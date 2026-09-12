@@ -1,0 +1,13 @@
+130010 -> {'name': '東京地方', 'enName': 'Tokyo Region', 'parent': '130000', 'children': ['130011', '130012', '130013', '130014', '130015']}
+130020 -> {'name': '伊豆諸島北部', 'enName': 'Northern Izu Islands', 'parent': '130000', 'children': ['130021', '130022']}
+130030 -> {'name': '伊豆諸島南部', 'enName': 'Southern Izu Islands', 'parent': '130000', 'children': ['130031', '130032']}
+130040 -> {'name': '小笠原諸島', 'enName': 'Ogasawara Islands', 'parent': '130000', 'children': ['130040']}
+1336100 -> {'name': '大島町', 'enName': 'Oshima Town', 'kana': 'おおしままち', 'parent': '130021'}
+1336200 -> {'name': '利島村', 'enName': 'Toshima Village', 'kana': 'としまむら', 'parent': '130022'}
+1336300 -> {'name': '新島村', 'enName': 'Niijima Village', 'kana': 'にいじまむら', 'parent': '130022'}
+1336400 -> {'name': '神津島村', 'enName': 'Kouzushima Village', 'kana': 'こうづしまむら', 'parent': '130022'}
+1338100 -> {'name': '三宅村', 'enName': 'Miyake Village', 'kana': 'みやけむら', 'parent': '130032'}
+1338200 -> {'name': '御蔵島村', 'enName': 'Mikurashima Village', 'kana': 'みくらじまむら', 'parent': '130032'}
+1340100 -> {'name': '八丈町', 'enName': 'Hachijo Town', 'kana': 'はちじょうまち', 'parent': '130031'}
+1340200 -> {'name': '青ヶ島村', 'enName': 'Aogashima Village', 'kana': 'あおがしまむら', 'parent': '130031'}
+1342100 -> {'name': '小笠原村', 'enName': 'Ogasawara Village', 'kana': 'おがさわらむら', 'parent': '130040'}

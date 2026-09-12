@@ -2,6 +2,7 @@ import * as Cesium from 'cesium';
 import {
   forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState,
 } from 'react';
+import { createPortal } from 'react-dom';
 import type { Lang, PulseEvent } from '../lib/types';
 import type { LineCollection, StationCollection } from '../lib/geo';
 import { lineSegments } from '../lib/geo';
@@ -55,7 +56,9 @@ const GSI_FLOOD = env.VITE_GSI_FLOOD_TILES
 
 // Versioned: bumping the suffix retires a saved preference so a changed default
 // actually reaches the presenter's browser instead of losing to an old click.
-const COLLAPSE_STORAGE_KEY = 'tp.collapsed.map';
+// v2: the default flipped to collapsed, and a stored `false` from before that
+// change would silently win. Bumping the key retires those.
+const COLLAPSE_STORAGE_KEY = 'tp.collapsed.map.v2';
 const BASEMAP_STORAGE_KEY = 'tp.basemap.v3';
 const LABELS_STORAGE_KEY = 'tp.basemapLabels.v3';
 
@@ -110,10 +113,14 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     try { return window.localStorage.getItem(LABELS_STORAGE_KEY) !== '0'; } catch { return true; }
   });
   const [pickerOpen, setPickerOpen] = useState(false);
+  const basemapBtnRef = useRef<HTMLButtonElement | null>(null);
+  const [menuPos, setMenuPos] = useState<{ left: number; top?: number; bottom?: number } | null>(null);
   const [controlsOpen, setControlsOpen] = useState<boolean>(() => {
-    // Persisted like every other widget so the presenter's layout survives a
-    // reload. localStorage throws in a private window - never let that mount-block.
-    try { return window.localStorage.getItem(COLLAPSE_STORAGE_KEY) !== '1'; } catch { return true; }
+    // COLLAPSED by default: the demo opens on the map, not on its controls. The
+    // zoom/home buttons live in the header so they stay reachable either way.
+    // Persisted like every other widget; localStorage throws in a private window,
+    // which must never block the mount.
+    try { return window.localStorage.getItem(COLLAPSE_STORAGE_KEY) === '0'; } catch { return false; }
   });
   const clusterRef = useRef<HTMLDivElement | null>(null);
   const busRouteDsRef = useRef<Cesium.CustomDataSource | null>(null);
@@ -136,6 +143,51 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       window.localStorage.setItem(COLLAPSE_STORAGE_KEY, controlsOpen ? '0' : '1');
     } catch { /* private window */ }
   }, [controlsOpen]);
+
+  /**
+   * The basemap menu is rendered through a PORTAL to document.body, not inside
+   * the panel. Two ancestor properties make an in-panel popover impossible here:
+   *   - .tp-panel sets `overflow: hidden` (panels.css, not ours to edit), which
+   *     clips anything escaping the 125px-tall cluster box;
+   *   - every HUD panel sets `backdrop-filter: blur(20px)`, and a backdrop-filter
+   *     ancestor becomes a containing block AND a stacking context — so even
+   *     `position: fixed` children get trapped inside it.
+   * A portal sidesteps all of it: no ancestor's overflow/filter/transform can
+   * affect the menu. Position is measured from the toggle button each time.
+   */
+  useEffect(() => {
+    if (!pickerOpen) { setMenuPos(null); return; }
+    const place = () => {
+      const btn = basemapBtnRef.current;
+      if (!btn) return;
+      const r = btn.getBoundingClientRect();
+      // Prefer opening upward (the cluster lives at the bottom of the viewport);
+      // flip down when there is not enough room above.
+      const NEEDED = 330;
+      if (r.top > NEEDED) setMenuPos({ left: Math.round(r.left), bottom: Math.round(window.innerHeight - r.top + 6) });
+      else setMenuPos({ left: Math.round(r.left), top: Math.round(r.bottom + 6) });
+    };
+    place();
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setPickerOpen(false); };
+    const onDown = (e: MouseEvent) => {
+      const t = e.target as Node | null;
+      if (!t) return;
+      if (basemapBtnRef.current?.contains(t)) return;
+      if (document.getElementById('tp-basemap-menu')?.contains(t)) return;
+      setPickerOpen(false);
+    };
+    window.addEventListener('resize', place);
+    window.addEventListener('scroll', place, true);
+    window.addEventListener('keydown', onKey);
+    // pointerdown, not click: the map's own handlers also listen for clicks.
+    window.addEventListener('pointerdown', onDown, true);
+    return () => {
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', place, true);
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('pointerdown', onDown, true);
+    };
+  }, [pickerOpen]);
 
   /**
    * Publish the cluster's rendered height so the LayerPanel stacked above it can
@@ -886,7 +938,23 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
           collapsed={!controlsOpen}
           onToggleCollapse={() => setControlsOpen((o) => !o)}
           actions={(
-            <span className="map-zoom" role="group" aria-label="Zoom">
+            <span className="map-zoom" role="group" aria-label="Map controls">
+              {/* The cluster is collapsed by default, so the basemap switcher
+                  needs a trigger that survives the collapse. This button is the
+                  portal's anchor in both states; the wider chip in the body is a
+                  labelled alias for it when expanded. */}
+              <button
+                type="button"
+                ref={basemapBtnRef}
+                className={'map-zoom-basemap' + (pickerOpen ? ' is-active' : '')}
+                aria-expanded={pickerOpen}
+                aria-haspopup="listbox"
+                onClick={() => setPickerOpen((o) => !o)}
+                title={'Basemap: ' + active.label}
+                aria-label="Change basemap"
+              >
+                <span className="map-basemap-swatch" data-bm={active.id} />
+              </button>
               <button type="button" onClick={() => zoomByFactor(1 / ZOOM_STEP)} title="Zoom in" aria-label="Zoom in">+</button>
               <button type="button" onClick={() => zoomByFactor(ZOOM_STEP)} title="Zoom out" aria-label="Zoom out">−</button>
               <button type="button" onClick={() => flyHome()} title="Reset view to central Tokyo" aria-label="Reset to Tokyo">⌂</button>
@@ -907,45 +975,6 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
           <div className="map-controls-body">
             {/* Basemap switcher — one chip; the menu opens upward. */}
             <div className={'map-basemap' + (pickerOpen ? ' is-open' : '')}>
-        {pickerOpen && (
-          <div className="map-basemap-menu" role="listbox" aria-label="Basemap">
-            {BASEMAPS.map((b) => (
-              <button
-                key={b.id}
-                type="button"
-                role="option"
-                aria-selected={b.id === basemapId}
-                className={'map-basemap-opt' + (b.id === basemapId ? ' is-active' : '')}
-                onClick={() => {
-                  // Persist only an explicit choice: an automatic ion->Esri
-                  // fallback must not become a sticky preference.
-                  try { window.localStorage.setItem(BASEMAP_STORAGE_KEY, b.id); } catch { /* ignore */ }
-                  setBasemapId(b.id);
-                  setPickerOpen(false);
-                }}
-              >
-                <span className="map-basemap-swatch" data-bm={b.id} />
-                {b.label}
-              </button>
-            ))}
-            <button
-              type="button"
-              className={'map-basemap-opt map-basemap-labels' + (labelsOn ? ' is-active' : '')}
-              aria-pressed={labelsOn}
-              disabled={active.hasOwnLabels}
-              onClick={() => setLabelsOn((o) => !o)}
-              title={active.hasOwnLabels
-                ? 'This basemap already has its own labels'
-                : 'Thin place-name overlay on top of the imagery'}
-            >
-              <span className="map-basemap-switch" />
-              Place labels
-            </button>
-            <div className="map-basemap-note">
-              GSI = 国土地理院, the official Japanese government basemap — aerial and topo.
-            </div>
-          </div>
-        )}
         <button
           type="button"
           className="map-basemap-toggle"
@@ -971,6 +1000,62 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
           </div>
         )}
       </div>
+
+
+      {/* Portalled to <body>: the cluster is COLLAPSED by default, so this must
+          not live inside the collapsible body, and no ancestor's overflow,
+          transform, filter or backdrop-filter can clip or trap it here. */}
+      {pickerOpen && menuPos && createPortal(
+        <div
+          id="tp-basemap-menu"
+          className="map-basemap-menu"
+          role="listbox"
+          aria-label="Basemap"
+          style={{
+            position: 'fixed',
+            left: menuPos.left,
+            ...(menuPos.top !== undefined ? { top: menuPos.top } : {}),
+            ...(menuPos.bottom !== undefined ? { bottom: menuPos.bottom } : {}),
+          }}
+        >
+          {BASEMAPS.map((b) => (
+            <button
+              key={b.id}
+              type="button"
+              role="option"
+              aria-selected={b.id === basemapId}
+              className={'map-basemap-opt' + (b.id === basemapId ? ' is-active' : '')}
+              onClick={() => {
+                // Persist only an explicit choice: an automatic ion->Esri
+                // fallback must not become a sticky preference.
+                try { window.localStorage.setItem(BASEMAP_STORAGE_KEY, b.id); } catch { /* ignore */ }
+                setBasemapId(b.id);
+                setPickerOpen(false);
+              }}
+            >
+              <span className="map-basemap-swatch" data-bm={b.id} />
+              {b.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            className={'map-basemap-opt map-basemap-labels' + (labelsOn ? ' is-active' : '')}
+            aria-pressed={labelsOn}
+            disabled={active.hasOwnLabels}
+            onClick={() => setLabelsOn((o) => !o)}
+            title={active.hasOwnLabels
+              ? 'This basemap already has its own labels'
+              : 'Thin place-name overlay on top of the imagery'}
+          >
+            <span className="map-basemap-switch" />
+            Place labels
+          </button>
+          <div className="map-basemap-note">
+            GSI = 国土地理院, the official Japanese government basemap — aerial and topo.
+          </div>
+        </div>,
+        document.body,
+      )}
 
       <div ref={creditRef} className="map-credits" />
       {fatal && (

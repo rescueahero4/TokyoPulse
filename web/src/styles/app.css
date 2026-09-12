@@ -170,6 +170,18 @@ html, body, #root {
 /* Zoom buttons live in the header actions slot, so they survive a collapse. */
 .map-zoom { display: inline-flex; gap: 4px; flex: 0 0 auto; }
 
+.map-zoom .map-zoom-basemap {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-right: 2px;
+}
+
+.map-zoom .map-zoom-basemap .map-basemap-swatch { width: 12px; height: 12px; }
+
 .map-zoom button {
   width: 22px;
   height: 22px;
@@ -224,13 +236,23 @@ html, body, #root {
   background: rgba(0, 0, 0, 0.25);
 }
 
-/* The popover opens upward and must not stretch the cluster. */
+/* Belt and braces: panels.css owns .tp-panel and sets `overflow: hidden`, and
+   that override has flipped out from under us once already when the panels agent
+   restyled it. Win it from here with a two-class selector. The menu no longer
+   DEPENDS on this (it is portalled to <body>), but anything else that needs to
+   overflow the cluster now can. */
+.tp-panel.map-controls { overflow: visible; }
+
+/* The basemap menu is portalled to <body>: position:fixed comes from the inline
+   style computed off the toggle button, so no ancestor's overflow, transform,
+   filter or backdrop-filter can clip or trap it. Above the HUD (z-index 10) and
+   above the cluster (40). */
 .map-basemap-menu {
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 0;
+  position: fixed;
   min-width: 230px;
-  z-index: 5;
+  max-width: 280px;
+  z-index: 120;
+  pointer-events: auto;
 }
 
 /* ---------- rail status legend ----------

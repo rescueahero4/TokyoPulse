@@ -1178,10 +1178,46 @@
   cursor: pointer;
 }
 
+/* The list is always on screen and takes whatever height is left; only it
+   scrolls, so the search box above it can never be pushed out of view. */
 .tp-line-search-results {
-  max-height: 260px;
+  flex: 1 1 auto;
+  min-height: 84px;
   overflow-y: auto;
   border-top: 1px solid var(--tp-border);
+}
+
+/* With a line detail open the list yields most of the height to the detail,
+   but stays visible so another line is one click away. */
+.tp-line-search-results-compact {
+  flex: 0 0 auto;
+  max-height: 132px;
+}
+
+.tp-line-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px 4px;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tp-accent);
+  background: rgba(0, 180, 255, 0.04);
+  border-bottom: 1px solid var(--tp-border-soft);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.tp-line-group-stat {
+  letter-spacing: 0.08em;
+  color: var(--tp-text-muted);
+  text-transform: none;
+  white-space: nowrap;
 }
 
 .tp-line-search-result {
@@ -1202,7 +1238,14 @@
 .tp-line-search-result:hover,
 .tp-line-search-result.tp-row-selected { background: rgba(0, 180, 255, 0.1); }
 
-.tp-line-search-name { flex: 1; letter-spacing: 0.04em; }
+.tp-line-search-name {
+  flex: 1;
+  min-width: 0;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .tp-line-search-status {
   font-size: 9px;

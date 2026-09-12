@@ -290,6 +290,7 @@ export default function App() {
               impact={impact}
               impactLoading={impactLoading}
               onStationClick={onStationClick}
+              lang={lang}
             />
           </ErrorBoundary>
         </div>

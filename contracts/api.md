@@ -103,6 +103,37 @@ existing consumers are unaffected. `sourceUrl` MUST be the real request URL actu
 so clicking it returns the same data we rendered. When serving from cache/mock, still return the URL that
 produced the cached payload and let `meta.degraded` convey the staleness.
 
+## GET /weathergrid.json
+**ADDED post-freeze (orchestrator broadcast).** A gridded weather field for rendering a continuous map
+surface, rather than the point markers we had. Open-Meteo accepts many coordinates in ONE request
+(verified: 63 points, one call, 951-char URL), so a lattice is cheap.
+
+```jsonc
+{
+  "bbox":  { "latMin": 35.30, "latMax": 36.05, "lonMin": 139.20, "lonMax": 140.20 },
+  "step":  0.125,
+  "rows":  7, "cols": 9,
+  "lats":  [35.30, 35.425, ...],          // length == rows
+  "lons":  [139.20, 139.325, ...],        // length == cols
+  "time":  "2026-09-12T20:00",            // the observation hour, Asia/Tokyo
+  "units": { "temperature_2m": "°C", "precipitation": "mm" },
+  "values": {                              // ROW-MAJOR, length == rows*cols
+    "temperature_2m": [18.5, ...],
+    "precipitation":  [0.0, ...]
+  },
+  "sourceUrl": "https://api.open-meteo.com/v1/forecast?latitude=...",
+  "attribution": "Weather data by Open-Meteo.com (CC BY 4.0)",
+  "meta": {...}
+}
+```
+Row-major means index `r * cols + c`. Consumers bilinearly interpolate between the 4 surrounding grid
+points to draw a smooth surface.
+
+**Honesty requirement:** interpolation adds NO new information — it only renders the transition between
+known values smoothly. It is defensible for temperature (a continuous field) and misleading for
+precipitation (genuinely patchy). The UI must say the surface is interpolated, and must not imply
+resolution finer than the model's native ~5km over Japan.
+
 ## GET /brief
 ```jsonc
 {

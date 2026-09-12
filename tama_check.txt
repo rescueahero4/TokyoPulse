@@ -1,0 +1,10 @@
+1320100 -> {'name': '八王子市', 'enName': 'Hachioji City', 'kana': 'はちおうじし', 'parent': '130015'}
+1320200 -> {'name': '立川市', 'enName': 'Tachikawa City', 'kana': 'たちかわし', 'parent': '130013'}
+1321500 -> {'name': '国立市', 'enName': 'Kunitachi City', 'kana': 'くにたちし', 'parent': '130013'}
+1321800 -> {'name': '福生市', 'enName': 'Fussa City', 'kana': 'ふっさし', 'parent': '130014'}
+1321900 -> {'name': '狛江市', 'enName': 'Komae City', 'kana': 'こまえし', 'parent': '130013'}
+1322900 -> {'name': '西東京市', 'enName': 'Nishitokyo City', 'kana': 'にしとうきょうし', 'parent': '130013'}
+1330300 -> {'name': '瑞穂町', 'enName': 'Mizuho Town', 'kana': 'みずほまち', 'parent': '130014'}
+1330500 -> {'name': '日の出町', 'enName': 'Hinode Town', 'kana': 'ひのでまち', 'parent': '130014'}
+1330700 -> {'name': '檜原村', 'enName': 'Hinohara Village', 'kana': 'ひのはらむら', 'parent': '130014'}
+1330800 -> {'name': '奥多摩町', 'enName': 'Okutama Town', 'kana': 'おくたままち', 'parent': '130014'}

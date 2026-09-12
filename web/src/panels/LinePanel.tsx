@@ -12,8 +12,8 @@
 // A6 depends on the pick behaviour: onPick(lineId) still fires on selection so
 // the map highlights the line and labels its stations, and onPick(null) clears.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { Impact, LineProps } from '../lib/types';
+import { useCallback, useEffect, useRef } from 'react';
+import type { Impact, Lang, LineProps } from '../lib/types';
 import { PanelHeader } from './PanelHeader';
 import { useCollapse } from './useCollapse';
 import { ImpactBody, STATUS_COLOR } from './ImpactPanel';
@@ -29,8 +29,52 @@ function matches(line: LineProps, query: string): boolean {
   );
 }
 
+/** Operators in the order a Tokyo resident reads them; anything else falls to the end. */
+const OPERATOR_ORDER = ['Toei', 'JR-East', 'TokyoMetro'];
+const OPERATOR_LABEL: Record<string, string> = {
+  Toei: 'Toei',
+  'JR-East': 'JR East',
+  TokyoMetro: 'Tokyo Metro',
+};
+
+interface LineGroup {
+  key: string;
+  label: string;
+  lines: LineProps[];
+  live: number;
+}
+
+/**
+ * Group by operator. This is deliberately NOT hidden detail: it makes the
+ * 11-live / 9-no-feed split legible at a glance, which is the honest shape of
+ * what the keyless feeds actually cover.
+ */
+function groupByOperator(lines: LineProps[]): LineGroup[] {
+  const byOp = new Map<string, LineProps[]>();
+  for (const l of lines) {
+    const key = l.operator || 'Other';
+    const arr = byOp.get(key);
+    if (arr) arr.push(l);
+    else byOp.set(key, [l]);
+  }
+  const rank = (k: string) => {
+    const i = OPERATOR_ORDER.indexOf(k);
+    return i === -1 ? OPERATOR_ORDER.length : i;
+  };
+  return [...byOp.entries()]
+    .sort((a, b) => rank(a[0]) - rank(b[0]) || a[0].localeCompare(b[0]))
+    .map(([key, group]) => ({
+      key,
+      label: OPERATOR_LABEL[key] ?? key,
+      lines: group,
+      live: group.filter((l) => l.statusSource !== 'none').length,
+    }));
+}
+
 export function LinePanel(p: {
   lines: LineProps[];
+  /** Row language. Optional with a safe default so older call sites still type-check. */
+  lang?: Lang;
   value: string;
   onChange(v: string): void;
   onPick(lineId: string | null): void;
@@ -39,7 +83,6 @@ export function LinePanel(p: {
   impactLoading: boolean;
   onStationClick(lat: number, lon: number): void;
 }): JSX.Element {
-  const [open, setOpen] = useState(false);
   const [collapsed, toggleCollapsed] = useCollapse('lines');
   const unsubRef = useRef<(() => void) | null>(null);
 
@@ -62,14 +105,18 @@ export function LinePanel(p: {
   }, []);
 
   useEffect(() => () => unsubRef.current?.(), []);
+  const lang: Lang = p.lang ?? 'en';
   const lines = p.lines ?? [];
+  // The list is ALWAYS shown — the search box filters it rather than summoning
+  // it, so a user who does not already know a line name still sees all 20.
   const results = lines.filter((l) => matches(l, p.value));
+  const groups = groupByOperator(results);
   const selected = lines.find((l) => l.lineId === p.selectedLineId) ?? null;
+  const hasDetail = !!p.selectedLineId;
 
   const clear = () => {
     p.onPick(null);
     p.onChange('');
-    setOpen(false);
   };
 
   return (
@@ -88,13 +135,11 @@ export function LinePanel(p: {
             <input
               type="text"
               className="tp-line-search-input"
-              placeholder="Search line…"
+              placeholder="Filter lines…"
               value={p.value}
-              onFocus={() => setOpen(true)}
-              onBlur={() => setOpen(false)}
               onChange={(ev) => p.onChange(ev.target.value)}
             />
-            {p.selectedLineId ? (
+            {p.value || p.selectedLineId ? (
               <button
                 type="button"
                 className="tp-line-search-clear"
@@ -106,42 +151,55 @@ export function LinePanel(p: {
             ) : null}
           </div>
 
-          {open ? (
-            <div className="tp-line-search-results" role="listbox">
-              {results.length === 0 ? (
-                <div className="tp-empty-row">No lines</div>
-              ) : (
-                results.map((line) => (
-                  <button
-                    type="button"
-                    key={line.lineId}
-                    className={`tp-line-search-result${line.lineId === p.selectedLineId ? ' tp-row-selected' : ''}`}
-                    style={{ borderLeft: `3px solid ${line.color || '#6b7280'}` }}
-                    onMouseDown={(ev) => {
-                      // onMouseDown fires before the input's onBlur, so the click still registers.
-                      ev.preventDefault();
-                      p.onPick(line.lineId);
-                      p.onChange(line.name);
-                      setOpen(false);
-                    }}
-                  >
-                    {/* Status dot MUST encode line.status, never livery (P0-1) —
-                        livery is shown via the row's left border above. */}
-                    <span
-                      className="tp-dot"
-                      style={{ backgroundColor: STATUS_COLOR[line.status] }}
-                      title={line.statusText}
-                      aria-hidden="true"
-                    />
-                    <span className="tp-line-search-name">{line.name}</span>
-                    <span className="tp-line-search-status" style={{ color: STATUS_COLOR[line.status] }}>
-                      {line.statusText}
+          <div
+            className={`tp-line-search-results${hasDetail ? ' tp-line-search-results-compact' : ''}`}
+            role="listbox"
+          >
+            {results.length === 0 ? (
+              <div className="tp-empty-row">No lines match “{p.value}”</div>
+            ) : (
+              groups.map((g) => (
+                <div key={g.key} className="tp-line-group">
+                  <div className="tp-line-group-head">
+                    <span>{g.label}</span>
+                    <span className="tp-line-group-stat">
+                      {g.live === 0
+                        ? `${g.lines.length} · no live feed`
+                        : `${g.live}/${g.lines.length} live`}
                     </span>
-                  </button>
-                ))
-              )}
-            </div>
-          ) : null}
+                  </div>
+                  {g.lines.map((line) => (
+                    <button
+                      type="button"
+                      key={line.lineId}
+                      className={`tp-line-search-result${line.lineId === p.selectedLineId ? ' tp-row-selected' : ''}`}
+                      style={{ borderLeft: `3px solid ${line.color || '#6b7280'}` }}
+                      onClick={() => p.onPick(line.lineId)}
+                      title={line.statusText}
+                    >
+                      {/* Status dot MUST encode line.status, never livery (P0-1) —
+                          livery is shown via the row's left border above. */}
+                      <span
+                        className="tp-dot"
+                        style={{ backgroundColor: STATUS_COLOR[line.status] }}
+                        title={line.statusText}
+                        aria-hidden="true"
+                      />
+                      <span className="tp-line-search-name">
+                        {lang === 'ja' && line.nameJa ? line.nameJa : line.name}
+                      </span>
+                      {/* Short status word in a 20-row list — the full statusText
+                          would wrap every name onto three lines. It is still on
+                          the row's title, and in full in the detail below. */}
+                      <span className="tp-line-search-status" style={{ color: STATUS_COLOR[line.status] }}>
+                        {line.status === 'unknown' ? 'no feed' : line.status}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              ))
+            )}
+          </div>
 
           {p.selectedLineId ? (
             <div className="tp-line-detail">
