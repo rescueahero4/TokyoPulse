@@ -779,6 +779,17 @@ def _ward_ja_map() -> list[tuple[str, str]]:
     return [(r["ward"], r.get("wardJa") or "") for r in wards_csv() if r.get("ward")]
 
 
+# Replay events are re-stamped copies of CACHED REAL payloads, so they carry the
+# upstream URL the original data came from. A judge clicking through on the demo's
+# scripted quake must land on the real feed, not a dead end — and the REPLAY chip
+# already tells them the timestamp was rewritten, so this is not overclaiming.
+_REPLAY_SOURCE_URL = {
+    "quake":   "https://www.p2pquake.net/",
+    "train":   "https://api-public.odpt.org/api/v4/odpt:TrainInformation",
+    "warning": "https://www.jma.go.jp/bosai/warning/#area_type=class20s&area_code=130000",
+}
+
+
 def _replay_quake(now: datetime) -> list[dict[str, Any]]:
     """Inject a real cached P2PQuake record as a fresh Event."""
     hist = read_mock("raw/p2pquake-history.json") or []
@@ -817,7 +828,7 @@ def _replay_quake(now: datetime) -> list[dict[str, Any]]:
         "time": now.isoformat(),
         "lat": hypo.get("latitude"), "lon": hypo.get("longitude"),
         "title": title, "titleJa": title_ja,
-        "affects": affects[:6], "source": "replay", "url": None,
+        "affects": affects[:6], "source": "replay", "url": _REPLAY_SOURCE_URL["quake"],
         "magnitude": mag, "maxScale": scale or None,
     }]
 
@@ -854,7 +865,7 @@ def _replay_train(now: datetime) -> list[dict[str, Any]]:
             "lat": None, "lon": None,
             "title": title, "titleJa": title_ja,
             "affects": [f"line:{row['lineId']}"],
-            "source": "replay", "url": None, "magnitude": None, "maxScale": None,
+            "source": "replay", "url": _REPLAY_SOURCE_URL["train"], "magnitude": None, "maxScale": None,
         })
         # P0-2: the Event alone is not enough — /lines.geojson and /impact/{id}
         # both read (:Line).status directly, so stamp it here too, honestly

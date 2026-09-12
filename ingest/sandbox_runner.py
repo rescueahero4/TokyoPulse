@@ -17,7 +17,11 @@ import sys
 def main() -> None:
     modname, path = sys.argv[1], sys.argv[2]
     with open(path, encoding="utf-8") as f:
-        raw = json.load(f)
+        content = f.read()
+    try:
+        raw = json.loads(content)  # dict/list feeds (trains, quakes, warnings, weather)
+    except json.JSONDecodeError:
+        raw = content  # text feeds (jreast's HTML scrape) -- normalize() takes the raw string
     mod = importlib.import_module(f"ingest.feeds.{modname}")
     events = mod.normalize(raw)
     sys.stdout.write(json.dumps(events, ensure_ascii=False))

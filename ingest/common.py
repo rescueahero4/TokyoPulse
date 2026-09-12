@@ -123,7 +123,7 @@ def stable_hash(text: str, n: int = 8) -> str:
 # ── the frozen Event shape (contracts/event.schema.json) ───────────────────
 EVENT_TYPES = {"quake", "train", "warning", "weather"}
 EVENT_SEVERITIES = {"info", "warning", "critical"}
-EVENT_SOURCES = {"odpt", "p2pquake", "jma", "open-meteo", "mock", "replay"}
+EVENT_SOURCES = {"odpt", "p2pquake", "jma", "open-meteo", "mock", "replay", "jreast"}
 
 
 def make_event(

@@ -14,9 +14,19 @@ NEVER forwarded — see doc/prep.md §2 and contracts/AGENT-BRIEF.md.
 Writes live status to ingest/state/sandboxes.json in exactly the
 GET /sandboxes.json shape from contracts/api.md.
 
---local runs all 4 ingestors as local threads instead of Daytona sandboxes
+--local runs all ingestors as local threads instead of Daytona sandboxes
 (status:"mock") -- the fallback that guarantees the badge is never empty and
 lets everything be tested without burning Daytona quota.
+
+Self-healing (--push): Daytona auto-stops idle sandboxes. A bootstrapped
+sandbox that goes quiet between polls WILL be stopped out from under the
+loop -- every feed's push loop detects "SANDBOX_NOT_RUNNING" style errors,
+tries Sandbox.start() in place first (fast, stable id), recreates the
+sandbox as a fallback, and after 3 consecutive failures degrades that one
+feed to a local thread (status:"degraded") while it keeps retrying the
+sandbox in the background -- one dead sandbox never takes down the other
+feeds and never stops the data flowing. create() also sets
+auto_stop_interval=0 to prevent the idle-stop in the first place.
 """
 
 from __future__ import annotations
@@ -43,7 +53,7 @@ from ingest.common import (
     get_logger,
     now_jst_iso,
 )
-from ingest.feeds import quakes, trains, warnings as warnings_feed, weather
+from ingest.feeds import jreast, quakes, trains, warnings as warnings_feed, weather
 from ingest.sink import upsert
 
 log = get_logger("ingest.launcher")
@@ -53,12 +63,24 @@ SANDBOXES_JSON = STATE_DIR / "sandboxes.json"
 # name, feed id (matches contracts/api.md sample + mock/sandboxes.json), module,
 # local filename (under ingest/feeds/), state-file key (sink.py's FEED_NAME),
 # fetch = the host-side (has egress) raw-payload getter for --push mode.
+# 5 feeds (A9 added jreast after the original 4) -- nothing here is a
+# hardcoded "4"; len(FEED_DEFS) is the single source of truth everywhere.
 FEED_DEFS: list[dict[str, Any]] = [
     {"name": "ingest-trains", "feed": "odpt", "module": trains, "filename": "trains.py", "state_key": "trains", "fetch": trains.fetch_once},
     {"name": "ingest-quakes", "feed": "p2pquake", "module": quakes, "filename": "quakes.py", "state_key": "quakes", "fetch": quakes.fetch_history},
     {"name": "ingest-warnings", "feed": "jma", "module": warnings_feed, "filename": "warnings.py", "state_key": "warnings", "fetch": warnings_feed.fetch_once},
     {"name": "ingest-weather", "feed": "open-meteo", "module": weather, "filename": "weather.py", "state_key": "weather", "fetch": weather.fetch_once},
+    {"name": "ingest-jreast", "feed": "jreast", "module": jreast, "filename": "jreast.py", "state_key": "jreast", "fetch": jreast.fetch_once},
 ]
+
+# Daytona error signatures for "the sandbox is no longer running" -- idle
+# auto-stop is the known cause (see launcher.py module docstring below).
+_DEAD_SANDBOX_MARKERS = ("SANDBOX_NOT_RUNNING", "Is the Sandbox started", "failed to resolve container IP")
+
+
+def _is_dead_sandbox_error(e: Exception) -> bool:
+    msg = str(e)
+    return any(m in msg for m in _DEAD_SANDBOX_MARKERS)
 
 # Secret whitelist (doc/prep.md §2 / AGENT-BRIEF). Never widen without a
 # contract change — this is what stands between a dead sandbox and a leaked key.
@@ -169,8 +191,8 @@ def run_local(duration: Optional[float] = None) -> None:
         target=_status_monitor_loop, args=(monitor_stop,), daemon=True
     )
     monitor.start()
-    write_sandboxes_json(note="--local: 4 ingestors running as local threads, status=mock")
-    log.info("local mode: 4 ingestor threads started; writing %s every 3s", SANDBOXES_JSON)
+    write_sandboxes_json(note=f"--local: {len(FEED_DEFS)} ingestors running as local threads, status=mock")
+    log.info("local mode: %d ingestor threads started; writing %s every 3s", len(FEED_DEFS), SANDBOXES_JSON)
 
     def _shutdown(*_a):
         log.info("shutting down local ingestors...")
@@ -341,7 +363,7 @@ def run_daytona() -> dict[str, Any]:
     except Exception:
         pass
 
-    log.info("4 Daytona sandboxes launched in parallel. Ctrl+C to tear down.")
+    log.info("%d Daytona sandboxes launched in parallel. Ctrl+C to tear down.", len(FEED_DEFS))
     while True:
         time.sleep(1)
 
@@ -395,6 +417,11 @@ def _push_bootstrap_one(daytona: Any, fd: dict[str, Any]) -> Optional[dict[str, 
                 name=f"tokyopulse-{fd['feed']}-normalize",
                 snapshot=get_env("DAYTONA_SNAPSHOT") or None,
                 labels={"project": "tokyopulse", "feed": fd["feed"], "role": "normalize"},
+                # 0 = never idle-auto-stop. Prevents the SANDBOX_NOT_RUNNING
+                # failure mode rather than just recovering from it. Defense in
+                # depth: the self-healing retry/recreate path below still
+                # covers the case where this isn't honored or isn't supported.
+                auto_stop_interval=0,
             ),
             timeout=90,
         )
@@ -413,7 +440,7 @@ def _push_bootstrap_one(daytona: Any, fd: dict[str, Any]) -> Optional[dict[str, 
             (ROOT / "ingest" / "feeds" / "__init__.py", f"{root}/tokyopulse/ingest/feeds/__init__.py"),
             (ROOT / "ingest" / "feeds" / fd["filename"], f"{root}/tokyopulse/ingest/feeds/{fd['filename']}"),
         ]
-        if fd["feed"] == "odpt":
+        if fd["feed"] in ("odpt", "jreast"):  # both join against contracts/lines.csv
             uploads.append((ROOT / "contracts" / "lines.csv", f"{root}/tokyopulse/contracts/lines.csv"))
         for local_path, remote_path in uploads:
             sandbox.fs.upload_file(str(local_path), remote_path)
@@ -453,24 +480,102 @@ def _push_cycle(fd: dict[str, Any], sb: dict[str, Any]) -> int:
     return len(events)
 
 
-def _push_feed_loop(fd: dict[str, Any], sb: dict[str, Any], stop_event: threading.Event) -> None:
+_DEGRADE_AFTER = 3  # consecutive failures before a feed falls back to local normalize()
+
+
+def _try_revive_sandbox(daytona: Any, fd: dict[str, Any], sb: dict[str, Any]) -> bool:
+    """Prefer restart (fast, keeps sandbox id stable) over recreate. Mutates
+    `sb` IN PLACE so every other reference (run_push's `sandboxes` dict used
+    at teardown) sees the new sandbox too. Returns True on success."""
+    sandbox = sb.get("sandbox")
+    if sandbox is not None:
+        try:
+            sandbox.start()
+            try:
+                sandbox.wait_for_sandbox_start(timeout=30)
+            except Exception:
+                pass  # older SDKs may not block here; exec below is the real proof
+            sb["root"] = sandbox.get_user_root_dir()
+            log.info("push: %s sandbox restarted in place (same id)", fd["name"])
+            return True
+        except Exception as e:
+            log.warning("push: %s restart failed (%s) -- recreating sandbox", fd["name"], e)
+    new_sb = _push_bootstrap_one(daytona, fd)
+    if new_sb is None:
+        return False
+    sb.clear()
+    sb.update(new_sb)
+    log.info("push: %s sandbox recreated", fd["name"])
+    return True
+
+
+def _push_feed_loop(daytona: Any, fd: dict[str, Any], sb: dict[str, Any], stop_event: threading.Event) -> None:
     poll = get_env_int("INGEST_POLL_SECONDS", 30)
     if fd["feed"] == "open-meteo":
         poll = max(poll * 10, 300)
     fail_streak = 0
+    degraded = False
+    local_stop: Optional[threading.Event] = None
+
     while not stop_event.is_set():
+        if degraded:
+            # Data keeps flowing locally; meanwhile keep trying to restore the
+            # real sandbox in the background so the badge can go honest again.
+            if _try_revive_sandbox(daytona, fd, sb):
+                log.info(
+                    "push: %s sandbox restored after %d failed cycles -- stopping local fallback, resuming sandbox normalize",
+                    fd["name"], fail_streak,
+                )
+                local_stop.set()
+                degraded = False
+                fail_streak = 0
+                _update_status(fd["name"], status="running")
+            else:
+                stop_event.wait(poll)
+                continue
+
         try:
             _push_cycle(fd, sb)
+            if fail_streak > 0:
+                log.info(
+                    "push: %s sandbox recovered after SANDBOX_NOT_RUNNING (%d failed cycles), cycle ok",
+                    fd["name"], fail_streak,
+                )
             fail_streak = 0
             n, last = _state_file_stats(fd["state_key"])
             _update_status(fd["name"], status="running", eventsWritten=n, lastWriteAt=last)
         except Exception as e:
             fail_streak += 1
-            log.error("push: %s cycle failed (%d in a row): %s", fd["name"], fail_streak, e)
-            _update_status(fd["name"], status="running" if fail_streak < 3 else "failed")
+            dead = _is_dead_sandbox_error(e)
+            log.error(
+                "push: %s cycle failed (%d in a row)%s: %s",
+                fd["name"], fail_streak, " [SANDBOX_NOT_RUNNING]" if dead else "", e,
+            )
+            if fail_streak < _DEGRADE_AFTER:
+                # one shot at an in-place revive before we pay the degrade cost
+                if dead:
+                    _try_revive_sandbox(daytona, fd, sb)
+                _update_status(fd["name"], status="running")
+            else:
+                log.error(
+                    "push: %s hit %d consecutive failures -- degrading to LOCAL normalize+fetch "
+                    "(status=degraded), will keep retrying the sandbox in the background",
+                    fd["name"], fail_streak,
+                )
+                _update_status(fd["name"], status="degraded")
+                degraded = True
+                local_stop = threading.Event()
+                th = threading.Thread(
+                    target=lambda m=fd["module"], ev=local_stop: m.main(stop_event=ev),
+                    daemon=True,
+                )
+                th.start()
             stop_event.wait(backoff_delay(min(fail_streak, 6)))
             continue
         stop_event.wait(poll)
+
+    if local_stop is not None:
+        local_stop.set()
 
 
 def run_push(duration: Optional[float] = None) -> None:
@@ -492,7 +597,7 @@ def run_push(duration: Optional[float] = None) -> None:
         return run_local(duration=duration)
 
     _init_status("push")
-    write_sandboxes_json(note="push: creating 4 normalize-only sandboxes in parallel...")
+    write_sandboxes_json(note=f"push: creating {len(FEED_DEFS)} normalize-only sandboxes in parallel...")
 
     with ThreadPoolExecutor(max_workers=len(FEED_DEFS)) as pool:
         boot_results = list(pool.map(lambda fd: _push_bootstrap_one(daytona, fd), FEED_DEFS))
@@ -513,7 +618,7 @@ def run_push(duration: Optional[float] = None) -> None:
             _update_status(fd["name"], status="mock")
             th = threading.Thread(target=lambda m=fd["module"]: m.main(stop_event=stop_event), daemon=True)
         else:
-            th = threading.Thread(target=_push_feed_loop, args=(fd, sb, stop_event), daemon=True)
+            th = threading.Thread(target=_push_feed_loop, args=(daytona, fd, sb, stop_event), daemon=True)
         th.start()
         threads.append(th)
 

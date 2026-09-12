@@ -30,7 +30,7 @@ function write(key: string, value: boolean): void {
  * `const [collapsed, toggle] = useCollapse('timeline')`
  * Lazily initialised from localStorage; every change is written back.
  */
-export function useCollapse(key: string, defaultCollapsed = false) {
+export function useCollapse(key: string, defaultCollapsed = false): readonly [boolean, () => void] {
   const [collapsed, setCollapsed] = useState<boolean>(() => read(key, defaultCollapsed));
 
   const toggle = useCallback(() => {

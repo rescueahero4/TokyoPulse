@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open-Meteo grid → color surface demo</title>
+
+<!-- Leaflet from CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<style>
+  :root {
+    --ink: #1c2430;
+    --paper: #f6f7f5;
+    --panel: #ffffff;
+    --line: #d9dde2;
+    --accent: #2563eb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 14px 20px 10px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  header h1 { font-size: 1.05rem; font-weight: 600; }
+  header p  { font-size: 0.82rem; color: #5a6572; margin-top: 2px; max-width: 70ch; }
+
+  .layout { flex: 1; display: flex; min-height: 0; }
+  #map { flex: 1; min-width: 0; }
+
+  aside {
+    width: 340px;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    padding: 16px;
+    overflow-y: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  aside h2 { font-size: 0.9rem; margin-bottom: 6px; }
+  aside section + section { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+
+  .controls { display: flex; gap: 8px; margin-top: 8px; }
+  .controls button {
+    flex: 1;
+    padding: 7px 0;
+    font: inherit;
+    font-size: 0.82rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .controls button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .legend-bar {
+    height: 12px;
+    border-radius: 6px;
+    margin: 8px 0 4px;
+  }
+  .legend-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: #5a6572; }
+
+  #cell-detail pre {
+    background: #f0f2f4;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 0.72rem;
+    overflow-x: auto;
+    margin-top: 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .hint { color: #5a6572; font-size: 0.78rem; }
+  .status { font-size: 0.78rem; color: #5a6572; margin-top: 8px; }
+  .snap-note { background: #eef4ff; border: 1px solid #c7d8fb; border-radius: 6px; padding: 8px 10px; margin-top: 8px; font-size: 0.78rem; }
+
+  @media (max-width: 760px) {
+    .layout { flex-direction: column; }
+    aside { width: 100%; border-left: none; border-top: 1px solid var(--line); max-height: 45%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Open-Meteo as a surface, not dots</h1>
+  <p>Each colored square is one weather-model grid cell around Tokyo, fetched live from Open-Meteo in a single batched request. Click any cell to see the raw API values behind it — and how your requested coordinates get snapped to the model grid.</p>
+</header>
+
+<div class="layout">
+  <div id="map"></div>
+
+  <aside>
+    <section>
+      <h2>Variable</h2>
+      <div class="controls">
+        <button id="btn-temp" class="active">Temperature</button>
+        <button id="btn-precip">Precipitation</button>
+      </div>
+      <div class="legend-bar" id="legend-bar"></div>
+      <div class="legend-labels"><span id="legend-min"></span><span id="legend-max"></span></div>
+      <div class="status" id="status">Loading grid…</div>
+    </section>
+
+    <section id="cell-detail">
+      <h2>Cell inspector</h2>
+      <p class="hint">Click a cell on the map. You'll see what was <em>requested</em> vs what the API <em>returned</em> — the returned lat/lon is the center of the nearest model grid cell, which is why values look "rounded".</p>
+    </section>
+
+    <section>
+      <h2>How to read this data</h2>
+      <p>1. <strong>One request, many points.</strong> Open-Meteo accepts comma-separated lat/lon lists, so a whole lattice comes back as one JSON array — one object per point.</p>
+      <p>2. <strong>Values are cell averages.</strong> A returned temperature isn't a thermometer at that coordinate; it's the model's value for the whole cell (~1–11 km depending on model).</p>
+      <p>3. <strong>Render as a surface.</strong> Because the data tiles space completely, color grading (a raster) is the honest visualization. Dots are for real station measurements.</p>
+      <p>4. <strong>Mind the units.</strong> Always read <code>current_units</code> / <code>hourly_units</code> from the response instead of assuming °C or mm.</p>
+    </section>
+  </aside>
+</div>
+
+<script>
+/* ============================================================
+   1. CONFIG — the lattice we will request
+   ------------------------------------------------------------
+   We build a regular grid of coordinates over greater Tokyo.
+   STEP is 0.125°. Open-Meteo will snap each requested point to
+   its internal model grid, so neighboring requests may even
+   land on the same cell if STEP is smaller than the model grid.
+   ============================================================ */
+const LAT_MIN = 35.30, LAT_MAX = 36.05;
+const LON_MIN = 139.20, LON_MAX = 140.20;
+const STEP = 0.125;
+
+const points = [];
+for (let lat = LAT_MIN; lat <= LAT_MAX + 1e-9; lat += STEP) {
+  for (let lon = LON_MIN; lon <= LON_MAX + 1e-9; lon += STEP) {
+    points.push({ lat: +lat.toFixed(4), lon: +lon.toFixed(4) });
+  }
+}
+
+/* ============================================================
+   2. MAP SETUP
+   ============================================================ */
+const map = L.map('map', { zoomControl: true }).setView([35.68, 139.70], 9);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO',
+  maxZoom: 18
+}).addTo(map);
+
+const cellLayer = L.layerGroup().addTo(map);
+
+/* ============================================================
+   3. COLOR SCALES
+   ------------------------------------------------------------
+   Simple linear interpolation across color stops. Temperature
+   uses a blue→red ramp; precipitation uses transparent→blue.
+   ============================================================ */
+const SCALES = {
+  temperature: {
+    stops: [
+      [0.00, [ 49,  54, 149]],
+      [0.25, [ 69, 117, 180]],
+      [0.50, [255, 255, 191]],
+      [0.75, [244, 109,  67]],
+      [1.00, [165,   0,  38]]
+    ],
+    unitKey: 'temperature_2m',
+    label: v => v.toFixed(1)
+  },
+  precipitation: {
+    stops: [
+      [0.00, [240, 249, 255]],
+      [0.40, [107, 174, 214]],
+      [0.75, [ 33, 113, 181]],
+      [1.00, [  8,  48, 107]]
+    ],
+    unitKey: 'precipitation',
+    label: v => v.toFixed(1)
+  }
+};
+
+function lerpColor(stops, t) {
+  t = Math.max(0, Math.min(1, t));
+  for (let i = 1; i < stops.length; i++) {
+    const [t0, c0] = stops[i - 1], [t1, c1] = stops[i];
+    if (t <= t1) {
+      const f = (t - t0) / (t1 - t0 || 1);
+      const c = c0.map((v, k) => Math.round(v + (c1[k] - v) * f));
+      return `rgb(${c[0]},${c[1]},${c[2]})`;
+    }
+  }
+  const last = stops[stops.length - 1][1];
+  return `rgb(${last[0]},${last[1]},${last[2]})`;
+}
+
+/* ============================================================
+   4. FETCH — one batched call for the entire lattice
+   ------------------------------------------------------------
+   latitude=a,b,c&longitude=x,y,z returns a JSON *array* with
+   one response object per point, in the same order.
+   We ask for "current" values to keep the payload small.
+   ============================================================ */
+let results = null;      // array of per-point API responses
+let currentVar = 'temperature';
+
+async function loadData() {
+  const lats = points.map(p => p.lat).join(',');
+  const lons = points.map(p => p.lon).join(',');
+  const url = `https://api.open-meteo.com/v1/forecast`
+    + `?latitude=${lats}&longitude=${lons}`
+    + `&current=temperature_2m,precipitation`
+    + `&timezone=Asia%2FTokyo`;
+
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`API error ${res.status}`);
+  const data = await res.json();
+  // Single-point requests return an object; batched return an array.
+  results = Array.isArray(data) ? data : [data];
+}
+
+/* ============================================================
+   5. RENDER — draw each grid cell as a colored rectangle
+   ============================================================ */
+const detailEl = document.getElementById('cell-detail');
+const statusEl = document.getElementById('status');
+
+function render() {
+  cellLayer.clearLayers();
+  const scale = SCALES[currentVar];
+
+  // Determine the value range from the data itself
+  const values = results.map(r => r.current[scale.unitKey]);
+  let min = Math.min(...values), max = Math.max(...values);
+  if (currentVar === 'precipitation') { min = 0; max = Math.max(max, 1); }
+  if (max - min < 0.5) max = min + 0.5; // avoid flat scale
+
+  const unit = results[0].current_units[scale.unitKey];
+
+  results.forEach((r, i) => {
+    const req = points[i];                 // what we asked for
+    const val = r.current[scale.unitKey];  // model value for this cell
+    const t = (val - min) / (max - min);
+    const color = lerpColor(scale.stops, t);
+
+    // Draw the cell centered on the REQUESTED point of our lattice
+    // (the API's returned lat/lon shows the model-grid snap; see popup)
+    const half = STEP / 2;
+    const rect = L.rectangle(
+      [[req.lat - half, req.lon - half], [req.lat + half, req.lon + half]],
+      { color: '#ffffff', weight: 0.5, fillColor: color, fillOpacity: 0.55 }
+    );
+
+    rect.on('click', () => showCell(req, r, unit));
+    rect.addTo(cellLayer);
+  });
+
+  // Legend
+  const bar = document.getElementById('legend-bar');
+  const gradStops = scale.stops
+    .map(([t, c]) => `rgb(${c[0]},${c[1]},${c[2]}) ${t * 100}%`).join(', ');
+  bar.style.background = `linear-gradient(to right, ${gradStops})`;
+  document.getElementById('legend-min').textContent = `${scale.label(min)} ${unit}`;
+  document.getElementById('legend-max').textContent = `${scale.label(max)} ${unit}`;
+
+  statusEl.textContent =
+    `${results.length} grid cells · fetched ${results[0].current.time} (local)`;
+}
+
+/* ============================================================
+   6. CELL INSPECTOR — the teaching moment
+   ------------------------------------------------------------
+   Shows requested vs returned coordinates side by side, plus
+   the raw "current" block, so the grid-snap behavior and unit
+   metadata are visible.
+   ============================================================ */
+function showCell(req, r, unit) {
+  const snapped = (req.lat !== r.latitude || req.lon !== r.longitude);
+  detailEl.innerHTML = `
+    <h2>Cell inspector</h2>
+    <p><strong>Requested:</strong> ${req.lat}, ${req.lon}<br>
+       <strong>API returned:</strong> ${r.latitude}, ${r.longitude}</p>
+    ${snapped
+      ? `<div class="snap-note">Coordinates were snapped to the nearest model
+         grid cell — this value represents that whole cell, not a point.</div>`
+      : `<div class="snap-note">Requested point happened to align exactly with
+         a model grid center.</div>`}
+    <pre>${JSON.stringify(
+      { elevation: r.elevation, current_units: r.current_units, current: r.current },
+      null, 2)}</pre>`;
+}
+
+/* ============================================================
+   7. WIRE UP CONTROLS + BOOT
+   ============================================================ */
+const btnTemp = document.getElementById('btn-temp');
+const btnPrecip = document.getElementById('btn-precip');
+
+function setVar(name) {
+  currentVar = name;
+  btnTemp.classList.toggle('active', name === 'temperature');
+  btnPrecip.classList.toggle('active', name === 'precipitation');
+  if (results) render();
+}
+btnTemp.addEventListener('click', () => setVar('temperature'));
+btnPrecip.addEventListener('click', () => setVar('precipitation'));
+
+loadData()
+  .then(render)
+  .catch(err => { statusEl.textContent = `Failed to load: ${err.message}`; });
+</script>
+</body>
+</html>

@@ -9,12 +9,13 @@
 // FROZEN RULE: a layer with state === 'off' renders DISABLED AND GREYED,
 // never hidden. Every row is always present.
 
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { LayerState } from '../lib/types';
 import { formatClock } from './time';
 import { PanelHeader } from './PanelHeader';
 import { useCollapse } from './useCollapse';
 import { LAYER_INFO } from './dataSources';
+import { layersBottomPx, setLayersHeight, subscribeStack } from './stack';
 
 const STATE_LABEL: Record<LayerState['state'], string> = {
   live: 'LIVE',
@@ -32,40 +33,95 @@ export function LayerPanel(p: {
   onToggleStationLabels?(): void;
 }): JSX.Element {
   const layers = p.layers ?? [];
-  const [collapsed, toggleCollapsed] = useCollapse('layers');
+  // Bumped key ('layers' -> 'layers.v2') because the DEFAULT flipped to collapsed:
+  // a presenter with a stored `false` from the old default would otherwise still
+  // get it expanded on load, which is exactly what was asked to change.
+  const [collapsed, toggleCollapsed] = useCollapse('layers.v2', true);
   const [openInfo, setOpenInfo] = useState<string | null>(null);
+
+  // The bottom-left corner is a shared stack (API chip -> A6's MAP cluster ->
+  // this panel), and every element in it changes height when collapsed. A6
+  // publishes --tp-map-cluster-h; this publishes --tp-layers-h the same way, so
+  // the left column above can reserve exactly the right amount and nothing
+  // drifts on top of anything else.
+  const observerRef = useRef<ResizeObserver | null>(null);
+  const unsubRef = useRef<(() => void) | null>(null);
+  const publishHeight = useCallback((el: HTMLElement | null) => {
+    observerRef.current?.disconnect();
+    observerRef.current = null;
+    unsubRef.current?.();
+    unsubRef.current = null;
+    if (!el) return;
+
+    // Our own bottom offset, applied INLINE — see panels/stack.ts for why the
+    // CSS `bottom: calc(... var(--tp-map-cluster-h) ...)` cannot be trusted to
+    // re-resolve when A6's cluster changes height.
+    const place = () => {
+      try {
+        el.style.bottom = `${layersBottomPx()}px`;
+      } catch {
+        /* CSS fallback stands */
+      }
+    };
+    place();
+    unsubRef.current = subscribeStack(place);
+
+    if (typeof ResizeObserver === 'undefined') return;
+    const publish = () => {
+      const h = Math.round(el.getBoundingClientRect().height);
+      setLayersHeight(h);
+      try {
+        document.documentElement.style.setProperty('--tp-layers-h', `${h}px`);
+      } catch {
+        /* non-fatal */
+      }
+    };
+    publish();
+    const ro = new ResizeObserver(publish);
+    ro.observe(el);
+    observerRef.current = ro;
+  }, []);
+
+  useEffect(() => () => {
+    observerRef.current?.disconnect();
+    unsubRef.current?.();
+  }, []);
 
   const activeCount = layers.reduce(
     (acc, l) => acc + (l.state !== 'off' && p.visible?.[l.id] ? 1 : 0),
     0,
   );
 
-  // Collapsed: an icon-only rail stuck to the left edge of the viewport.
+  // Collapsed (the default): a compact chip docked in the bottom-left stack,
+  // shaped like the MAP cluster it sits above rather than the old vertical rail,
+  // which read as misaligned once this moved out of the top-left column.
   if (collapsed) {
     return (
       <button
+        ref={publishHeight}
         type="button"
-        className="tp-panel tp-layer-rail"
+        className="tp-panel tp-layer-chip"
         onClick={toggleCollapsed}
         aria-expanded={false}
         aria-label="Expand layers panel"
         title={`Layers — ${activeCount}/${layers.length} on`}
       >
-        <span className="tp-layer-rail-icon" aria-hidden="true">
+        <span className="tp-layer-chip-icon" aria-hidden="true">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6" d="M10 3l7 3.5-7 3.5-7-3.5L10 3z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6" d="M3 10.5L10 14l7-3.5" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6" d="M3 14.5L10 18l7-3.5" />
           </svg>
         </span>
-        <span className="tp-layer-rail-text">LAYERS</span>
-        <span className="tp-layer-rail-count">{activeCount}</span>
+        <span className="tp-layer-chip-text">Layers</span>
+        <span className="tp-layer-chip-count">{activeCount}/{layers.length}</span>
+        <span className="tp-layer-chip-cta" aria-hidden="true">▴</span>
       </button>
     );
   }
 
   return (
-    <div className="tp-panel tp-layer-panel">
+    <div className="tp-panel tp-layer-panel" ref={publishHeight}>
       <PanelHeader
         title="Layers"
         label="Layers"

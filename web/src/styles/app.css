@@ -131,67 +131,67 @@ html, body, #root {
 
 
 /* ---------- bottom-left map control cluster ----------
-   Camera buttons + basemap chip + rail legend as ONE group, so they read as a
-   single system and cannot drift into each other. Geometry constraints:
-     - the weather strip owns bottom-centre from x=575, so this stays under 350px wide
-     - the collapsed LAYERS dock rail is 36px at x=0, so this starts at x=48
-     - the API LIVE chip sits in the very corner, so this floats 34px above the bottom
+   Structural rules only: the panel chrome (glass, border, radius, scanline,
+   header, chevron) comes from .tp-panel / .tp-panel-header in panels.css, which
+   the panels agent owns — this cluster imports their PanelHeader so it reads as
+   the same widget family as WEATHER.
+
+   Stacking in the bottom-left corner, bottom -> up:
+     API LIVE chip (bottom 6px) -> this cluster (bottom 34px) -> LayerPanel,
+   which anchors off the --tp-map-cluster-h custom property this component
+   publishes via ResizeObserver. Bounded on the right by the weather strip.
 */
 
 .map-controls {
-  position: absolute;
-  left: 48px;
+  left: 16px;
   bottom: 34px;
   z-index: 40;
-  width: 300px;
-  max-width: calc(100vw - 640px);
+  /* Never reach the weather strip. That strip is
+     `width: min(760px, 100vw - 380px)` centred, so its left edge sits at
+     (100vw - itswidth)/2 — derive our cap from the same expression rather than
+     guessing a breakpoint, and it stays correct at any viewport.
+     2550px -> 300 | 1920px -> 300 | 1280px -> 236 | 1100px -> 166. */
+  width: min(300px, calc((100vw - min(760px, 100vw - 380px)) / 2 - 24px));
+  display: flex;
+  flex-direction: column;
+  /* .tp-panel clips with overflow:hidden; the basemap menu opens upward and
+     must escape the panel box. The scanline is inset:0 so it is unaffected. */
+  overflow: visible;
+}
+
+.map-controls-body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 6px;
-  pointer-events: none;
+  padding: 8px;
 }
 
-.map-controls > *,
-.map-controls .map-basemap > * { pointer-events: auto; }
+/* Zoom buttons live in the header actions slot, so they survive a collapse. */
+.map-zoom { display: inline-flex; gap: 4px; flex: 0 0 auto; }
 
-.map-controls-row { display: flex; align-items: center; gap: 6px; }
-
-.map-controls-collapse,
-.map-zoom button,
-.map-basemap-toggle,
-.map-basemap-opt {
+.map-zoom button {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   border: 1px solid var(--gs-border-panel);
-  border-radius: 4px;
-  background: var(--gs-bg-panel);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  border-radius: 3px;
+  background: rgba(0, 180, 255, 0.06);
   color: var(--gs-text-primary);
   font-family: var(--gs-font-mono);
+  font-size: 13px;
+  line-height: 1;
   cursor: pointer;
   transition: border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
 }
 
-.map-controls-collapse {
-  flex: 1 1 auto;
-  padding: 5px 9px;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-align: left;
-  color: var(--gs-electric-blue);
-}
-
-.map-zoom { display: flex; gap: 4px; flex: 0 0 auto; }
-
-.map-zoom button {
-  width: 26px;
-  height: 26px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  line-height: 1;
-  padding: 0;
+.map-zoom button:hover {
+  border-color: var(--gs-electric-blue);
+  color: var(--gs-neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 180, 255, 0.25);
 }
 
 .map-zoom button.is-active {
@@ -200,8 +200,19 @@ html, body, #root {
   box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
 }
 
-.map-controls-collapse:hover,
-.map-zoom button:hover {
+.map-basemap-toggle,
+.map-basemap-opt {
+  border: 1px solid var(--gs-border-panel);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--gs-text-primary);
+  font-family: var(--gs-font-mono);
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.map-basemap-toggle:hover,
+.map-basemap-opt:hover {
   border-color: var(--gs-electric-blue);
   color: var(--gs-neon-cyan);
   box-shadow: 0 0 8px rgba(0, 180, 255, 0.25);
@@ -210,13 +221,17 @@ html, body, #root {
 .map-legend {
   border: 1px solid var(--gs-border-panel);
   border-radius: 4px;
-  background: var(--gs-bg-panel);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.25);
 }
 
-/* The popover must open upward and must not stretch the cluster. */
-.map-basemap-menu { position: absolute; bottom: calc(100% + 6px); left: 0; min-width: 220px; }
+/* The popover opens upward and must not stretch the cluster. */
+.map-basemap-menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  min-width: 230px;
+  z-index: 5;
+}
 
 /* ---------- rail status legend ----------
    Lines carry their official livery colour, so status is encoded as a modifier:

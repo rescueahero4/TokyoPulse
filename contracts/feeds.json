@@ -89,5 +89,26 @@
     "verified": "403 Akamai Access Denied from server-side curl (any UA/Referer). Reachable only from a real browser.",
     "content": "Even when reachable it holds ONE placeholder record with metainfo.dummy=1, title literally '...ダミー...'. No delay data.",
     "verdict": "UNUSABLE -- do not wire this. Use jreast_kanto_status instead."
+  },
+  "odpt_bus_vehicles": {
+    "url": "https://api-public.odpt.org/api/v4/odpt:Bus",
+    "keyless": true,
+    "verified": "200, 390 live Toei vehicles, dc:date matched wall-clock to the second",
+    "CRITICAL_NOTE": "Vehicles have NO geo:lat/geo:long. Position must be DERIVED from odpt:fromBusstopPole -> odpt:toBusstopPole plus odpt:fromBusstopPoleTime. Never claim GPS accuracy: this is an interpolated position between two known stops.",
+    "fields": "odpt:busroutePattern, odpt:fromBusstopPole, odpt:toBusstopPole, odpt:fromBusstopPoleTime, odpt:busNumber, odpt:frequency, odpt:note (JP route label)",
+    "note": "This RECOVERS the PRD's cut bus stretch goal WITHOUT the ODPT token -- the keyless mirror carries Toei bus data after all."
+  },
+  "odpt_busstop_poles": {
+    "url": "https://api-public.odpt.org/api/v4/odpt:BusstopPole",
+    "keyless": true,
+    "verified": "200, 3690 stops, ALL 3690 have geo:lat + geo:long",
+    "use": "stop coordinates; join key for vehicle positions and route geometry"
+  },
+  "odpt_busroute_patterns": {
+    "url": "https://api-public.odpt.org/api/v4/odpt:BusroutePattern",
+    "keyless": true,
+    "verified": "200, 757 patterns",
+    "use": "odpt:busstopPoleOrder gives the ordered stop sequence per pattern -> join to BusstopPole coords to build route polylines. Same technique as odpt:Railway stationOrder for rail.",
+    "note": "No geometry field of its own; polylines are stop-to-stop straight lines, NOT true road-following shapes. Disclose that."
   }
 }

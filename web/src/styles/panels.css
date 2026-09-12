@@ -304,33 +304,97 @@
    stacked left column. The column starts at viewport x=0 with a 16px left
    PADDING (not an offset), which is what lets the collapsed LayerPanel rail
    dock flush against the left edge with margin-left:-16px and no overflow. */
+/* Bottom-left is a SHARED stack, bottom -> up:
+     API LIVE chip (34px)  ->  A6's MAP cluster  ->  LayerPanel (mine).
+   Both upper elements change height when collapsed, so nothing here uses a
+   fixed offset: A6 publishes --tp-map-cluster-h and LayerPanel publishes
+   --tp-layers-h, both via ResizeObserver. The fallbacks matter — if either
+   property is not set yet we must still land somewhere sane. */
+:root {
+  /* Only OUR height lives here. --tp-map-cluster-h is published by A6 as an
+     inline style on <html>; we never declare it, so there is no stylesheet
+     value that could mask theirs.
+     NB: do NOT wrap the stack offset in another custom property — a derived
+     `--x: calc(... var(--tp-map-cluster-h) ...)` did NOT re-resolve when A6's
+     inline value changed (observed: the chip stayed at the 40px-cluster offset
+     and landed ON TOP of a 125px-tall cluster). Every consumer below therefore
+     references var(--tp-map-cluster-h) DIRECTLY. */
+  --tp-layers-h: 44px;
+}
+
+/* The left column now holds ONE widget (LinePanel). It does not scroll itself —
+   the panel inside it does — so the search box can never be pushed off-screen
+   by a long line detail. */
 .tp-left-column {
   position: absolute;
   top: 52px;
-  left: 0;
-  width: 316px;
-  padding-left: 16px;
-  max-height: calc(100vh - 96px);
+  left: 16px;
+  width: 300px;
+  max-height: calc(100vh - 64px - 34px - var(--tp-map-cluster-h, 120px) - 8px - var(--tp-layers-h, 44px) - 12px);
   z-index: 30;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 8px;
-  overflow-y: auto;
+  overflow: hidden;
   pointer-events: auto;
 }
 
 .tp-line-search,
-.tp-layer-panel,
+.tp-line-panel,
 .tp-impact-panel {
   position: static;
   width: 100%;
-  flex-shrink: 0;
 }
+
+.tp-line-search,
+.tp-impact-panel { flex-shrink: 0; }
 
 .tp-impact-panel {
   max-height: none;
   overflow: hidden;
+}
+
+/* ---- merged line search + detail ---- */
+
+.tp-line-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.tp-line-detail {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  border-top: 1px solid var(--tp-border);
+}
+
+.tp-line-detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px 6px;
+  background: rgba(0, 180, 255, 0.04);
+  border-bottom: 1px solid var(--tp-border-soft);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.tp-line-detail-title {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Right rail: the merged City Feed (brief + pills + timeline), full height. */
@@ -376,7 +440,7 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: min(760px, calc(100vw - 380px));
+  width: min(760px, calc(100vw - 700px));
   height: 150px;
   z-index: 20;
   display: flex;
@@ -1016,45 +1080,60 @@
 .tp-toggle-switch-sm::after { width: 10px; height: 10px; top: 1px; left: 1px; }
 .tp-toggle-switch-sm.tp-toggle-on::after { left: 15px; }
 
-/* ---------- LayerPanel collapsed: vertical rail docked on the left edge ---------- */
+/* ---------- LayerPanel: docked bottom-left, collapsed by default ---------- */
 
-.tp-layer-rail {
-  position: static;
-  align-self: flex-start;
-  /* the left column carries a 16px left PADDING; -16px margin puts this rail
-     flush against x=0 of the viewport without overflowing the scroll box. */
-  margin-left: -16px;
-  width: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0 12px;
-  cursor: pointer;
-  border-left: none;
-  border-radius: 0 4px 4px 0;
-  color: var(--tp-text-muted);
-  font-family: var(--tp-font);
-  flex-shrink: 0;
+.tp-layer-panel,
+.tp-layer-chip {
+  position: fixed;
+  left: 16px;
+  bottom: calc(34px + var(--tp-map-cluster-h, 120px) + 8px);
+  z-index: 30;
+  pointer-events: auto;
 }
 
-.tp-layer-rail:hover { color: var(--tp-text); border-color: rgba(0, 180, 255, 0.45); }
+.tp-layer-panel {
+  width: 300px;
+  max-height: min(340px, calc(100vh - 300px));
+  display: flex;
+  flex-direction: column;
+}
 
-.tp-layer-rail-icon { width: 18px; height: 18px; color: var(--tp-accent); }
-.tp-layer-rail-icon svg { width: 100%; height: 100%; }
+.tp-layer-panel .tp-layer-list {
+  overflow-y: auto;
+  min-height: 0;
+}
 
-.tp-layer-rail-text {
-  writing-mode: vertical-rl;
+/* Collapsed: a compact chip shaped like the MAP cluster it stacks above. */
+.tp-layer-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--tp-text-muted);
+  font-family: var(--tp-font);
+  transition: all 0.2s ease;
+}
+
+.tp-layer-chip:hover { color: var(--tp-text); border-color: rgba(0, 180, 255, 0.45); }
+
+.tp-layer-chip-icon { width: 14px; height: 14px; color: var(--tp-accent); flex-shrink: 0; }
+.tp-layer-chip-icon svg { width: 100%; height: 100%; }
+
+.tp-layer-chip-text {
   font-size: 9px;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.tp-layer-rail-count {
+.tp-layer-chip-count {
   font-size: 10px;
   color: var(--gs-neon-green);
-  letter-spacing: 0;
+  letter-spacing: 0.04em;
 }
+
+.tp-layer-chip-cta { color: var(--tp-accent); font-size: 9px; }
 
 /* ---------- LineSearch ---------- */
 
@@ -1702,13 +1781,14 @@
 
 @media (max-width: 1100px) {
   .tp-city-feed, .tp-timeline { width: 300px; }
-  .tp-left-column { width: 276px; }
+  .tp-left-column, .tp-layer-panel { width: 276px; }
   .tp-inspector { left: 292px; width: 300px; }
 }
 
 @media (max-width: 900px) {
   .tp-city-feed, .tp-timeline { width: 260px; }
-  .tp-left-column { width: 236px; }
-  .tp-forecast-strip { width: calc(100vw - 280px); }
+  .tp-left-column, .tp-layer-panel { width: 236px; }
+  /* keep the strip clear of the bottom-left stack AND the right rail */
+  .tp-forecast-strip { width: calc(100vw - 560px); }
   .tp-inspector { left: 252px; width: 280px; }
 }

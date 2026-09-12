@@ -14,9 +14,8 @@ import type { Impact, LayerState, Lang, PulseEvent, SandboxInfo, TimeWindow } fr
 import { AlertBanner } from './panels/AlertBanner';
 import { CityFeed } from './panels/CityFeed';
 import { LayerPanel } from './panels/LayerPanel';
-import { LineSearch } from './panels/LineSearch';
+import { LinePanel } from './panels/LinePanel';
 import { ForecastStrip } from './panels/ForecastStrip';
-import { ImpactPanel } from './panels/ImpactPanel';
 import { InspectorPanel } from './panels/InspectorPanel';
 import { StatusBar } from './panels/StatusBar';
 
@@ -257,38 +256,35 @@ export default function App() {
         {/* Single stacked left column (LineSearch -> LayerPanel -> ImpactPanel) so they
             never overlap each other or CityBrief below, and never reach as far into
             the map centre as two side-by-side columns did. Internally scrollable. */}
+        {/* Line search + line detail are ONE widget (LinePanel): picking a line
+            expands its detail inside the same panel, so the search box can never
+            be scrolled off. LineSearch and ImpactPanel stay exported for the
+            frozen UI contract. */}
         <div className="tp-left-column" ref={leftColumnRef}>
-          <ErrorBoundary label="LineSearch">
-            <LineSearch
+          <ErrorBoundary label="LinePanel">
+            <LinePanel
               lines={lineList}
               value={search}
               onChange={setSearch}
               onPick={onPickLine}
               selectedLineId={selectedLineId}
+              impact={impact}
+              impactLoading={impactLoading}
+              onStationClick={onStationClick}
             />
           </ErrorBoundary>
-
-          <ErrorBoundary label="LayerPanel">
-            <LayerPanel
-              layers={layerStates}
-              visible={visible}
-              onToggle={onToggleLayer}
-              showStationLabels={showStationLabels}
-              onToggleStationLabels={onToggleStationLabels}
-            />
-          </ErrorBoundary>
-
-          {selectedLineId && (
-            <ErrorBoundary label="ImpactPanel">
-              <ImpactPanel
-                impact={impact}
-                loading={impactLoading}
-                onClose={() => { setSelectedLineId(null); setSearch(''); }}
-                onStationClick={onStationClick}
-              />
-            </ErrorBoundary>
-          )}
         </div>
+
+        {/* Bottom-left stack: API chip -> A6's MAP cluster -> Layers. */}
+        <ErrorBoundary label="LayerPanel">
+          <LayerPanel
+            layers={layerStates}
+            visible={visible}
+            onToggle={onToggleLayer}
+            showStationLabels={showStationLabels}
+            onToggleStationLabels={onToggleStationLabels}
+          />
+        </ErrorBoundary>
 
         {/* City Brief + Timeline are ONE right-rail panel (CityFeed): the brief is
             the summary header, the filtered feed is the rows it came from.

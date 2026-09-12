@@ -11,6 +11,9 @@ import { renderWarnings } from './layers/warnings';
 import { renderCrowd } from './layers/crowd';
 import { addFloodLayer } from './layers/flood';
 import { renderPeopleFlow } from './layers/peopleflow';
+// Shared collapsible header owned by the panels agent. Imported, never edited,
+// so the MAP cluster's collapse affordance matches every other HUD widget.
+import { PanelHeader } from '../panels/PanelHeader';
 import {
   BASEMAPS, DEFAULT_BASEMAP_ID, ION_TOKEN, SYNC_FALLBACK_ID, basemapById,
   buildBasemapLayerAsync, buildFirstWorkingBasemap, buildLabelOverlay,
@@ -47,6 +50,7 @@ const GSI_FLOOD = env.VITE_GSI_FLOOD_TILES
 
 // Versioned: bumping the suffix retires a saved preference so a changed default
 // actually reaches the presenter's browser instead of losing to an old click.
+const COLLAPSE_STORAGE_KEY = 'tp.collapsed.map';
 const BASEMAP_STORAGE_KEY = 'tp.basemap.v3';
 const LABELS_STORAGE_KEY = 'tp.basemapLabels.v3';
 
@@ -101,7 +105,12 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     try { return window.localStorage.getItem(LABELS_STORAGE_KEY) !== '0'; } catch { return true; }
   });
   const [pickerOpen, setPickerOpen] = useState(false);
-  const [controlsOpen, setControlsOpen] = useState(true);
+  const [controlsOpen, setControlsOpen] = useState<boolean>(() => {
+    // Persisted like every other widget so the presenter's layout survives a
+    // reload. localStorage throws in a private window - never let that mount-block.
+    try { return window.localStorage.getItem(COLLAPSE_STORAGE_KEY) !== '1'; } catch { return true; }
+  });
+  const clusterRef = useRef<HTMLDivElement | null>(null);
   const [introFlying, setIntroFlying] = useState(false);
   const introTimerRef = useRef<number | null>(null);
   const atmosphereRef = useRef<boolean | null>(null);
@@ -110,6 +119,41 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   /** Fresh every render so the once-registered pinch listener never goes stale. */
   const zoomInstantRef = useRef<((f: number) => void) | null>(null);
   const statsRef = useRef<Record<string, number>>({});
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, controlsOpen ? '0' : '1');
+    } catch { /* private window */ }
+  }, [controlsOpen]);
+
+  /**
+   * Publish the cluster's rendered height so the LayerPanel stacked above it can
+   * anchor off a live value instead of a guessed constant:
+   *   bottom: calc(34px + var(--tp-map-cluster-h) + 8px)
+   * A ResizeObserver keeps it correct through collapse/expand and window resize.
+   */
+  useEffect(() => {
+    const el = clusterRef.current;
+    const root = document.documentElement;
+    if (!el) return;
+    const publish = () => {
+      const h = Math.round(el.getBoundingClientRect().height);
+      if (h > 0) root.style.setProperty('--tp-map-cluster-h', h + 'px');
+    };
+    publish();
+    let ro: ResizeObserver | null = null;
+    try {
+      ro = new ResizeObserver(publish);
+      ro.observe(el);
+    } catch {
+      window.addEventListener('resize', publish);
+    }
+    return () => {
+      try { ro?.disconnect(); } catch { /* ignore */ }
+      window.removeEventListener('resize', publish);
+      root.style.removeProperty('--tp-map-cluster-h');
+    };
+  }, [controlsOpen, pickerOpen]);
 
   linesRef.current = props.lines;
   onLinePickRef.current = props.onLinePick;
@@ -707,38 +751,41 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     <div className="map-root">
       <div ref={hostRef} className="cesium-host" data-testid="cesium-host" />
 
-      {/* One bottom-left control cluster: camera buttons, basemap chip and the
-          rail legend, stacked. Kept clear of the weather strip (bottom-centre),
-          the left-edge LAYERS dock and the API chip in the corner. */}
-      <div className={'map-controls' + (controlsOpen ? '' : ' is-collapsed')}>
-        <div className="map-controls-row">
-          <button
-            type="button"
-            className="map-controls-collapse"
-            aria-expanded={controlsOpen}
-            onClick={() => setControlsOpen((o) => !o)}
-            title={controlsOpen ? 'Hide map controls' : 'Show map controls'}
-          >
-            {controlsOpen ? '▾' : '▸'} MAP
-          </button>
-          <div className="map-zoom" role="group" aria-label="Zoom">
-            <button type="button" onClick={() => zoomByFactor(1 / ZOOM_STEP)} title="Zoom in" aria-label="Zoom in">+</button>
-            <button type="button" onClick={() => zoomByFactor(ZOOM_STEP)} title="Zoom out" aria-label="Zoom out">−</button>
-            <button type="button" onClick={() => flyHome()} title="Reset view to central Tokyo" aria-label="Reset to Tokyo">⌂</button>
-            <button
-              type="button"
-              className={introFlying ? 'is-active' : ''}
-              onClick={() => runIntro(true)}
-              title="Replay the globe → Tokyo intro flight"
-              aria-label="Replay intro flight"
-            >
-              ⟳
-            </button>
-          </div>
-        </div>
+      {/* Bottom-left control cluster: camera buttons, basemap chip, rail legend.
+          Uses A8's shared PanelHeader so the collapse affordance is identical to
+          WEATHER and every other widget. The zoom buttons live in the header's
+          `actions` slot, so + / − / home / replay stay reachable while collapsed —
+          losing the home button behind a collapse would be an on-stage downgrade.
+          Height is published as --tp-map-cluster-h for the LayerPanel above. */}
+      <div
+        ref={clusterRef}
+        className={'tp-panel map-controls' + (controlsOpen ? '' : ' tp-panel-collapsed')}
+      >
+        <PanelHeader
+          title="MAP"
+          label="Map controls"
+          collapsed={!controlsOpen}
+          onToggleCollapse={() => setControlsOpen((o) => !o)}
+          actions={(
+            <span className="map-zoom" role="group" aria-label="Zoom">
+              <button type="button" onClick={() => zoomByFactor(1 / ZOOM_STEP)} title="Zoom in" aria-label="Zoom in">+</button>
+              <button type="button" onClick={() => zoomByFactor(ZOOM_STEP)} title="Zoom out" aria-label="Zoom out">−</button>
+              <button type="button" onClick={() => flyHome()} title="Reset view to central Tokyo" aria-label="Reset to Tokyo">⌂</button>
+              <button
+                type="button"
+                className={introFlying ? 'is-active' : ''}
+                onClick={() => runIntro(true)}
+                title="Replay the globe → Tokyo intro flight"
+                aria-label="Replay intro flight"
+              >
+                ⟳
+              </button>
+            </span>
+          )}
+        />
 
         {controlsOpen && (
-          <>
+          <div className="map-controls-body">
             {/* Basemap switcher — one chip; the menu opens upward. */}
             <div className={'map-basemap' + (pickerOpen ? ' is-open' : '')}>
         {pickerOpen && (
@@ -802,7 +849,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
               <span className="map-legend-item"><i className="map-legend-swatch is-suspended" />suspended</span>
               <span className="map-legend-item"><i className="map-legend-swatch is-unknown" />no feed</span>
             </div>
-          </>
+          </div>
         )}
       </div>
 
