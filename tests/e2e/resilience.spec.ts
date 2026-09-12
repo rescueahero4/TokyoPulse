@@ -11,7 +11,7 @@ test.describe('Resilience: layers fail independently', () => {
     test.setTimeout(45_000);
     const capture = captureConsole(page);
 
-    await page.route('http://localhost:8000/**', (route) => route.abort());
+    await page.route('http://127.0.0.1:8000/**', (route) => route.abort());
     await page.goto('/');
     await waitForViewer(page);
     await page.waitForTimeout(3000);
@@ -43,8 +43,8 @@ test.describe('Resilience: layers fail independently', () => {
     test.setTimeout(45_000);
     const capture = captureConsole(page);
 
-    await page.route('http://localhost:8000/brief**', (route) => route.abort());
-    await page.route('http://localhost:8000/forecast.json**', (route) => route.abort());
+    await page.route('http://127.0.0.1:8000/brief**', (route) => route.abort());
+    await page.route('http://127.0.0.1:8000/forecast.json**', (route) => route.abort());
     await page.goto('/');
     await waitForViewer(page);
     await page.waitForTimeout(3000);

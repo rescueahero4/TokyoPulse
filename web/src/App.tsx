@@ -47,6 +47,7 @@ const LAYER_LABELS: Record<string, string> = {
 
 export default function App() {
   const mapRef = useRef<MapHandle | null>(null);
+  const leftColumnRef = useRef<HTMLDivElement | null>(null);
 
   // ---- UI state (App owns all of it; panels are pure)
   const [timeWindow, setTimeWindow] = useState<TimeWindow>('now');
@@ -103,6 +104,20 @@ export default function App() {
       .catch(() => { if (alive) setImpact(null); })
       .finally(() => { if (alive) setImpactLoading(false); });
     return () => { alive = false; };
+  }, [selectedLineId]);
+
+  // ImpactPanel renders as the last item in the scrollable left column, below
+  // LineSearch + LayerPanel — auto-scroll it into view so demo beat 3 ("click a
+  // delayed line") shows the ward/flood breakdown immediately, no manual scroll.
+  useEffect(() => {
+    const col = leftColumnRef.current;
+    if (!col) return;
+    if (selectedLineId) {
+      const panel = col.querySelector('.tp-impact-panel');
+      panel?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    } else {
+      col.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, [selectedLineId]);
 
   // ---- layer health rows for LayerPanel (always all layers, never hidden)
@@ -204,7 +219,7 @@ export default function App() {
         {/* Single stacked left column (LineSearch -> LayerPanel -> ImpactPanel) so they
             never overlap each other or CityBrief below, and never reach as far into
             the map centre as two side-by-side columns did. Internally scrollable. */}
-        <div className="tp-left-column">
+        <div className="tp-left-column" ref={leftColumnRef}>
           <ErrorBoundary label="LineSearch">
             <LineSearch
               lines={lineList}

@@ -1,7 +1,7 @@
 import type { ConsoleMessage, Page } from '@playwright/test';
 
-export const API_BASE = 'http://localhost:8000';
-export const WEB_BASE = 'http://localhost:5173';
+export const API_BASE = 'http://127.0.0.1:8000';
+export const WEB_BASE = 'http://127.0.0.1:5173';
 
 /**
  * Benign noise we explicitly allowlist (spec 2). Everything else that logs at

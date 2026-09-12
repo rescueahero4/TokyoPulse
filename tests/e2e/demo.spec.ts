@@ -10,7 +10,7 @@ import {
 
 /**
  * QA-E2E — one spec per demo beat, PRD §9.
- * Assumes A1a (http://localhost:5173) and A3 (http://localhost:8000) are both
+ * Assumes A1a (http://localhost:5173) and A3 (http://127.0.0.1:8000) are both
  * already running; this suite never starts either (contracts/AGENT-BRIEF.md).
  *
  * A few tests override the 30s project default via test.setTimeout() because

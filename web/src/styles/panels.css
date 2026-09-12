@@ -620,7 +620,7 @@
   list-style: none;
   margin: 0;
   padding: 0 10px 6px;
-  max-height: 160px;
+  max-height: 112px; /* keeps the whole ImpactPanel scannable after the auto-scroll-into-view */
   overflow-y: auto;
 }
 
