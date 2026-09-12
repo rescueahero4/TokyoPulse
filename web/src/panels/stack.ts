@@ -28,6 +28,8 @@ export const COLUMN_GAP = 12;
 export const COLUMN_TOP = 52;
 
 const CLUSTER_FALLBACK = 120;
+/** Never let the column shrink below this; also the reserve the LayerPanel leaves it. */
+export const MIN_COLUMN = 100;
 const LAYERS_FALLBACK = 44;
 
 const listeners = new Set<Listener>();
@@ -60,7 +62,18 @@ export function stackReservePx(): number {
 /** Max height available to the top-left column before it would reach the stack. */
 export function leftColumnMaxPx(): number {
   const h = typeof window === 'undefined' ? 800 : window.innerHeight;
-  return Math.max(160, Math.round(h - COLUMN_TOP - stackReservePx()));
+  // The floor must stay SMALL: it wins over the computed value, so a generous
+  // floor is exactly how the column would end up overlapping the stack on a
+  // short viewport. 100px still shows the header + search box, and the detail
+  // below them scrolls.
+  return Math.max(MIN_COLUMN, Math.round(h - COLUMN_TOP - stackReservePx()));
+}
+
+/** Max height the expanded LayerPanel may take without squeezing the column above it. */
+export function layersMaxHeightPx(): number {
+  const h = typeof window === 'undefined' ? 800 : window.innerHeight;
+  const room = h - layersBottomPx() - COLUMN_TOP - MIN_COLUMN - COLUMN_GAP;
+  return Math.max(120, Math.min(340, Math.round(room)));
 }
 
 export function setLayersHeight(h: number): void {
@@ -101,6 +114,16 @@ function ensureWatchers(): void {
 export function subscribeStack(cb: Listener): () => void {
   ensureWatchers();
   listeners.add(cb);
+  // A6 may have published --tp-map-cluster-h BEFORE we subscribed (nothing
+  // orders the two mounts), in which case no mutation is coming and a
+  // first-paint read would keep the fallback. Re-read on the next frame and
+  // once more after the map has settled.
+  try {
+    requestAnimationFrame(() => cb());
+    window.setTimeout(() => cb(), 1000);
+  } catch {
+    /* ignore */
+  }
   return () => {
     listeners.delete(cb);
   };

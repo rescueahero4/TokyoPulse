@@ -80,6 +80,10 @@ TTL_HEALTH = 10.0
 TTL_BRIEF = 15.0
 TTL_FORECAST = 60.0
 TTL_SANDBOXES = 5.0
+# odpt:Bus republishes every 30s (odpt:frequency), so refreshing faster than
+# that just burns the mirror for an identical payload.
+TTL_BUSES = 15.0
+TTL_BUSROUTES = 900.0        # static geometry off disk
 
 # Replayed events survive a dead Neo4j: /events.json always merges these in.
 REPLAY: list[dict[str, Any]] = []
@@ -637,10 +641,318 @@ def _produce_sandboxes() -> dict[str, Any]:
     return three_tier(live, cache_tier, _empty_sandboxes, "sandboxes.json")
 
 
+# ─────────────────────────── buses (A11) ────────────────────────────────────
+# Recovers the stretch goal doc/prd.md §3.5 cut for want of an ODPT token: the
+# keyless mirror carries odpt:Bus after all. Buses are a MAP LAYER, not timeline
+# rows — see the header of ingest/feeds/buses.py for why they write no Events.
+#
+# Tier 1 here is the live ODPT feed (like /forecast.json), not Neo4j: a derived
+# vehicle position has a 30-second shelf life and has no business in the graph.
+
+def _empty_buses() -> dict[str, Any]:
+    return {"type": "FeatureCollection", "features": [], "busCount": 0,
+            "interpolatedCount": 0, "atStopCount": 0, "staleCount": 0,
+            "feedAgeSeconds": None, "feedStale": False, "feedTime": None,
+            "sourceUrl": "https://api-public.odpt.org/api/v4/odpt:Bus",
+            "sourceName": "ODPT odpt:Bus (Toei)",
+            "positionMethod": None, "attribution": None}
+
+
+# One live ODPT fetch feeds every filtered variant of /buses.geojson, the same
+# way _forecast_cache fronts Open-Meteo. Without it, five filter combinations
+# would be five hits on the mirror for a payload that only changes every 30s.
+_bus_live_cache: dict[str, Any] = {"at": 0.0, "value": None}
+_BUS_LIVE_TTL = 12.0
+
+
+def _produce_buses() -> dict[str, Any]:
+    from ingest.feeds import buses as buses_feed
+
+    def live():
+        if _bus_live_cache["value"] and (time.monotonic() - _bus_live_cache["at"]) < _BUS_LIVE_TTL:
+            return json.loads(json.dumps(_bus_live_cache["value"]))
+        payload = buses_feed.normalize(buses_feed.fetch_once())
+        if not payload.get("features"):
+            raise NoLiveData("odpt:Bus returned no placeable vehicles")
+        _bus_live_cache.update(at=time.monotonic(), value=payload)
+        return json.loads(json.dumps(payload))
+
+    def cache_tier():
+        raw = read_mock("busvehicles.geojson")
+        if not raw or not raw.get("features"):
+            return None
+        raw.pop("meta", None)
+        return raw
+
+    payload = three_tier(live, cache_tier, _empty_buses, "buses.geojson")
+
+    # Honesty pass. `dct:valid` is only 30s, so a strictly-expired payload is the
+    # NORMAL case and must not cry wolf; the layer is called degraded only when
+    # the feed itself has stopped moving (ingest.feeds.buses.STALE_AFTER_S).
+    if payload.get("feedStale"):
+        m = payload["meta"]
+        m["degraded"] = True
+        age = payload.get("feedAgeSeconds")
+        extra = (f"ODPT bus feed is {age}s behind — positions shown are the last "
+                 f"known ones, not current")
+        m["note"] = f"{m['note']}; {extra}" if m.get("note") else extra
+    return payload
+
+
+def _produce_busroutes() -> dict[str, Any]:
+    """Static route geometry, built offline by mock/_tools/gen_buses.py. There is
+    no live tier: ODPT's shapes change on a multi-day cadence, and re-fetching
+    3.3 MB of BusroutePattern per request would be absurd."""
+    def cache_tier():
+        raw = read_mock("busroutes.geojson")
+        if not raw or not raw.get("features"):
+            return None
+        raw.pop("meta", None)
+        return raw
+
+    payload = three_tier(lambda: None, cache_tier, _empty_fc, "busroutes.geojson")
+    # three_tier calls a file-backed static layer "cache"; that is accurate, but
+    # it is not a FAILURE, so do not raise the UI's amber degraded badge for it.
+    if (payload.get("meta") or {}).get("source") == "cache" and payload.get("features"):
+        payload["meta"]["degraded"] = False
+        payload["meta"]["note"] = (
+            "static ODPT route geometry (road-following ug:region shapes), "
+            "23-ward bbox, deduplicated and simplified")
+    return payload
+
+
+def _produce_busstops() -> dict[str, Any]:
+    def cache_tier():
+        raw = read_mock("busstops.geojson")
+        if not raw or not raw.get("features"):
+            return None
+        raw.pop("meta", None)
+        return raw
+
+    payload = three_tier(lambda: None, cache_tier, _empty_fc, "busstops.geojson")
+    if (payload.get("meta") or {}).get("source") == "cache" and payload.get("features"):
+        payload["meta"]["degraded"] = False
+        payload["meta"]["note"] = "static ODPT bus stop poles, 23-ward bbox"
+    return payload
+
+
+# ───────────────── bus ENTITY BUDGET (orchestrator constraint) ───────────────
+# A6 dragged this map from 5,651 rail polylines / 506ms rebuilds down to 415
+# polylines / 575 entities / p95 1.2ms frame, because the human asked for "a
+# simple map, not heavy on the frontend". Serving all three bus layers whole
+# would add 651 + 3,322 + 368 = 4,341 entities and undo exactly that work.
+#
+# So the BUDGET IS ENFORCED HERE, in the API, not left to the map agent:
+#   /buses.geojson       ~368 Points, cheap, the actual wow  -> served whole
+#   /busroutes.geojson   651 polylines                        -> OPT-IN, scoped
+#   /busstops.geojson    3,322 Points                         -> OPT-IN, scoped
+# Asking either static endpoint for everything is still possible (`all=1`) but
+# you have to mean it, and the response says what it cost you.
+BUS_ROUTE_LIMIT = 40            # max polylines per scoped request
+BUS_STOP_LIMIT = 400            # max stop points per scoped request
+
+
+def _parse_bbox(raw: str | None) -> tuple[float, float, float, float] | None:
+    """`minLon,minLat,maxLon,maxLat`. Returns None for anything unparseable —
+    a bad bbox must degrade to "no bbox filter", never to a 500."""
+    if not raw:
+        return None
+    try:
+        parts = [float(x) for x in str(raw).split(",")]
+    except ValueError:
+        return None
+    if len(parts) != 4:
+        return None
+    a, b, c, d = parts
+    return (min(a, c), min(b, d), max(a, c), max(b, d))
+
+
+def _pt_in_bbox(coords: list[float], box) -> bool:
+    return box[0] <= coords[0] <= box[2] and box[1] <= coords[1] <= box[3]
+
+
+def _line_hits_bbox(coords: list[list[float]], box) -> bool:
+    return any(_pt_in_bbox(c, box) for c in coords)
+
+
+def _route_prefix(route_id: str | None) -> str | None:
+    """Accepts `Toei.T01`, `T01`, or a full patternId `Toei.T01.8501.1`."""
+    if not route_id:
+        return None
+    r = route_id.strip()
+    if not r:
+        return None
+    return r if r.startswith("Toei.") else f"Toei.{r}"
+
+
+def _produce_busroutes_scoped(routeId: str | None, bbox: str | None,
+                              want_all: bool, limit: int | None) -> dict[str, Any]:
+    base = _produce_busroutes()
+    feats = base.get("features") or []
+    total = len(feats)
+    route_ids = sorted({(f.get("properties") or {}).get("routeId")
+                        for f in feats if (f.get("properties") or {}).get("routeId")})
+    m = dict(base.get("meta") or meta("mock", True))
+
+    if not (routeId or bbox or want_all):
+        # The default is DELIBERATELY empty: 651 polylines next to the 415 rail
+        # polylines would swamp the PRD's core story, visually and in frame time.
+        out = {"type": "FeatureCollection", "features": [],
+               "routeCount": 0, "availableFeatures": total,
+               "availableRouteIds": route_ids, "scope": "none"}
+        # Empty-by-choice is NOT degraded; empty-because-the-file-is-gone IS.
+        # Only a layer that actually has data may clear the amber badge.
+        if total == 0:
+            return dict(out, meta=m)
+        m["degraded"] = False
+        m["note"] = (f"opt-in layer: {total} route polylines available, none served. "
+                     f"Pass ?routeId=<id> (see availableRouteIds), ?bbox=minLon,"
+                     f"minLat,maxLon,maxLat, or ?all=1 to accept the full cost.")
+        out["meta"] = m
+        return out
+
+    scope = []
+    prefix = _route_prefix(routeId)
+    if prefix:
+        feats = [f for f in feats
+                 if str((f.get("properties") or {}).get("routeId") or "") == prefix
+                 or str((f.get("properties") or {}).get("patternId") or "").startswith(prefix + ".")]
+        scope.append(f"routeId={prefix}")
+    box = _parse_bbox(bbox)
+    if box:
+        feats = [f for f in feats
+                 if _line_hits_bbox((f.get("geometry") or {}).get("coordinates") or [], box)]
+        scope.append("bbox")
+    cap = BUS_ROUTE_LIMIT if limit is None else max(1, min(int(limit), total))
+    if want_all and limit is None:
+        cap = total
+        scope.append("all=1")
+    truncated = len(feats) > cap
+    feats = feats[:cap]
+
+    out = {"type": "FeatureCollection", "features": feats,
+           "routeCount": len(feats), "availableFeatures": total,
+           "availableRouteIds": route_ids, "scope": ",".join(scope) or "all",
+           "truncated": truncated}
+    if total == 0:
+        return dict(out, meta=m)        # no geometry on disk -> stay degraded
+    m["degraded"] = False
+    vertices = sum(len((f.get("geometry") or {}).get("coordinates") or []) for f in feats)
+    note = (f"{len(feats)} of {total} route polylines ({vertices} vertices). "
+            "Road-following ODPT ug:region shapes, 23-ward bbox, deduplicated, "
+            "Douglas-Peucker simplified to ~13 m.")
+    if truncated:
+        note += f" Truncated at {cap}; raise ?limit= or narrow the scope."
+    m["note"] = note
+    out["meta"] = m
+    return out
+
+
+def _produce_busstops_scoped(routeId: str | None, bbox: str | None,
+                             want_all: bool, limit: int | None) -> dict[str, Any]:
+    base = _produce_busstops()
+    feats = base.get("features") or []
+    total = len(feats)
+    m = dict(base.get("meta") or meta("mock", True))
+
+    if not (routeId or bbox or want_all):
+        out = {"type": "FeatureCollection", "features": [], "stopCount": 0,
+               "availableFeatures": total, "scope": "none"}
+        if total == 0:
+            return dict(out, meta=m)    # no stops on disk -> stay degraded
+        m["degraded"] = False
+        m["note"] = (f"opt-in layer: {total} bus stop poles available, none served. "
+                     "Bus stops are noise at city zoom — pass ?routeId=<id> to get "
+                     "one route's stops, ?bbox=minLon,minLat,maxLon,maxLat for a "
+                     "viewport, or ?all=1 to accept the full cost.")
+        out["meta"] = m
+        return out
+
+    scope = []
+    prefix = _route_prefix(routeId)
+    if prefix:
+        # Route -> stop membership comes from the static BusroutePattern index,
+        # so busstops.geojson does not have to carry a route list per pole
+        # (that would have added ~200 KB to a file the map already downloads).
+        wanted: set[str] = set()
+        try:
+            from ingest.feeds import buses as buses_feed
+            patterns = buses_feed.load_static()["patterns"]
+            for pid, pat in patterns.items():
+                if pid == prefix or pid.startswith(prefix + "."):
+                    for s in pat.get("stops") or []:
+                        if s:
+                            wanted.add(s.replace("odpt.BusstopPole:", ""))
+        except Exception:
+            log.warning("bus stop routeId filter unavailable (no static index)")
+        if wanted:
+            feats = [f for f in feats
+                     if (f.get("properties") or {}).get("stopId") in wanted]
+            scope.append(f"routeId={prefix}")
+        else:
+            feats = []
+            scope.append(f"routeId={prefix} (no match)")
+    box = _parse_bbox(bbox)
+    if box:
+        feats = [f for f in feats
+                 if _pt_in_bbox((f.get("geometry") or {}).get("coordinates") or [0, 0], box)]
+        scope.append("bbox")
+
+    cap = BUS_STOP_LIMIT if limit is None else max(1, min(int(limit), total))
+    if want_all and limit is None:
+        cap = total
+        scope.append("all=1")
+    truncated = len(feats) > cap
+    feats = feats[:cap]        # busstops.geojson is pre-sorted by routeCount DESC,
+                               # so a truncated viewport keeps the busiest poles
+
+    out = {"type": "FeatureCollection", "features": feats, "stopCount": len(feats),
+           "availableFeatures": total, "scope": ",".join(scope) or "all",
+           "truncated": truncated}
+    if total == 0:
+        return dict(out, meta=m)        # no stops on disk -> stay degraded
+    m["degraded"] = False
+    m["note"] = (f"{len(feats)} of {total} Toei bus stop poles"
+                 + (f"; truncated at {cap} (busiest poles first)" if truncated else ""))
+    out["meta"] = m
+    return out
+
+
+def _produce_buses_scoped(routeId: str | None, bbox: str | None,
+                          limit: int | None) -> dict[str, Any]:
+    base = _produce_buses()
+    if not (routeId or bbox or limit):
+        return base
+    feats = base.get("features") or []
+    total = len(feats)
+    prefix = _route_prefix(routeId)
+    if prefix:
+        feats = [f for f in feats
+                 if str((f.get("properties") or {}).get("routeId") or "") == prefix]
+    box = _parse_bbox(bbox)
+    if box:
+        feats = [f for f in feats
+                 if _pt_in_bbox((f.get("geometry") or {}).get("coordinates") or [0, 0], box)]
+    if limit:
+        feats = feats[:max(1, int(limit))]
+    out = dict(base)
+    out["features"] = feats
+    out["busCount"] = len(feats)
+    out["interpolatedCount"] = sum(
+        1 for f in feats if (f.get("properties") or {}).get("positionSource") == "interpolated")
+    out["atStopCount"] = len(feats) - out["interpolatedCount"]
+    out["availableFeatures"] = total
+    m = dict(base.get("meta") or meta("mock", True))
+    extra = f"filtered to {len(feats)} of {total} live vehicles"
+    m["note"] = f"{m['note']}; {extra}" if m.get("note") else extra
+    out["meta"] = m
+    return out
+
+
 LAYER_LABELS = {
     "trains": "Train lines", "quakes": "Earthquakes", "warnings": "JMA warnings",
     "weather": "Weather", "flood": "Flood hazard", "crowd": "Station crowding",
-    "peopleflow": "People flow (typical)",
+    "peopleflow": "People flow (typical)", "buses": "Toei buses (derived)",
 }
 
 
@@ -690,6 +1002,23 @@ def _produce_layers() -> dict[str, Any]:
         {"id": "peopleflow", "label": LAYER_LABELS["peopleflow"], "state": "off",
          "count": 0, "lastUpdate": stamp},
     ]
+
+    # Buses: computed the same way as every other row — from the endpoint's own
+    # cached payload, never hardcoded. Uses the cached copy if the poller has
+    # one, and does NOT force a live ODPT fetch just to render a layer badge.
+    bus = _cached_payload("buses.geojson")
+    if bus is None:
+        bus_state, bus_count, bus_update = "off", 0, stamp
+    else:
+        bus_meta = bus.get("meta") or {}
+        bus_state = bus_meta.get("source", "mock")
+        if bus_state == "live" and bus.get("feedStale"):
+            bus_state = "cache"          # live connection, stale content
+        bus_count = bus.get("busCount") or len(bus.get("features") or [])
+        bus_update = bus.get("feedTime") or stamp
+    layers.append({"id": "buses", "label": LAYER_LABELS["buses"],
+                   "state": bus_state, "count": bus_count,
+                   "lastUpdate": bus_update})
     up, note = graph.neo4j_status()
     return {"layers": layers,
             "meta": meta("live" if up else "cache", not up,
@@ -765,6 +1094,63 @@ def brief() -> Response:
 def sandboxes_json() -> Response:
     return cache.serve("sandboxes.json", TTL_SANDBOXES, _produce_sandboxes,
                        "sandboxes.json", _empty_sandboxes)
+
+
+@app.get("/buses.geojson")
+def buses_geojson(routeId: str | None = Query(None),
+                  bbox: str | None = Query(None),
+                  limit: int | None = Query(None)) -> Response:
+    """Live Toei bus vehicles as Point features (~368 entities — the cheap,
+    high-value layer, served whole by default).
+
+    Positions are DERIVED, never GPS: odpt:Bus carries no coordinates, so each
+    one is interpolated between its last and next stop. Every feature says which
+    via `positionSource` ("interpolated" | "at-stop") and the collection carries
+    `positionMethod`. Optional `routeId`, `bbox=minLon,minLat,maxLon,maxLat` and
+    `limit` narrow it. Static geometry lives on GET /busroutes.geojson and
+    GET /busstops.geojson, which are OPT-IN — see their docstrings."""
+    if not (routeId or bbox or limit):
+        return cache.serve("buses.geojson", TTL_BUSES, _produce_buses,
+                           "buses.geojson", _empty_buses)
+    key = f"buses.geojson:{routeId}|{bbox}|{limit}"
+    return cache.serve(key, TTL_BUSES,
+                       lambda: _produce_buses_scoped(routeId, bbox, limit),
+                       "buses.geojson", _empty_buses)
+
+
+@app.get("/busroutes.geojson")
+def busroutes_geojson(routeId: str | None = Query(None),
+                      bbox: str | None = Query(None),
+                      all: int | None = Query(None),
+                      limit: int | None = Query(None)) -> Response:
+    """Static Toei bus route polylines — OPT-IN, and empty without a scope.
+
+    651 polylines would sit next to the map's 415 rail polylines and swamp the
+    PRD's core story, so an unscoped call returns zero features plus
+    `availableRouteIds` for a picker. Pass `routeId=`, `bbox=`, or `all=1`.
+    Geometry is ODPT's real road-following `ug:region` shape (NOT stop-to-stop
+    straight lines) except for the 9 patterns that ship without one, which are
+    tagged `geometrySource: "stop-to-stop"`."""
+    key = f"busroutes.geojson:{routeId}|{bbox}|{all}|{limit}"
+    return cache.serve(key, TTL_BUSROUTES,
+                       lambda: _produce_busroutes_scoped(routeId, bbox, bool(all), limit),
+                       "busroutes.geojson", _empty_fc)
+
+
+@app.get("/busstops.geojson")
+def busstops_geojson(routeId: str | None = Query(None),
+                     bbox: str | None = Query(None),
+                     all: int | None = Query(None),
+                     limit: int | None = Query(None)) -> Response:
+    """Static Toei bus stop poles — OPT-IN, and empty without a scope.
+
+    3,322 poles are noise at city zoom and would blow the map's entity budget on
+    their own. Pass `routeId=` (one route's stops), `bbox=` (a viewport, capped
+    at 400 busiest-first), or `all=1`."""
+    key = f"busstops.geojson:{routeId}|{bbox}|{all}|{limit}"
+    return cache.serve(key, TTL_BUSROUTES,
+                       lambda: _produce_busstops_scoped(routeId, bbox, bool(all), limit),
+                       "busstops.geojson", _empty_fc)
 
 
 @app.get("/layers.json")
@@ -1055,6 +1441,21 @@ def _warm_on_startup() -> None:
         cache.prime("stations.geojson", TTL_STATIONS, _produce_stations, "stations.geojson")
         cache.prime("forecast.json", TTL_FORECAST, _produce_forecast, "forecast.json")
         cache.prime("sandboxes.json", TTL_SANDBOXES, _produce_sandboxes, "sandboxes.json")
+        cache.prime("busroutes.geojson:None|None|None|None", TTL_BUSROUTES,
+                    lambda: _produce_busroutes_scoped(None, None, False, None),
+                    "busroutes.geojson")
+        cache.prime("busstops.geojson:None|None|None|None", TTL_BUSROUTES,
+                    lambda: _produce_busstops_scoped(None, None, False, None),
+                    "busstops.geojson")
+        # Parse the 9 MB static stop/route index off the request path, THEN take
+        # the first live fetch — otherwise the demo's first /buses.geojson pays
+        # for both and looks broken.
+        try:
+            from ingest.feeds import buses as _buses_feed
+            _buses_feed.load_static()
+        except Exception:
+            log.warning("startup: bus static index unavailable; /buses.geojson will use mock/")
+        cache.prime("buses.geojson", TTL_BUSES, _produce_buses, "buses.geojson")
         # the query shapes the UI actually polls
         for n in (30, 60):
             k = _events_key(n, None, None, since_now, "now")
@@ -1090,7 +1491,9 @@ def root() -> dict[str, Any]:
         "service": "TokyoPulse API", "neo4j": "up" if up else "down",
         "endpoints": ["/health", "/events.json", "/lines.geojson", "/stations.geojson",
                       "/impact/{lineId}", "/forecast.json", "/brief",
-                      "/sandboxes.json", "/layers.json", "POST /demo/replay"],
+                      "/sandboxes.json", "/layers.json", "/buses.geojson",
+                      "/busroutes.geojson", "/busstops.geojson",
+                      "POST /demo/replay"],
         "meta": meta("live" if up else "cache", not up),
     }
 

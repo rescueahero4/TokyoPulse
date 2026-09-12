@@ -15,7 +15,7 @@ import { formatClock } from './time';
 import { PanelHeader } from './PanelHeader';
 import { useCollapse } from './useCollapse';
 import { LAYER_INFO } from './dataSources';
-import { layersBottomPx, setLayersHeight, subscribeStack } from './stack';
+import { layersBottomPx, layersMaxHeightPx, setLayersHeight, subscribeStack } from './stack';
 
 const STATE_LABEL: Record<LayerState['state'], string> = {
   live: 'LIVE',
@@ -59,6 +59,9 @@ export function LayerPanel(p: {
     const place = () => {
       try {
         el.style.bottom = `${layersBottomPx()}px`;
+        // Expanded, this panel must never grow so tall that the column above it
+        // has nowhere left to go.
+        el.style.maxHeight = el.classList.contains('tp-layer-chip') ? '' : `${layersMaxHeightPx()}px`;
       } catch {
         /* CSS fallback stands */
       }

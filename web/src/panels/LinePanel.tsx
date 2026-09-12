@@ -41,6 +41,27 @@ export function LinePanel(p: {
 }): JSX.Element {
   const [open, setOpen] = useState(false);
   const [collapsed, toggleCollapsed] = useCollapse('lines');
+  const unsubRef = useRef<(() => void) | null>(null);
+
+  // The panel bounds ITSELF (inline px) so it can never grow down into the
+  // bottom-left stack — see panels/stack.ts. Only the detail below scrolls, so
+  // the search box stays put no matter how long a line's detail is.
+  const bindHeight = useCallback((el: HTMLElement | null) => {
+    unsubRef.current?.();
+    unsubRef.current = null;
+    if (!el) return;
+    const apply = () => {
+      try {
+        el.style.maxHeight = `${leftColumnMaxPx()}px`;
+      } catch {
+        /* CSS fallback stands */
+      }
+    };
+    apply();
+    unsubRef.current = subscribeStack(apply);
+  }, []);
+
+  useEffect(() => () => unsubRef.current?.(), []);
   const lines = p.lines ?? [];
   const results = lines.filter((l) => matches(l, p.value));
   const selected = lines.find((l) => l.lineId === p.selectedLineId) ?? null;
@@ -52,7 +73,7 @@ export function LinePanel(p: {
   };
 
   return (
-    <div className={`tp-panel tp-line-panel${collapsed ? ' tp-panel-collapsed' : ''}`}>
+    <div ref={bindHeight} className={`tp-panel tp-line-panel${collapsed ? ' tp-panel-collapsed' : ''}`}>
       <PanelHeader
         title="Lines"
         label="Lines"

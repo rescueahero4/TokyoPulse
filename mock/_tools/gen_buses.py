@@ -38,7 +38,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import MOCK_DIR, iso, meta, now_jst, write_json  # noqa: E402
+from common import MOCK_DIR, iso, meta  # noqa: E402
 
 RAW = os.path.join(MOCK_DIR, "raw")
 
@@ -54,10 +54,11 @@ SIMPLIFY_TOL = 0.00012      # degrees, ~13 m — below a bus-lane's width at z15
 COORD_DP = 5                # ~1.1 m; more precision than a derived position earns
 MIN_IN_BOX_RATIO = 0.5      # a pattern needs half its shape inside the 23 wards
 
-# Average Toei bus speed, road-distance / scheduled-leg-duration, calibrated
-# against real odpt:BusTimetable rows by `--calibrate`. Used ONLY to estimate
-# how long a stop-to-stop leg should take, never presented as a measurement.
-BUS_SPEED_KMH = 12.8
+# Average Toei bus speed, road-distance / scheduled-leg-duration. MEASURED, not
+# guessed: median of 416 real scheduled legs across 21 odpt:BusTimetable rows
+# (mean 13.8, p25 8.7, p75 16.6). Used ONLY to estimate how long a leg should
+# take; never presented as a measurement. Re-derive with `--calibrate`.
+BUS_SPEED_KMH = 12.3
 
 
 # ─────────────────────────────── geometry helpers ────────────────────────────
@@ -151,6 +152,20 @@ def load_raw(name):
         return json.load(f)
 
 
+def write_compact(relpath, obj):
+    """Like common.write_json but WITHOUT indent=2.
+
+    Pretty-printing a coordinate array puts every number on its own line: the
+    same 12,684 bus-route vertices are 1.23 MB indented and 0.30 MB compact.
+    Nobody reads a 659-polyline geojson by eye, and the map has to fetch it.
+    """
+    path = os.path.join(MOCK_DIR, relpath)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
+    print(f"wrote {path} ({os.path.getsize(path)} bytes)")
+
+
 def fetch_raw():
     """--fetch: refresh the three ODPT bus payloads under mock/raw/."""
     import httpx
@@ -208,9 +223,24 @@ def calibrate():
     import statistics
 
     import httpx
+    sys.path.insert(0, os.path.dirname(MOCK_DIR))
+    from ingest.feeds import buses as buses_feed
+    static = buses_feed.load_static()
+
+    def road_km(from_id, to_id, pattern_id):
+        """Road distance for the same leg the runtime will interpolate along —
+        calibrating against straight-line distance would bake in a systematic
+        under-estimate of speed (road > straight, always)."""
+        pat = static["patterns"].get(pattern_id)
+        seg = buses_feed._leg_slice(pat, static["stops"], from_id, to_id) if pat else None
+        if not seg:
+            return None
+        return sum(haversine_m(seg[i][0], seg[i][1], seg[i + 1][0], seg[i + 1][1])
+                   for i in range(len(seg) - 1)) / 1000.0
+
     poles = pole_index()
     buses = load_raw("odpt-bus.json")
-    seen, samples, legs = set(), [], 0
+    seen, samples, legs, straight = set(), [], 0, []
     headers = {"User-Agent": "TokyoPulse-hackathon/1.0"}
     with httpx.Client(timeout=30, headers=headers, follow_redirects=True) as c:
         for b in buses:
@@ -228,6 +258,8 @@ def calibrate():
                 continue
             if not rows:
                 continue
+            pattern_id = (rows[0].get("odpt:busroutePattern") or "").replace(
+                "odpt.BusroutePattern:", "")
             objs = sorted(rows[0].get("odpt:busTimetableObject") or [],
                           key=lambda o: o.get("odpt:index", 0))
             for a, z in zip(objs, objs[1:]):
@@ -245,21 +277,25 @@ def calibrate():
                 mins = mz - ma
                 if mins <= 0 or mins > 30:
                     continue          # timetables round to the minute; 0 is unusable
-                dist_km = haversine_m(pa["lon"], pa["lat"], pz["lon"], pz["lat"]) / 1000.0
+                straight_km = haversine_m(pa["lon"], pa["lat"], pz["lon"], pz["lat"]) / 1000.0
+                dist_km = road_km(a.get("odpt:busstopPole"), z.get("odpt:busstopPole"),
+                                  pattern_id) or straight_km
                 if dist_km < 0.05:
                     continue
                 samples.append(dist_km / (mins / 60.0))
+                straight.append(straight_km / (mins / 60.0))
                 legs += 1
     if not samples:
         print("calibration produced no samples — keeping BUS_SPEED_KMH as-is")
         return
     med = statistics.median(samples)
     print(f"calibration: {len(seen)} timetables, {legs} usable legs")
-    print(f"  median {med:.2f} km/h, mean {statistics.mean(samples):.2f}, "
+    print(f"  ROAD distance   median {med:.2f} km/h, mean {statistics.mean(samples):.2f}, "
           f"p25 {statistics.quantiles(samples, n=4)[0]:.2f}, "
           f"p75 {statistics.quantiles(samples, n=4)[2]:.2f}")
-    print(f"  -> set BUS_SPEED_KMH = {med:.1f}  (straight-line stop-to-stop; the "
-          f"road distance is longer, so this UNDER-estimates true road speed)")
+    print(f"  straight line   median {statistics.median(straight):.2f} km/h "
+          f"(for reference only — the runtime walks the road polyline)")
+    print(f"  -> set BUS_SPEED_KMH = {med:.1f}")
 
 
 # ──────────────────────────────── build: routes ──────────────────────────────
@@ -332,7 +368,21 @@ def build_routes(poles):
             },
         }
 
-    feats = list(by_key.values())
+    # Second dedupe pass, on the DRAWN shape. Toei registers separate patterns
+    # for variants that differ only in which stops are served (express/local,
+    # or a different terminus stop pole) but run the identical road. Those pass
+    # the stop-sequence test and would stack invisible duplicate polylines.
+    by_geom = {}
+    for f in by_key.values():
+        c = f["geometry"]["coordinates"]
+        gkey = (len(c), tuple(c[0]), tuple(c[len(c) // 2]), tuple(c[-1]))
+        if gkey in by_geom:
+            stats["dropped_dupe"] += 1
+            by_geom[gkey]["properties"]["patternCount"] += f["properties"]["patternCount"]
+            continue
+        by_geom[gkey] = f
+
+    feats = list(by_geom.values())
     stats["kept"] = len(feats)
     stats["vertices_out"] = sum(len(f["geometry"]["coordinates"]) for f in feats)
     return feats, stats
@@ -365,7 +415,7 @@ def build_stops(poles):
 def build_vehicles():
     """Snapshot the live fleet through the SAME normalize() the API calls, so
     the tier-2 mock payload and the tier-1 live payload cannot drift apart."""
-    sys.path.insert(0, os.path.dirname(os.path.dirname(MOCK_DIR)))
+    sys.path.insert(0, os.path.dirname(MOCK_DIR))
     from ingest.feeds import buses as buses_feed
     payload = buses_feed.build_input(load_raw("odpt-bus.json"))
     return buses_feed.normalize(payload)
@@ -387,13 +437,13 @@ def main():
     routes, rs = build_routes(poles)
     stops, stops_dropped = build_stops(poles)
 
-    write_json("busroutes.geojson", {
+    write_compact("busroutes.geojson", {
         "type": "FeatureCollection", "features": routes,
         "meta": meta("cache", False,
                      f"Toei bus route patterns, 23-ward bbox, "
                      f"{rs['kept']} of {rs['total']} patterns"),
     })
-    write_json("busstops.geojson", {
+    write_compact("busstops.geojson", {
         "type": "FeatureCollection", "features": stops,
         "meta": meta("cache", False, f"Toei bus stop poles inside the 23-ward bbox"),
     })
@@ -402,7 +452,7 @@ def main():
         veh = build_vehicles()
         veh["meta"] = meta("cache", True,
                            f"snapshot of {veh.get('busCount', 0)} live vehicles at {iso()}")
-        write_json("busvehicles.geojson", veh)
+        write_compact("busvehicles.geojson", veh)
     except Exception as e:
         print(f"vehicle snapshot skipped: {type(e).__name__}: {e}")
 

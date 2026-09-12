@@ -330,13 +330,13 @@
   top: 52px;
   left: 16px;
   width: 300px;
-  max-height: calc(100vh - 64px - 34px - var(--tp-map-cluster-h, 120px) - 8px - var(--tp-layers-h, 44px) - 12px);
+  /* first-paint fallback only; LinePanel sets its own max-height in px (stack.ts) */
+  max-height: none;
   z-index: 30;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 8px;
-  overflow: hidden;
   pointer-events: auto;
 }
 
@@ -1093,7 +1093,9 @@
 
 .tp-layer-panel {
   width: 300px;
-  max-height: min(340px, calc(100vh - 300px));
+  /* 420px keeps the expanded panel short enough that the left column above it
+     still gets >=180px at 720p — see stack.ts leftColumnMaxPx(). */
+  max-height: min(340px, calc(100vh - 420px));
   display: flex;
   flex-direction: column;
 }
