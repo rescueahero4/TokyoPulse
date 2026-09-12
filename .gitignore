@@ -8,3 +8,9 @@ __pycache__/
 .venv/
 node_modules/
 dist/
+tests/test-results/
+tests/playwright-report/
+tests/*.log
+tests/e2e/*.log
+ingest/state/
+*.pyc

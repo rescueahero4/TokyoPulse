@@ -7,13 +7,13 @@ import { defineConfig, devices } from '@playwright/test';
  * the poll-before-run contract.
  */
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: './e2e',
   timeout: 30_000,
   expect: { timeout: 10_000 },
   fullyParallel: false,
   workers: 1,
   retries: 0,
-  reporter: [['list'], ['html', { open: 'never', outputFolder: 'tests/e2e/report' }]],
+  reporter: [['list'], ['html', { open: 'never', outputFolder: 'e2e/report' }]],
   use: {
     baseURL: 'http://localhost:5173',
     screenshot: 'only-on-failure',
