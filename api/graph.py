@@ -580,55 +580,47 @@ def fetch_events(since_iso: str, limit: int = 30,
 
 
 def fetch_line_status() -> dict[str, dict[str, Any]]:
+    """Status for all 20 lines in ONE round-trip (Aura RTT is ~0.4s, so every
+    extra query is a visible pause). Includes the fallback that derives a line's
+    status from the newest train Event that AFFECTS it, for when the ingestor
+    writes Events but does not stamp Line.status."""
     rows = run(
         """
         MATCH (l:Line)
+        OPTIONAL MATCH (e:Event {type: 'train'})-[:AFFECTS]->(l)
+        WITH l, e ORDER BY e.time DESC
+        WITH l, head(collect(e)) AS latest
         RETURN l.lineId AS lineId, l.status AS status, l.statusText AS statusText,
                l.statusTextJa AS statusTextJa, l.statusSource AS statusSource,
-               l.updatedAt AS updatedAt
+               l.updatedAt AS updatedAt,
+               latest.severity AS dSeverity, latest.title AS dTitle,
+               latest.titleJa AS dTitleJa, latest.time AS dTime
         """
     )
     if not rows:
         raise NoGraphData("graph has no Line nodes (run scripts/seed.py)")
-    out = {
-        r["lineId"]: {
+    out: dict[str, dict[str, Any]] = {}
+    for r in rows:
+        lid = r["lineId"]
+        if not lid:
+            continue
+        cur = {
             "status": r["status"] or "unknown",
             "statusText": r["statusText"] or "No live status feed",
             "statusTextJa": r["statusTextJa"],
             "statusSource": r["statusSource"] or "none",
             "updatedAt": to_iso(r["updatedAt"]),
         }
-        for r in rows if r["lineId"]
-    }
-
-    # Hedge: if the ingestor only writes train Events (and not Line.status), derive
-    # the line's status from the newest train Event that AFFECTS it. Lights up
-    # automatically, no code change, whichever way A2 writes.
-    try:
-        derived = run(
-            """
-            MATCH (e:Event {type: 'train'})-[:AFFECTS]->(l:Line)
-            WITH l, e ORDER BY e.time DESC
-            WITH l, head(collect(e)) AS latest
-            RETURN l.lineId AS lineId, latest.severity AS severity,
-                   latest.title AS title, latest.titleJa AS titleJa,
-                   latest.time AS time
-            """
-        )
-    except Exception:
-        derived = []
-    for r in derived:
-        cur = out.get(r["lineId"])
-        if not cur or cur["statusSource"] == "live":
-            continue
-        sev = r.get("severity") or "info"
-        cur.update(
-            status={"critical": "suspended", "warning": "delay"}.get(sev, "normal"),
-            statusText=r.get("title") or cur["statusText"],
-            statusTextJa=r.get("titleJa") or cur.get("statusTextJa"),
-            statusSource="live",
-            updatedAt=to_iso(r.get("time")),
-        )
+        if cur["statusSource"] != "live" and r.get("dTitle"):
+            sev = r.get("dSeverity") or "info"
+            cur.update(
+                status={"critical": "suspended", "warning": "delay"}.get(sev, "normal"),
+                statusText=r["dTitle"],
+                statusTextJa=r.get("dTitleJa") or cur.get("statusTextJa"),
+                statusSource="live",
+                updatedAt=to_iso(r.get("dTime")),
+            )
+        out[lid] = cur
     return out
 
 
@@ -654,78 +646,67 @@ def fetch_stations() -> list[dict[str, Any]]:
 
 
 def fetch_impact(lineId: str, since_iso: str) -> dict[str, Any] | None:
-    """The demo beat: (Line)-[:SERVES]->(Station)-[:IN]->(Ward) + AFFECTS events.
+    """The demo beat: (Line)-[:SERVES]->(Station)-[:IN]->(Ward) + AFFECTS events,
+    in ONE round-trip. Returns None when the Line node is not in the graph.
 
-    Returns None when the Line node does not exist in the graph.
+    Every subquery ends in an aggregation so an empty branch yields a row rather
+    than eliminating the outer one.
     """
-    head = run(
+    rows = run(
         """
         MATCH (l:Line {lineId: $lineId})
+        CALL {
+          WITH l
+          MATCH (l)-[r:SERVES]->(s:Station)
+          OPTIONAL MATCH (s)-[:IN]->(w:Ward)
+          WITH s, w, coalesce(r.index, 0) AS idx ORDER BY idx
+          RETURN collect({stationId: s.stationId, name: s.name, nameJa: s.nameJa,
+                          lat: s.lat, lon: s.lon, ward: w.name,
+                          inFloodZone: coalesce(s.inFloodZone, false),
+                          ridershipBand: coalesce(s.ridershipBand, 1)}) AS stations
+        }
+        CALL {
+          WITH l
+          MATCH (l)-[:SERVES]->(s2:Station)-[:IN]->(w2:Ward)
+          WITH w2, count(DISTINCT s2) AS stationCount
+          OPTIONAL MATCH (e2:Event)-[:AFFECTS]->(w2)
+            WHERE e2.time >= datetime($since)
+          WITH w2, stationCount, count(DISTINCT e2) AS activeEventCount
+          ORDER BY stationCount DESC, w2.name
+          RETURN collect({ward: w2.name, wardJa: w2.nameJa,
+                          stationCount: stationCount,
+                          activeEventCount: activeEventCount}) AS wards
+        }
+        CALL {
+          WITH l
+          MATCH (e:Event)-[:AFFECTS]->(l)
+          WITH e ORDER BY e.time DESC LIMIT 20
+          OPTIONAL MATCH (e)-[:AFFECTS]->(t)
+          WITH e, collect(DISTINCT
+                 CASE WHEN t:Line THEN 'line:' + t.lineId
+                      WHEN t:Ward THEN 'ward:' + t.name ELSE null END) AS refs
+          RETURN collect({node: e {.*},
+                          affects: [x IN refs WHERE x IS NOT NULL]}) AS events
+        }
         RETURN l.name AS name, l.nameJa AS nameJa, l.status AS status,
-               l.statusText AS statusText, l.statusTextJa AS statusTextJa,
-               l.statusSource AS statusSource, l.updatedAt AS updatedAt
-        """,
-        lineId=lineId,
-    )
-    if not head:
-        return None
-
-    stations = run(
-        """
-        MATCH (l:Line {lineId: $lineId})-[r:SERVES]->(s:Station)
-        OPTIONAL MATCH (s)-[:IN]->(w:Ward)
-        RETURN s.stationId AS stationId, s.name AS name, s.nameJa AS nameJa,
-               s.lat AS lat, s.lon AS lon, w.name AS ward,
-               coalesce(s.inFloodZone, false) AS inFloodZone,
-               coalesce(s.ridershipBand, 1) AS ridershipBand,
-               coalesce(r.index, 0) AS idx
-        ORDER BY idx
-        """,
-        lineId=lineId,
-    )
-    wards = run(
-        """
-        MATCH (l:Line {lineId: $lineId})-[:SERVES]->(s:Station)-[:IN]->(w:Ward)
-        WITH w, count(DISTINCT s) AS stationCount
-        OPTIONAL MATCH (e:Event)-[:AFFECTS]->(w) WHERE e.time >= datetime($since)
-        RETURN w.name AS ward, w.nameJa AS wardJa, stationCount,
-               count(DISTINCT e) AS activeEventCount
-        ORDER BY stationCount DESC, ward
+               l.statusText AS statusText, l.statusSource AS statusSource,
+               stations, wards, events
         """,
         lineId=lineId, since=since_iso,
     )
-    evrows = run(
-        """
-        MATCH (e:Event)-[:AFFECTS]->(:Line {lineId: $lineId})
-        OPTIONAL MATCH (e)-[:AFFECTS]->(t)
-        WITH e, collect(DISTINCT
-               CASE WHEN t:Line THEN 'line:' + t.lineId
-                    WHEN t:Ward THEN 'ward:' + t.name ELSE null END) AS refs
-        RETURN e AS node, [x IN refs WHERE x IS NOT NULL] AS affects
-        ORDER BY e.time DESC LIMIT 20
-        """,
-        lineId=lineId,
-    )
-
-    h = head[0]
-    for s in stations:
-        s.pop("idx", None)
-    # Same status resolution as /lines.geojson, so the two views never disagree.
-    status = h["status"] or "unknown"
-    status_text = h["statusText"] or "No live status feed"
-    try:
-        st = fetch_line_status().get(lineId) or {}
-        if st.get("statusSource") == "live":
-            status, status_text = st["status"], st["statusText"]
-    except Exception:
-        pass
+    if not rows:
+        return None
+    r = rows[0]
+    stations = [dict(s) for s in (r.get("stations") or [])]
     return {
         "lineId": lineId,
-        "name": h["name"], "nameJa": h["nameJa"],
-        "status": status,
-        "statusText": status_text,
-        "wards": wards,
+        "name": r["name"], "nameJa": r["nameJa"],
+        "status": r["status"] or "unknown",
+        "statusText": r["statusText"] or "No live status feed",
+        "statusSource": r["statusSource"] or "none",
+        "wards": [dict(w) for w in (r.get("wards") or [])],
         "stations": stations,
-        "events": [event_from_node(dict(r["node"]), r["affects"]) for r in evrows],
+        "events": [event_from_node(dict(x["node"]), x.get("affects"))
+                   for x in (r.get("events") or [])],
         "stationsInFloodZone": sum(1 for s in stations if s.get("inFloodZone")),
     }

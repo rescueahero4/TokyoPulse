@@ -121,6 +121,12 @@
   border: 1px solid var(--tp-accent);
 }
 
+.tp-chip-upcoming {
+  background: rgba(138, 153, 168, 0.18);
+  color: var(--tp-text-muted);
+  border: 1px solid var(--tp-text-muted);
+}
+
 .tp-chip-state-live { background: rgba(34, 197, 94, 0.18); color: var(--tp-normal); border: 1px solid var(--tp-normal); }
 .tp-chip-state-cache { background: rgba(245, 158, 11, 0.18); color: var(--tp-warning); border: 1px solid var(--tp-warning); }
 .tp-chip-state-mock { background: rgba(56, 189, 248, 0.18); color: var(--tp-accent); border: 1px solid var(--tp-accent); }
@@ -321,6 +327,50 @@
   font-size: 12px;
   font-family: 'Consolas', 'SF Mono', monospace;
   color: var(--tp-text-muted);
+}
+
+/* Upcoming (future-dated) rows: same row, visually de-emphasised — never hidden. */
+.tp-timeline-row-upcoming {
+  opacity: 0.62;
+}
+
+.tp-timeline-row-upcoming .tp-timeline-title {
+  font-weight: 500;
+}
+
+.tp-timeline-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 6px 4px;
+  padding-top: 2px;
+  border-top: 1px dashed var(--tp-border);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--tp-accent);
+  text-transform: uppercase;
+}
+
+/* ---------- Timeline: collapsed "normal operation" group row ---------- */
+
+.tp-timeline-row-group {
+  align-items: center;
+}
+
+.tp-timeline-chevron {
+  margin-left: auto;
+  color: var(--tp-text-muted);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.tp-timeline-group-body {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  border-left: 2px solid var(--tp-border);
+  margin: 0 0 2px 18px;
 }
 
 /* ---------- LayerPanel ---------- */
