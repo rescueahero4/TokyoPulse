@@ -163,3 +163,20 @@ Reset between rehearsals: `curl -X POST http://127.0.0.1:8000/demo/reset` (delet
 | JR / Tokyo Metro line status | No keyless feed exists — the mirror is Toei-only. Those lines are in the graph with real OSM geometry but render grey `unknown`. We never fake a green. |
 | Daytona sandboxes | 4, created in parallel, **1.9-3.4s** each, each running a feed's `normalize()`. They have no outbound egress on this account, so the host fetches and writes. Not "5 sandboxes at 200ms". |
 | The brief | Anthropic today, Nosana roadmap. The provider is printed in the card so we cannot be accused of bluffing. |
+
+## 8. Last-minute rules (learned the hard way this build)
+
+- **Do NOT restart the API in the final minutes before curtain.** QA caught a run where two tests
+  failed on `ECONNREFUSED 127.0.0.1:8000` because the API was bouncing. If it is down when you fire
+  `/demo/replay`, the scripted earthquake beat visibly fails. Run `curl http://127.0.0.1:8000/health`
+  right before you go on and leave the process alone after that.
+- **Check the ingest launcher is actually alive**, not just that `sandboxes.json` looks healthy.
+  The file is written by the launcher, so a dead launcher leaves a stale-but-plausible file:
+  `tail -3 ingest/state/launcher.log` should show cycles from the last minute.
+  Ground truth for the Daytona badge is the platform itself — 5 sandboxes should be `STARTED`.
+- **Open the app at `http://127.0.0.1:5173`.** `localhost` resolves via IPv6 to a different project
+  on this machine (verified twice).
+- **The demo opens collapsed on purpose.** Layers and the MAP cluster start collapsed, the alert is a
+  chip, and Weather / Flood / Buses / People-flow layers are OFF. That is the clean opening view —
+  expand deliberately as you narrate, do not pre-expand everything.
+- **Fire the reset before you start:** `curl -X POST http://127.0.0.1:8000/demo/reset`.
