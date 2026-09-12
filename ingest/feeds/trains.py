@@ -90,7 +90,12 @@ def normalize(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
         severity = classify_severity(text_ja)
         line_name = line_names.get(line_id, {}).get("name", line_id)
         title = f"{line_name}: {_ENGLISH_BY_SEVERITY[severity]}"
-        time_str = item.get("dc:date") or now_jst_iso()
+        # odpt:timeOfOrigin = when THIS status began (stable while unchanged).
+        # dc:date is the feed's publish/poll timestamp -- it refreshes every
+        # cycle even when nothing changed, which would bubble stale
+        # "normal operation" rows to the top of a time-sorted timeline on
+        # every 30s poll and bury real incidents. Prefer the honest time.
+        time_str = item.get("odpt:timeOfOrigin") or item.get("dc:date") or now_jst_iso()
         events.append(
             make_event(
                 id=f"odpt-{line_id}-{stable_hash(text_ja)}",

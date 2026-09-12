@@ -9,7 +9,7 @@ import {
 } from './lib/api';
 import { lineSegments } from './lib/geo';
 import { wardCentroid } from './lib/wards';
-import type { Impact, LayerState, Lang, PulseEvent, TimeWindow } from './lib/types';
+import type { Impact, LayerState, Lang, PulseEvent, SandboxInfo, TimeWindow } from './lib/types';
 
 import { AlertBanner } from './panels/AlertBanner';
 import { Timeline } from './panels/Timeline';
@@ -31,6 +31,10 @@ const DEFAULT_VISIBLE: Record<string, boolean> = {
   flood: false,
   peopleflow: false,
 };
+
+/** Stable empty collections: identity churn here re-fires the map layer effects. */
+const EMPTY_EVENTS: PulseEvent[] = [];
+const EMPTY_SANDBOXES: SandboxInfo[] = [];
 
 const LAYER_LABELS: Record<string, string> = {
   trains: 'Train lines',
@@ -71,7 +75,9 @@ export default function App() {
     return () => { alive = false; };
   }, []);
 
-  const events: PulseEvent[] = eventsRes.data?.data.events ?? [];
+  // NB: a fresh [] literal here would change identity on every render and spin
+  // the map layer effects into an update loop. Keep the empty case stable.
+  const events: PulseEvent[] = eventsRes.data?.data.events ?? EMPTY_EVENTS;
   const eventsMeta = eventsRes.data?.data.meta ?? null;
   const lines = linesRes.data?.data ?? null;
   const lineList = useMemo(() => linesFromCollection(lines), [lines]);
@@ -183,7 +189,7 @@ export default function App() {
       <div className="hud">
         <ErrorBoundary label="StatusBar">
           <StatusBar
-            sandboxes={sandboxRes.data?.data.sandboxes ?? []}
+            sandboxes={sandboxRes.data?.data.sandboxes ?? EMPTY_SANDBOXES}
             window={timeWindow}
             onWindowChange={setTimeWindow}
             lang={lang}

@@ -217,7 +217,9 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /** Report a layer's entity count upward, but only when it actually changed. */
   const bump = (k: string, n: number) => {
+    if (statsRef.current[k] === n) return;
     statsRef.current = { ...statsRef.current, [k]: n };
     props.onStats?.(statsRef.current);
   };
