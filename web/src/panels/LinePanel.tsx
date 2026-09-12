@@ -113,6 +113,12 @@ export function LinePanel(p: {
   const groups = groupByOperator(results);
   const selected = lines.find((l) => l.lineId === p.selectedLineId) ?? null;
   const hasDetail = !!p.selectedLineId;
+  const hasQuery = p.value.trim().length > 0;
+  // With a line selected the list gets out of the way entirely so the detail
+  // has the whole panel. The search input NEVER hides though — it is the only
+  // route back to the list, so typing re-summons the filtered list (compact,
+  // above the detail) and picking from it swaps the detail in place.
+  const showList = !hasDetail || hasQuery;
 
   const clear = () => {
     p.onPick(null);
@@ -135,7 +141,8 @@ export function LinePanel(p: {
             <input
               type="text"
               className="tp-line-search-input"
-              placeholder="Filter lines…"
+              /* With the list hidden the input is the only way back to it, so say so. */
+              placeholder={hasDetail && !hasQuery ? 'Type to switch line…' : 'Filter lines…'}
               value={p.value}
               onChange={(ev) => p.onChange(ev.target.value)}
             />
@@ -151,6 +158,7 @@ export function LinePanel(p: {
             ) : null}
           </div>
 
+          {showList ? (
           <div
             className={`tp-line-search-results${hasDetail ? ' tp-line-search-results-compact' : ''}`}
             role="listbox"
@@ -174,7 +182,7 @@ export function LinePanel(p: {
                       key={line.lineId}
                       className={`tp-line-search-result${line.lineId === p.selectedLineId ? ' tp-row-selected' : ''}`}
                       style={{ borderLeft: `3px solid ${line.color || '#6b7280'}` }}
-                      onClick={() => p.onPick(line.lineId)}
+                      onClick={() => { p.onPick(line.lineId); p.onChange(''); }}
                       title={line.statusText}
                     >
                       {/* Status dot MUST encode line.status, never livery (P0-1) —
@@ -200,6 +208,7 @@ export function LinePanel(p: {
               ))
             )}
           </div>
+          ) : null}
 
           {p.selectedLineId ? (
             <div className="tp-line-detail">

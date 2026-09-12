@@ -255,6 +255,70 @@ html, body, #root {
   pointer-events: auto;
 }
 
+
+/* ---------- weather surface legend (inside the map cluster) ---------- */
+
+.map-wx {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 7px 9px;
+  border: 1px solid var(--gs-border-panel);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  font-family: var(--gs-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--gs-text-dim);
+}
+
+.map-wx-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.map-wx-title { color: var(--gs-electric-blue); letter-spacing: 0.14em; }
+
+.map-wx-seg { display: inline-flex; gap: 3px; }
+
+.map-wx-seg button {
+  padding: 2px 7px;
+  border: 1px solid var(--gs-border-panel);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--gs-text-dim);
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.map-wx-seg button.is-active {
+  border-color: var(--gs-electric-blue);
+  color: var(--gs-neon-cyan);
+  box-shadow: 0 0 6px rgba(0, 180, 255, 0.25);
+}
+
+/* Ramps mirror layers/weathergrid.ts exactly: temperature is a continuous
+   gradient; precipitation is hard-edged bands, because it is quantised there. */
+.map-wx-ramp { height: 8px; border-radius: 2px; border: 1px solid rgba(255, 255, 255, 0.12); }
+
+.map-wx-ramp.is-temp {
+  background: linear-gradient(90deg,
+    rgb(49, 84, 168) 0%, rgb(58, 160, 200) 25%, rgb(120, 196, 120) 50%,
+    rgb(240, 214, 90) 70%, rgb(240, 140, 55) 85%, rgb(214, 60, 50) 100%);
+}
+
+.map-wx-ramp.is-precip {
+  background: linear-gradient(90deg,
+    rgba(130, 200, 230, 0.55) 0 20%, rgba(70, 160, 220, 0.7) 20% 40%,
+    rgba(40, 110, 205, 0.8) 40% 60%, rgba(90, 70, 200, 0.85) 60% 75%,
+    rgba(150, 55, 175, 0.9) 75% 90%, rgba(200, 40, 120, 0.92) 90% 100%);
+}
+
+.map-wx-scale { color: var(--gs-text-primary); }
+.map-wx-probe { color: var(--gs-neon-cyan); font-weight: 600; }
+
+.map-wx-opacity { gap: 8px; }
+.map-wx-opacity input { flex: 1; accent-color: var(--gs-electric-blue); height: 12px; }
+
+.map-wx-note { line-height: 1.45; white-space: normal; color: var(--gs-text-dim); opacity: 0.85; }
+
 /* ---------- rail status legend ----------
    Lines carry their official livery colour, so status is encoded as a modifier:
    a coloured casing under the line, a dash for suspended, low alpha for no feed.

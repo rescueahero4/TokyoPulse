@@ -322,6 +322,66 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     assertNoConsoleErrors(capture);
   });
 
+  test('7b. Regression: basemap menu opens and is clickable while the MAP cluster is collapsed', async ({ page }) => {
+    // The MAP cluster (web/src/map/CesiumViewer.tsx) is collapsed by default.
+    // Until minutes before this test was written, the basemap picker's portal
+    // was nested INSIDE the collapsed cluster body and rendered nothing - the
+    // fix moves it to a document.body portal (#tp-basemap-menu) triggered by a
+    // button that lives in the header's always-rendered actions slot. Pin the
+    // exact regression: collapsed cluster, menu opens, options are real and
+    // clickable, and the portal really is body-level (not just visually
+    // similar while still trapped inside the collapsed ancestor).
+    test.setTimeout(45_000);
+    const capture = captureConsole(page);
+    await page.goto('/');
+    await waitForViewer(page);
+
+    const mapCluster = page.locator('.map-controls');
+    await expect(mapCluster).toBeVisible({ timeout: 15000 });
+    const clusterClass = (await mapCluster.getAttribute('class')) ?? '';
+    expect(clusterClass, 'MAP cluster is expected to be collapsed by default').toMatch(/tp-panel-collapsed/);
+
+    const trigger = page.locator('.map-zoom-basemap');
+    await expect(trigger).toBeVisible({ timeout: 10000 });
+    const beforeSwatch = await trigger.locator('.map-basemap-swatch').getAttribute('data-bm');
+
+    await trigger.click();
+
+    const menu = page.locator('#tp-basemap-menu');
+    await expect(menu).toBeVisible({ timeout: 10000 });
+    const insideCollapsedCluster = await menu.evaluate((el) => !!el.closest('.map-controls'));
+    expect(
+      insideCollapsedCluster,
+      'basemap menu rendered nested inside the collapsed .map-controls cluster - it would be invisible/unclickable, the exact regression',
+    ).toBe(false);
+    const menuParentTag = await menu.evaluate((el) => el.parentElement?.tagName);
+    expect(menuParentTag, 'basemap menu is not a direct child of <body>, so it is not really portal-level').toBe('BODY');
+
+    const options = menu.locator('.map-basemap-opt:not(.map-basemap-labels)');
+    const optCount = await options.count();
+    expect(optCount, 'basemap menu rendered zero style options').toBeGreaterThan(0);
+    let target = options.first();
+    for (let i = 0; i < optCount; i++) {
+      const cls = (await options.nth(i).getAttribute('class')) ?? '';
+      if (!/is-active/.test(cls)) { target = options.nth(i); break; }
+    }
+    const targetSwatch = await target.locator('.map-basemap-swatch').getAttribute('data-bm');
+    expect(targetSwatch, 'candidate basemap option has no data-bm').toBeTruthy();
+    await target.click();
+
+    // Picking an option closes the portal and updates the trigger's own swatch.
+    await expect(menu).toHaveCount(0, { timeout: 10000 });
+    await expect(trigger.locator('.map-basemap-swatch')).toHaveAttribute('data-bm', targetSwatch as string, { timeout: 10000 });
+    expect(targetSwatch).not.toBe(beforeSwatch);
+
+    const canvas = page.locator('canvas').first();
+    await expect(canvas).toBeVisible();
+    const stats = await canvasColorVariance(page);
+    expect(stats.uniqueColors, `canvas blanked after basemap switch: ${JSON.stringify(stats)}`).toBeGreaterThan(3);
+
+    assertNoConsoleErrors(capture);
+  });
+
   test('8. Time toggle: 7d changes the timeline content (demo beat 4)', async ({ page }) => {
     test.setTimeout(45_000);
     await page.goto('/');
