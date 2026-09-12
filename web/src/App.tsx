@@ -13,7 +13,7 @@ import type { Impact, LayerState, Lang, PulseEvent, SandboxInfo, TimeWindow } fr
 
 import { AlertBanner } from './panels/AlertBanner';
 import { CityFeed } from './panels/CityFeed';
-import { LayerPanel } from './panels/LayerPanel';
+import { LayerPanel, type WeatherVar } from './panels/LayerPanel';
 import { LinePanel } from './panels/LinePanel';
 import { ForecastStrip } from './panels/ForecastStrip';
 import { InspectorPanel } from './panels/InspectorPanel';
@@ -44,6 +44,10 @@ const PANEL_LAYER_IDS: string[] = Array.from(new Set<string>([...LAYER_IDS, 'bus
 
 /** Shared with the map (A6) and the LayerPanel control (A8). */
 const STATION_LABELS_KEY = 'tp.showStationLabels';
+/** Weather surface parameters — controls live in LayerPanel, the map consumes them. */
+const WEATHER_VAR_KEY = 'tp.weatherVar';
+const WEATHER_OPACITY_KEY = 'tp.weatherOpacity';
+const WEATHER_VALUES_KEY = 'tp.wxValues';
 
 /** Stable empty collections: identity churn here re-fires the map layer effects. */
 const EMPTY_EVENTS: PulseEvent[] = [];
@@ -82,6 +86,31 @@ export default function App() {
       return window.localStorage.getItem(STATION_LABELS_KEY) !== '0';
     } catch {
       return true;
+    }
+  });
+
+  const [weatherVar, setWeatherVar] = useState<WeatherVar>(() => {
+    try {
+      return window.localStorage.getItem(WEATHER_VAR_KEY) === 'precipitation'
+        ? 'precipitation'
+        : 'temperature';
+    } catch {
+      return 'temperature';
+    }
+  });
+  const [weatherOpacity, setWeatherOpacity] = useState<number>(() => {
+    try {
+      const n = Number(window.localStorage.getItem(WEATHER_OPACITY_KEY));
+      return Number.isFinite(n) && n > 0 ? Math.max(0.2, Math.min(0.9, n)) : 0.55;
+    } catch {
+      return 0.55;
+    }
+  });
+  const [showWeatherValues, setShowWeatherValues] = useState<boolean>(() => {
+    try {
+      return window.localStorage.getItem(WEATHER_VALUES_KEY) === '1';
+    } catch {
+      return false;
     }
   });
 
@@ -189,6 +218,25 @@ export default function App() {
     setVisible((v) => ({ ...v, [id]: !v[id] }));
   }, []);
 
+  const onWeatherVarChange = useCallback((v: WeatherVar) => {
+    setWeatherVar(v);
+    try { window.localStorage.setItem(WEATHER_VAR_KEY, v); } catch { /* private window */ }
+  }, []);
+
+  const onWeatherOpacityChange = useCallback((v: number) => {
+    const clamped = Math.max(0.2, Math.min(0.9, v));
+    setWeatherOpacity(clamped);
+    try { window.localStorage.setItem(WEATHER_OPACITY_KEY, String(clamped)); } catch { /* private window */ }
+  }, []);
+
+  const onToggleWeatherValues = useCallback(() => {
+    setShowWeatherValues((prev) => {
+      const next = !prev;
+      try { window.localStorage.setItem(WEATHER_VALUES_KEY, next ? '1' : '0'); } catch { /* private window */ }
+      return next;
+    });
+  }, []);
+
   const onToggleStationLabels = useCallback(() => {
     setShowStationLabels((prev) => {
       const next = !prev;
@@ -253,6 +301,9 @@ export default function App() {
         lang={lang}
         peopleFlowAvailable={peopleFlow}
         showStationLabels={showStationLabels}
+        weatherVar={weatherVar}
+        weatherOpacity={weatherOpacity}
+        showWeatherValues={showWeatherValues}
         onLinePick={(id) => { setSearch(''); onPickLine(id); }}
         onStats={setMapStats}
       />
@@ -304,6 +355,12 @@ export default function App() {
             showStationLabels={showStationLabels}
             onToggleStationLabels={onToggleStationLabels}
             events={events}
+            weatherVar={weatherVar}
+            onWeatherVarChange={onWeatherVarChange}
+            weatherOpacity={weatherOpacity}
+            onWeatherOpacityChange={onWeatherOpacityChange}
+            showWeatherValues={showWeatherValues}
+            onToggleWeatherValues={onToggleWeatherValues}
           />
         </ErrorBoundary>
 

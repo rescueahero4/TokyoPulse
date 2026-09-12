@@ -17,6 +17,13 @@ import { useCollapse } from './useCollapse';
 import { LAYER_INFO, wardAdvisorySummary } from './dataSources';
 import { layersBottomPx, layersMaxHeightPx, setLayersHeight, subscribeStack } from './stack';
 
+export type WeatherVar = 'temperature' | 'precipitation';
+
+const WEATHER_VAR_LABEL: Record<WeatherVar, string> = {
+  temperature: 'Temperature',
+  precipitation: 'Rainfall',
+};
+
 const STATE_LABEL: Record<LayerState['state'], string> = {
   live: 'LIVE',
   cache: 'CACHED',
@@ -33,6 +40,13 @@ export function LayerPanel(p: {
   onToggleStationLabels?(): void;
   /** Live events, so a layer's ⓘ can state what is actually active right now. */
   events?: PulseEvent[];
+  /* ---- weather surface parameters, nested under the weather layer row ---- */
+  weatherVar?: WeatherVar;
+  onWeatherVarChange?(v: WeatherVar): void;
+  weatherOpacity?: number;
+  onWeatherOpacityChange?(v: number): void;
+  showWeatherValues?: boolean;
+  onToggleWeatherValues?(): void;
 }): JSX.Element {
   const layers = p.layers ?? [];
   // Bumped key ('layers' -> 'layers.v2') because the DEFAULT flipped to collapsed:
@@ -145,12 +159,22 @@ export function LayerPanel(p: {
             const infoOpen = openInfo === layer.id;
             const showLabelRow = layer.id === 'crowd' && typeof p.onToggleStationLabels === 'function';
             const labelsOn = p.showStationLabels !== false;
+            const isWeather = layer.id === 'weather';
+            const wxVar: WeatherVar = p.weatherVar ?? 'temperature';
+            const wxOpacity = typeof p.weatherOpacity === 'number' ? p.weatherOpacity : 0.55;
+            const wxValues = !!p.showWeatherValues;
+            const showWeatherRows = isWeather && typeof p.onWeatherVarChange === 'function';
             return (
               <div key={layer.id} className="tp-layer-block">
                 <div className={`tp-layer-row${isOff ? ' tp-layer-off' : ''}`}>
                   <span className="tp-layer-main">
                     <span className="tp-layer-name-row">
-                      <span className="tp-layer-label">{layer.label}</span>
+                      <span className="tp-layer-label">
+                        {layer.label}
+                        {isWeather ? (
+                          <span className="tp-layer-label-var"> · {WEATHER_VAR_LABEL[wxVar]}</span>
+                        ) : null}
+                      </span>
                       {info ? (
                         <button
                           type="button"
@@ -216,6 +240,69 @@ export function LayerPanel(p: {
                       </a>
                     ) : null}
                   </div>
+                ) : null}
+
+                {/* Weather surface parameters, nested under their own layer. Shown as
+                    live controls while the layer is on; collapsed to one greyed
+                    summary row when it is off, so the panel stays quiet. */}
+                {showWeatherRows ? (
+                  on ? (
+                    <div className="tp-layer-subgroup">
+                      <div className="tp-layer-subrow">
+                        <span className="tp-layer-sublabel">Variable</span>
+                        <span className="tp-seg" role="radiogroup" aria-label="Weather variable">
+                          {(['temperature', 'precipitation'] as WeatherVar[]).map((key) => (
+                            <button
+                              key={key}
+                              type="button"
+                              role="radio"
+                              aria-checked={wxVar === key}
+                              className={`tp-seg-btn${wxVar === key ? ' tp-seg-btn-active' : ''}`}
+                              onClick={() => p.onWeatherVarChange?.(key)}
+                            >
+                              {WEATHER_VAR_LABEL[key]}
+                            </button>
+                          ))}
+                        </span>
+                      </div>
+
+                      <div className="tp-layer-subrow">
+                        <span className="tp-layer-sublabel">Opacity</span>
+                        <input
+                          type="range"
+                          className="tp-range"
+                          min={0.2}
+                          max={0.9}
+                          step={0.05}
+                          value={wxOpacity}
+                          aria-label="Weather surface opacity"
+                          onChange={(ev) => p.onWeatherOpacityChange?.(Number(ev.target.value))}
+                        />
+                        <span className="tp-layer-subvalue">{Math.round(wxOpacity * 100)}%</span>
+                      </div>
+
+                      <div className="tp-layer-subrow">
+                        <span className="tp-layer-sublabel">Show values</span>
+                        <button
+                          type="button"
+                          className={`tp-toggle-switch tp-toggle-switch-sm${wxValues ? ' tp-toggle-on' : ''}`}
+                          role="switch"
+                          aria-checked={wxValues}
+                          aria-label="Show weather values at lattice points"
+                          title="Numbers are printed at the real lattice points, not at interpolated positions"
+                          onClick={() => p.onToggleWeatherValues?.()}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="tp-layer-subrow tp-layer-off">
+                      <span className="tp-layer-sublabel">
+                        {WEATHER_VAR_LABEL[wxVar]} · {Math.round(wxOpacity * 100)}%
+                        {wxValues ? ' · values on' : ''}
+                      </span>
+                      <span className="tp-layer-subvalue">layer off</span>
+                    </div>
+                  )
                 ) : null}
 
                 {/* Station names ride on the crowd markers: no markers, no labels. */}

@@ -65,7 +65,6 @@ const GSI_FLOOD = env.VITE_GSI_FLOOD_TILES
 const COLLAPSE_STORAGE_KEY = 'tp.collapsed.map.v2';
 const BASEMAP_STORAGE_KEY = 'tp.basemap.v3';
 const LABELS_STORAGE_KEY = 'tp.basemapLabels.v3';
-const WX_VALUES_KEY = 'tp.wxValues';
 
 export interface MapHandle {
   flyTo(lat: number, lon: number, height?: number): void;
@@ -84,6 +83,12 @@ export interface CesiumViewerProps {
   /** Presenter toggle for station name labels. Owned by App/LayerPanel (A8);
    *  the map only consumes it. Defaults to on when the prop is absent. */
   showStationLabels?: boolean;
+  /** Weather surface controls. Owned by App/LayerPanel (A8); the map consumes
+   *  them. A8's vocabulary is 'temperature'; the payload field is
+   *  'temperature_2m', so the two are mapped at this boundary and nowhere else. */
+  weatherVar?: 'temperature' | 'precipitation';
+  weatherOpacity?: number;
+  showWeatherValues?: boolean;
   onLinePick?(lineId: string): void;
   onStats?(stats: Record<string, number>): void;
 }
@@ -131,13 +136,13 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   const busRouteDsRef = useRef<Cesium.CustomDataSource | null>(null);
   const weatherLayerRef = useRef<Cesium.ImageryLayer | null>(null);
   const [wxGrid, setWxGrid] = useState<WeatherGrid | null>(null);
-  const [wxVar, setWxVar] = useState<WeatherVar>('temperature_2m');
-  const [wxAlpha, setWxAlpha] = useState(0.55);
   const [wxProbe, setWxProbe] = useState<number | null>(null);
-  const [wxValues, setWxValues] = useState<boolean>(() => {
-    try { return window.localStorage.getItem(WX_VALUES_KEY) === '1'; } catch { return false; }
-  });
   const wxValuesDsRef = useRef<Cesium.CustomDataSource | null>(null);
+  const wxVar: WeatherVar = props.weatherVar === 'precipitation' ? 'precipitation' : 'temperature_2m';
+  const wxAlpha = typeof props.weatherOpacity === 'number'
+    ? Math.max(0, Math.min(1, props.weatherOpacity))
+    : 0.55;
+  const wxValues = props.showWeatherValues === true;
   const [buses, setBuses] = useState<BusCollection | null>(null);
   const [selectedBusId, setSelectedBusId] = useState<string | null>(null);
   const [selectedBusRouteId, setSelectedBusRouteId] = useState<string | null>(null);
@@ -979,9 +984,9 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     }
   }, [ready, weatherOn, wxGrid, wxVar, wxValues]);
 
-  useEffect(() => {
-    try { window.localStorage.setItem(WX_VALUES_KEY, wxValues ? '1' : '0'); } catch { /* private window */ }
-  }, [wxValues]);
+  // A probe reading is variable-specific: a temperature left on screen and
+  // relabelled "mm" would be a small but real lie. Clear it on every switch.
+  useEffect(() => { setWxProbe(null); }, [wxVar]);
 
   // Turning the weather layer on from the LayerPanel brings controls with it
   // (variable, opacity, values). The MAP cluster is collapsed by default, so
@@ -1131,59 +1136,23 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
               const r = range(wxGrid, wxVar);
               const unit = wxGrid.units?.[wxVar] || '';
               const isTemp = wxVar === 'temperature_2m';
+              // READOUT ONLY. The controls (variable, opacity, values) live in
+              // the Layers panel and arrive here as props — two sets of controls
+              // for one layer would drift out of sync.
               return (
                 <div className="map-wx" aria-label="Weather surface legend">
                   <div className="map-wx-row">
                     <span className="map-wx-title">WEATHER</span>
-                    <span className="map-wx-seg" role="group" aria-label="Variable">
-                      <button
-                        type="button"
-                        className={isTemp ? 'is-active' : ''}
-                        onClick={() => { setWxProbe(null); setWxVar('temperature_2m'); }}
-                      >
-                        TEMP
-                      </button>
-                      <button
-                        type="button"
-                        className={!isTemp ? 'is-active' : ''}
-                        onClick={() => { setWxProbe(null); setWxVar('precipitation'); }}
-                      >
-                        RAIN
-                      </button>
-                    </span>
+                    <span className="map-wx-var">{isTemp ? 'TEMPERATURE' : 'PRECIPITATION'}</span>
                   </div>
                   <div className={'map-wx-ramp' + (isTemp ? ' is-temp' : ' is-precip')} />
                   <div className="map-wx-row map-wx-scale">
                     <span>{r.min.toFixed(1)}{unit}</span>
-                    {/* Cleared on every variable switch: a temperature reading
-                        re-labelled "mm" would be a small but real lie. */}
                     {wxProbe !== null && (
                       <span className="map-wx-probe">{wxProbe.toFixed(1)}{unit}</span>
                     )}
                     <span>{r.max.toFixed(1)}{unit}</span>
                   </div>
-                  <button
-                    type="button"
-                    className={'map-wx-values' + (wxValues ? ' is-active' : '')}
-                    aria-pressed={wxValues}
-                    onClick={() => setWxValues((o) => !o)}
-                    title={'Print the sampled ' + (isTemp ? 'temperatures' : 'rainfall')
-                      + ' at the model grid points'}
-                  >
-                    <span className="map-basemap-switch" />
-                    Show values
-                  </button>
-                  <label className="map-wx-row map-wx-opacity">
-                    OPACITY
-                    <input
-                      type="range"
-                      min={0}
-                      max={100}
-                      value={Math.round(wxAlpha * 100)}
-                      onChange={(e) => setWxAlpha(Number(e.target.value) / 100)}
-                      aria-label="Weather surface opacity"
-                    />
-                  </label>
                   <div className="map-wx-note">
                     {isTemp
                       ? 'Bilinearly interpolated between a 7×9 lattice — smoothing only, no added detail. Model resolution ~5km.'
