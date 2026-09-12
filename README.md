@@ -4,6 +4,8 @@ A live Tokyo city-operations map, built in a 2-hour hackathon (Daytona HackSprin
 
 The question it answers: *"what's happening around me right now, what happened earlier, and what's coming?"*
 
+![TokyoPulse — live Tokyo city-operations map: rail lines, earthquakes, JMA warnings and flood hazard on one CesiumJS globe, with the city feed and LLM brief on the right](doc/img/screenshot.png)
+
 This is demo-grade code, built for a live 2-minute demo — not production. No auth, no persistence guarantees, no hardening. See `demo-runbook.md` for how to run and present it, `doc/prd.md` for the product spec, and `doc/arch.md` for the full architecture writeup.
 
 ---
