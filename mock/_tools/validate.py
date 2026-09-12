@@ -156,6 +156,49 @@ def main():
     else:
         ok(f"forecast.json nowIndex={forecast_doc['nowIndex']} within {len(forecast_doc['hourly'])} hourly entries")
 
+    # --- peopleflow.geojson: proxy crowd layer, must be honestly labelled ---
+    pf_path = os.path.join(MOCK_DIR, "peopleflow.geojson")
+    if not os.path.exists(pf_path):
+        err("peopleflow.geojson: file missing")
+    else:
+        pf_doc = load("peopleflow.geojson")
+        check_meta(pf_doc, "peopleflow.geojson")
+        if pf_doc.get("type") != "FeatureCollection":
+            err("peopleflow.geojson: not a FeatureCollection")
+        note = pf_doc.get("_note")
+        if not note or "not real" not in note.lower() and "licence-gated" not in note.lower() and "proxy" not in note.lower():
+            err("peopleflow.geojson: top-level _note missing or doesn't plainly disclose this is a non-real proxy")
+        meta_note = pf_doc.get("meta", {}).get("note") or ""
+        if "proxy" not in meta_note.lower() and "not real" not in meta_note.lower():
+            err("peopleflow.geojson: meta.note doesn't disclose this is a proxy")
+        pf_bad_coords = []
+        bad_band = 0
+        bad_label = 0
+        for f in pf_doc.get("features", []):
+            geom = f.get("geometry", {})
+            if geom.get("type") != "Polygon":
+                err(f"peopleflow.geojson: non-Polygon feature geometry {geom.get('type')}")
+                continue
+            for ring in geom.get("coordinates", []):
+                for lon, lat in ring:
+                    if not in_bounds(lon, lat):
+                        pf_bad_coords.append((lon, lat))
+            props = f.get("properties", {})
+            band = props.get("band")
+            if not isinstance(band, int) or not (1 <= band <= 5):
+                bad_band += 1
+            label = props.get("label") or ""
+            if "typical pattern" not in label.lower() and "proxy" not in label.lower() and "not real" not in label.lower():
+                bad_label += 1
+        if pf_bad_coords:
+            err(f"peopleflow.geojson: {len(pf_bad_coords)} out-of-bounds coordinates, sample {pf_bad_coords[:5]}")
+        if bad_band:
+            err(f"peopleflow.geojson: {bad_band} features with invalid 'band' (must be int 1..5)")
+        if bad_label:
+            err(f"peopleflow.geojson: {bad_label} features whose 'label' doesn't read as a non-real proxy")
+        if not pf_bad_coords and not bad_band and not bad_label and note:
+            ok(f"peopleflow.geojson: {len(pf_doc.get('features', []))} features, all in-bounds, bands valid, honestly labelled ('{note[:60]}...')")
+
     print()
     print(f"WARNINGS: {len(warnings)}")
     for w in warnings:

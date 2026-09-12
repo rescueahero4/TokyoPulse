@@ -35,7 +35,7 @@
         "value": 22554.8,
         "band": 1,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -71,7 +71,7 @@
         "value": 25309.5,
         "band": 1,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -107,7 +107,7 @@
         "value": 44048.2,
         "band": 2,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -143,7 +143,7 @@
         "value": 49788.7,
         "band": 2,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -179,7 +179,7 @@
         "value": 36617.5,
         "band": 1,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -215,7 +215,7 @@
         "value": 36351.5,
         "band": 1,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -251,7 +251,7 @@
         "value": 65946.8,
         "band": 2,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -287,7 +287,7 @@
         "value": 78051.9,
         "band": 2,
         "ward": "Ota",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -323,7 +323,7 @@
         "value": 60613.0,
         "band": 2,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -359,7 +359,7 @@
         "value": 30940.2,
         "band": 1,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -395,7 +395,7 @@
         "value": 38786.4,
         "band": 1,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -431,7 +431,7 @@
         "value": 75030.0,
         "band": 2,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -467,7 +467,7 @@
         "value": 95810.8,
         "band": 3,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -503,7 +503,7 @@
         "value": 81886.1,
         "band": 3,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -539,7 +539,7 @@
         "value": 47058.2,
         "band": 2,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -575,7 +575,7 @@
         "value": 34935.7,
         "band": 1,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -611,7 +611,7 @@
         "value": 74783.4,
         "band": 2,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -647,7 +647,7 @@
         "value": 108913.3,
         "band": 3,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -683,7 +683,7 @@
         "value": 107636.9,
         "band": 3,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -719,7 +719,7 @@
         "value": 75866.9,
         "band": 2,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -755,7 +755,7 @@
         "value": 40590.5,
         "band": 1,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -791,7 +791,7 @@
         "value": 33577.6,
         "band": 1,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -827,7 +827,7 @@
         "value": 82921.8,
         "band": 3,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -863,7 +863,7 @@
         "value": 138671.1,
         "band": 4,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -899,7 +899,7 @@
         "value": 165281.7,
         "band": 4,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -935,7 +935,7 @@
         "value": 147291.2,
         "band": 4,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -971,7 +971,7 @@
         "value": 104308.2,
         "band": 3,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1007,7 +1007,7 @@
         "value": 58213.9,
         "band": 2,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1043,7 +1043,7 @@
         "value": 24220.8,
         "band": 1,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1079,7 +1079,7 @@
         "value": 38413.4,
         "band": 1,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1115,7 +1115,7 @@
         "value": 101798.4,
         "band": 3,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1151,7 +1151,7 @@
         "value": 191074.4,
         "band": 4,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1187,7 +1187,7 @@
         "value": 263725.1,
         "band": 4,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1223,7 +1223,7 @@
         "value": 284329.0,
         "band": 4,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1259,7 +1259,7 @@
         "value": 245282.2,
         "band": 4,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1295,7 +1295,7 @@
         "value": 164046.2,
         "band": 4,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1331,7 +1331,7 @@
         "value": 82231.3,
         "band": 3,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1367,7 +1367,7 @@
         "value": 31225.4,
         "band": 1,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1403,7 +1403,7 @@
         "value": 39921.7,
         "band": 1,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1439,7 +1439,7 @@
         "value": 112642.8,
         "band": 3,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1475,7 +1475,7 @@
         "value": 228494.6,
         "band": 4,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1511,7 +1511,7 @@
         "value": 357616.5,
         "band": 4,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1547,7 +1547,7 @@
         "value": 453596.7,
         "band": 5,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1583,7 +1583,7 @@
         "value": 459542.3,
         "band": 5,
         "ward": "Shinagawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1619,7 +1619,7 @@
         "value": 356525.2,
         "band": 4,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1655,7 +1655,7 @@
         "value": 207980.6,
         "band": 4,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1691,7 +1691,7 @@
         "value": 95066.5,
         "band": 3,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1727,7 +1727,7 @@
         "value": 37937.9,
         "band": 1,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1763,7 +1763,7 @@
         "value": 32560.1,
         "band": 1,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1799,7 +1799,7 @@
         "value": 96464.9,
         "band": 3,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1835,7 +1835,7 @@
         "value": 215341.7,
         "band": 4,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1871,7 +1871,7 @@
         "value": 388399.1,
         "band": 5,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1907,7 +1907,7 @@
         "value": 576176.2,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1943,7 +1943,7 @@
         "value": 675856.1,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -1979,7 +1979,7 @@
         "value": 603490.3,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2015,7 +2015,7 @@
         "value": 410637.7,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2051,7 +2051,7 @@
         "value": 225843.9,
         "band": 4,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2087,7 +2087,7 @@
         "value": 109248.1,
         "band": 3,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2123,7 +2123,7 @@
         "value": 46869.5,
         "band": 2,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2159,7 +2159,7 @@
         "value": 30494.2,
         "band": 1,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2195,7 +2195,7 @@
         "value": 79932.7,
         "band": 2,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2231,7 +2231,7 @@
         "value": 183595.5,
         "band": 4,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2267,7 +2267,7 @@
         "value": 364492.3,
         "band": 4,
         "ward": "Meguro",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2303,7 +2303,7 @@
         "value": 605628.9,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2339,7 +2339,7 @@
         "value": 800647.8,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2375,7 +2375,7 @@
         "value": 814876.8,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2411,7 +2411,7 @@
         "value": 643537.3,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2447,7 +2447,7 @@
         "value": 417384.5,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2483,7 +2483,7 @@
         "value": 237078.0,
         "band": 4,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2519,7 +2519,7 @@
         "value": 118965.1,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2555,7 +2555,7 @@
         "value": 48984.8,
         "band": 2,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2591,7 +2591,7 @@
         "value": 31575.9,
         "band": 1,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2627,7 +2627,7 @@
         "value": 66793.4,
         "band": 2,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2663,7 +2663,7 @@
         "value": 117064.1,
         "band": 3,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2699,7 +2699,7 @@
         "value": 197783.2,
         "band": 4,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2735,7 +2735,7 @@
         "value": 342673.3,
         "band": 4,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2771,7 +2771,7 @@
         "value": 565256.2,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2807,7 +2807,7 @@
         "value": 794814.3,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2843,7 +2843,7 @@
         "value": 905455.7,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2879,7 +2879,7 @@
         "value": 821713.8,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2915,7 +2915,7 @@
         "value": 616726.9,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2951,7 +2951,7 @@
         "value": 402073.1,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -2987,7 +2987,7 @@
         "value": 231306.6,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3023,7 +3023,7 @@
         "value": 112851.5,
         "band": 3,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3059,7 +3059,7 @@
         "value": 47659.6,
         "band": 2,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3095,7 +3095,7 @@
         "value": 37385.6,
         "band": 1,
         "ward": "Setagaya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3131,7 +3131,7 @@
         "value": 101885.1,
         "band": 3,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3167,7 +3167,7 @@
         "value": 193450.1,
         "band": 4,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3203,7 +3203,7 @@
         "value": 267881.2,
         "band": 4,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3239,7 +3239,7 @@
         "value": 310329.1,
         "band": 4,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3275,7 +3275,7 @@
         "value": 370258.8,
         "band": 5,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3311,7 +3311,7 @@
         "value": 506415.6,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3347,7 +3347,7 @@
         "value": 711270.0,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3383,7 +3383,7 @@
         "value": 886165.9,
         "band": 5,
         "ward": "Minato",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3419,7 +3419,7 @@
         "value": 912143.8,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3455,7 +3455,7 @@
         "value": 782144.4,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3491,7 +3491,7 @@
         "value": 583255.6,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3527,7 +3527,7 @@
         "value": 384806.5,
         "band": 5,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3563,7 +3563,7 @@
         "value": 218309.3,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3599,7 +3599,7 @@
         "value": 109841.6,
         "band": 3,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3635,7 +3635,7 @@
         "value": 58178.5,
         "band": 2,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3671,7 +3671,7 @@
         "value": 44761.5,
         "band": 2,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3707,7 +3707,7 @@
         "value": 47251.2,
         "band": 2,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3743,7 +3743,7 @@
         "value": 51396.0,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3779,7 +3779,7 @@
         "value": 48770.5,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3815,7 +3815,7 @@
         "value": 39563.6,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3851,7 +3851,7 @@
         "value": 26971.6,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3887,7 +3887,7 @@
         "value": 22529.1,
         "band": 1,
         "ward": "Suginami",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3923,7 +3923,7 @@
         "value": 85467.3,
         "band": 3,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3959,7 +3959,7 @@
         "value": 225421.9,
         "band": 4,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -3995,7 +3995,7 @@
         "value": 411253.9,
         "band": 5,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4031,7 +4031,7 @@
         "value": 526134.9,
         "band": 5,
         "ward": "Shibuya",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4067,7 +4067,7 @@
         "value": 512156.1,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4103,7 +4103,7 @@
         "value": 458492.4,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4139,7 +4139,7 @@
         "value": 496638.0,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4175,7 +4175,7 @@
         "value": 667002.8,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4211,7 +4211,7 @@
         "value": 877920.9,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4247,7 +4247,7 @@
         "value": 985915.1,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4283,7 +4283,7 @@
         "value": 936146.9,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4319,7 +4319,7 @@
         "value": 779363.0,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4355,7 +4355,7 @@
         "value": 570240.7,
         "band": 5,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4391,7 +4391,7 @@
         "value": 358287.1,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4427,7 +4427,7 @@
         "value": 202607.0,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4463,7 +4463,7 @@
         "value": 120822.1,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4499,7 +4499,7 @@
         "value": 92454.5,
         "band": 3,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4535,7 +4535,7 @@
         "value": 89954.6,
         "band": 3,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4571,7 +4571,7 @@
         "value": 94766.6,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4607,7 +4607,7 @@
         "value": 92404.8,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4643,7 +4643,7 @@
         "value": 81084.5,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4679,7 +4679,7 @@
         "value": 61377.1,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4715,7 +4715,7 @@
         "value": 37011.1,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4751,7 +4751,7 @@
         "value": 36145.9,
         "band": 1,
         "ward": "Suginami",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4787,7 +4787,7 @@
         "value": 130771.8,
         "band": 4,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4823,7 +4823,7 @@
         "value": 332270.0,
         "band": 4,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4859,7 +4859,7 @@
         "value": 588451.1,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4895,7 +4895,7 @@
         "value": 730657.9,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4931,7 +4931,7 @@
         "value": 670733.5,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -4967,7 +4967,7 @@
         "value": 543745.4,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5003,7 +5003,7 @@
         "value": 539910.1,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5039,7 +5039,7 @@
         "value": 711027.9,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5075,7 +5075,7 @@
         "value": 939603.1,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5111,7 +5111,7 @@
         "value": 1074056.1,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5147,7 +5147,7 @@
         "value": 1062603.3,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5183,7 +5183,7 @@
         "value": 937196.9,
         "band": 5,
         "ward": "Chuo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5219,7 +5219,7 @@
         "value": 727704.3,
         "band": 5,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5255,7 +5255,7 @@
         "value": 488889.9,
         "band": 5,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5291,7 +5291,7 @@
         "value": 294526.1,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5327,7 +5327,7 @@
         "value": 179785.3,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5363,7 +5363,7 @@
         "value": 128933.9,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5399,7 +5399,7 @@
         "value": 114216.8,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5435,7 +5435,7 @@
         "value": 114198.7,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5471,7 +5471,7 @@
         "value": 116083.6,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5507,7 +5507,7 @@
         "value": 113071.0,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5543,7 +5543,7 @@
         "value": 97079.3,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5579,7 +5579,7 @@
         "value": 65815.2,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5615,7 +5615,7 @@
         "value": 32878.3,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5651,7 +5651,7 @@
         "value": 41792.1,
         "band": 1,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5687,7 +5687,7 @@
         "value": 139522.1,
         "band": 4,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5723,7 +5723,7 @@
         "value": 333915.3,
         "band": 4,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5759,7 +5759,7 @@
         "value": 568333.0,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5795,7 +5795,7 @@
         "value": 689564.3,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5831,7 +5831,7 @@
         "value": 629312.5,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5867,7 +5867,7 @@
         "value": 518612.9,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5903,7 +5903,7 @@
         "value": 544931.0,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5939,7 +5939,7 @@
         "value": 736970.0,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -5975,7 +5975,7 @@
         "value": 959520.6,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6011,7 +6011,7 @@
         "value": 1069220.1,
         "band": 5,
         "ward": "Chiyoda",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6047,7 +6047,7 @@
         "value": 1051333.5,
         "band": 5,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6083,7 +6083,7 @@
         "value": 949559.5,
         "band": 5,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6119,7 +6119,7 @@
         "value": 774323.6,
         "band": 5,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6155,7 +6155,7 @@
         "value": 554209.1,
         "band": 5,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6191,7 +6191,7 @@
         "value": 352026.4,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6227,7 +6227,7 @@
         "value": 207622.9,
         "band": 4,
         "ward": "Koto",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6263,7 +6263,7 @@
         "value": 128314.6,
         "band": 4,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6299,7 +6299,7 @@
         "value": 97171.7,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6335,7 +6335,7 @@
         "value": 91698.8,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6371,7 +6371,7 @@
         "value": 98972.7,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6407,7 +6407,7 @@
         "value": 111221.5,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6443,7 +6443,7 @@
         "value": 110516.3,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6479,7 +6479,7 @@
         "value": 86054.0,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6515,7 +6515,7 @@
         "value": 50833.6,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6551,7 +6551,7 @@
         "value": 24050.9,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6587,7 +6587,7 @@
         "value": 41528.5,
         "band": 1,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6623,7 +6623,7 @@
         "value": 115616.5,
         "band": 3,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6659,7 +6659,7 @@
         "value": 246254.8,
         "band": 4,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6695,7 +6695,7 @@
         "value": 387431.7,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6731,7 +6731,7 @@
         "value": 451064.8,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6767,7 +6767,7 @@
         "value": 414594.2,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6803,7 +6803,7 @@
         "value": 373118.6,
         "band": 5,
         "ward": "Shinjuku",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6839,7 +6839,7 @@
         "value": 446296.0,
         "band": 5,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6875,7 +6875,7 @@
         "value": 638476.8,
         "band": 5,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6911,7 +6911,7 @@
         "value": 817923.5,
         "band": 5,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6947,7 +6947,7 @@
         "value": 879778.8,
         "band": 5,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -6983,7 +6983,7 @@
         "value": 847890.0,
         "band": 5,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7019,7 +7019,7 @@
         "value": 780724.8,
         "band": 5,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7055,7 +7055,7 @@
         "value": 679296.8,
         "band": 5,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7091,7 +7091,7 @@
         "value": 531114.2,
         "band": 5,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7127,7 +7127,7 @@
         "value": 356085.9,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7163,7 +7163,7 @@
         "value": 199417.1,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7199,7 +7199,7 @@
         "value": 100531.7,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7235,7 +7235,7 @@
         "value": 58653.6,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7271,7 +7271,7 @@
         "value": 49868.9,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7307,7 +7307,7 @@
         "value": 59604.4,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7343,7 +7343,7 @@
         "value": 80405.3,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7379,7 +7379,7 @@
         "value": 95394.3,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7415,7 +7415,7 @@
         "value": 89603.4,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7451,7 +7451,7 @@
         "value": 67997.6,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7487,7 +7487,7 @@
         "value": 43436.7,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7523,7 +7523,7 @@
         "value": 22408.5,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7559,7 +7559,7 @@
         "value": 24305.3,
         "band": 1,
         "ward": "Suginami",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7595,7 +7595,7 @@
         "value": 50718.2,
         "band": 2,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7631,7 +7631,7 @@
         "value": 96630.1,
         "band": 3,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7667,7 +7667,7 @@
         "value": 159111.5,
         "band": 4,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7703,7 +7703,7 @@
         "value": 210607.7,
         "band": 4,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7739,7 +7739,7 @@
         "value": 222313.4,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7775,7 +7775,7 @@
         "value": 206163.6,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7811,7 +7811,7 @@
         "value": 218361.2,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7847,7 +7847,7 @@
         "value": 310713.0,
         "band": 4,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7883,7 +7883,7 @@
         "value": 463126.3,
         "band": 5,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7919,7 +7919,7 @@
         "value": 577637.0,
         "band": 5,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7955,7 +7955,7 @@
         "value": 595962.3,
         "band": 5,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -7991,7 +7991,7 @@
         "value": 556231.7,
         "band": 5,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8027,7 +8027,7 @@
         "value": 517325.9,
         "band": 5,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8063,7 +8063,7 @@
         "value": 481752.5,
         "band": 5,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8099,7 +8099,7 @@
         "value": 411712.3,
         "band": 5,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8135,7 +8135,7 @@
         "value": 291981.1,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8171,7 +8171,7 @@
         "value": 158105.7,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8207,7 +8207,7 @@
         "value": 66658.8,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8243,7 +8243,7 @@
         "value": 27701.1,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8279,7 +8279,7 @@
         "value": 26684.6,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8315,7 +8315,7 @@
         "value": 45345.4,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8351,7 +8351,7 @@
         "value": 66631.3,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8387,7 +8387,7 @@
         "value": 80562.3,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8423,7 +8423,7 @@
         "value": 81649.7,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8459,7 +8459,7 @@
         "value": 66129.4,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8495,7 +8495,7 @@
         "value": 39299.8,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8531,7 +8531,7 @@
         "value": 24159.8,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8567,7 +8567,7 @@
         "value": 28002.3,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8603,7 +8603,7 @@
         "value": 54158.3,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8639,7 +8639,7 @@
         "value": 80754.3,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8675,7 +8675,7 @@
         "value": 102679.2,
         "band": 3,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8711,7 +8711,7 @@
         "value": 117200.7,
         "band": 3,
         "ward": "Nakano",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8747,7 +8747,7 @@
         "value": 117616.3,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8783,7 +8783,7 @@
         "value": 105533.1,
         "band": 3,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8819,7 +8819,7 @@
         "value": 103958.7,
         "band": 3,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8855,7 +8855,7 @@
         "value": 142583.1,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8891,7 +8891,7 @@
         "value": 226890.5,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8927,7 +8927,7 @@
         "value": 323114.3,
         "band": 4,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8963,7 +8963,7 @@
         "value": 376125.5,
         "band": 5,
         "ward": "Bunkyo",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -8999,7 +8999,7 @@
         "value": 363769.0,
         "band": 4,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9035,7 +9035,7 @@
         "value": 318507.9,
         "band": 4,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9071,7 +9071,7 @@
         "value": 282334.1,
         "band": 4,
         "ward": "Taito",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9107,7 +9107,7 @@
         "value": 265237.6,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9143,7 +9143,7 @@
         "value": 239704.3,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9179,7 +9179,7 @@
         "value": 176601.8,
         "band": 4,
         "ward": "Sumida",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9215,7 +9215,7 @@
         "value": 94339.9,
         "band": 3,
         "ward": "Katsushika",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9251,7 +9251,7 @@
         "value": 35928.2,
         "band": 1,
         "ward": "Katsushika",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9287,7 +9287,7 @@
         "value": 39881.2,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9323,7 +9323,7 @@
         "value": 63610.4,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9359,7 +9359,7 @@
         "value": 80457.8,
         "band": 3,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9395,7 +9395,7 @@
         "value": 74432.3,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9431,7 +9431,7 @@
         "value": 46857.6,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9467,7 +9467,7 @@
         "value": 29535.3,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9503,7 +9503,7 @@
         "value": 25152.0,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9539,7 +9539,7 @@
         "value": 54792.1,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9575,7 +9575,7 @@
         "value": 92135.2,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9611,7 +9611,7 @@
         "value": 117320.9,
         "band": 4,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9647,7 +9647,7 @@
         "value": 116965.9,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9683,7 +9683,7 @@
         "value": 99344.8,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9719,7 +9719,7 @@
         "value": 81456.2,
         "band": 3,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9755,7 +9755,7 @@
         "value": 72916.5,
         "band": 2,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9791,7 +9791,7 @@
         "value": 87860.1,
         "band": 3,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9827,7 +9827,7 @@
         "value": 133274.0,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9863,7 +9863,7 @@
         "value": 195912.3,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9899,7 +9899,7 @@
         "value": 241973.6,
         "band": 4,
         "ward": "Toshima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9935,7 +9935,7 @@
         "value": 249756.2,
         "band": 4,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -9971,7 +9971,7 @@
         "value": 224261.4,
         "band": 4,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10007,7 +10007,7 @@
         "value": 179376.3,
         "band": 4,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10043,7 +10043,7 @@
         "value": 136648.3,
         "band": 4,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10079,7 +10079,7 @@
         "value": 112387.0,
         "band": 3,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10115,7 +10115,7 @@
         "value": 97483.1,
         "band": 3,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10151,7 +10151,7 @@
         "value": 72548.9,
         "band": 2,
         "ward": "Katsushika",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10187,7 +10187,7 @@
         "value": 39012.3,
         "band": 1,
         "ward": "Katsushika",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10223,7 +10223,7 @@
         "value": 40336.6,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10259,7 +10259,7 @@
         "value": 57973.2,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10295,7 +10295,7 @@
         "value": 56786.3,
         "band": 2,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10331,7 +10331,7 @@
         "value": 36818.4,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10367,7 +10367,7 @@
         "value": 23346.9,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10403,7 +10403,7 @@
         "value": 45977.0,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10439,7 +10439,7 @@
         "value": 81534.4,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10475,7 +10475,7 @@
         "value": 114904.5,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10511,7 +10511,7 @@
         "value": 126645.9,
         "band": 4,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10547,7 +10547,7 @@
         "value": 110212.1,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10583,7 +10583,7 @@
         "value": 82867.0,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10619,7 +10619,7 @@
         "value": 68972.8,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10655,7 +10655,7 @@
         "value": 78765.1,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10691,7 +10691,7 @@
         "value": 107107.2,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10727,7 +10727,7 @@
         "value": 143087.6,
         "band": 4,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10763,7 +10763,7 @@
         "value": 169319.4,
         "band": 4,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10799,7 +10799,7 @@
         "value": 173610.1,
         "band": 4,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10835,7 +10835,7 @@
         "value": 159303.9,
         "band": 4,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10871,7 +10871,7 @@
         "value": 136085.7,
         "band": 4,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10907,7 +10907,7 @@
         "value": 103686.8,
         "band": 3,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10943,7 +10943,7 @@
         "value": 66538.3,
         "band": 2,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -10979,7 +10979,7 @@
         "value": 40641.7,
         "band": 1,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11015,7 +11015,7 @@
         "value": 28769.4,
         "band": 1,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11051,7 +11051,7 @@
         "value": 28275.2,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11087,7 +11087,7 @@
         "value": 28505.8,
         "band": 1,
         "ward": "Edogawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11123,7 +11123,7 @@
         "value": 32728.7,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11159,7 +11159,7 @@
         "value": 65083.0,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11195,7 +11195,7 @@
         "value": 95452.6,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11231,7 +11231,7 @@
         "value": 109867.4,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11267,7 +11267,7 @@
         "value": 102622.7,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11303,7 +11303,7 @@
         "value": 80985.2,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11339,7 +11339,7 @@
         "value": 65035.2,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11375,7 +11375,7 @@
         "value": 72288.9,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11411,7 +11411,7 @@
         "value": 100179.6,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11447,7 +11447,7 @@
         "value": 127166.9,
         "band": 4,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11483,7 +11483,7 @@
         "value": 136126.6,
         "band": 4,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11519,7 +11519,7 @@
         "value": 126583.8,
         "band": 4,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11555,7 +11555,7 @@
         "value": 107538.0,
         "band": 3,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11591,7 +11591,7 @@
         "value": 91743.5,
         "band": 3,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11627,7 +11627,7 @@
         "value": 80314.2,
         "band": 2,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11663,7 +11663,7 @@
         "value": 62267.1,
         "band": 2,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11699,7 +11699,7 @@
         "value": 37061.1,
         "band": 1,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11735,7 +11735,7 @@
         "value": 36639.5,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11771,7 +11771,7 @@
         "value": 67654.1,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11807,7 +11807,7 @@
         "value": 87713.8,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11843,7 +11843,7 @@
         "value": 85669.5,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11879,7 +11879,7 @@
         "value": 70128.0,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11915,7 +11915,7 @@
         "value": 58194.7,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11951,7 +11951,7 @@
         "value": 63337.1,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -11987,7 +11987,7 @@
         "value": 88544.7,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12023,7 +12023,7 @@
         "value": 119106.8,
         "band": 4,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12059,7 +12059,7 @@
         "value": 128882.6,
         "band": 4,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12095,7 +12095,7 @@
         "value": 110089.7,
         "band": 3,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12131,7 +12131,7 @@
         "value": 79709.9,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12167,7 +12167,7 @@
         "value": 57333.6,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12203,7 +12203,7 @@
         "value": 51481.4,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12239,7 +12239,7 @@
         "value": 53005.7,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12275,7 +12275,7 @@
         "value": 45628.6,
         "band": 2,
         "ward": "Arakawa",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12311,7 +12311,7 @@
         "value": 26919.2,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12347,7 +12347,7 @@
         "value": 27370.7,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12383,7 +12383,7 @@
         "value": 49712.6,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12419,7 +12419,7 @@
         "value": 62645.5,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12455,7 +12455,7 @@
         "value": 60890.4,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12491,7 +12491,7 @@
         "value": 56199.6,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12527,7 +12527,7 @@
         "value": 62431.8,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12563,7 +12563,7 @@
         "value": 83527.9,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12599,7 +12599,7 @@
         "value": 110694.4,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12635,7 +12635,7 @@
         "value": 124630.7,
         "band": 4,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12671,7 +12671,7 @@
         "value": 111084.7,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12707,7 +12707,7 @@
         "value": 76399.3,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12743,7 +12743,7 @@
         "value": 43938.6,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12779,7 +12779,7 @@
         "value": 30278.4,
         "band": 1,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12815,7 +12815,7 @@
         "value": 36221.6,
         "band": 1,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12851,7 +12851,7 @@
         "value": 46470.5,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12887,7 +12887,7 @@
         "value": 43159.5,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12923,7 +12923,7 @@
         "value": 26810.9,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12959,7 +12959,7 @@
         "value": 27300.8,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -12995,7 +12995,7 @@
         "value": 39679.0,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13031,7 +13031,7 @@
         "value": 50158.0,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13067,7 +13067,7 @@
         "value": 64302.1,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13103,7 +13103,7 @@
         "value": 84993.1,
         "band": 3,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13139,7 +13139,7 @@
         "value": 107063.0,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13175,7 +13175,7 @@
         "value": 118883.8,
         "band": 4,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13211,7 +13211,7 @@
         "value": 110429.1,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13247,7 +13247,7 @@
         "value": 80721.8,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13283,7 +13283,7 @@
         "value": 45308.4,
         "band": 2,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13319,7 +13319,7 @@
         "value": 22515.1,
         "band": 1,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13355,7 +13355,7 @@
         "value": 31531.7,
         "band": 1,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13391,7 +13391,7 @@
         "value": 45470.1,
         "band": 2,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13427,7 +13427,7 @@
         "value": 43801.2,
         "band": 2,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13463,7 +13463,7 @@
         "value": 27093.4,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13499,7 +13499,7 @@
         "value": 28921.9,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13535,7 +13535,7 @@
         "value": 49635.5,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13571,7 +13571,7 @@
         "value": 74107.3,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13607,7 +13607,7 @@
         "value": 95758.8,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13643,7 +13643,7 @@
         "value": 106079.0,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13679,7 +13679,7 @@
         "value": 99672.2,
         "band": 3,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13715,7 +13715,7 @@
         "value": 77237.3,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13751,7 +13751,7 @@
         "value": 47338.7,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13787,7 +13787,7 @@
         "value": 22747.0,
         "band": 1,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13823,7 +13823,7 @@
         "value": 28178.6,
         "band": 1,
         "ward": "Kita",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13859,7 +13859,7 @@
         "value": 42229.0,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13895,7 +13895,7 @@
         "value": 40673.5,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13931,7 +13931,7 @@
         "value": 25161.1,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -13967,7 +13967,7 @@
         "value": 22398.0,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14003,7 +14003,7 @@
         "value": 42544.7,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14039,7 +14039,7 @@
         "value": 63499.7,
         "band": 2,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14075,7 +14075,7 @@
         "value": 76289.4,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14111,7 +14111,7 @@
         "value": 75365.7,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14147,7 +14147,7 @@
         "value": 61060.9,
         "band": 2,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14183,7 +14183,7 @@
         "value": 40392.3,
         "band": 1,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14219,7 +14219,7 @@
         "value": 24530.4,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14255,7 +14255,7 @@
         "value": 36738.9,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14291,7 +14291,7 @@
         "value": 35367.0,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14327,7 +14327,7 @@
         "value": 21883.7,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14363,7 +14363,7 @@
         "value": 25447.1,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14399,7 +14399,7 @@
         "value": 36666.3,
         "band": 1,
         "ward": "Nerima",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14435,7 +14435,7 @@
         "value": 41108.9,
         "band": 1,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14471,7 +14471,7 @@
         "value": 36798.5,
         "band": 1,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14507,7 +14507,7 @@
         "value": 26320.5,
         "band": 1,
         "ward": "Itabashi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14543,7 +14543,7 @@
         "value": 31577.5,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14579,7 +14579,7 @@
         "value": 30493.4,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14615,7 +14615,7 @@
         "value": 25308.7,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     },
     {
@@ -14651,13 +14651,13 @@
         "value": 24529.9,
         "band": 1,
         "ward": "Adachi",
-        "label": "typical pattern (derived from station ridership) -- Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
+        "label": "typical pattern (derived from station ridership, not real-time people-flow)"
       }
     }
   ],
   "meta": {
     "source": "mock",
-    "generatedAt": "2026-09-12T14:31:56+09:00",
+    "generatedAt": "2026-09-12T14:32:23+09:00",
     "degraded": true,
     "note": "Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
   }
