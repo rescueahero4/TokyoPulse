@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import type { Lang, Meta, PulseEvent } from '../lib/types';
 import { formatClockWithRelative } from './time';
+import { PanelHeader } from './PanelHeader';
+import { useCollapse } from './useCollapse';
 
 const TYPE_ICON: Record<string, string> = {
   quake: '\u{1F30D}', // 🌍
@@ -49,13 +51,19 @@ function groupRows(events: PulseEvent[]): Row[] {
   return rows;
 }
 
-export function Timeline(p: {
+/**
+ * The scrollable event feed, with no panel chrome of its own.
+ * Rendered both by `Timeline` (standalone panel, kept for the frozen contract)
+ * and by `CityFeed` (brief + pills + feed in one right-rail panel).
+ */
+export function TimelineFeed(p: {
   events: PulseEvent[];
   loading: boolean;
-  meta: Meta | null;
   selectedId: string | null;
   onSelect(e: PulseEvent): void;
   lang: Lang;
+  /** Shown instead of "No events" when a type filter has emptied the feed. */
+  emptyLabel?: string;
 }): JSX.Element {
   const events = p.events ?? [];
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -146,36 +154,68 @@ export function Timeline(p: {
   }
 
   return (
-    <div className="tp-panel tp-timeline">
-      <div className="tp-panel-header">
-        <span className="tp-panel-title">Timeline</span>
-        <span className="tp-chip-row">
-          {p.loading ? <span className="tp-chip tp-chip-muted">LOADING</span> : null}
-          {p.meta?.degraded ? <span className="tp-chip tp-chip-cached">CACHED</span> : null}
-        </span>
-      </div>
-      <div className="tp-timeline-list" role="list">
-        {events.length === 0 ? (
-          <div className="tp-empty-row">
-            {p.loading ? 'Loading events…' : 'No events'}
-          </div>
-        ) : (
+    <div className="tp-timeline-list" role="list">
+      {events.length === 0 ? (
+        <div className="tp-empty-row">
+          {p.loading ? 'Loading events…' : (p.emptyLabel ?? 'No events')}
+        </div>
+      ) : (
+        <>
+          {upcoming.length > 0 ? (
+            <>
+              <div className="tp-panel-subheader">Upcoming</div>
+              {upcoming.map((e) => renderEventRow(e, { upcoming: true }))}
+              <div className="tp-timeline-divider" role="separator">NOW</div>
+            </>
+          ) : null}
+          {rows.length === 0 ? (
+            <div className="tp-empty-row">No current events</div>
+          ) : (
+            rows.map((r) => (r.kind === 'single' ? renderEventRow(r.event) : renderGroupRow(r.events)))
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Standalone Timeline panel — kept exported at its frozen signature.
+ * The demo HUD now composes `CityFeed` (brief + pills + this feed) instead.
+ */
+export function Timeline(p: {
+  events: PulseEvent[];
+  loading: boolean;
+  meta: Meta | null;
+  selectedId: string | null;
+  onSelect(e: PulseEvent): void;
+  lang: Lang;
+}): JSX.Element {
+  const [collapsed, toggleCollapsed] = useCollapse('timeline');
+
+  return (
+    <div className={`tp-panel tp-timeline${collapsed ? ' tp-panel-collapsed' : ''}`}>
+      <PanelHeader
+        title="Timeline"
+        label="Timeline"
+        collapsed={collapsed}
+        onToggleCollapse={toggleCollapsed}
+        chips={
           <>
-            {upcoming.length > 0 ? (
-              <>
-                <div className="tp-panel-subheader">Upcoming</div>
-                {upcoming.map((e) => renderEventRow(e, { upcoming: true }))}
-                <div className="tp-timeline-divider" role="separator">NOW</div>
-              </>
-            ) : null}
-            {rows.length === 0 ? (
-              <div className="tp-empty-row">No current events</div>
-            ) : (
-              rows.map((r) => (r.kind === 'single' ? renderEventRow(r.event) : renderGroupRow(r.events)))
-            )}
+            {p.loading ? <span className="tp-chip tp-chip-muted">LOADING</span> : null}
+            {p.meta?.degraded ? <span className="tp-chip tp-chip-cached">CACHED</span> : null}
           </>
-        )}
-      </div>
+        }
+      />
+      {collapsed ? null : (
+        <TimelineFeed
+          events={p.events ?? []}
+          loading={p.loading}
+          selectedId={p.selectedId}
+          onSelect={p.onSelect}
+          lang={p.lang}
+        />
+      )}
     </div>
   );
 }

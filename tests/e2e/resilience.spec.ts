@@ -76,7 +76,7 @@ test.describe('Resilience: layers fail independently', () => {
     // ...and each shows SOME content: either a real value served by its own
     // fallback rung (mock/brief.json, mock/forecast.json are both checked in,
     // so the api.ts ladder recovers automatically) or an honest empty state.
-    const briefCard = page.locator('.tp-brief-card');
+    const briefCard = page.locator('.tp-cf-brief');
     await expect(briefCard).toBeVisible();
     const briefHasText = await briefCard.locator('.tp-brief-text').count();
     const briefHasEmpty = await briefCard.locator('.tp-empty-row').count();
@@ -105,16 +105,20 @@ test.describe('Resilience: layers fail independently', () => {
       await waitForViewer(page);
       await page.waitForTimeout(2000);
 
-      const timeline = page.locator('.tp-timeline');
-      await expect(timeline).toBeVisible({ timeout: 15000 });
+      // Timeline/BriefCard were merged into one right-rail "CityFeed" panel
+      // (web/src/panels/CityFeed.tsx) - .tp-timeline/.tp-brief-card are no
+      // longer rendered by App.tsx (still exported standalone per the frozen
+      // ui-contract, just unused). .tp-city-feed is the actual live rail.
+      const cityFeed = page.locator('.tp-city-feed');
+      await expect(cityFeed).toBeVisible({ timeout: 15000 });
 
       const panelSelectors = [
         '.tp-status-bar',
         '.tp-alert-banner-wrap',
         '.tp-line-search',
         '.tp-layer-panel',
-        '.tp-timeline',
-        '.tp-brief-card',
+        '.tp-left-column',
+        '.tp-city-feed',
         '.tp-forecast-strip',
       ];
 

@@ -10,8 +10,8 @@ import { renderCrowd } from './layers/crowd';
 import { addFloodLayer } from './layers/flood';
 import { renderPeopleFlow } from './layers/peopleflow';
 import {
-  BASEMAPS, DEFAULT_BASEMAP_ID, basemapById, buildBasemapLayer, buildFirstWorkingBasemap,
-  buildLabelOverlay,
+  BASEMAPS, DEFAULT_BASEMAP_ID, ION_TOKEN, SYNC_FALLBACK_ID, basemapById,
+  buildBasemapLayerAsync, buildFirstWorkingBasemap, buildLabelOverlay,
 } from './basemaps';
 
 /** Layer ids match GET /layers.json so LayerPanel toggles map 1:1 onto the map. */
@@ -30,8 +30,10 @@ const MAX_ZOOM_M = Number(env.VITE_MAP_MAX_ZOOM_M ?? 2_500_000) || 2_500_000;
 const GSI_FLOOD = env.VITE_GSI_FLOOD_TILES
   || 'https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png';
 
-const BASEMAP_STORAGE_KEY = 'tp.basemap';
-const LABELS_STORAGE_KEY = 'tp.basemapLabels';
+// Versioned: bumping the suffix retires a saved preference so a changed default
+// actually reaches the presenter's browser instead of losing to an old click.
+const BASEMAP_STORAGE_KEY = 'tp.basemap.v3';
+const LABELS_STORAGE_KEY = 'tp.basemapLabels.v3';
 
 export interface MapHandle {
   flyTo(lat: number, lon: number, height?: number): void;
@@ -69,6 +71,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   const floodRef = useRef<Cesium.ImageryLayer | null>(null);
   const baseLayerRef = useRef<Cesium.ImageryLayer | null>(null);
   const labelLayerRef = useRef<Cesium.ImageryLayer | null>(null);
+  const appliedBasemapRef = useRef<string>('');
   const linesRef = useRef<LineCollection | null>(null);
   const [fatal, setFatal] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -122,7 +125,9 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     }
 
     let viewer: Cesium.Viewer;
-    const { layer, def } = buildFirstWorkingBasemap(initialBasemapId());
+    // Startup is always synchronous and keyless: the canvas must never wait on a
+    // network round-trip to ion. The ion upgrade happens in the swap effect below.
+    const { layer, def } = buildFirstWorkingBasemap(SYNC_FALLBACK_ID);
     try {
       viewer = new Cesium.Viewer(hostRef.current, {
         baseLayer: layer,
@@ -152,10 +157,13 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     }
     viewerRef.current = viewer;
     baseLayerRef.current = layer;
-    if (def.id !== basemapId) setBasemapId(def.id);
+    appliedBasemapRef.current = def.id;
     // Exposed for QA / e2e probing. Read-only debugging handle, no secrets.
     (window as unknown as { __tpViewer?: Cesium.Viewer }).__tpViewer = viewer;
-    console.info('[map] viewer up, basemap=' + def.id);
+    console.info(
+      '[map] viewer up, imagery=' + def.id + ' (sync keyless boot), ion token '
+      + (ION_TOKEN ? 'present' : 'absent'),
+    );
     try {
       layer.imageryProvider.errorEvent.addEventListener((err: unknown) => {
         console.warn('[map] imagery tile error', err);
@@ -173,7 +181,10 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       scene.globe.showGroundAtmosphere = false;
       scene.globe.enableLighting = false;       // a lit globe dims our tiles; HUD wants flat
       scene.globe.depthTestAgainstTerrain = false;
-      scene.globe.maximumScreenSpaceError = 12; // less LOD work per frame
+      // NB: godseye's maximumScreenSpaceError 12-16 is on its 3D TILESETS, not the
+      // globe. Raising it on the globe visibly blurs the satellite imagery, and
+      // with the rail layer collapsed we no longer need to buy frames that way.
+      scene.globe.maximumScreenSpaceError = 2;
       scene.fog.enabled = false;
       scene.highDynamicRange = false;
       try { scene.postProcessStages.fxaa.enabled = false; } catch { /* optional stage */ }
@@ -271,29 +282,46 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
 
   // ---- basemap swap. The base layer always sits at index 0 so the label
   // overlay and the flood raster (both added above it) keep compositing.
+  // Async because the ion path is a network call; a failure leaves the current
+  // surface untouched rather than blanking the canvas.
   useEffect(() => {
     if (!ready) return;
     const viewer = viewerRef.current;
-    const current = baseLayerRef.current;
-    if (!viewer || !current) return;
+    if (!viewer) return;
+    if (appliedBasemapRef.current === basemapId) return;
     const def = basemapById(basemapId);
     if (!def) return;
-    try { window.localStorage.setItem(BASEMAP_STORAGE_KEY, def.id); } catch { /* ignore */ }
-    if (current.imageryProvider && (current.imageryProvider as { url?: string }).url === def.url) return;
-    try {
-      const built = buildBasemapLayer(def);
-      if (!built) return;
-      viewer.imageryLayers.add(built.layer, 0);
-      viewer.imageryLayers.remove(current, true);
-      baseLayerRef.current = built.layer;
-      built.layer.imageryProvider.errorEvent.addEventListener((err: unknown) => {
-        console.warn('[map] imagery tile error', err);
-      });
-      console.info('[map] basemap -> ' + def.id);
-      viewer.scene.requestRender();
-    } catch (e) {
-      console.warn('[map] basemap swap failed, keeping current surface', e);
-    }
+
+    let cancelled = false;
+    void (async () => {
+      let built = await buildBasemapLayerAsync(def);
+      if (!built && def.ion) {
+        // ion refused (bad/expired/rate-limited token): degrade to keyless Esri.
+        const fb = basemapById('satellite');
+        built = await buildBasemapLayerAsync(fb);
+        if (built) {
+          console.warn('[map] imagery=esri-fallback (ion unavailable)');
+          if (!cancelled) setBasemapId(fb.id);
+        }
+      }
+      if (!built || cancelled || !viewerRef.current) return;
+      const current = baseLayerRef.current;
+      try {
+        viewer.imageryLayers.add(built.layer, 0);
+        if (current) viewer.imageryLayers.remove(current, true);
+        baseLayerRef.current = built.layer;
+        appliedBasemapRef.current = built.def.id;
+        built.layer.imageryProvider.errorEvent.addEventListener((err: unknown) => {
+          console.warn('[map] imagery tile error', err);
+        });
+        console.info('[map] imagery=' + built.path);
+        viewer.scene.requestRender();
+      } catch (e) {
+        console.warn('[map] basemap swap failed, keeping current surface', e);
+      }
+    })();
+
+    return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, basemapId]);
 
@@ -443,6 +471,16 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     <div className="map-root">
       <div ref={hostRef} className="cesium-host" data-testid="cesium-host" />
 
+      {/* Rail status legend. Lines are painted in their official livery colour,
+          so status has to be readable as a modifier without explanation. */}
+      <div className="map-legend" aria-label="Rail line status legend">
+        <span className="map-legend-title">RAIL</span>
+        <span className="map-legend-item"><i className="map-legend-swatch is-normal" />normal</span>
+        <span className="map-legend-item"><i className="map-legend-swatch is-delay" />delay</span>
+        <span className="map-legend-item"><i className="map-legend-swatch is-suspended" />suspended</span>
+        <span className="map-legend-item"><i className="map-legend-swatch is-unknown" />no feed</span>
+      </div>
+
       {/* Basemap switcher — collapsed to one chip so it never covers the data
           plane or the panels. Opens upward, bottom-left of the forecast strip. */}
       <div className={'map-basemap' + (pickerOpen ? ' is-open' : '')}>
@@ -455,7 +493,13 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
                 role="option"
                 aria-selected={b.id === basemapId}
                 className={'map-basemap-opt' + (b.id === basemapId ? ' is-active' : '')}
-                onClick={() => { setBasemapId(b.id); setPickerOpen(false); }}
+                onClick={() => {
+                  // Persist only an explicit choice: an automatic ion->Esri
+                  // fallback must not become a sticky preference.
+                  try { window.localStorage.setItem(BASEMAP_STORAGE_KEY, b.id); } catch { /* ignore */ }
+                  setBasemapId(b.id);
+                  setPickerOpen(false);
+                }}
               >
                 <span className="map-basemap-swatch" data-bm={b.id} />
                 {b.label}

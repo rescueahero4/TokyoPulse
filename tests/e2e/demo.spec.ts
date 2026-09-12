@@ -69,17 +69,17 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await page.waitForTimeout(200);
 
     // time + language toggles
-    await page.getByRole('button', { name: '7d' }).click();
+    await page.locator('.tp-status-toggles').getByRole('button', { name: '7d', exact: true }).click();
     await page.waitForTimeout(600);
-    await page.getByRole('button', { name: 'Now' }).click();
+    await page.locator('.tp-status-toggles').getByRole('button', { name: 'Now', exact: true }).click();
     await page.waitForTimeout(600);
-    await page.getByRole('button', { name: 'JA' }).click();
+    await page.locator('.tp-status-toggles').getByRole('button', { name: 'JA', exact: true }).click();
     await page.waitForTimeout(300);
-    await page.getByRole('button', { name: 'EN' }).click();
+    await page.locator('.tp-status-toggles').getByRole('button', { name: 'EN', exact: true }).click();
     await page.waitForTimeout(300);
 
     // one layer toggle off/on
-    const firstCheckbox = page.locator('.tp-layer-row input[type="checkbox"]:not([disabled])').first();
+    const firstCheckbox = page.locator('.tp-layer-row .tp-toggle-switch:not([disabled])').first();
     if (await firstCheckbox.count()) {
       await firstCheckbox.scrollIntoViewIfNeeded();
       await firstCheckbox.click({ timeout: 20_000 });
@@ -222,7 +222,7 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await page.screenshot({ path: 'e2e/screenshots/02-line-search-impact.png', fullPage: true });
   });
 
-  test('7. Layer toggles: each checkbox flips off/on without throwing', async ({ page }) => {
+  test('7. Layer toggles: each switch flips off/on without throwing', async ({ page }) => {
     // This sandbox renders Cesium in software (no real GPU - "GPU stall due
     // to ReadPixels" in the console confirms it), so each toggle's re-render
     // can take 1-3.5s. That's an environment characteristic, not a bug; give
@@ -233,9 +233,9 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await waitForViewer(page);
     await page.waitForTimeout(1000);
 
-    const checkboxes = page.locator('.tp-layer-row input[type="checkbox"]');
+    const checkboxes = page.locator('.tp-layer-row .tp-toggle-switch');
     const n = await checkboxes.count();
-    expect(n, 'LayerPanel rendered zero checkboxes').toBeGreaterThan(0);
+    expect(n, 'LayerPanel rendered zero toggle switches').toBeGreaterThan(0);
 
     for (let i = 0; i < n; i++) {
       const cb = checkboxes.nth(i);
@@ -262,7 +262,7 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     const beforeCount = await page.locator('.tp-timeline-row').count();
     const beforeFirstTitle = await page.locator('.tp-timeline-title').first().textContent();
 
-    await page.getByRole('button', { name: '7d' }).click();
+    await page.locator('.tp-status-toggles').getByRole('button', { name: '7d', exact: true }).click();
     await page.waitForTimeout(2500);
     await expect(page.locator('.tp-timeline-row').first()).toBeVisible({ timeout: 20000 });
 
@@ -285,8 +285,15 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
 
     const svg = page.locator('.tp-forecast-svg');
     await expect(svg).toBeVisible({ timeout: 20000 });
-    const childCount = await svg.locator(':scope > *').count();
-    expect(childCount, `forecast SVG only has ${childCount} children - looks empty`).toBeGreaterThan(5);
+    // ForecastStrip.tsx renders the <svg> and its bars/path/marker in one
+    // commit, so a 0-child read right after "visible" is a render/poll race,
+    // not a real empty state (confirmed by re-running this in isolation and
+    // by manual inspection - see the QA-E2E report). Poll instead of a
+    // single-shot read so a transient race can't produce a false failure;
+    // the >5 threshold itself is unchanged.
+    await expect
+      .poll(() => svg.locator(':scope > *').count(), { timeout: 10_000 })
+      .toBeGreaterThan(5);
   });
 
   test('10. Brief card shows non-empty text and a provider label (demo beat 5)', async ({ page }) => {
@@ -294,7 +301,7 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await page.goto('/');
     await waitForViewer(page);
 
-    const brief = page.locator('.tp-brief-card');
+    const brief = page.locator('.tp-cf-brief');
     await expect(brief).toBeVisible();
 
     const text = brief.locator('.tp-brief-text');

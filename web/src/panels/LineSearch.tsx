@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import type { LineProps } from '../lib/types';
+import { PanelHeader } from './PanelHeader';
+import { useCollapse } from './useCollapse';
 
 const STATUS_COLOR: Record<LineProps['status'], string> = {
   normal: '#22c55e',
@@ -26,15 +28,20 @@ export function LineSearch(p: {
   selectedLineId: string | null;
 }): JSX.Element {
   const [open, setOpen] = useState(false);
+  const [collapsed, toggleCollapsed] = useCollapse('lines');
   const lines = p.lines ?? [];
   const results = lines.filter((l) => matches(l, p.value));
 
   return (
-    <div className="tp-panel tp-line-search">
-      <div className="tp-panel-header">
-        <span className="tp-panel-title">Lines</span>
-      </div>
-      <div className="tp-line-search-input-row">
+    <div className={`tp-panel tp-line-search${collapsed ? ' tp-panel-collapsed' : ''}`}>
+      <PanelHeader
+        title="Lines"
+        label="Lines"
+        collapsed={collapsed}
+        onToggleCollapse={toggleCollapsed}
+        chips={<span className="tp-chip tp-chip-count">{lines.length}</span>}
+      />
+      <div className="tp-line-search-input-row" hidden={collapsed}>
         <input
           type="text"
           className="tp-line-search-input"
@@ -58,7 +65,7 @@ export function LineSearch(p: {
           </button>
         ) : null}
       </div>
-      {open ? (
+      {open && !collapsed ? (
         <div className="tp-line-search-results" role="listbox">
           {results.length === 0 ? (
             <div className="tp-empty-row">No lines</div>

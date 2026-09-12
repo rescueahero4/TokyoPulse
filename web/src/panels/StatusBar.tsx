@@ -1,11 +1,12 @@
 import type { Lang, SandboxInfo, TimeWindow } from '../lib/types';
 
+// godseye neon palette (same semantics as ui-contract rule 5).
 const SANDBOX_DOT_COLOR: Record<string, string> = {
-  running: '#22c55e',
-  starting: '#f59e0b',
-  mock: '#38bdf8',
+  running: '#00ff41',
+  starting: '#ffaa00',
+  mock: '#00b4ff',
   stopped: '#6b7280',
-  failed: '#ef4444',
+  failed: '#ff3333',
 };
 
 export function StatusBar(p: {

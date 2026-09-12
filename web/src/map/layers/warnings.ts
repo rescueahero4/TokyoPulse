@@ -83,14 +83,20 @@ export function renderWarnings(
       group.forEach((j, i) => {
         const color = severityColor(j.severity);
         const isLead = j === lead;
-        // Fan duplicates out on a ~9px screen ring so each pin stays clickable.
+        // Fan duplicates out on a ~220m ring (PointGraphics has no pixelOffset, so
+        // the offset has to be geographic) — one pixel is ~40m at the home camera
+        // height, so this separates the pins without moving them off their ward.
         const angle = (i / Math.max(1, n)) * Math.PI * 2;
-        const offX = n > 1 ? Math.cos(angle) * 9 : 0;
-        const offY = n > 1 ? Math.sin(angle) * 9 : 0;
+        const r = n > 1 ? 220 : 0;
+        const dLat = (r * Math.sin(angle)) / 111_320;
+        const dLon = (r * Math.cos(angle)) / (111_320 * Math.cos((j.lat * Math.PI) / 180) || 1);
 
-        const labelText = isLead
-          ? (j.place || j.title.slice(0, 24)) + (n > 1 ? '  ×' + n : '')
-          : '';
+        // P1-9: null-geo events all resolve to the same ward centroid. Only the
+        // lead marker of a spot gets a label, and ONLY when we actually know the
+        // place — a truncated event title is noise, and stacking them was what
+        // produced the black smear over Shinjuku. Every event is in the timeline
+        // regardless, so nothing is lost by not printing it on the map.
+        const labelText = isLead && j.place ? j.place + (n > 1 ? '  ×' + n : '') : '';
 
         try {
           ds.entities.add({
@@ -98,13 +104,12 @@ export function renderWarnings(
             name: j.title,
             description: j.place,
             properties: { kind: 'event', eventId: j.eventId },
-            position: Cesium.Cartesian3.fromDegrees(j.lon, j.lat, 40),
+            position: Cesium.Cartesian3.fromDegrees(j.lon + dLon, j.lat + dLat, 40),
             point: {
               pixelSize: j.selected ? 16 : 11,
               color: color.withAlpha(0.65),
               outlineColor: color,
               outlineWidth: j.selected ? 3 : 1.5,
-              pixelOffset: new Cesium.Cartesian2(offX, offY),
               disableDepthTestDistance: Number.POSITIVE_INFINITY,
             },
             // A HUD chip, not a heavy black text outline — that stacking is what

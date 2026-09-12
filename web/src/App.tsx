@@ -12,11 +12,10 @@ import { wardCentroid } from './lib/wards';
 import type { Impact, LayerState, Lang, PulseEvent, SandboxInfo, TimeWindow } from './lib/types';
 
 import { AlertBanner } from './panels/AlertBanner';
-import { Timeline } from './panels/Timeline';
+import { CityFeed } from './panels/CityFeed';
 import { LayerPanel } from './panels/LayerPanel';
 import { LineSearch } from './panels/LineSearch';
 import { ForecastStrip } from './panels/ForecastStrip';
-import { BriefCard } from './panels/BriefCard';
 import { ImpactPanel } from './panels/ImpactPanel';
 import { StatusBar } from './panels/StatusBar';
 
@@ -68,7 +67,10 @@ export default function App() {
   const sandboxRes = usePolling(fetchSandboxes, 20_000);
   const stationsRes = usePolling(fetchStations, 0);
   const forecastRes = usePolling(fetchForecast, 0);
-  const briefRes = usePolling(fetchBrief, 0);
+  // P1-8: interval 0 fetched the brief once, ever — it went stale next to a
+  // scrolling timeline. /brief is already cached 60s server-side, so this costs
+  // nothing extra.
+  const briefRes = usePolling(fetchBrief, 60_000);
 
   useEffect(() => {
     let alive = true;
@@ -130,7 +132,11 @@ export default function App() {
     return LAYER_IDS.map((id) => {
       const a = byId.get(id);
       let state: LayerState['state'] = a?.state ?? (origin === 'api' ? 'off' : 'mock');
-      if (id === 'flood') state = 'live';           // GSI raster, keyless and live
+      // P1-5: flood used to be force-pinned 'live' here regardless of what the
+      // API actually reported. /layers.json already gets this right (it says
+      // 'cache' when Neo4j/the feed is down) — let that honest value through
+      // instead of overclaiming on a layer that can be zero-count and still
+      // show LIVE.
       if (id === 'peopleflow') state = peopleFlow ? state : 'off';
       // The API's count is the domain count (6 lines with live status); mapStats
       // is the Cesium entity count, which is a rendering detail and must never
@@ -188,7 +194,11 @@ export default function App() {
     mapRef.current?.flyTo(lat, lon, 4_000);
   }, []);
 
-  const degraded = (eventsRes.data?.origin ?? 'none') !== 'api';
+  // P1-4: `origin === 'api'` only means the HTTP request succeeded — a
+  // degraded-but-200 response (e.g. dead Neo4j, API serving its cached mock
+  // payload) kept `origin` at 'api' while the tooltip admitted the truth.
+  // Drive the chip from the envelope's own honesty fields instead.
+  const degraded = eventsMeta ? (eventsMeta.degraded || eventsMeta.source !== 'live') : true;
 
   return (
     <div className="app-root">
@@ -251,23 +261,20 @@ export default function App() {
           )}
         </div>
 
-        <ErrorBoundary label="Timeline">
-          <Timeline
+        {/* City Brief + Timeline are ONE right-rail panel (CityFeed): the brief is
+            the summary header, the filtered feed is the rows it came from.
+            Timeline and BriefCard stay exported for the frozen UI contract. */}
+        <ErrorBoundary label="CityFeed">
+          <CityFeed
             events={events}
             loading={eventsRes.loading}
             meta={eventsMeta}
             selectedId={selectedEventId}
             onSelect={onSelectEvent}
             lang={lang}
-          />
-        </ErrorBoundary>
-
-        <ErrorBoundary label="BriefCard">
-          <BriefCard
             brief={briefRes.data?.data ?? null}
-            loading={briefRes.loading}
-            lang={lang}
-            onRefresh={briefRes.refresh}
+            briefLoading={briefRes.loading}
+            onRefreshBrief={briefRes.refresh}
           />
         </ErrorBoundary>
 

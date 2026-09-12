@@ -1,9 +1,12 @@
 import type { Impact } from '../lib/types';
+import { PanelHeader } from './PanelHeader';
+import { useCollapse } from './useCollapse';
 
+// Line status on the godseye neon palette (same semantics as ui-contract rule 5).
 const STATUS_COLOR: Record<Impact['status'], string> = {
-  normal: '#22c55e',
-  delay: '#f59e0b',
-  suspended: '#ef4444',
+  normal: '#00ff41',
+  delay: '#ffaa00',
+  suspended: '#ff3333',
   unknown: '#6b7280',
 };
 
@@ -13,6 +16,8 @@ export function ImpactPanel(p: {
   onClose(): void;
   onStationClick(lat: number, lon: number): void;
 }): JSX.Element {
+  const [collapsed, toggleCollapsed] = useCollapse('impact');
+
   if (!p.impact) {
     // Rule: impact === null renders nothing at all. Empty fragment keeps the
     // exact JSX.Element return type from the contract while painting nothing.
@@ -22,16 +27,25 @@ export function ImpactPanel(p: {
   const impact = p.impact;
 
   return (
-    <div className="tp-panel tp-impact-panel">
-      <div className="tp-panel-header">
-        <span className="tp-panel-title">
-          {impact.name}
-          {impact.nameJa ? <span className="tp-panel-title-ja"> · {impact.nameJa}</span> : null}
-        </span>
-        <button type="button" className="tp-impact-close" onClick={() => p.onClose()} aria-label="Close impact panel">
-          ×
-        </button>
-      </div>
+    <div className={`tp-panel tp-impact-panel${collapsed ? ' tp-panel-collapsed' : ''}`}>
+      <PanelHeader
+        title={
+          <>
+            {impact.name}
+            {impact.nameJa ? <span className="tp-panel-title-ja"> · {impact.nameJa}</span> : null}
+          </>
+        }
+        label="line impact"
+        collapsed={collapsed}
+        onToggleCollapse={toggleCollapsed}
+        actions={
+          <button type="button" className="tp-impact-close" onClick={() => p.onClose()} aria-label="Close impact panel">
+            ×
+          </button>
+        }
+      />
+      {collapsed ? null : (
+      <>
       <div className="tp-impact-status" style={{ color: STATUS_COLOR[impact.status] }}>
         <span className="tp-dot" style={{ backgroundColor: STATUS_COLOR[impact.status] }} aria-hidden="true" />
         {impact.statusText}
@@ -103,6 +117,8 @@ export function ImpactPanel(p: {
           </ul>
         )}
       </div>
+      </>
+      )}
     </div>
   );
 }

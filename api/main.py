@@ -85,6 +85,10 @@ TTL_SANDBOXES = 5.0
 REPLAY: list[dict[str, Any]] = []
 REPLAY_CAP = 200
 
+# lineIds whose (:Line) node /demo/replay stamped with a replay status (P0-2).
+# /demo/reset reverts exactly these back to their real ingested status.
+REPLAY_STAMPED_LINES: set[str] = set()
+
 _forecast_cache: dict[str, Any] = {"at": 0.0, "value": None}
 
 
@@ -316,6 +320,16 @@ def _mock_line_props() -> dict[str, dict[str, Any]]:
     return out
 
 
+# contracts/line-feature.schema.json freezes statusSource to live|cache|mock|none
+# — it has no 'replay' slot (unlike Event.source, which does). P0-2's replay
+# stamp (api/graph.py set_line_status) tags the Neo4j field 'replay' so
+# /demo/reset can find exactly what it touched; this maps that internal tag to
+# the nearest honest frozen value ('cache': not live, not a faked normal) right
+# at the API boundary, so the wire shape never changes. statusText still says
+# "(replay)" explicitly, so nothing is hidden from a judge reading the panel.
+_STATUS_SOURCE_WIRE = {"replay": "cache"}
+
+
 def _line_features(status_map: dict[str, dict[str, Any]] | None,
                    geometry_src: dict[str, dict[str, Any]],
                    fallback_source: str) -> list[dict[str, Any]]:
@@ -355,7 +369,8 @@ def _line_features(status_map: dict[str, dict[str, Any]] | None,
                 "operator": row.get("operator"),
                 "status": status, "statusText": text, "statusTextJa": text_ja,
                 "color": row.get("color") or "#888888",
-                "statusSource": source if has_feed else "none",
+                "statusSource": (_STATUS_SOURCE_WIRE.get(source, source)
+                                if has_feed else "none"),
                 "updatedAt": updated,
             },
         })
@@ -447,15 +462,11 @@ def _produce_impact(lineId: str, row: dict[str, str]) -> dict[str, Any]:
             raise NoLiveData(f"Line {lineId} is not in the graph (run scripts/seed.py)")
         if not data.get("stations"):
             raise NoLiveData(f"Line {lineId} has no stations in the graph")
-        # Agree with /lines.geojson without paying another query: reuse its
-        # cached status if the Line node itself was never stamped.
-        if data.get("statusSource") != "live":
-            lines = _cached_payload("lines.geojson") or {}
-            for f in lines.get("features") or []:
-                p = f.get("properties") or {}
-                if p.get("lineId") == lineId and p.get("statusSource") == "live":
-                    data["status"], data["statusText"] = p["status"], p["statusText"]
-                    break
+        # P0-2: graph.fetch_impact() now resolves status with the exact same
+        # logic as /lines.geojson's graph.fetch_line_status(), in the SAME
+        # round-trip — no more reuse-from-another-endpoint's-cache trick here,
+        # which could race with /demo/replay or /demo/reset invalidating that
+        # other cache entry a moment earlier.
         data.pop("statusSource", None)
         return data
 
@@ -822,6 +833,21 @@ def _replay_train(now: datetime) -> list[dict[str, Any]]:
             "affects": [f"line:{row['lineId']}"],
             "source": "replay", "url": None, "magnitude": None, "maxScale": None,
         })
+        # P0-2: the Event alone is not enough — /lines.geojson and /impact/{id}
+        # both read (:Line).status directly, so stamp it here too, honestly
+        # tagged statusSource='replay' (never 'live' — this is not a live feed
+        # read). /demo/reset reverts this via REPLAY_STAMPED_LINES.
+        line_status = {"critical": "suspended", "warning": "delay"}.get(sev, "normal")
+        try:
+            graph.set_line_status(
+                row["lineId"], line_status, title, title_ja,
+                statusSource="replay", updatedAt=now.isoformat(),
+            )
+            REPLAY_STAMPED_LINES.add(row["lineId"])
+        except Exception as exc:
+            log.warning("replay: could not stamp Line %s status (%s) — "
+                        "Event still written, /lines.geojson may lag until "
+                        "Neo4j is back", row["lineId"], exc)
     return out
 
 
@@ -919,7 +945,12 @@ def demo_replay(body: dict[str, Any] = Body(default=None)) -> dict[str, Any]:
         note = note or "no cached payload in mock/raw for this scenario"
 
     # The injected events must show up on the very next poll, not one TTL later.
-    for prefix in ("events:", "layers.json", "brief", "impact:", "health"):
+    # "lines.geojson" is included (P0-2): a replay-train beat stamps (:Line)
+    # status above, and without this the polyline stays its old colour for up
+    # to TTL_LINES while /impact/{id} already shows the new status — the exact
+    # on-screen contradiction this fix closes.
+    for prefix in ("events:", "layers.json", "brief", "impact:", "health",
+                   "lines.geojson"):
         cache.invalidate(prefix)
 
     return {"injected": len(events), "scenario": scenario, "written": written,
@@ -948,10 +979,26 @@ def demo_reset() -> dict[str, Any]:
                 f"replay events only")
         log.warning("demo/reset: %s", note)
 
-    for prefix in ("events:", "layers.json", "brief", "impact:", "health"):
+    # P0-2: undo _replay_train's direct Line.status stamp too, or reset leaves
+    # every replayed line stuck amber after the real delay Events are gone.
+    stamped = sorted(REPLAY_STAMPED_LINES)
+    reverted: list[str] = []
+    for lineId in stamped:
+        try:
+            graph.revert_line_status(lineId)
+            reverted.append(lineId)
+        except Exception as exc:
+            src, degraded = "mock", True
+            note = (f"{note}; " if note else "") + (
+                f"could not revert Line {lineId} status ({type(exc).__name__})")
+            log.warning("demo/reset: %s", note)
+    REPLAY_STAMPED_LINES.difference_update(reverted)
+
+    for prefix in ("events:", "layers.json", "brief", "impact:", "health",
+                   "lines.geojson"):
         cache.invalidate(prefix)
 
-    return {"deleted": deleted, "cleared": held,
+    return {"deleted": deleted, "cleared": held, "linesReverted": reverted,
             "meta": meta(src, degraded, note)}
 
 

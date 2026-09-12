@@ -417,6 +417,23 @@ def set_line_status(lineId: str, status: str, statusText: str,
     )
 
 
+def revert_line_status(lineId: str) -> None:
+    """Undo a replay's direct Line.status stamp (P0-2 / `set_line_status`
+    counterpart). Clears the override back to the neutral 'none' defaults so
+    `fetch_line_status()`'s own event-derived fallback regains authority from
+    whatever REAL (non-replay) Events remain once `delete_replay_events()` has
+    run — i.e. this reverts to the line's real ingested status, not a second
+    hardcoded guess. Used by `POST /demo/reset`."""
+    run(
+        """
+        MATCH (l:Line {lineId: $lineId})
+        SET l.status = 'unknown', l.statusText = 'No live status feed',
+            l.statusTextJa = null, l.statusSource = 'none', l.updatedAt = null
+        """,
+        lineId=lineId,
+    )
+
+
 def _f(v: Any) -> float | None:
     try:
         return float(v) if v not in (None, "") else None
@@ -665,6 +682,40 @@ def fetch_events(since_iso: str, limit: int = 30,
     return out
 
 
+def _resolve_line_status(r: dict[str, Any]) -> dict[str, Any]:
+    """Shared status resolution for a single Line row, used by BOTH
+    `fetch_line_status()` (all 20 lines) and `fetch_impact()` (one line) —
+    P0-2: these two must compute status identically or /lines.geojson and
+    /impact/{id} can say different things about the same line at the same
+    instant. `r` needs: status, statusText, statusTextJa, statusSource,
+    updatedAt, dSeverity, dTitle, dTitleJa, dTime (the last four from the
+    latest train Event AFFECTS-ing this line, or null if there is none).
+
+    Only falls back to the derived-from-Event guess when NOTHING has
+    explicitly stamped this Line yet. An explicit stamp — whether a real
+    ingestor's statusSource='live' or /demo/replay's statusSource='replay' —
+    wins outright; otherwise this fallback would relabel a replay stamp as
+    'live', which is exactly the overclaim AGENT-BRIEF rule 5 forbids.
+    """
+    cur = {
+        "status": r.get("status") or "unknown",
+        "statusText": r.get("statusText") or "No live status feed",
+        "statusTextJa": r.get("statusTextJa"),
+        "statusSource": r.get("statusSource") or "none",
+        "updatedAt": to_iso(r.get("updatedAt")),
+    }
+    if cur["statusSource"] == "none" and r.get("dTitle"):
+        sev = r.get("dSeverity") or "info"
+        cur.update(
+            status={"critical": "suspended", "warning": "delay"}.get(sev, "normal"),
+            statusText=r["dTitle"],
+            statusTextJa=r.get("dTitleJa") or cur.get("statusTextJa"),
+            statusSource="live",
+            updatedAt=to_iso(r.get("dTime")),
+        )
+    return cur
+
+
 def fetch_line_status() -> dict[str, dict[str, Any]]:
     """Status for all 20 lines in ONE round-trip (Aura RTT is ~0.4s, so every
     extra query is a visible pause). Includes the fallback that derives a line's
@@ -690,23 +741,7 @@ def fetch_line_status() -> dict[str, dict[str, Any]]:
         lid = r["lineId"]
         if not lid:
             continue
-        cur = {
-            "status": r["status"] or "unknown",
-            "statusText": r["statusText"] or "No live status feed",
-            "statusTextJa": r["statusTextJa"],
-            "statusSource": r["statusSource"] or "none",
-            "updatedAt": to_iso(r["updatedAt"]),
-        }
-        if cur["statusSource"] != "live" and r.get("dTitle"):
-            sev = r.get("dSeverity") or "info"
-            cur.update(
-                status={"critical": "suspended", "warning": "delay"}.get(sev, "normal"),
-                statusText=r["dTitle"],
-                statusTextJa=r.get("dTitleJa") or cur.get("statusTextJa"),
-                statusSource="live",
-                updatedAt=to_iso(r.get("dTime")),
-            )
-        out[lid] = cur
+        out[lid] = _resolve_line_status(r)
     return out
 
 
@@ -741,6 +776,9 @@ def fetch_impact(lineId: str, since_iso: str) -> dict[str, Any] | None:
     rows = run(
         """
         MATCH (l:Line {lineId: $lineId})
+        OPTIONAL MATCH (e0:Event {type: 'train'})-[:AFFECTS]->(l)
+        WITH l, e0 ORDER BY e0.time DESC
+        WITH l, head(collect(e0)) AS latestTrain
         CALL {
           WITH l
           MATCH (l)-[r:SERVES]->(s:Station)
@@ -775,7 +813,10 @@ def fetch_impact(lineId: str, since_iso: str) -> dict[str, Any] | None:
                           affects: [x IN refs WHERE x IS NOT NULL]}) AS events
         }
         RETURN l.name AS name, l.nameJa AS nameJa, l.status AS status,
-               l.statusText AS statusText, l.statusSource AS statusSource,
+               l.statusText AS statusText, l.statusTextJa AS statusTextJa,
+               l.statusSource AS statusSource, l.updatedAt AS updatedAt,
+               latestTrain.severity AS dSeverity, latestTrain.title AS dTitle,
+               latestTrain.titleJa AS dTitleJa, latestTrain.time AS dTime,
                stations, wards, events
         """,
         lineId=lineId, since=since_iso,
@@ -784,12 +825,19 @@ def fetch_impact(lineId: str, since_iso: str) -> dict[str, Any] | None:
         return None
     r = rows[0]
     stations = [dict(s) for s in (r.get("stations") or [])]
+    # P0-2: resolve status the SAME way fetch_line_status() does, in this same
+    # round-trip, so /impact/{id} can never show a different status than
+    # /lines.geojson for the same line at the same instant — no more relying
+    # on /lines.geojson's cache already being warm (main._produce_impact's old
+    # cross-endpoint reuse trick raced with cache invalidation after
+    # /demo/replay or /demo/reset and could briefly disagree).
+    resolved = _resolve_line_status(r)
     return {
         "lineId": lineId,
         "name": r["name"], "nameJa": r["nameJa"],
-        "status": r["status"] or "unknown",
-        "statusText": r["statusText"] or "No live status feed",
-        "statusSource": r["statusSource"] or "none",
+        "status": resolved["status"],
+        "statusText": resolved["statusText"],
+        "statusSource": resolved["statusSource"],
         "wards": [dict(w) for w in (r.get("wards") or [])],
         "stations": stations,
         "events": [event_from_node(dict(x["node"]), x.get("affects"))

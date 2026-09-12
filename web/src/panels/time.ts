@@ -18,6 +18,25 @@ export function formatClock(iso: string | null | undefined): string {
   }
 }
 
+/** "10 Sep 14:00" in Asia/Tokyo — used where a strip spans more than one day. */
+export function formatDayClock(iso: string | null | undefined): string {
+  if (!iso) return '--';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '--';
+  try {
+    return d.toLocaleString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      timeZone: 'Asia/Tokyo',
+    });
+  } catch {
+    return '--';
+  }
+}
+
 /** "3m ago" / "2h ago" / "just now" / "in 5m" for future timestamps. */
 export function formatRelative(iso: string | null | undefined): string {
   if (!iso) return '';

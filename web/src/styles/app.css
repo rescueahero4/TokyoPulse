@@ -110,7 +110,16 @@ html, body, #root {
 }
 
 .map-credits a { color: var(--gs-text-dim); text-decoration: none; }
-.map-credits .cesium-credit-lightbox-overlay { display: none !important; }
+/* Cesium collapses multiple credits behind a "Data attribution" link that opens
+   this lightbox. Keep it reachable — Esri / CARTO / GSI all require attribution. */
+.map-credits .cesium-credit-lightbox-overlay { z-index: 200; }
+.map-credits .cesium-credit-lightbox { color: #111; }
+.map-credits .cesium-credit-expand-link {
+  color: var(--gs-text-dim);
+  text-decoration: underline;
+  pointer-events: auto;
+  cursor: pointer;
+}
 .map-credits img { max-height: 11px; width: auto; opacity: 0.45; vertical-align: middle; }
 .map-credits .cesium-widget-credits {
   font-size: 9px;
@@ -119,6 +128,56 @@ html, body, #root {
   align-items: center;
   color: var(--gs-text-dim);
 }
+
+/* ---------- rail status legend ----------
+   Lines carry their official livery colour, so status is encoded as a modifier:
+   a coloured casing under the line, a dash for suspended, low alpha for no feed.
+   The swatches below mirror exactly what layers/rail.ts draws. */
+
+.map-legend {
+  position: absolute;
+  left: 332px;
+  bottom: 42px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--gs-border-panel);
+  border-radius: 4px;
+  background: var(--gs-bg-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--gs-text-dim);
+  font-family: var(--gs-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.map-legend-title { color: var(--gs-electric-blue); letter-spacing: 0.14em; }
+.map-legend-item { display: inline-flex; align-items: center; gap: 5px; }
+
+.map-legend-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 8px;
+  border-radius: 2px;
+  /* A neutral stand-in for "whatever this line's livery is". */
+  background: #64748b;
+}
+
+.map-legend-swatch.is-normal { background: #64748b; }
+/* amber casing showing past the line on both sides */
+.map-legend-swatch.is-delay { background: #64748b; box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.75); }
+/* red casing + dashed line */
+.map-legend-swatch.is-suspended {
+  background: repeating-linear-gradient(90deg, #64748b 0 5px, transparent 5px 8px);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.8);
+}
+.map-legend-swatch.is-unknown { background: #64748b; opacity: 0.35; }
 
 /* ---------- basemap switcher ---------- */
 
@@ -286,46 +345,9 @@ html, body, #root {
 
 .hud > * { pointer-events: auto; }
 
-/* ---------- glass panel (godseye signature: faint scanline over blurred glass) ---------- */
-
-.tp-panel,
-.tp-line-search,
-.tp-layer-panel,
-.tp-impact-panel,
-.tp-alert-banner {
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.tp-panel::before,
-.tp-line-search::before,
-.tp-layer-panel::before,
-.tp-impact-panel::before,
-.tp-alert-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: repeating-linear-gradient(0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 180, 255, 0.02) 2px,
-      rgba(0, 180, 255, 0.02) 4px);
-}
-
-.tp-panel > *,
-.tp-line-search > *,
-.tp-layer-panel > *,
-.tp-impact-panel > *,
-.tp-alert-banner > * { position: relative; z-index: 1; }
-
-/* The timeline scrolls: a scanline pinned to the panel must not scroll with it,
-   and an overflow:hidden timeline would kill its own scrollbar. */
-.tp-timeline { overflow: hidden; }
-.tp-timeline::before { display: none; }
+/* Panel styling (glass, scanline, toggles, layout) lives in panels.css and is
+   owned by the panels agent — this file stays map/globe/Cesium-chrome only.
+   The godseye design tokens above are shared; panels.css reads them. */
 
 /* ---------- error boundary fallback ---------- */
 
@@ -365,3 +387,5 @@ html, body, #root {
   letter-spacing: 0.08em;
   z-index: 45;
 }
+
+.map-basemap-swatch[data-bm='ion'] { background: linear-gradient(135deg, #35562f, #1b4a63); }
