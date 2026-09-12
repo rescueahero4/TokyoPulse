@@ -88,7 +88,10 @@ test.describe('Resilience: layers fail independently', () => {
     { width: 1920, height: 1080, label: '1920x1080' },
   ]) {
     test(`15. Viewport ${vp.label}: no panel overflows off-screen, timeline stays visible`, async ({ page }) => {
-      test.setTimeout(45_000);
+      // Software-rendered Cesium in this sandbox is slow to settle (see test 7's
+      // comment); a screenshot taken while it's still painting can stall well
+      // past 45s without indicating any actual app problem.
+      test.setTimeout(75_000);
       await page.setViewportSize({ width: vp.width, height: vp.height });
       await page.goto('/');
       await waitForViewer(page);
