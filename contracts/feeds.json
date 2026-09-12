@@ -64,5 +64,30 @@
   "osm_fallback_tiles": {
     "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     "keyless": true
+  },
+  "jreast_kanto_status": {
+    "url": "https://traininfo.jreast.co.jp/train_info/kanto.aspx",
+    "keyless": true,
+    "verified": "200, 93KB, 50 lines parsed (47 normal / 2 info / 1 adjust)",
+    "format": "HTML scrape (no public JSON for per-line status)",
+    "parse": "regex: lineid=([a-z0-9_-]+)\" ... class=\"traininfo-routes__status ([a-z]+)\" ... <span>(text)</span>",
+    "join_key": "contracts/lines.csv column jreastLineId",
+    "CRITICAL_NOTE": "JR East only reports delays of 30+ MINUTES (30分以上の遅れ). ODPT/Toei reports 15+ minutes. Different thresholds -- never present them as one uniform 'delay' semantic without disclosing this.",
+    "classify_by": "Japanese status TEXT is authoritative, not the CSS class: 平常運転->normal, 遅延/運転状況/ダイヤ乱れ->delay, 運転見合わせ/運転中止->suspended, お知らせ->info notice",
+    "covers": "JR-Yamanote, JR-Chuo-Rapid, JR-Chuo-Sobu, JR-Keihin-Tohoku, JR-Saikyo (+45 other JR East lines outside our registry)"
+  },
+  "jreast_kanto_notices": {
+    "url": "https://www.jreast.co.jp/traininfojp/kanto.json",
+    "keyless": true,
+    "verified": "200, 3.6KB, 4 records (3 real + 1 dummy)",
+    "use": "JR East service notices (planned works, long suspensions). Skip records where metainfo.dummy == '1'.",
+    "note": "This is a NOTICE feed, not per-line realtime status."
+  },
+  "jreast_delay_certificate_BLOCKED": {
+    "url": "https://www.jreast.co.jp/traininfomulti/delaycertificate.json",
+    "keyless": false,
+    "verified": "403 Akamai Access Denied from server-side curl (any UA/Referer). Reachable only from a real browser.",
+    "content": "Even when reachable it holds ONE placeholder record with metainfo.dummy=1, title literally '...ダミー...'. No delay data.",
+    "verdict": "UNUSABLE -- do not wire this. Use jreast_kanto_status instead."
   }
 }
