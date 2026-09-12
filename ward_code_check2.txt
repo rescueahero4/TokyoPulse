@@ -1,9 +1,0 @@
---- class10s --- count=142
-  130010 -> {'name': '東京地方', 'enName': 'Tokyo Region', 'parent': '130000', 'children': ['130011', '130012', '130013', '130014', '130015']}
-  130020 -> {'name': '伊豆諸島北部', 'enName': 'Northern Izu Islands', 'parent': '130000', 'children': ['130021', '130022']}
-  130030 -> {'name': '伊豆諸島南部', 'enName': 'Southern Izu Islands', 'parent': '130000', 'children': ['130031', '130032']}
---- class15s --- count=375
---- class20s --- count=1805
-  1310100 -> {'name': '千代田区', 'enName': 'Chiyoda City', 'kana': 'ちよだく', 'parent': '130011'}
-  1310200 -> {'name': '中央区', 'enName': 'Chuo City', 'kana': 'ちゅうおうく', 'parent': '130011'}
-  1312300 -> {'name': '江戸川区', 'enName': 'Edogawa City', 'kana': 'えどがわく', 'parent': '130012'}

@@ -195,10 +195,20 @@ def load_wards_csv() -> list[dict[str, str]]:
 
 
 # JMA's bosai warning JSON only carries numeric area codes (no names, no CSV
-# join key is provided in contracts/ for this). The 7-digit "class15" city
+# join key is provided in contracts/ for this). The 7-digit "class20s" city
 # codes used for the 23 special wards follow the standard JIS X0402 municipal
 # code (5 digits) + "00" suffix, in the same Chiyoda->Edogawa order as
 # contracts/wards.csv. Best-effort join; unmapped codes degrade to affects:[].
+#
+# VERIFIED 2026-09-12 (A12) against the live JMA area master
+# (https://www.jma.go.jp/bosai/common/const/area.json, class20s section; a
+# snapshot lives at mock/raw/jma-area-master.json): 1310100->千代田区
+# (Chiyoda City) ... 1312300->江戸川区 (Edogawa City) match this table exactly.
+# The table was already correct -- the reason live warnings.py output showed
+# affects:[] was NOT a bad join key, it is that every advisory active in the
+# live 130000.json feed at verification time coded to a NON-ward area (see
+# _NONWARD_AREA_RANGES below), and normalize() never attached the ward
+# centroid lat/lon even when a ward DID resolve. Both are fixed here/below.
 _WARD_ORDER = [
     "Chiyoda", "Chuo", "Minato", "Shinjuku", "Bunkyo", "Taito", "Sumida",
     "Koto", "Shinagawa", "Meguro", "Ota", "Setagaya", "Shibuya", "Nakano",
@@ -212,3 +222,77 @@ JMA_AREA_CODE_TO_WARD: dict[str, str] = {
 
 def jma_code_to_ward(code: str) -> Optional[str]:
     return JMA_AREA_CODE_TO_WARD.get(code)
+
+
+# ── ward centroid lookup (contracts/wards.csv lat/lon) ──────────────────────
+# So a resolved ward can be placed on the map, not just named in affects[].
+_ward_centroid_cache: dict[str, tuple[float, float]] | None = None
+
+
+def ward_centroid(ward: str) -> Optional[tuple[float, float]]:
+    global _ward_centroid_cache
+    if _ward_centroid_cache is None:
+        _ward_centroid_cache = {}
+        for row in load_wards_csv():
+            w = row.get("ward")
+            try:
+                lat, lon = float(row["lat"]), float(row["lon"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            if w:
+                _ward_centroid_cache[w] = (lat, lon)
+    return _ward_centroid_cache.get(ward)
+
+
+_ward_ja_cache: dict[str, str] | None = None
+
+
+def ward_ja(ward: str) -> Optional[str]:
+    """contracts/wards.csv wardJa column, e.g. 'Koto' -> '江東区'."""
+    global _ward_ja_cache
+    if _ward_ja_cache is None:
+        _ward_ja_cache = {r["ward"]: r.get("wardJa") or ""
+                          for r in load_wards_csv() if r.get("ward")}
+    return _ward_ja_cache.get(ward) or None
+
+
+# ── honest labels for JMA areas that are NOT one of the 23 wards ───────────
+# Tokyo-prefecture JMA area codes also cover the Tama mainland cities/towns
+# and the Izu/Ogasawara islands, which this build's wards.csv has no row for.
+# Forcing those onto the nearest ward would misrepresent where the advisory
+# actually applies, so they stay affects:[] / lat=lon=None -- but the title
+# should say WHERE they really are instead of a vague "Tokyo area" default.
+# Ranges verified 2026-09-12 against the live JMA area master (class10s for
+# the 6-digit codes, class20s for the 7-digit municipal codes).
+_NONWARD_REGION_LABEL: dict[str, tuple[str, str]] = {
+    "130010": ("東京地方", "Tokyo mainland (23 wards + Tama)"),
+    "130020": ("伊豆諸島北部", "Northern Izu Islands"),
+    "130030": ("伊豆諸島南部", "Southern Izu Islands"),
+    "130040": ("小笠原諸島", "Ogasawara Islands"),
+}
+# 7-digit class20s municipal codes, as numeric ranges:
+#   1320100-1330800  Tama area cities/towns/villages (26 municipalities)
+#   1336100-1342999  Izu + Ogasawara island villages/towns
+_TAMA_RANGE = (1320100, 1330800)
+_ISLANDS_RANGE = (1336100, 1342999)
+
+
+def jma_area_label(code: str) -> Optional[tuple[str, str]]:
+    """Best-effort honest (nameJa, nameEn) for a JMA area code that is NOT one
+    of the 23 wards. Returns None for a genuinely unrecognised code (still
+    honest -- callers fall back to a generic "unmapped area" note)."""
+    if not code:
+        return None
+    hit = _NONWARD_REGION_LABEL.get(code)
+    if hit:
+        return hit
+    try:
+        n = int(code)
+    except ValueError:
+        return None
+    if len(code) == 7:
+        if _TAMA_RANGE[0] <= n <= _TAMA_RANGE[1]:
+            return ("多摩地域", "Tama area")
+        if _ISLANDS_RANGE[0] <= n <= _ISLANDS_RANGE[1]:
+            return ("伊豆・小笠原諸島", "Izu/Ogasawara Islands")
+    return None

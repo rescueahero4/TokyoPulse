@@ -23,7 +23,9 @@ from typing import Any, Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from ingest.common import backoff_delay, get_env, get_env_int, get_logger, jma_code_to_ward, make_event
+from ingest.common import (backoff_delay, get_env, get_env_int, get_logger,
+                           jma_area_label, jma_code_to_ward, make_event,
+                           ward_centroid, ward_ja)
 from ingest.sink import upsert
 
 FEED_NAME = "warnings"
@@ -88,10 +90,23 @@ def _severity_for_level(level: str) -> str:
 def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
     report_time = payload.get("reportDatetime")
     events: list[dict[str, Any]] = []
+    unmapped_codes: set[str] = set()
     for area_type in payload.get("areaTypes") or []:
         for area in area_type.get("areas") or []:
             area_code = area.get("code")
             ward = jma_code_to_ward(area_code) if area_code else None
+            lat = lon = None
+            if ward:
+                centroid = ward_centroid(ward)
+                if centroid:
+                    lat, lon = centroid
+            else:
+                # Honest labelling for the genuinely-not-a-ward case (Tama
+                # mainland cities, Izu/Ogasawara islands) instead of a vague
+                # "Tokyo area" default -- see ingest/common.py jma_area_label.
+                region = jma_area_label(area_code) if area_code else None
+                if not region and area_code:
+                    unmapped_codes.add(area_code)
             for w in area.get("warnings") or []:
                 status = w.get("status")
                 if not _is_active(status):
@@ -101,9 +116,19 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
                     code, (f"警報コード{code}", f"Warning code {code}", "注意報")
                 )
                 severity = _severity_for_level(level)
-                affects = [f"ward:{ward}"] if ward else []
-                title = f"{name_en} ({status})" + (f" — {ward}" if ward else " — Tokyo area")
-                title_ja = f"{name_ja}（{status}）" + (f" — {ward}区" if ward else "")
+                if ward:
+                    affects = [f"ward:{ward}"]
+                    scope_en, scope_ja = ward, (ward_ja(ward) or f"{ward}区")
+                elif region:
+                    affects = []
+                    scope_en = f"{region[1]} (outside 23-ward scope)"
+                    scope_ja = f"{region[0]}（23区外）"
+                else:
+                    affects = []
+                    scope_en = f"unmapped area {area_code}"
+                    scope_ja = f"未対応エリア（コード{area_code}）"
+                title = f"{name_en} ({status}) — {scope_en}"
+                title_ja = f"{name_ja}（{status}）— {scope_ja}"
                 events.append(
                     make_event(
                         id=f"jma-{area_code}-{code}",
@@ -115,8 +140,13 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
                         affects=affects,
                         source="jma",
                         url=SOURCE_URL,
+                        lat=lat,
+                        lon=lon,
                     )
                 )
+    if unmapped_codes:
+        log.warning("JMA area codes with no ward/region label (affects:[] by "
+                    "necessity, not a bug): %s", sorted(unmapped_codes))
     return events
 
 
