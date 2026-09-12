@@ -43,6 +43,7 @@ log = logging.getLogger("tokyopulse.graph")
 JST = timezone(timedelta(hours=9))
 
 CONNECT_TIMEOUT = 3.0          # hard cap: a dead DB costs 3s, once.
+POOL_SIZE = 50                 # one shared pool, never per request
 _PROBE_TTL_UP = 10.0
 _PROBE_TTL_DOWN = 15.0
 
@@ -112,11 +113,19 @@ def _get_driver():
                     connection_timeout=CONNECT_TIMEOUT,
                     connection_acquisition_timeout=CONNECT_TIMEOUT + 1.0,
                     max_transaction_retry_time=4.0,
+                    # ONE pool for the whole process. Sized for the API's
+                    # threadpool + the prefetch loop + A2's ingestors sharing Aura.
+                    max_connection_pool_size=POOL_SIZE,
+                    # Routing discovery happens once per driver; keep connections
+                    # alive so we never re-pay it on a warm path.
+                    max_connection_lifetime=3600,
+                    liveness_check_timeout=30,
                 )
                 drv.verify_connectivity()
                 _driver, _resolved_user, _resolved_db = drv, u, db
                 _fail.update(until=0.0, note="")
-                log.info("neo4j connected uri=%s user=%s db=%s", uri, u, db)
+                log.info("neo4j connected uri=%s user=%s db=%s pool=%d "
+                         "(single process-wide driver)", uri, u, db, POOL_SIZE)
                 return _driver
             except AuthError as exc:      # fast failure — try the next identity
                 last = exc

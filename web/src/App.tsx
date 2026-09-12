@@ -201,19 +201,35 @@ export default function App() {
           <AlertBanner events={localizedEvents} onSelect={onSelectEvent} />
         </ErrorBoundary>
 
-        <ErrorBoundary label="LineSearch">
-          <LineSearch
-            lines={lineList}
-            value={search}
-            onChange={setSearch}
-            onPick={onPickLine}
-            selectedLineId={selectedLineId}
-          />
-        </ErrorBoundary>
+        {/* Single stacked left column (LineSearch -> LayerPanel -> ImpactPanel) so they
+            never overlap each other or CityBrief below, and never reach as far into
+            the map centre as two side-by-side columns did. Internally scrollable. */}
+        <div className="tp-left-column">
+          <ErrorBoundary label="LineSearch">
+            <LineSearch
+              lines={lineList}
+              value={search}
+              onChange={setSearch}
+              onPick={onPickLine}
+              selectedLineId={selectedLineId}
+            />
+          </ErrorBoundary>
 
-        <ErrorBoundary label="LayerPanel">
-          <LayerPanel layers={layerStates} visible={visible} onToggle={onToggleLayer} />
-        </ErrorBoundary>
+          <ErrorBoundary label="LayerPanel">
+            <LayerPanel layers={layerStates} visible={visible} onToggle={onToggleLayer} />
+          </ErrorBoundary>
+
+          {selectedLineId && (
+            <ErrorBoundary label="ImpactPanel">
+              <ImpactPanel
+                impact={impact}
+                loading={impactLoading}
+                onClose={() => { setSelectedLineId(null); setSearch(''); }}
+                onStationClick={onStationClick}
+              />
+            </ErrorBoundary>
+          )}
+        </div>
 
         <ErrorBoundary label="Timeline">
           <Timeline
@@ -225,17 +241,6 @@ export default function App() {
             lang={lang}
           />
         </ErrorBoundary>
-
-        {selectedLineId && (
-          <ErrorBoundary label="ImpactPanel">
-            <ImpactPanel
-              impact={impact}
-              loading={impactLoading}
-              onClose={() => { setSelectedLineId(null); setSearch(''); }}
-              onStationClick={onStationClick}
-            />
-          </ErrorBoundary>
-        )}
 
         <ErrorBoundary label="BriefCard">
           <BriefCard

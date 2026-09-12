@@ -167,30 +167,36 @@
   border-radius: 0 0 10px 0;
 }
 
-.tp-line-search {
+/* LineSearch, LayerPanel and (when a line is selected) ImpactPanel share ONE
+   stacked left column instead of each claiming their own absolute rect. That
+   fixes two things at once: LayerPanel no longer reaches sideways into the
+   map's centre, and CityBrief below never collides with it, because the
+   column's own max-height is capped and clipped instead of set by content. */
+.tp-left-column {
   position: absolute;
   top: 56px;
   left: 16px;
   width: 300px;
+  max-height: calc(100vh - 414px); /* leaves room for CityBrief (capped 210px) + gap below, any viewport */
   z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  pointer-events: auto;
 }
 
-.tp-layer-panel {
-  position: absolute;
-  top: 56px;
-  left: 332px;
-  width: 260px;
-  z-index: 30;
+.tp-line-search,
+.tp-layer-panel,
+.tp-impact-panel {
+  position: static;
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .tp-impact-panel {
-  position: absolute;
-  top: 320px;
-  left: 16px;
-  width: 300px;
-  max-height: calc(100vh - 480px);
-  overflow-y: auto;
-  z-index: 25;
+  max-height: none;
+  overflow-y: visible;
 }
 
 .tp-timeline {
@@ -221,7 +227,9 @@
   position: absolute;
   bottom: 136px;
   left: 16px;
-  width: 320px;
+  width: 300px;
+  max-height: 210px;
+  overflow-y: auto;
   z-index: 20;
 }
 

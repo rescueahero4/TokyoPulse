@@ -6,7 +6,8 @@ import { hasGeometry } from './geo';
 
 const BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
 export const FORCE_MOCKS = String(import.meta.env.VITE_USE_MOCKS) === 'true';
-const TIMEOUT_MS = 6000;
+const TIMEOUT_MS = 15000; // orchestrator: was 6000 -- Aura-backed endpoints intermittently took 6.3s,
+// aborting at 6s produced a FALSE "API UNREACHABLE / MOCK" HUD state while the API was healthy.
 
 /** Where a payload actually came from, for honest labelling. */
 export type Origin = 'api' | 'mock' | 'fallback' | 'none';
