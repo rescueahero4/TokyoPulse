@@ -116,8 +116,14 @@ def _severities_at_least(minimum: str | None) -> list[str] | None:
     return [s for s, r in SEV_RANK.items() if r >= floor]
 
 
+# `window=now` is a STATE view (see EVENTS_NOW_CYPHER): incidents from the last
+# 48h, plus the latest status per train line and every active warning regardless
+# of age. `window=7d` stays a pure 7-day history — the time-travel beat.
+NOW_INCIDENT_HOURS = 48
+
+
 def _window_hours(window: str | None) -> int:
-    return 24 * 7 if (window or "now").lower() == "7d" else 6
+    return 24 * 7 if (window or "now").lower() == "7d" else NOW_INCIDENT_HOURS
 
 
 def _since_iso(window: str | None, since: str | None) -> str:
@@ -162,6 +168,51 @@ def _filter_events(events: list[dict], since_iso: str, types: list[str] | None,
     return out[:limit]
 
 
+def _select_now(events: list[dict]) -> list[dict]:
+    """Tier 2/3 equivalent of EVENTS_NOW_CYPHER: the same "currently in effect"
+    union applied to a cached payload, so a degraded timeline is shaped like a
+    live one."""
+    cutoff = (now_jst() - timedelta(hours=NOW_INCIDENT_HOURS)).isoformat()
+    picked: dict[str, dict] = {}
+
+    def keep(ev: dict) -> None:
+        if ev.get("id"):
+            picked[ev["id"]] = ev
+
+    latest_line: dict[str, dict] = {}
+    latest_ward: dict[str, dict] = {}
+    for ev in events:
+        if not isinstance(ev, dict):
+            continue
+        t = graph.normalise_time(ev.get("time"))
+        if not t:
+            continue
+        ev = dict(ev, time=t)
+        ev.setdefault("affects", [])
+        if t >= cutoff:                                   # A: recent (incl. future)
+            keep(ev)
+        refs = [str(x) for x in ev.get("affects") or []]
+        if ev.get("type") == "train":                     # B: latest per line
+            for r in refs:
+                if r.startswith("line:"):
+                    cur = latest_line.get(r)
+                    if not cur or t > cur["time"]:
+                        latest_line[r] = ev
+        elif ev.get("type") == "warning":                 # C: active warnings
+            # ward when known, else title — see EVENTS_NOW_CYPHER subquery C.
+            scopes = [r for r in refs if r.startswith("ward:")] or [
+                f"title:{ev.get('title')}"]
+            for sc in scopes:
+                cur = latest_ward.get(sc)
+                if not cur or t > cur["time"]:
+                    latest_ward[sc] = ev
+    for ev in list(latest_line.values()) + list(latest_ward.values()):
+        keep(ev)
+    out = list(picked.values())
+    out.sort(key=lambda e: e.get("time") or "", reverse=True)
+    return out
+
+
 def _merge_replay(events: list[dict], since_iso: str, types, severities, limit) -> list[dict]:
     """Replayed events are merged into every events view, graph up or down."""
     if not REPLAY:
@@ -192,11 +243,13 @@ def _empty_events() -> dict[str, Any]:
 
 
 def _produce_events(limit: int, types: list[str] | None,
-                    severities: list[str] | None, since_iso: str) -> dict[str, Any]:
+                    severities: list[str] | None, since_iso: str,
+                    now_window: bool = False) -> dict[str, Any]:
     def live():
         try:
             evs = graph.fetch_events(since_iso, limit=limit, types=types,
-                                     severities=severities)
+                                     severities=severities,
+                                     now_window=now_window)
         except graph.NoGraphData:
             # A live graph that simply has nothing matching this filter is a
             # legitimate empty answer, not a degradation.
@@ -210,7 +263,14 @@ def _produce_events(limit: int, types: list[str] | None,
         raw = read_mock("events.json")
         if not raw:
             return None
-        evs = _filter_events(raw.get("events") or [], since_iso, types, severities, limit)
+        pool = raw.get("events") or []
+        if now_window:
+            pool = _select_now(pool)
+            evs = [e for e in pool
+                   if (not types or e.get("type") in types)
+                   and (not severities or e.get("severity") in severities)][:limit]
+        else:
+            evs = _filter_events(pool, since_iso, types, severities, limit)
         evs = _merge_replay(evs, since_iso, types, severities, limit)
         if not evs:
             return None
@@ -504,7 +564,7 @@ def _produce_brief() -> dict[str, Any]:
     window = "now"
     since = _since_iso(window, None)
     key = _events_key(10, None, None, since, window)
-    ev_payload = _cached_payload(key) or _produce_events(10, None, None, since)
+    ev_payload = _cached_payload(key) or _produce_events(10, None, None, since, True)
     events = ev_payload.get("events") or []
     result = brief_mod.build_brief(events, window)
     src_meta = dict(ev_payload.get("meta") or meta("mock", True, "no event source"))
@@ -562,7 +622,7 @@ def _produce_layers() -> dict[str, Any]:
     stamp = now_iso()
     since = _since_iso("now", None)
     ev_key = _events_key(200, None, None, since, "now")
-    ev = _cached_payload(ev_key) or _produce_events(200, None, None, since)
+    ev = _cached_payload(ev_key) or _produce_events(200, None, None, since, True)
     ev_state = (ev.get("meta") or {}).get("source", "mock")
     counts = ev.get("counts") or dict(EMPTY_COUNTS)
 
@@ -623,9 +683,11 @@ def events_json(
     types = _csv_list(type, TYPES)
     sevs = _severities_at_least(severity)
     since_iso = _since_iso(window, since)
+    # An explicit ?since= is a literal request: honour it verbatim, no state union.
+    now_window = (not since) and (window or "now").lower() != "7d"
     key = _events_key(n, types, sevs, since_iso, window)
     return cache.serve(key, TTL_EVENTS,
-                       lambda: _produce_events(n, types, sevs, since_iso),
+                       lambda: _produce_events(n, types, sevs, since_iso, now_window),
                        "events.json", _empty_events)
 
 
@@ -916,11 +978,11 @@ def _warm_on_startup() -> None:
         for n in (30, 60):
             k = _events_key(n, None, None, since_now, "now")
             cache.prime(k, TTL_EVENTS,
-                        lambda n=n, s=since_now: _produce_events(n, None, None, s),
+                        lambda n=n, s=since_now: _produce_events(n, None, None, s, True),
                         "events.json")
         k200 = _events_key(200, None, None, since_now, "now")
         cache.prime(k200, TTL_EVENTS,
-                    lambda s=since_now: _produce_events(200, None, None, s),
+                    lambda s=since_now: _produce_events(200, None, None, s, True),
                     "events.json")
         cache.prime("layers.json", TTL_LAYERS, _produce_layers, "layers.json")
         cache.prime("brief", TTL_BRIEF, _produce_brief, "brief")

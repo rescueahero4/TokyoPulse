@@ -60,6 +60,15 @@ export function assertNoConsoleErrors(capture: ConsoleCapture) {
  * WebGL canvas onto a 2D canvas, which Chromium allows same-origin) and
  * returns simple colour-variance stats. A blank/solid canvas (loading spinner
  * frozen, WebGL context lost, all-black globe) has ~0 variance.
+ *
+ * Cesium's WebGL context is created with `preserveDrawingBuffer: false`
+ * (verified via getContextAttributes()), so the drawing buffer's contents
+ * are only guaranteed valid for the JS turn right after a draw. We force a
+ * render via `viewer.scene.requestRender()` and wait two rAF ticks before
+ * sampling — reading "whenever the test happens to call this" without that
+ * nudge reliably samples a cleared/undefined buffer and reports a false
+ * "blank canvas", which is exactly the failure mode this check exists to
+ * catch for real, so it must not misfire on its own.
  */
 export async function canvasColorVariance(page: Page, selector = 'canvas'): Promise<{
   width: number;
@@ -68,44 +77,56 @@ export async function canvasColorVariance(page: Page, selector = 'canvas'): Prom
   variance: number;
 }> {
   return page.evaluate((sel) => {
-    const canvas = document.querySelector(sel) as HTMLCanvasElement | null;
-    if (!canvas) return { width: 0, height: 0, uniqueColors: 0, variance: 0 };
-    const w = canvas.width;
-    const h = canvas.height;
-    if (!w || !h) return { width: w, height: h, uniqueColors: 0, variance: 0 };
-    const copy = document.createElement('canvas');
-    // Downsample for speed; 128x128 grid is plenty to detect a blank frame.
-    const sw = Math.min(128, w);
-    const sh = Math.min(128, h);
-    copy.width = sw;
-    copy.height = sh;
-    const ctx = copy.getContext('2d');
-    if (!ctx) return { width: w, height: h, uniqueColors: 0, variance: 0 };
-    ctx.drawImage(canvas, 0, 0, w, h, 0, 0, sw, sh);
-    let data: Uint8ClampedArray;
-    try {
-      data = ctx.getImageData(0, 0, sw, sh).data;
-    } catch {
-      // Tainted/cross-origin canvas read failure -> treat as no signal.
-      return { width: w, height: h, uniqueColors: 0, variance: 0 };
-    }
-    const colors = new Set<string>();
-    let sum = 0;
-    let sumSq = 0;
-    let n = 0;
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      colors.add(`${r},${g},${b}`);
-      const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-      sum += lum;
-      sumSq += lum * lum;
-      n++;
-    }
-    const mean = sum / n;
-    const variance = sumSq / n - mean * mean;
-    return { width: w, height: h, uniqueColors: colors.size, variance };
+    return new Promise((resolve) => {
+      const finish = () => {
+        const canvas = document.querySelector(sel) as HTMLCanvasElement | null;
+        if (!canvas) return resolve({ width: 0, height: 0, uniqueColors: 0, variance: 0 });
+        const w = canvas.width;
+        const h = canvas.height;
+        if (!w || !h) return resolve({ width: w, height: h, uniqueColors: 0, variance: 0 });
+        const copy = document.createElement('canvas');
+        // Downsample for speed; 128x128 grid is plenty to detect a blank frame.
+        const sw = Math.min(128, w);
+        const sh = Math.min(128, h);
+        copy.width = sw;
+        copy.height = sh;
+        const ctx = copy.getContext('2d');
+        if (!ctx) return resolve({ width: w, height: h, uniqueColors: 0, variance: 0 });
+        ctx.drawImage(canvas, 0, 0, w, h, 0, 0, sw, sh);
+        let data: Uint8ClampedArray;
+        try {
+          data = ctx.getImageData(0, 0, sw, sh).data;
+        } catch {
+          // Tainted/cross-origin canvas read failure -> treat as no signal.
+          return resolve({ width: w, height: h, uniqueColors: 0, variance: 0 });
+        }
+        const colors = new Set<string>();
+        let sum = 0;
+        let sumSq = 0;
+        let n = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          colors.add(`${r},${g},${b}`);
+          const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+          sum += lum;
+          sumSq += lum * lum;
+          n++;
+        }
+        const mean = sum / n;
+        const variance = sumSq / n - mean * mean;
+        resolve({ width: w, height: h, uniqueColors: colors.size, variance });
+      };
+
+      const viewer = (window as unknown as { __tpViewer?: { scene: { requestRender(): void } } }).__tpViewer;
+      try {
+        viewer?.scene.requestRender();
+      } catch {
+        /* ignore */
+      }
+      requestAnimationFrame(() => requestAnimationFrame(finish));
+    });
   }, selector);
 }
 

@@ -599,9 +599,14 @@ LIMIT $limit
 #   A  every event within the last 48h (this also covers future-dated weather,
 #      which the UI renders in its UPCOMING section)
 #   B  the LATEST train event per lineId  (current line status, one row per line)
-#   C  the LATEST warning per ward, plus the latest area-wide warning
-# B and C are capped at $stateSince so a months-old cached snapshot cannot be
-# presented as "current" — honest labelling beats a fuller timeline.
+#   C  every ACTIVE warning, with NO age cap — a warning not yet lifted is still
+#      in effect, and a wrong upstream timestamp is a display concern, not a
+#      filter concern (orchestrator decision; A2 is fixing the JMA time field).
+#      Grouped by ward when the event carries one, else by title: the JMA feed
+#      currently emits the SAME advisory once per sub-area (4 distinct advisories
+#      as 26 rows), and 10 identical "Thunderstorm Advisory" rows is the same
+#      duplicate-row sloppiness /demo/reset just removed. Once A2 attaches ward
+#      refs this automatically becomes one row per ward per advisory.
 EVENTS_NOW_CYPHER = """
 CALL {
   MATCH (e:Event) WHERE e.time >= datetime($since)
@@ -609,15 +614,14 @@ CALL {
 }
 CALL {
   MATCH (e:Event {type: 'train'})-[:AFFECTS]->(l:Line)
-  WHERE e.time >= datetime($stateSince)
   WITH l, e ORDER BY e.time DESC
   WITH l, head(collect(e)) AS latest
   RETURN collect(latest) AS trains
 }
 CALL {
-  MATCH (e:Event {type: 'warning'}) WHERE e.time >= datetime($stateSince)
+  MATCH (e:Event {type: 'warning'})
   OPTIONAL MATCH (e)-[:AFFECTS]->(w:Ward)
-  WITH coalesce(w.name, '__area__') AS scope, e ORDER BY e.time DESC
+  WITH coalesce(w.name, e.title) AS scope, e ORDER BY e.time DESC
   WITH scope, head(collect(e)) AS latest
   RETURN collect(latest) AS warnings
 }
@@ -642,17 +646,16 @@ LIMIT $limit
 def fetch_events(since_iso: str, limit: int = 30,
                  types: list[str] | None = None,
                  severities: list[str] | None = None,
-                 state_since_iso: str | None = None) -> list[dict[str, Any]]:
+                 now_window: bool = False) -> list[dict[str, Any]]:
     """Events for the Timeline / AlertBanner / brief, newest first.
 
-    `state_since_iso` switches on the "currently in effect" union above (the
-    `window=now` semantic). Pass None for a plain "since" query (`window=7d`, or
-    an explicit `?since=`).
+    `now_window=True` selects the "currently in effect" union above (the
+    `window=now` semantic, where `since_iso` is the 48h incident cutoff).
+    False gives a plain "since" query (`window=7d`, or an explicit `?since=`).
     """
-    if state_since_iso:
-        rows = run(EVENTS_NOW_CYPHER, since=since_iso, stateSince=state_since_iso,
-                   limit=int(limit), types=types or None,
-                   severities=severities or None)
+    if now_window:
+        rows = run(EVENTS_NOW_CYPHER, since=since_iso, limit=int(limit),
+                   types=types or None, severities=severities or None)
     else:
         rows = run(EVENTS_CYPHER, since=since_iso, limit=int(limit),
                    types=types or None, severities=severities or None)
