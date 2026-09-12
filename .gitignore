@@ -14,3 +14,5 @@ tests/*.log
 tests/e2e/*.log
 ingest/state/
 *.pyc
+tests/e2e/report/
+tests/e2e/screenshots/
