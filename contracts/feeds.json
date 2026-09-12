@@ -1,0 +1,68 @@
+{
+  "_comment": "FROZEN. Verified reachable from this machine at 13:45 JST 2026-09-12. Pinned so no agent guesses a URL.",
+  "odpt_train_information": {
+    "url": "https://api-public.odpt.org/api/v4/odpt:TrainInformation",
+    "CRITICAL_NOTE": "Do NOT append '.json' - that triggers a redirect to a dead Azure blob (BlobNotFound). The extension-less path returns 200.",
+    "keyless": true,
+    "verified": "200, 6 items",
+    "coverage": "Toei operator ONLY (6 lines). No JR-East, no Tokyo Metro on the keyless mirror.",
+    "sample_text_normal": "現在、１５分以上の遅延はありません。"
+  },
+  "odpt_railway": {
+    "url": "https://api-public.odpt.org/api/v4/odpt:Railway",
+    "keyless": true,
+    "verified": "200, 6 items",
+    "use": "odpt:stationOrder gives the station sequence per line -> join to odpt:Station coords to build polyline geometry"
+  },
+  "odpt_station": {
+    "url": "https://api-public.odpt.org/api/v4/odpt:Station",
+    "keyless": true,
+    "verified": "200, 149 items, ALL have geo:lat and geo:long",
+    "use": "station coords + odpt:passengerSurvey ridership"
+  },
+  "p2pquake_history": {
+    "url": "https://api.p2pquake.net/v2/history?codes=551&limit=100",
+    "keyless": true,
+    "verified": "200, 4.6KB at limit=5"
+  },
+  "p2pquake_ws": {
+    "url": "wss://api.p2pquake.net/v2/ws",
+    "keyless": true,
+    "note": "May be silent for hours. POST /demo/replay is the demo guarantee, not this."
+  },
+  "jma_warning_tokyo": {
+    "url": "https://www.jma.go.jp/bosai/warning/data/warning/130000.json",
+    "keyless": true,
+    "verified": "200, 14KB"
+  },
+  "open_meteo": {
+    "url": "https://api.open-meteo.com/v1/forecast?latitude=35.68&longitude=139.76&hourly=temperature_2m,precipitation&past_days=2&forecast_days=2&timezone=Asia%2FTokyo",
+    "keyless": true,
+    "verified": "200, 3KB"
+  },
+  "overpass": {
+    "url": "https://overpass-api.de/api/interpreter",
+    "keyless": true,
+    "verified": "reachable",
+    "use": "rail geometry for the JR/Metro lines absent from the ODPT keyless mirror",
+    "note": "POST the query from a UTF-8 FILE, not a shell argument - Japanese line names get mangled by the Windows shell."
+  },
+  "gsi_std_tiles": {
+    "url": "https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",
+    "keyless": true,
+    "verified": "200, 95KB"
+  },
+  "gsi_pale_tiles": {
+    "url": "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
+    "keyless": true
+  },
+  "gsi_flood_tiles": {
+    "url": "https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png",
+    "keyless": true,
+    "verified": "200, 15KB"
+  },
+  "osm_fallback_tiles": {
+    "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    "keyless": true
+  }
+}

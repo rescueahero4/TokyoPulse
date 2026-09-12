@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tokyopulse.local/contracts/line-feature.schema.json",
+  "title": "LineFeature",
+  "description": "FROZEN at 0:15. One GeoJSON Feature per rail line in GET /lines.geojson. geometry is LineString or MultiLineString in [lon,lat] order (GeoJSON spec).",
+  "type": "object",
+  "required": ["type", "geometry", "properties"],
+  "properties": {
+    "type": { "const": "Feature" },
+    "geometry": {
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": { "type": { "enum": ["LineString", "MultiLineString"] } }
+    },
+    "properties": {
+      "type": "object",
+      "required": ["lineId", "name", "nameJa", "status", "statusText", "color"],
+      "properties": {
+        "lineId":     { "type": "string", "description": "Internal key from contracts/lines.csv. Join key for everything." },
+        "name":       { "type": "string" },
+        "nameJa":     { "type": ["string", "null"] },
+        "operator":   { "type": ["string", "null"], "description": "Toei | JR-East | TokyoMetro" },
+        "status":     { "type": "string", "enum": ["normal", "delay", "suspended", "unknown"], "description": "unknown => render grey. Lines with no live status feed are 'unknown', never faked 'normal'." },
+        "statusText": { "type": "string", "description": "Human text from the feed, or 'No live status feed' for unknown." },
+        "statusTextJa": { "type": ["string", "null"] },
+        "color":      { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$", "description": "Official line livery colour; used when status=normal and as the search-highlight tint." },
+        "statusSource": { "type": "string", "enum": ["live", "cache", "mock", "none"] },
+        "updatedAt":  { "type": ["string", "null"], "format": "date-time" }
+      }
+    }
+  }
+}

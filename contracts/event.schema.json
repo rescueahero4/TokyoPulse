@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tokyopulse.local/contracts/event.schema.json",
+  "title": "Event",
+  "description": "FROZEN at 0:15. The single normalized shape every ingestor writes and every reader (timeline, alerts, brief) renders. Do not add/rename/remove fields without an orchestrator broadcast.",
+  "type": "object",
+  "required": ["id", "type", "severity", "time", "title", "source"],
+  "additionalProperties": false,
+  "properties": {
+    "id":       { "type": "string", "description": "Stable dedupe key. Convention: '<source>-<naturalkey>'. Re-ingesting the same real-world event MUST produce the same id (Neo4j MERGE key)." },
+    "type":     { "type": "string", "enum": ["quake", "train", "warning", "weather"] },
+    "severity": { "type": "string", "enum": ["info", "warning", "critical"] },
+    "time":     { "type": "string", "format": "date-time", "description": "ISO8601 WITH offset, Asia/Tokyo (+09:00). Never naive." },
+    "lat":      { "type": ["number", "null"], "minimum": -90,  "maximum": 90,  "description": "null = area-wide event with no single point" },
+    "lon":      { "type": ["number", "null"], "minimum": -180, "maximum": 180 },
+    "title":    { "type": "string", "description": "English one-liner for the timeline row." },
+    "titleJa":  { "type": ["string", "null"], "description": "Japanese one-liner. null if source had no JP text." },
+    "affects":  {
+      "type": "array",
+      "description": "Typed refs. Exactly 'line:<lineId>' (lineId from contracts/lines.csv) or 'ward:<WardName>' (ward name from contracts/wards.csv). Empty array allowed.",
+      "items": { "type": "string", "pattern": "^(line|ward):[A-Za-z0-9_-]+$" }
+    },
+    "source":   { "type": "string", "enum": ["odpt", "p2pquake", "jma", "open-meteo", "mock", "replay"] },
+    "url":      { "type": ["string", "null"] },
+    "magnitude":{ "type": ["number", "null"], "description": "quake only" },
+    "maxScale": { "type": ["number", "null"], "description": "quake only: JMA shindo *10 (e.g. 45 = shindo 4.5). P2PQuake native." }
+  }
+}
