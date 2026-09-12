@@ -42,7 +42,7 @@
       "lat": 35.733768,
       "lon": 139.788841,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -52,7 +52,7 @@
       "lat": 35.741923,
       "lon": 139.78421,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -62,7 +62,7 @@
       "lat": 35.738573,
       "lon": 139.784704,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -82,7 +82,7 @@
       "lat": 35.734913,
       "lon": 139.786416,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -122,7 +122,7 @@
       "lat": 35.745626,
       "lon": 139.773867,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -162,7 +162,7 @@
       "lat": 35.748487,
       "lon": 139.769859,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -172,7 +172,7 @@
       "lat": 35.742783,
       "lon": 139.780891,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -182,7 +182,7 @@
       "lat": 35.743919,
       "lon": 139.776416,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -192,7 +192,7 @@
       "lat": 35.732207,
       "lon": 139.791509,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -202,7 +202,7 @@
       "lat": 35.749811,
       "lon": 139.76619,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -232,7 +232,7 @@
       "lat": 35.750477,
       "lon": 139.761739,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -345,10 +345,10 @@
       "maxScale": null
     }
   ],
-  "stationsInFloodZone": 0,
+  "stationsInFloodZone": 11,
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T16:07:01+09:00",
+    "generatedAt": "2026-09-12T16:42:41+09:00",
     "degraded": false,
     "note": null
   }

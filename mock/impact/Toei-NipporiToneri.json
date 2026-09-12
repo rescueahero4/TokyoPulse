@@ -26,7 +26,7 @@
       "lat": 35.754655,
       "lon": 139.770376,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -36,7 +36,7 @@
       "lat": 35.742868,
       "lon": 139.769025,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -46,7 +46,7 @@
       "lat": 35.773954,
       "lon": 139.77029,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -56,7 +56,7 @@
       "lat": 35.768351,
       "lon": 139.770692,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -66,7 +66,7 @@
       "lat": 35.748513,
       "lon": 139.769828,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -76,7 +76,7 @@
       "lat": 35.814541,
       "lon": 139.770707,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -86,7 +86,7 @@
       "lat": 35.728793,
       "lon": 139.771121,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -96,7 +96,7 @@
       "lat": 35.733739,
       "lon": 139.768169,
       "ward": "Arakawa",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -106,7 +106,7 @@
       "lat": 35.78151,
       "lon": 139.770077,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -116,7 +116,7 @@
       "lat": 35.763906,
       "lon": 139.770798,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -126,7 +126,7 @@
       "lat": 35.796384,
       "lon": 139.770159,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -136,7 +136,7 @@
       "lat": 35.80569,
       "lon": 139.770069,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -146,7 +146,7 @@
       "lat": 35.788787,
       "lon": 139.770036,
       "ward": "Adachi",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     }
   ],
@@ -169,10 +169,10 @@
       "maxScale": null
     }
   ],
-  "stationsInFloodZone": 0,
+  "stationsInFloodZone": 13,
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T16:07:01+09:00",
+    "generatedAt": "2026-09-12T16:42:41+09:00",
     "degraded": false,
     "note": null
   }

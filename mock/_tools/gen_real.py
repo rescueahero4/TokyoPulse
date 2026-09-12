@@ -29,6 +29,12 @@ WARDS = read_wards_csv()
 
 TOKYO_BOUNDS = {"lon": (138.9, 140.2), "lat": (35.4, 36.0)}
 
+# Low-lying-ward heuristic for inFloodZone -- NOT a flood-map lookup, just the
+# wards most commonly cited as low-elevation / river-adjacent in Tokyo flood
+# hazard discussion. Applied consistently to every station regardless of
+# operator (Toei/ODPT or JR/Metro/OSM).
+FLOOD_WARDS = {"Sumida", "Koto", "Adachi", "Katsushika", "Edogawa", "Arakawa"}
+
 
 def in_bounds(lon, lat):
     lo, hi = TOKYO_BOUNDS["lon"]
@@ -136,13 +142,17 @@ for item in TRAININFO_RAW:
         "maxScale": None,
     })
 
-# Lines with statusFeed=none are always "unknown" per line-feature schema
+# Any line this mock generator has no actual live-feed data for (i.e. wasn't
+# populated from odpt:TrainInformation above) is "unknown" per line-feature
+# schema -- this now includes the 5 JR lines even though contracts/lines.csv
+# marks their statusFeed "live" (A2's JR-East scraper supplies that live at
+# runtime; this mock script only has ODPT TrainInformation, which is Toei-only).
 for row in LINES:
-    if row["statusFeed"] == "none":
-        TRAIN_STATUS_BY_LINE.setdefault(row["lineId"], {
+    if row["lineId"] not in TRAIN_STATUS_BY_LINE:
+        TRAIN_STATUS_BY_LINE[row["lineId"]] = {
             "status": "unknown", "statusText": "No live status feed",
             "statusTextJa": None, "severity": None,
-        })
+        }
 
 # Hand-authored demo disruption events (source:"mock") -- all 6 Toei lines are
 # currently normal live, so the demo needs something amber/red to point at.
@@ -267,15 +277,20 @@ def build_lines_geojson():
     empty_lines = []
     for row in LINES:
         line_id = row["lineId"]
-        if row["statusFeed"] == "live":
+        status_info = TRAIN_STATUS_BY_LINE.get(line_id, {"status": "unknown", "statusText": "No live status feed", "statusTextJa": None})
+        # Geometry source is keyed on whether THIS mock script actually has
+        # odpt:Railway station-order data for the line (Toei only) -- NOT on
+        # contracts/lines.csv's statusFeed column, which now also says "live"
+        # for the 5 JR lines (A2's separate JR-East scraper), even though
+        # odptRailway is blank for them and they still need the OSM path here.
+        if row["odptRailway"]:
             coords = build_toei_geometry(row)
             geom = {"type": "LineString", "coordinates": coords}
-            status_info = TRAIN_STATUS_BY_LINE.get(line_id, {"status": "unknown", "statusText": "No live status feed"})
             status = status_info["status"]
             status_text = status_info["statusText"]
             status_text_ja = status_info.get("statusTextJa")
-            status_source = "live"
-            updated_at = iso()
+            status_source = "live" if status != "unknown" else "none"
+            updated_at = iso() if status != "unknown" else None
             for lon, lat in coords:
                 if not in_bounds(lon, lat):
                     bad_coords.append((line_id, lon, lat))
@@ -292,6 +307,8 @@ def build_lines_geojson():
             else:
                 geom = {"type": "MultiLineString", "coordinates": []}
                 empty_lines.append(line_id)
+            # This mock script has no live JR/Metro status feed (A2's JR-East
+            # scraper supplies it separately at runtime) -- honestly "unknown".
             status = "unknown"
             status_text = "No live status feed"
             status_text_ja = None
@@ -353,6 +370,7 @@ def build_stations_geojson():
         row = LINE_BY_ODPT.get(odpt_railway)
         line_ids = [row["lineId"]] if row else []
         ward_row = nearest_ward(lat, lon)
+        ward_name = ward_row["ward"] if ward_row else None
         ridership = RIDERSHIP_BY_STATION.get(sid)
         band = band_fn(ridership) if ridership is not None else 2
         title = st.get("odpt:stationTitle") or {}
@@ -366,10 +384,10 @@ def build_stations_geojson():
                 "name": title.get("en", sid),
                 "nameJa": title.get("ja"),
                 "lineIds": line_ids,
-                "ward": ward_row["ward"] if ward_row else None,
+                "ward": ward_name,
                 "ridership": ridership,
                 "ridershipBand": band,
-                "inFloodZone": False,
+                "inFloodZone": ward_name in FLOOD_WARDS if ward_name else False,
             },
         })
     write_json("stations.geojson", {"type": "FeatureCollection", "features": features, "meta": meta(source="live")})
@@ -625,8 +643,12 @@ def build_forecast():
 # 2e. impact/<lineId>.json for all 6 Toei lines
 # ---------------------------------------------------------------------------
 def build_impact(all_events, station_lookup):
+    # Restricted to lines we actually have ODPT station-order data for (Toei).
+    # JR/Metro impact is computed by the real API from stations.geojson +
+    # lines.geojson once seeded into Neo4j (see gen_osm_stations.py) rather
+    # than from a static mock file here.
     for row in LINES:
-        if row["statusFeed"] != "live":
+        if not row["odptRailway"]:
             continue
         line_id = row["lineId"]
         status_info = TRAIN_STATUS_BY_LINE.get(line_id, {"status": "unknown", "statusText": "No live status feed"})
@@ -643,7 +665,9 @@ def build_impact(all_events, station_lookup):
             title = st.get("odpt:stationTitle") or {}
             line_stations.append({
                 "stationId": sid, "name": title.get("en", sid), "nameJa": title.get("ja"),
-                "lat": lat, "lon": lon, "ward": ward_name, "inFloodZone": False, "ridershipBand": 2,
+                "lat": lat, "lon": lon, "ward": ward_name,
+                "inFloodZone": ward_name in FLOOD_WARDS if ward_name else False,
+                "ridershipBand": 2,
             })
             if ward_name:
                 ward_counter[ward_name] = ward_counter.get(ward_name, 0) + 1
@@ -663,7 +687,7 @@ def build_impact(all_events, station_lookup):
             "wards": wards_out,
             "stations": line_stations,
             "events": line_events,
-            "stationsInFloodZone": 0,
+            "stationsInFloodZone": sum(1 for s in line_stations if s["inFloodZone"]),
             "meta": meta(source="live"),
         })
         print(f"impact/{line_id}.json: {len(line_stations)} stations, {len(line_events)} events")

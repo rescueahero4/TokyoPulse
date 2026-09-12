@@ -118,6 +118,36 @@ def main():
         check_coords_geometry(f["geometry"], f"stations.geojson:{f['properties'].get('stationId')}", bad_coords)
     ok(f"stations.geojson has {len(stations_doc['features'])} features")
 
+    # --- stations.geojson: no duplicate stationIds, valid band, valid lineIds ---
+    seen_station_ids = {}
+    dup_station_ids = []
+    bad_band_stations = 0
+    bad_lineid_refs = []
+    for f in stations_doc["features"]:
+        props = f["properties"]
+        sid = props.get("stationId")
+        if sid in seen_station_ids:
+            dup_station_ids.append(sid)
+        seen_station_ids[sid] = seen_station_ids.get(sid, 0) + 1
+        band = props.get("ridershipBand")
+        if not isinstance(band, int) or not (1 <= band <= 5):
+            bad_band_stations += 1
+        for lid in props.get("lineIds", []):
+            if lid not in expected_ids:
+                bad_lineid_refs.append((sid, lid))
+    if dup_station_ids:
+        err(f"stations.geojson: {len(dup_station_ids)} duplicate stationId(s): {dup_station_ids[:10]}")
+    else:
+        ok(f"stations.geojson: all {len(seen_station_ids)} stationIds unique")
+    if bad_band_stations:
+        err(f"stations.geojson: {bad_band_stations} station(s) missing a valid ridershipBand (1..5)")
+    else:
+        ok("stations.geojson: every station has a valid ridershipBand (1..5)")
+    if bad_lineid_refs:
+        err(f"stations.geojson: {len(bad_lineid_refs)} lineIds reference a lineId not in contracts/lines.csv: {bad_lineid_refs[:10]}")
+    else:
+        ok("stations.geojson: every station's lineIds[] reference a real lineId from contracts/lines.csv")
+
     # --- event lat/lon bounds (non-null only) ---
     for e in events_doc.get("events", []):
         lat, lon = e.get("lat"), e.get("lon")

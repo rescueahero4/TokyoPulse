@@ -5,54 +5,54 @@
       "label": "Trains",
       "state": "live",
       "count": 8,
-      "lastUpdate": "2026-09-12T16:07:01+09:00"
+      "lastUpdate": "2026-09-12T16:42:41+09:00"
     },
     {
       "id": "quakes",
       "label": "Quakes",
       "state": "live",
       "count": 39,
-      "lastUpdate": "2026-09-12T16:07:01+09:00"
+      "lastUpdate": "2026-09-12T16:42:41+09:00"
     },
     {
       "id": "warnings",
       "label": "Warnings",
       "state": "live",
       "count": 0,
-      "lastUpdate": "2026-09-12T16:07:01+09:00"
+      "lastUpdate": "2026-09-12T16:42:41+09:00"
     },
     {
       "id": "weather",
       "label": "Weather",
       "state": "live",
       "count": 2,
-      "lastUpdate": "2026-09-12T16:07:01+09:00"
+      "lastUpdate": "2026-09-12T16:42:41+09:00"
     },
     {
       "id": "flood",
       "label": "Flood",
       "state": "mock",
       "count": 0,
-      "lastUpdate": "2026-09-12T16:07:01+09:00"
+      "lastUpdate": "2026-09-12T16:42:41+09:00"
     },
     {
       "id": "crowd",
       "label": "Crowd",
       "state": "live",
       "count": 149,
-      "lastUpdate": "2026-09-12T16:07:01+09:00"
+      "lastUpdate": "2026-09-12T16:42:41+09:00"
     },
     {
       "id": "peopleflow",
       "label": "Peopleflow",
       "state": "mock",
       "count": 0,
-      "lastUpdate": "2026-09-12T16:07:01+09:00"
+      "lastUpdate": "2026-09-12T16:42:41+09:00"
     }
   ],
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T16:07:01+09:00",
+    "generatedAt": "2026-09-12T16:42:41+09:00",
     "degraded": false,
     "note": null
   }

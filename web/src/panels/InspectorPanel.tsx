@@ -187,7 +187,15 @@ export function InspectorPanel(p: {
     const stationCount = (p.stations?.features ?? []).filter((s) =>
       (s.properties?.lineIds ?? []).includes(pick.lineId),
     ).length;
-    const noFeed = !l || l.statusSource === 'none' || l.status === 'unknown';
+    // Provenance is per-OPERATOR, not per-status value — THREE different feeds
+    // back this map now, and they do not agree on what counts as a delay:
+    //   Toei       -> ODPT odpt:TrainInformation, publishes 15min+ delays
+    //   JR East    -> traininfo.jreast.co.jp scrape, publishes 30min+ delays
+    //   TokyoMetro -> no keyless feed at all; status stays honestly unknown
+    const operator = l?.operator ?? '';
+    const isJr = operator === 'JR-East';
+    const hasFeed = !!l && l.statusSource !== 'none';
+    const threshold = !hasFeed ? null : isJr ? '30 min or more (JR East)' : '15 min or more (ODPT)';
     body = l ? (
       <>
         <Row label="Name (JA)" value={l.nameJa} />
@@ -207,6 +215,7 @@ export function InspectorPanel(p: {
           accent={STATUS_COLOR[l.status] ?? STATUS_COLOR.unknown}
         />
         <Row label="Status text" value={p.lang === 'ja' ? l.statusTextJa || l.statusText : l.statusText} />
+        <Row label="Delay threshold" value={threshold ?? 'no feed — nothing is published'} />
         <Row label="Stations on line" value={stationCount > 0 ? String(stationCount) : 'no data'} mono />
         <Row label="Status updated" value={l.updatedAt ? formatClockWithRelative(l.updatedAt) : 'never'} mono />
         {p.onOpenImpact ? (
@@ -218,17 +227,26 @@ export function InspectorPanel(p: {
     ) : (
       <div className="tp-empty-row">Line {pick.lineId} is not in the loaded line set.</div>
     );
-    footer = noFeed ? (
+    footer = !hasFeed ? (
       <SourceFooter
         text="Geometry: OpenStreetMap via Overpass. Status: NO LIVE FEED."
         meta={p.linesMeta}
-        note="The keyless ODPT mirror carries Toei only — there is no JR-East or Tokyo Metro live status here, so this line renders grey/unknown rather than a faked 'normal'."
+        // The /lines payload itself is live; this LINE's status is not. Saying
+        // "LIVE" here would undo the whole point of the card.
+        fresh="NO STATUS FEED · geometry only"
+        note={`There is no keyless live-status feed for ${operator || 'this operator'}, so this line renders grey/unknown rather than a faked 'normal'.`}
+      />
+    ) : isJr ? (
+      <SourceFooter
+        text="JR East traininfo.jreast.co.jp (live, 30min+ delay threshold) · geometry from OpenStreetMap via Overpass"
+        meta={p.linesMeta}
+        note="JR East only publishes delays of 30 minutes or more — the Toei/ODPT feed publishes 15+. A JR line reading 'normal' can still be running 20 minutes late."
       />
     ) : (
       <SourceFooter
-        text="ODPT odpt:TrainInformation (live) · geometry from odpt:Railway stationOrder × odpt:Station coords"
+        text="ODPT odpt:TrainInformation (live, 15min+ delay threshold) · geometry from odpt:Railway stationOrder × odpt:Station coords"
         meta={p.linesMeta}
-        note="Live status exists for Toei operator lines only."
+        note="Live status covers Toei and JR East lines; Tokyo Metro remains unknown."
       />
     );
   } else if (pick.kind === 'event') {

@@ -26,6 +26,12 @@ export function ImpactPanel(p: {
 
   const impact = p.impact;
 
+  // No graph rows for this line at all -> show one honest explanation instead of
+  // four blank lists (wards, stations, the flood count, and its "0 of nothing").
+  const noGraphData =
+    (!impact.stations || impact.stations.length === 0) &&
+    (!impact.wards || impact.wards.length === 0);
+
   return (
     <div className={`tp-panel tp-impact-panel${collapsed ? ' tp-panel-collapsed' : ''}`}>
       <PanelHeader
@@ -53,6 +59,19 @@ export function ImpactPanel(p: {
 
       {p.loading ? <div className="tp-empty-row">Refreshing…</div> : null}
 
+      {noGraphData ? (
+        /* JR East and Tokyo Metro have no (Line)-[:SERVES]->(Station) rows: the
+           keyless ODPT mirror only ever supplied Toei's 149 stations. Four empty
+           lists would read as a bug; say what is actually missing and why. */
+        <div className="tp-impact-nograph">
+          <div className="tp-impact-nograph-title">Live status only</div>
+          <p className="tp-impact-nograph-text">
+            Station and ward data for this line isn&apos;t in the graph — the keyless ODPT feed
+            covers Toei stations only.
+          </p>
+        </div>
+      ) : (
+      <>
       <div className="tp-impact-flood-banner">
         <span className="tp-impact-flood-count">{impact.stationsInFloodZone}</span>
         <span className="tp-impact-flood-label">stations in flood zone</span>
@@ -101,7 +120,11 @@ export function ImpactPanel(p: {
           </ul>
         )}
       </div>
+      </>
+      )}
 
+      {/* Events are graph-independent (they attach to the Line node itself), so
+          this section renders for every operator, empty state or not. */}
       <div className="tp-impact-section">
         <div className="tp-panel-subheader">Events</div>
         {(!impact.events || impact.events.length === 0) ? (

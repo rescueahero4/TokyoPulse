@@ -6,7 +6,7 @@
       "feed": "odpt",
       "status": "running",
       "eventsWritten": 8,
-      "lastWriteAt": "2026-09-12T16:07:01+09:00",
+      "lastWriteAt": "2026-09-12T16:42:41+09:00",
       "startupMs": 180
     },
     {
@@ -14,7 +14,7 @@
       "feed": "p2pquake",
       "status": "running",
       "eventsWritten": 39,
-      "lastWriteAt": "2026-09-12T16:07:01+09:00",
+      "lastWriteAt": "2026-09-12T16:42:41+09:00",
       "startupMs": 210
     },
     {
@@ -22,7 +22,7 @@
       "feed": "jma",
       "status": "running",
       "eventsWritten": 0,
-      "lastWriteAt": "2026-09-12T16:07:01+09:00",
+      "lastWriteAt": "2026-09-12T16:42:41+09:00",
       "startupMs": 150
     },
     {
@@ -30,13 +30,13 @@
       "feed": "open-meteo",
       "status": "running",
       "eventsWritten": 2,
-      "lastWriteAt": "2026-09-12T16:07:01+09:00",
+      "lastWriteAt": "2026-09-12T16:42:41+09:00",
       "startupMs": 140
     }
   ],
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T16:07:01+09:00",
+    "generatedAt": "2026-09-12T16:42:41+09:00",
     "degraded": false,
     "note": null
   }

@@ -14657,7 +14657,7 @@
   ],
   "meta": {
     "source": "mock",
-    "generatedAt": "2026-09-12T14:32:23+09:00",
+    "generatedAt": "2026-09-12T16:42:50+09:00",
     "degraded": true,
     "note": "Derived proxy: static station ridership, distance-weighted. NOT real-time telco people-flow. Real MLIT 人流 data is licence-gated."
   }

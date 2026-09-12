@@ -460,8 +460,15 @@ def _produce_impact(lineId: str, row: dict[str, str]) -> dict[str, Any]:
         data = graph.fetch_impact(lineId, since)      # ONE round-trip
         if not data:
             raise NoLiveData(f"Line {lineId} is not in the graph (run scripts/seed.py)")
-        if not data.get("stations"):
-            raise NoLiveData(f"Line {lineId} has no stations in the graph")
+        # NOT a NoLiveData case. A line can legitimately have live STATUS but no
+        # station graph: ODPT's keyless mirror only ever supplied Toei's stations,
+        # so the 5 JR East lines (live via ingest/feeds/jreast.py) and the 9 Metro
+        # lines have geometry + status but no (Line)-[:SERVES]->(Station) rows.
+        # Throwing to the mock tier here made /impact answer "No live status feed"
+        # for JR-Chuo-Rapid while /lines.geojson said "normal / live" at the same
+        # instant — the inspector card and the impact panel contradicted each other
+        # on screen, on the PRD's own demo line. Serve the real status with empty
+        # station/ward lists; the UI renders an honest "live status only" state.
         # P0-2: graph.fetch_impact() now resolves status with the exact same
         # logic as /lines.geojson's graph.fetch_line_status(), in the SAME
         # round-trip — no more reuse-from-another-endpoint's-cache trick here,

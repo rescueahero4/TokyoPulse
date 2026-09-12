@@ -64,7 +64,7 @@
         "ward": "Sumida",
         "ridership": 21482,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -108,7 +108,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -130,7 +130,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -152,7 +152,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -196,7 +196,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -284,7 +284,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -372,7 +372,7 @@
         "ward": "Sumida",
         "ridership": 42345,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -394,7 +394,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -416,7 +416,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -438,7 +438,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -460,7 +460,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -482,7 +482,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -548,7 +548,7 @@
         "ward": "Arakawa",
         "ridership": null,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -790,7 +790,7 @@
         "ward": "Sumida",
         "ridership": 59010,
         "ridershipBand": 4,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1032,7 +1032,7 @@
         "ward": "Sumida",
         "ridership": 227566,
         "ridershipBand": 5,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1714,7 +1714,7 @@
         "ward": "Arakawa",
         "ridership": 3596,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1736,7 +1736,7 @@
         "ward": "Arakawa",
         "ridership": 5318,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1758,7 +1758,7 @@
         "ward": "Adachi",
         "ridership": 12626,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1780,7 +1780,7 @@
         "ward": "Adachi",
         "ridership": 6207,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1802,7 +1802,7 @@
         "ward": "Arakawa",
         "ridership": 8714,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1824,7 +1824,7 @@
         "ward": "Adachi",
         "ridership": 13251,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1846,7 +1846,7 @@
         "ward": "Arakawa",
         "ridership": 52085,
         "ridershipBand": 4,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1890,7 +1890,7 @@
         "ward": "Arakawa",
         "ridership": 31946,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1912,7 +1912,7 @@
         "ward": "Adachi",
         "ridership": 11848,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1934,7 +1934,7 @@
         "ward": "Adachi",
         "ridership": 9914,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1956,7 +1956,7 @@
         "ward": "Adachi",
         "ridership": 4820,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -1978,7 +1978,7 @@
         "ward": "Adachi",
         "ridership": 9145,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2000,7 +2000,7 @@
         "ward": "Adachi",
         "ridership": 10579,
         "ridershipBand": 1,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2242,7 +2242,7 @@
         "ward": "Koto",
         "ridership": 40727,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2286,7 +2286,7 @@
         "ward": "Sumida",
         "ridership": 37966,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2308,7 +2308,7 @@
         "ward": "Koto",
         "ridership": 81017,
         "ridershipBand": 5,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2330,7 +2330,7 @@
         "ward": "Koto",
         "ridership": 65316,
         "ridershipBand": 4,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2506,7 +2506,7 @@
         "ward": "Sumida",
         "ridership": 34318,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2880,7 +2880,7 @@
         "ward": "Edogawa",
         "ridership": 58409,
         "ridershipBand": 4,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2924,7 +2924,7 @@
         "ward": "Edogawa",
         "ridership": 30424,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -2990,7 +2990,7 @@
         "ward": "Edogawa",
         "ridership": 43043,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3056,7 +3056,7 @@
         "ward": "Koto",
         "ridership": 24573,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3078,7 +3078,7 @@
         "ward": "Koto",
         "ridership": 41577,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3100,7 +3100,7 @@
         "ward": "Edogawa",
         "ridership": 55028,
         "ridershipBand": 4,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3122,7 +3122,7 @@
         "ward": "Koto",
         "ridership": 74094,
         "ridershipBand": 4,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3144,7 +3144,7 @@
         "ward": "Edogawa",
         "ridership": 72322,
         "ridershipBand": 4,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3166,7 +3166,7 @@
         "ward": "Koto",
         "ridership": 27698,
         "ridershipBand": 2,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3210,7 +3210,7 @@
         "ward": "Koto",
         "ridership": 31661,
         "ridershipBand": 3,
-        "inFloodZone": false
+        "inFloodZone": true
       }
     },
     {
@@ -3276,14 +3276,5372 @@
         "ward": "Edogawa",
         "ridership": 39512,
         "ridershipBand": 3,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73856634999999,
+          35.628655325
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3589537622",
+        "name": "Shinagawa",
+        "nameJa": "品川",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Shinagawa",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7285842,
+          35.619437
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3406728238",
+        "name": "Osaki",
+        "nameJa": "大崎",
+        "lineIds": [
+          "JR-Saikyo",
+          "JR-Yamanote"
+        ],
+        "ward": "Shinagawa",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7236289,
+          35.6262569
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1593325906",
+        "name": "Gotanda",
+        "nameJa": "五反田",
+        "lineIds": [
+          "JR-Yamanote"
+        ],
+        "ward": "Shinagawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.715748375,
+          35.6332863
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1593259713",
+        "name": "Meguro",
+        "nameJa": "目黒",
+        "lineIds": [
+          "JR-Yamanote",
+          "Metro-Namboku"
+        ],
+        "ward": "Meguro",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70956208,
+          35.646646520000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2218777236",
+        "name": "Ebisu",
+        "nameJa": "恵比寿",
+        "lineIds": [
+          "JR-Saikyo",
+          "JR-Yamanote",
+          "Metro-Hibiya"
+        ],
+        "ward": "Meguro",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70218926666666,
+          35.658713544444446
+        ]
+      },
+      "properties": {
+        "stationId": "osm-266083652",
+        "name": "Shibuya",
+        "nameJa": "渋谷",
+        "lineIds": [
+          "JR-Saikyo",
+          "JR-Yamanote",
+          "Metro-Fukutoshin",
+          "Metro-Ginza",
+          "Metro-Hanzomon"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70241985,
+          35.6702198
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1579675415",
+        "name": "Harajuku",
+        "nameJa": "原宿",
+        "lineIds": [
+          "JR-Yamanote"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7020807,
+          35.6839514
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1658981778",
+        "name": "Yoyogi",
+        "nameJa": "代々木",
+        "lineIds": [
+          "JR-Chuo-Sobu",
+          "JR-Yamanote"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70064810833333,
+          35.689666375
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2389061844",
+        "name": "Shinjuku",
+        "nameJa": "新宿",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu",
+          "JR-Saikyo",
+          "JR-Yamanote",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70024155,
+          35.7013004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708277016",
+        "name": "Shin-Ōkubo",
+        "nameJa": "新大久保",
+        "lineIds": [
+          "JR-Yamanote"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7043242,
+          35.71302875
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1894258044",
+        "name": "Takadanobaba",
+        "nameJa": "高田馬場",
+        "lineIds": [
+          "JR-Yamanote",
+          "Metro-Tozai"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70646449999998,
+          35.7211919
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276252",
+        "name": "Mejiro",
+        "nameJa": "目白",
+        "lineIds": [
+          "JR-Yamanote"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71053835,
+          35.73026427
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1951959624",
+        "name": "Ikebukuro",
+        "nameJa": "池袋",
+        "lineIds": [
+          "JR-Saikyo",
+          "JR-Yamanote",
+          "Metro-Fukutoshin",
+          "Metro-Marunouchi",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72859745,
+          35.731683200000006
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1950369530",
+        "name": "Otsuka",
+        "nameJa": "大塚",
+        "lineIds": [
+          "JR-Yamanote"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73942920000002,
+          35.733408
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708277018",
+        "name": "Sugamo",
+        "nameJa": "巣鴨",
+        "lineIds": [
+          "JR-Yamanote"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74699917499998,
+          35.736287775
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2329712992",
+        "name": "Komagome",
+        "nameJa": "駒込",
+        "lineIds": [
+          "JR-Yamanote",
+          "Metro-Namboku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.761704375,
+          35.737370399999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708277020",
+        "name": "Tabata",
+        "nameJa": "田端",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7668529,
+          35.73232998333334
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276999",
+        "name": "Nishi-Nippori",
+        "nameJa": "西日暮里",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote",
+          "Metro-Chiyoda"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7704202,
+          35.7279807
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1591333868",
+        "name": "Nippori",
+        "nameJa": "日暮里",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.777914725,
+          35.721702375
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708279852",
+        "name": "Uguisudani",
+        "nameJa": "鶯谷",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7764941,
+          35.712680075
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189615",
+        "name": "Ueno",
+        "nameJa": "上野",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote",
+          "Metro-Ginza",
+          "Metro-Hibiya"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77463245,
+          35.706952425
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1593268411",
+        "name": "Okachimachi",
+        "nameJa": "御徒町",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7736513,
+          35.698404625
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355404",
+        "name": "Akihabara",
+        "nameJa": "秋葉原",
+        "lineIds": [
+          "JR-Chuo-Sobu",
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote",
+          "Metro-Hibiya"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77090492222223,
+          35.692222066666666
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1593264885",
+        "name": "Kanda",
+        "nameJa": "神田",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote",
+          "Metro-Ginza"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7661121,
+          35.6814600375
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3589537651",
+        "name": "Tokyo",
+        "nameJa": "東京",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76274085,
+          35.67529625
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926376078",
+        "name": "Yurakucho",
+        "nameJa": "有楽町",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75837085,
+          35.666503883333334
+        ]
+      },
+      "properties": {
+        "stationId": "osm-31253877",
+        "name": "Shimbashi",
+        "nameJa": "新橋",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote",
+          "Metro-Ginza"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7570553,
+          35.65511185
+        ]
+      },
+      "properties": {
+        "stationId": "osm-31253872",
+        "name": "Hamamatsucho",
+        "nameJa": "浜松町",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.747686575,
+          35.645739025
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708279826",
+        "name": "Tamachi",
+        "nameJa": "田町",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.740667525,
+          35.635398
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7293401977",
+        "name": "Takanawa Gateway",
+        "nameJa": "高輪ゲートウェイ",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Yamanote"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76474962857142,
+          35.69987404285714
+        ]
+      },
+      "properties": {
+        "stationId": "osm-315863112",
+        "name": "Ochanomizu",
+        "nameJa": "御茶ノ水",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6655361,
+          35.70582822857143
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1496387349",
+        "name": "Nakano",
+        "nameJa": "中野",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu",
+          "Metro-Tozai"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.649953,
+          35.705334640000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1494688726",
+        "name": "Kōenji",
+        "nameJa": "高円寺",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6353877,
+          35.70486888000001
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434097",
+        "name": "Asagaya",
+        "nameJa": "阿佐ケ谷",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.62015658571428,
+          35.7044211
+        ]
+      },
+      "properties": {
+        "stationId": "osm-243887493",
+        "name": "Ogikubo",
+        "nameJa": "荻窪",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.59958514,
+          35.703785499999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1942352333",
+        "name": "Nishi-Ogikubo",
+        "nameJa": "西荻窪",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.5802187,
+          35.7031387
+        ]
+      },
+      "properties": {
+        "stationId": "osm-544466248",
+        "name": "Kichijoji",
+        "nameJa": "吉祥寺",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.5609313,
+          35.702686725
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1942357056",
+        "name": "Mitaka",
+        "nameJa": "三鷹",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.54408026666667,
+          35.7021298
+        ]
+      },
+      "properties": {
+        "stationId": "osm-243890692",
+        "name": "Musashi-Sakai",
+        "nameJa": "武蔵境",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.52405396666666,
+          35.70157336666667
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1944400728",
+        "name": "Higashi-Koganei",
+        "nameJa": "東小金井",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.50678736666666,
+          35.701124166666666
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434132",
+        "name": "Musashi-Koganei",
+        "nameJa": "武蔵小金井",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.48035816666666,
+          35.700100266666674
+        ]
+      },
+      "properties": {
+        "stationId": "osm-243887500",
+        "name": "Kokubunji",
+        "nameJa": "国分寺",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.46585036666667,
+          35.69973853333333
+        ]
+      },
+      "properties": {
+        "stationId": "osm-472678588",
+        "name": "Nishi-Kokubunji",
+        "nameJa": "西国分寺",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.44653106666667,
+          35.69926986666666
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434122",
+        "name": "Kunitachi",
+        "nameJa": "国立",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.41355086666667,
+          35.697933266666666
+        ]
+      },
+      "properties": {
+        "stationId": "osm-243890691",
+        "name": "Tachikawa",
+        "nameJa": "立川",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.39368473333334,
+          35.67908356666667
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2558122562",
+        "name": "Hino",
+        "nameJa": "日野",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.3814725,
+          35.65955066666667
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434167",
+        "name": "Toyoda",
+        "nameJa": "豊田",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.33947743333331,
+          35.6554027
+        ]
+      },
+      "properties": {
+        "stationId": "osm-298330905",
+        "name": "Hachioji",
+        "nameJa": "八王子",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.3124277,
+          35.65652773333333
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434142",
+        "name": "Nishi-Hachioji",
+        "nameJa": "西八王子",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.28250160000002,
+          35.6422911
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3622405816",
+        "name": "Takao",
+        "nameJa": "高尾",
+        "lineIds": [
+          "JR-Chuo-Rapid"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7301547875,
+          35.685512075
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1951028836",
+        "name": "Yotsuya",
+        "nameJa": "四ツ谷",
+        "lineIds": [
+          "JR-Chuo-Rapid",
+          "JR-Chuo-Sobu",
+          "Metro-Marunouchi",
+          "Metro-Namboku"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.11242903333334,
+          35.61349073333333
+        ]
+      },
+      "properties": {
+        "stationId": "osm-237498814",
+        "name": "Chiba",
+        "nameJa": "千葉",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.10312515,
+          35.6227303
+        ]
+      },
+      "properties": {
+        "stationId": "osm-237498569",
+        "name": "Nishi-Chiba",
+        "nameJa": "西千葉",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0925146666667,
+          35.63706053333333
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2558121916",
+        "name": "Inage",
+        "nameJa": "稲毛",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.07309650000002,
+          35.6517747
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434157",
+        "name": "Shin-Kemigawa",
+        "nameJa": "新検見川",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.05791964999997,
+          35.659351799999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434124",
+        "name": "Makuhari",
+        "nameJa": "幕張",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0423025,
+          35.6726856
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2559434125",
+        "name": "Makuhari-Hongo",
+        "nameJa": "幕張本郷",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.02008610000001,
+          35.6912892
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2052390077",
+        "name": "Tsudanuma",
+        "nameJa": "津田沼",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0042889,
+          35.69977816666667
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2558121910",
+        "name": "Higashi-Funabashi",
+        "nameJa": "東船橋",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.98522745,
+          35.70158945
+        ]
+      },
+      "properties": {
+        "stationId": "osm-251849541",
+        "name": "Funabashi",
+        "nameJa": "船橋",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9591067,
+          35.707329575
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6182429805",
+        "name": "Nishi-Funabashi",
+        "nameJa": "西船橋",
+        "lineIds": [
+          "JR-Chuo-Sobu",
+          "Metro-Tozai"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.94306265,
+          35.714308450000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1725010110",
+        "name": "Shimosa-Nakayama",
+        "nameJa": "下総中山",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.92721845,
+          35.72092555
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2558121927",
+        "name": "Moto-Yawata",
+        "nameJa": "本八幡",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.90810165,
+          35.72877235
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2375229595",
+        "name": "Ichikawa",
+        "nameJa": "市川",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8818532,
+          35.73323635
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6987879094",
+        "name": "Koiwa",
+        "nameJa": "小岩",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.85803245,
+          35.71687905
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7865838624",
+        "name": "Shin-Koiwa",
+        "nameJa": "新小岩",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.842511,
+          35.70642425
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1947656215",
+        "name": "Hirai",
+        "nameJa": "平井",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.82670245,
+          35.69733265
+        ]
+      },
+      "properties": {
+        "stationId": "osm-251847636",
+        "name": "Kameido",
+        "nameJa": "亀戸",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Sumida",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.814494075,
+          35.696498399999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1947633325",
+        "name": "Kinshicho",
+        "nameJa": "錦糸町",
+        "lineIds": [
+          "JR-Chuo-Sobu",
+          "Metro-Hanzomon"
+        ],
+        "ward": "Sumida",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.79296664999998,
+          35.69582045
+        ]
+      },
+      "properties": {
+        "stationId": "osm-241867419",
+        "name": "Ryogoku",
+        "nameJa": "両国",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Sumida",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.78468420000002,
+          35.69740615
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1918062080",
+        "name": "Asakusabashi",
+        "nameJa": "浅草橋",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7537382,
+          35.70204545
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7016046677",
+        "name": "Suidobashi",
+        "nameJa": "水道橋",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74427793333334,
+          35.701318566666664
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1894258041",
+        "name": "Iidabashi",
+        "nameJa": "飯田橋",
+        "lineIds": [
+          "JR-Chuo-Sobu",
+          "Metro-Namboku",
+          "Metro-Tozai",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.736115075,
+          35.691866000000005
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926376077",
+        "name": "Ichigaya",
+        "nameJa": "市ケ谷",
+        "lineIds": [
+          "JR-Chuo-Sobu",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7204128,
+          35.6800348
+        ]
+      },
+      "properties": {
+        "stationId": "osm-237409677",
+        "name": "Shinanomachi",
+        "nameJa": "信濃町",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71136365,
+          35.6812678
+        ]
+      },
+      "properties": {
+        "stationId": "osm-196845925",
+        "name": "Sendagaya",
+        "nameJa": "千駄ケ谷",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6973226,
+          35.70078135
+        ]
+      },
+      "properties": {
+        "stationId": "osm-196838866",
+        "name": "Okubo",
+        "nameJa": "大久保",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6848675,
+          35.70625025
+        ]
+      },
+      "properties": {
+        "stationId": "osm-196838894",
+        "name": "Higashi-Nakano",
+        "nameJa": "東中野",
+        "lineIds": [
+          "JR-Chuo-Sobu"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.623946275,
+          35.9062951
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3558103016",
+        "name": "Omiya",
+        "nameJa": "大宮",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6340197,
+          35.89367
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708277014",
+        "name": "Saitama-Shintoshin",
+        "nameJa": "さいたま新都心",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6391602,
+          35.88439385
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708279858",
+        "name": "Yono",
+        "nameJa": "与野",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.64610455000002,
+          35.8721594
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276245",
+        "name": "Kita-Urawa",
+        "nameJa": "北浦和",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.65734925,
+          35.85905225
+        ]
+      },
+      "properties": {
+        "stationId": "osm-244878176",
+        "name": "Urawa",
+        "nameJa": "浦和",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.669145275,
+          35.847733025
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276254",
+        "name": "Minami-Urawa",
+        "nameJa": "南浦和",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6903852,
+          35.8281263
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708279856",
+        "name": "Warabi",
+        "nameJa": "蕨",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70447945,
+          35.8155859
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276997",
+        "name": "Nishi-Kawaguchi",
+        "nameJa": "西川口",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71752675,
+          35.8019199
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276989",
+        "name": "Kawaguchi",
+        "nameJa": "川口",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.720724175,
+          35.7781056
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1109001308",
+        "name": "Akabane",
+        "nameJa": "赤羽",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "JR-Saikyo"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72689494999997,
+          35.76385725
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276975",
+        "name": "Higashi-Jujo",
+        "nameJa": "東十条",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.737893725,
+          35.75315365
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1599119264",
+        "name": "Ōji",
+        "nameJa": "王子",
+        "lineIds": [
+          "JR-Keihin-Tohoku",
+          "Metro-Namboku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74638944999998,
+          35.746947899999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276987",
+        "name": "Kami-Nakazato",
+        "nameJa": "上中里",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7348829,
+          35.606392650000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-255557491",
+        "name": "Oimachi",
+        "nameJa": "大井町",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Shinagawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7278528,
+          35.58850545
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708277007",
+        "name": "Omori",
+        "nameJa": "大森",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Shinagawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71599265,
+          35.56247195
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276985",
+        "name": "Kamata",
+        "nameJa": "蒲田",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6968929,
+          35.5314039
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276242",
+        "name": "Kawasaki",
+        "nameJa": "川崎",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.67614730000003,
+          35.508289899999994
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708279831",
+        "name": "Tsurumi",
+        "nameJa": "鶴見",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.65415695000002,
+          35.4868742
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1493404226",
+        "name": "Shin-Koyasu",
+        "nameJa": "新子安",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63332094999998,
+          35.47794475
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3708276978",
+        "name": "Higashi-Kanagawa",
+        "nameJa": "東神奈川",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6224813,
+          35.4656787
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3558156216",
+        "name": "Yokohama",
+        "nameJa": "横浜",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63098910000002,
+          35.45101795
+        ]
+      },
+      "properties": {
+        "stationId": "osm-264810179",
+        "name": "Sakuragicho",
+        "nameJa": "桜木町",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63603645,
+          35.44408325
+        ]
+      },
+      "properties": {
+        "stationId": "osm-264810180",
+        "name": "Kannai",
+        "nameJa": "関内",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.64274505,
+          35.43922954999999
+        ]
+      },
+      "properties": {
+        "stationId": "osm-264809791",
+        "name": "Ishikawacho",
+        "nameJa": "石川町",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.64622435,
+          35.42734645
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7973040562",
+        "name": "Yamate",
+        "nameJa": "山手",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63504154999998,
+          35.4156485
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7973040560",
+        "name": "Negishi",
+        "nameJa": "根岸",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6181648,
+          35.4001344
+        ]
+      },
+      "properties": {
+        "stationId": "osm-264810159",
+        "name": "Isogo",
+        "nameJa": "磯子",
+        "lineIds": [
+          "JR-Keihin-Tohoku"
+        ],
+        "ward": "Ota",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71942790000003,
+          35.74527345
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7034762882",
+        "name": "Itabashi",
+        "nameJa": "板橋",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72230695000002,
+          35.76000825
+        ]
+      },
+      "properties": {
+        "stationId": "osm-246079158",
+        "name": "Jujo",
+        "nameJa": "十条",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.706017,
+          35.786783650000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1752641071",
+        "name": "Kita-Akabane",
+        "nameJa": "北赤羽",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.69150555,
+          35.7911823
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1640176202",
+        "name": "Ukimafunado",
+        "nameJa": "浮間舟渡",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.67818284999998,
+          35.80793225
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7034730831",
+        "name": "Todakoen",
+        "nameJa": "戸田公園",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.66959659999998,
+          35.817696
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7034730829",
+        "name": "Toda",
+        "nameJa": "戸田",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.66015,
+          35.8276338
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7034738540",
+        "name": "Kita-Toda",
+        "nameJa": "北戸田",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.64686469999998,
+          35.84553075
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1752641257",
+        "name": "Musashi-Urawa",
+        "nameJa": "武蔵浦和",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63770975,
+          35.853553149999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1580754031",
+        "name": "Naka-Urawa",
+        "nameJa": "中浦和",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63104045,
+          35.86788815
+        ]
+      },
+      "properties": {
+        "stationId": "osm-13591740823",
+        "name": "Minami-Yono",
+        "nameJa": "南与野",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6260223,
+          35.8812071
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1580754265",
+        "name": "Yono-Hommachi",
+        "nameJa": "与野本町",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.62862095,
+          35.890683300000006
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1147134920",
+        "name": "Kita-Yono",
+        "nameJa": "北与野",
+        "lineIds": [
+          "JR-Saikyo"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.79782025,
+          35.710844949999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189622",
+        "name": "Asakusa",
+        "nameJa": "浅草",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Sumida",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.79076655,
+          35.7098833
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189624",
+        "name": "Tawaramachi",
+        "nameJa": "田原町",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Sumida",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7826764,
+          35.71138565
+        ]
+      },
+      "properties": {
+        "stationId": "osm-270339450",
+        "name": "Inaricho",
+        "nameJa": "稲荷町",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7729904,
+          35.70782895
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189616",
+        "name": "Ueno-hirokoji",
+        "nameJa": "上野広小路",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77167745,
+          35.70294165
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189621",
+        "name": "Suehirocho",
+        "nameJa": "末広町",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77335490000002,
+          35.686015475
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189614",
+        "name": "Mitsukoshimae",
+        "nameJa": "三越前",
+        "lineIds": [
+          "Metro-Ginza",
+          "Metro-Hanzomon"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.773938725,
+          35.68214705
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189620",
+        "name": "Nihombashi",
+        "nameJa": "日本橋",
+        "lineIds": [
+          "Metro-Ginza",
+          "Metro-Tozai"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77007635,
+          35.6767517
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189617",
+        "name": "Kyobashi",
+        "nameJa": "京橋",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76409809999998,
+          35.672124583333336
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2328213063",
+        "name": "Ginza",
+        "nameJa": "銀座",
+        "lineIds": [
+          "Metro-Ginza",
+          "Metro-Hibiya",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75000315,
+          35.67013335
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189626",
+        "name": "Toranomon",
+        "nameJa": "虎ノ門",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7417027,
+          35.67227145
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189623",
+        "name": "Tameike-sanno",
+        "nameJa": "溜池山王",
+        "lineIds": [
+          "Metro-Ginza",
+          "Metro-Namboku"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.737521325,
+          35.6763225
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6210447374",
+        "name": "Akasaka-mitsuke",
+        "nameJa": "赤坂見附",
+        "lineIds": [
+          "Metro-Ginza",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7239218,
+          35.6727352
+        ]
+      },
+      "properties": {
+        "stationId": "osm-265554028",
+        "name": "Aoyama-itchome",
+        "nameJa": "青山一丁目",
+        "lineIds": [
+          "Metro-Ginza",
+          "Metro-Hanzomon"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7178307,
+          35.6705387
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926189618",
+        "name": "Gaiemmae",
+        "nameJa": "外苑前",
+        "lineIds": [
+          "Metro-Ginza"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7124180666667,
+          35.66511151666666
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3669016744",
+        "name": "Omote-sando",
+        "nameJa": "表参道",
+        "lineIds": [
+          "Metro-Chiyoda",
+          "Metro-Ginza",
+          "Metro-Hanzomon"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63570885000001,
+          35.6993987
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2389061832",
+        "name": "Minami-asagaya",
+        "nameJa": "南阿佐ケ谷",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.64869015,
+          35.6978655
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1950720225",
+        "name": "Shin-koenji",
+        "nameJa": "新高円寺",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6581601,
+          35.6979717
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1950720191",
+        "name": "Higashi-koenji",
+        "nameJa": "東高円寺",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.66864275,
+          35.69745985
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1950720192",
+        "name": "Shin-nakano",
+        "nameJa": "新中野",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.68190346666668,
+          35.6971041
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926277321",
+        "name": "Nakano-sakaue",
+        "nameJa": "中野坂上",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6927814,
+          35.6944257
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926277366",
+        "name": "Nishi-shinjuku",
+        "nameJa": "西新宿",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70443590000002,
+          35.6909717
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1951952383",
+        "name": "Shinjuku-sanchome",
+        "nameJa": "新宿三丁目",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71073675,
+          35.6885733
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2389061854",
+        "name": "Shinjuku-gyoemmae",
+        "nameJa": "新宿御苑前",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72057239999998,
+          35.68798925
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2389668134",
+        "name": "Yotsuya-sanchome",
+        "nameJa": "四谷三丁目",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74448895,
+          35.674116025000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239456",
+        "name": "Kokkai-gijidomae",
+        "nameJa": "国会議事堂前",
+        "lineIds": [
+          "Metro-Chiyoda",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75185478333333,
+          35.673516150000005
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239476",
+        "name": "Kasumigaseki",
+        "nameJa": "霞ケ関",
+        "lineIds": [
+          "Metro-Chiyoda",
+          "Metro-Hibiya",
+          "Metro-Marunouchi"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7653105625,
+          35.686217549999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926277334",
+        "name": "Otemachi",
+        "nameJa": "大手町",
+        "lineIds": [
+          "Metro-Chiyoda",
+          "Metro-Hanzomon",
+          "Metro-Marunouchi",
+          "Metro-Tozai"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76747635,
+          35.695128499999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926277363",
+        "name": "Awajicho",
+        "nameJa": "淡路町",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7601239,
+          35.70650045
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6276986007",
+        "name": "Hongo-sanchome",
+        "nameJa": "本郷三丁目",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.751511,
+          35.707777175000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2730655229",
+        "name": "Korakuen",
+        "nameJa": "後楽園",
+        "lineIds": [
+          "Metro-Marunouchi",
+          "Metro-Namboku"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7369396,
+          35.71718955
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6224865805",
+        "name": "Myogadani",
+        "nameJa": "茗荷谷",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72992334999998,
+          35.725782249999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926700039",
+        "name": "Shin-otsuka",
+        "nameJa": "新大塚",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6737603,
+          35.69201135
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1950976762",
+        "name": "Nakano-shimbashi",
+        "nameJa": "中野新橋",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6670033,
+          35.6905547
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1950739949",
+        "name": "Nakano-fujimicho",
+        "nameJa": "中野富士見町",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.65764295000002,
+          35.6835076
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1950976760",
+        "name": "Honancho",
+        "nameJa": "方南町",
+        "lineIds": [
+          "Metro-Marunouchi"
+        ],
+        "ward": "Suginami",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.69876705000001,
+          35.64408755
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3646448193",
+        "name": "Naka-meguro",
+        "nameJa": "中目黒",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Meguro",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72220475,
+          35.652077
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2011999937",
+        "name": "Hiro-o",
+        "nameJa": "広尾",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Meguro",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73132694999998,
+          35.662836999999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355400",
+        "name": "Roppongi",
+        "nameJa": "六本木",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7450566,
+          35.662990449999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355403",
+        "name": "Kamiyacho",
+        "nameJa": "神谷町",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.747838,
+          35.66747985
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6352856405",
+        "name": "Toranomon Hills",
+        "nameJa": "虎ノ門ヒルズ",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7593588,
+          35.6740771
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5413560218",
+        "name": "Hibiya",
+        "nameJa": "日比谷",
+        "lineIds": [
+          "Metro-Chiyoda",
+          "Metro-Hibiya"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76695260000002,
+          35.669701849999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6293444387",
+        "name": "Higashi-Ginza",
+        "nameJa": "東銀座",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7726006,
+          35.66808725
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6279623175",
+        "name": "Tsukiji",
+        "nameJa": "築地",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7770783,
+          35.67499665
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355399",
+        "name": "Hatchobori",
+        "nameJa": "八丁堀",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.779566275,
+          35.679751525
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6184201319",
+        "name": "Kayabacho",
+        "nameJa": "茅場町",
+        "lineIds": [
+          "Metro-Hibiya",
+          "Metro-Tozai"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.78242970000002,
+          35.686165
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6178454120",
+        "name": "Ningyocho",
+        "nameJa": "人形町",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77845209999998,
+          35.6907498
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355401",
+        "name": "Kodemmacho",
+        "nameJa": "小伝馬町",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77619175,
+          35.70656845
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355397",
+        "name": "Naka-okachimachi",
+        "nameJa": "仲御徒町",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.78458890000002,
+          35.7207207
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355398",
+        "name": "Iriya",
+        "nameJa": "入谷",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7912928,
+          35.72955045
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926355394",
+        "name": "Minowa",
+        "nameJa": "三ノ輪",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.79878250000002,
+          35.7323315
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2180732990",
+        "name": "Minami-senju",
+        "nameJa": "南千住",
+        "lineIds": [
+          "Metro-Hibiya"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8049619,
+          35.749595025
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6237889013",
+        "name": "Kita-Senju",
+        "nameJa": "北千住",
+        "lineIds": [
+          "Metro-Chiyoda",
+          "Metro-Hibiya"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.68593155000002,
+          35.71065175
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7303330290",
+        "name": "Ochiai",
+        "nameJa": "落合",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Nakano",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72128594999998,
+          35.7057916
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1894258034",
+        "name": "Waseda",
+        "nameJa": "早稲田",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7342246,
+          35.703892999999994
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1074739698",
+        "name": "Kagurazaka",
+        "nameJa": "神楽坂",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75090484999998,
+          35.695604775
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6189820128",
+        "name": "Kudanshita",
+        "nameJa": "九段下",
+        "lineIds": [
+          "Metro-Hanzomon",
+          "Metro-Tozai"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75872075,
+          35.6901084
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1894258040",
+        "name": "Takebashi",
+        "nameJa": "竹橋",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.795067,
+          35.6722932
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3653340568",
+        "name": "Monzen-nakacho",
+        "nameJa": "門前仲町",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.80654164999999,
+          35.66938535
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6184114157",
+        "name": "Kiba",
+        "nameJa": "木場",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8174767,
+          35.66960165
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7300128822",
+        "name": "Toyocho",
+        "nameJa": "東陽町",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.83185455,
+          35.6683479
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6183749643",
+        "name": "Minami-sunamachi",
+        "nameJa": "南砂町",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8593171,
+          35.66457885
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5410186975",
+        "name": "Nishi-kasai",
+        "nameJa": "西葛西",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8726925,
+          35.663627950000006
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5410188469",
+        "name": "Kasai",
+        "nameJa": "葛西",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.89298885,
+          35.665836850000005
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5410193247",
+        "name": "Urayasu",
+        "nameJa": "浦安",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.90227729999998,
+          35.67273045
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7300128820",
+        "name": "Minami-gyotoku",
+        "nameJa": "南行徳",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.91448505,
+          35.6828624
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6367931744",
+        "name": "Gyotoku",
+        "nameJa": "行徳",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.92442185,
+          35.69108
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6368102150",
+        "name": "Myoden",
+        "nameJa": "妙典",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.94165185,
+          35.703129399999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6182417010",
+        "name": "Baraki-nakayama",
+        "nameJa": "原木中山",
+        "lineIds": [
+          "Metro-Tozai"
+        ],
+        "ward": "Edogawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6797884,
+          35.6690082
+        ]
+      },
+      "properties": {
+        "stationId": "osm-9339029496",
+        "name": "Yoyogi-Uehara",
+        "nameJa": "代々木上原",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.69012305,
+          35.66902245
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239440",
+        "name": "Yoyogi-koen",
+        "nameJa": "代々木公園",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.704850975,
+          35.668696275
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6178465936",
+        "name": "Meiji-jingumae 'Harajuku'",
+        "nameJa": "明治神宮前〈原宿〉",
+        "lineIds": [
+          "Metro-Chiyoda",
+          "Metro-Fukutoshin"
+        ],
+        "ward": "Shibuya",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72633745000002,
+          35.6666802
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239435",
+        "name": "Nogizaka",
+        "nameJa": "乃木坂",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7363044,
+          35.67217395
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239474",
+        "name": "Akasaka",
+        "nameJa": "赤坂",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76168695,
+          35.680323650000005
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2769291151",
+        "name": "Nijubashimae 'Marunouchi'",
+        "nameJa": "二重橋前〈丸の内〉",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76555635,
+          35.697187650000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239458",
+        "name": "Shin-ochanomizu",
+        "nameJa": "新御茶ノ水",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76999125,
+          35.7073294
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239465",
+        "name": "Yushima",
+        "nameJa": "湯島",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7657383,
+          35.717365799999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239464",
+        "name": "Nezu",
+        "nameJa": "根津",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76328130000002,
+          35.72554505
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926239451",
+        "name": "Sendagi",
+        "nameJa": "千駄木",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Taito",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.78008735,
+          35.74217625
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2440290619",
+        "name": "Machiya",
+        "nameJa": "町屋",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.82486695,
+          35.76212785
+        ]
+      },
+      "properties": {
+        "stationId": "osm-172531881",
+        "name": "Ayase",
+        "nameJa": "綾瀬",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Adachi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.83214164999998,
+          35.77690225
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2176856089",
+        "name": "Kita-ayase",
+        "nameJa": "北綾瀬",
+        "lineIds": [
+          "Metro-Chiyoda"
+        ],
+        "ward": "Adachi",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6128583,
+          35.788336
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3645998146",
+        "name": "Wakoshi",
+        "nameJa": "和光市",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Nerima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.63130135,
+          35.776659550000005
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7775796371",
+        "name": "Chikatetsu-narimasu",
+        "nameJa": "地下鉄成増",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Nerima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6441246,
+          35.7699241
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7775801427",
+        "name": "Chikatetsu-akatsuka",
+        "nameJa": "地下鉄赤塚",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Nerima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6542043,
+          35.75765195
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7775791257",
+        "name": "Heiwadai",
+        "nameJa": "平和台",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Nerima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.66506735000002,
+          35.7498402
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7775809567",
+        "name": "Hikawadai",
+        "nameJa": "氷川台",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Nerima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.67981667499998,
+          35.74324395
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7369435826",
+        "name": "Kotake-mukaihara",
+        "nameJa": "小竹向原",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Nerima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.689458225,
+          35.738248
+        ]
+      },
+      "properties": {
+        "stationId": "osm-7775774740",
+        "name": "Senkawa",
+        "nameJa": "千川",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Itabashi",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.698704875,
+          35.73325345
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6213383386",
+        "name": "Kanamecho",
+        "nameJa": "要町",
+        "lineIds": [
+          "Metro-Fukutoshin",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71955405,
+          35.725660700000006
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6277315766",
+        "name": "Higashi-ikebukuro",
+        "nameJa": "東池袋",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72745435000002,
+          35.71907635
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926376085",
+        "name": "Gokokuji",
+        "nameJa": "護国寺",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7335673,
+          35.709522500000006
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926376082",
+        "name": "Edogawabashi",
+        "nameJa": "江戸川橋",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73765145,
+          35.6840244
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926376088",
+        "name": "Kojimachi",
+        "nameJa": "麹町",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7398015,
+          35.678274933333334
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2329712694",
+        "name": "Nagatacho",
+        "nameJa": "永田町",
+        "lineIds": [
+          "Metro-Hanzomon",
+          "Metro-Namboku",
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7516904,
+          35.67740265
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926376080",
+        "name": "Sakuradamon",
+        "nameJa": "桜田門",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76704035,
+          35.674355
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926376086",
+        "name": "Ginza-itchome",
+        "nameJa": "銀座一丁目",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77341969999998,
+          35.6706344
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6274908262",
+        "name": "Shintomicho",
+        "nameJa": "新富町",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.78471215,
+          35.6645355
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6278523324",
+        "name": "Tsukishima",
+        "nameJa": "月島",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.79610505,
+          35.6550025
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6274211196",
+        "name": "Toyosu",
+        "nameJa": "豊洲",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.81066695,
+          35.6455126
+        ]
+      },
+      "properties": {
+        "stationId": "osm-31330037",
+        "name": "Tatsumi",
+        "nameJa": "辰巳",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8266499,
+          35.645900499999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-31330041",
+        "name": "Shin-kiba",
+        "nameJa": "新木場",
+        "lineIds": [
+          "Metro-Yurakucho"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74157885,
+          35.68522875
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1926703933",
+        "name": "Hanzomon",
+        "nameJa": "半蔵門",
+        "lineIds": [
+          "Metro-Hanzomon"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75692450000003,
+          35.695926299999996
+        ]
+      },
+      "properties": {
+        "stationId": "osm-4855419881",
+        "name": "Jimbocho",
+        "nameJa": "神保町",
+        "lineIds": [
+          "Metro-Hanzomon"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.78562169999998,
+          35.682535
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1947633322",
+        "name": "Suitengumae",
+        "nameJa": "水天宮前",
+        "lineIds": [
+          "Metro-Hanzomon"
+        ],
+        "ward": "Chuo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7992393,
+          35.68207405
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5594511145",
+        "name": "Kiyosumi-shirakawa",
+        "nameJa": "清澄白河",
+        "lineIds": [
+          "Metro-Hanzomon"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.81567595,
+          35.688734350000004
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3680226249",
+        "name": "Sumiyoshi",
+        "nameJa": "住吉",
+        "lineIds": [
+          "Metro-Hanzomon"
+        ],
+        "ward": "Koto",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8133516,
+          35.70994505
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6417196736",
+        "name": "Oshiage 'SKYTREE'",
+        "nameJa": "押上〈スカイツリー前〉",
+        "lineIds": [
+          "Metro-Hanzomon"
+        ],
+        "ward": "Sumida",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72656195000002,
+          35.6381047
+        ]
+      },
+      "properties": {
+        "stationId": "osm-4111329876",
+        "name": "Shirokanedai",
+        "nameJa": "白金台",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Meguro",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73414225,
+          35.6429371
+        ]
+      },
+      "properties": {
+        "stationId": "osm-4111329879",
+        "name": "Shirokane-takanawa",
+        "nameJa": "白金高輪",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73713605,
+          35.6551729
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2329712566",
+        "name": "Azabu-juban",
+        "nameJa": "麻布十番",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73901315,
+          35.66494055
+        ]
+      },
+      "properties": {
+        "stationId": "osm-4407018830",
+        "name": "Roppongi-itchome",
+        "nameJa": "六本木一丁目",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Minato",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7367542,
+          35.693280599999994
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2329712819",
+        "name": "Ichigaya",
+        "nameJa": "市ヶ谷駅",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Chiyoda",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7581841,
+          35.717320099999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5406699405",
+        "name": "Todaimae",
+        "nameJa": "東大前",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7537008,
+          35.72476305
+        ]
+      },
+      "properties": {
+        "stationId": "osm-2730655233",
+        "name": "Hon-komagome",
+        "nameJa": "本駒込",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Bunkyo",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7421722,
+          35.7460496
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5406704874",
+        "name": "Nishigahara",
+        "nameJa": "西ヶ原駅",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73572015,
+          35.765052749999995
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5406714310",
+        "name": "Oji-kamiya",
+        "nameJa": "王子神谷",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.7325256,
+          35.7779045
+        ]
+      },
+      "properties": {
+        "stationId": "osm-5406717733",
+        "name": "Shimo",
+        "nameJa": "志茂",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72191655,
+          35.7834408
+        ]
+      },
+      "properties": {
+        "stationId": "osm-361024853",
+        "name": "Akabane-iwabuchi",
+        "nameJa": "赤羽岩淵",
+        "lineIds": [
+          "Metro-Namboku"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71477375,
+          35.72024465
+        ]
+      },
+      "properties": {
+        "stationId": "osm-3656056003",
+        "name": "Zoshigaya",
+        "nameJa": "雑司が谷",
+        "lineIds": [
+          "Metro-Fukutoshin"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70903765,
+          35.70792175
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1951954570",
+        "name": "Nishi-waseda",
+        "nameJa": "西早稲田",
+        "lineIds": [
+          "Metro-Fukutoshin"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70769575,
+          35.698950550000006
+        ]
+      },
+      "properties": {
+        "stationId": "osm-6188734706",
+        "name": "Higashi-shinjuku",
+        "nameJa": "東新宿",
+        "lineIds": [
+          "Metro-Fukutoshin"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70545225,
+          35.678473999999994
+        ]
+      },
+      "properties": {
+        "stationId": "osm-1951952367",
+        "name": "Kita-sando",
+        "nameJa": "北参道",
+        "lineIds": [
+          "Metro-Fukutoshin"
+        ],
+        "ward": "Shinjuku",
+        "ridership": null,
+        "ridershipBand": 2,
         "inFloodZone": false
       }
     }
   ],
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T16:07:01+09:00",
-    "degraded": false,
-    "note": null
+    "generatedAt": "2026-09-12T16:42:41+09:00",
+    "degraded": true,
+    "note": "Toei stations + ridership are real (odpt:Station / odpt:passengerSurvey). JR/Metro stations (lineIds for the 14 non-Toei lines) are from OpenStreetMap (no ODPT coverage) -- their ridership is null (not invented) and ridershipBand is a FALLBACK heuristic (3 = serves >=2 of our lines, else 2), not measured data. inFloodZone for all stations is a low-lying-ward heuristic (Adachi, Arakawa, Edogawa, Katsushika, Koto, Sumida), not a flood-map lookup."
   }
 }

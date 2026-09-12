@@ -184,7 +184,7 @@
       "lat": 35.682355,
       "lon": 139.798758,
       "ward": "Koto",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -204,7 +204,7 @@
       "lat": 35.705587,
       "lon": 139.792244,
       "ward": "Sumida",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -214,7 +214,7 @@
       "lat": 35.672772,
       "lon": 139.795124,
       "ward": "Koto",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -224,7 +224,7 @@
       "lat": 35.687926,
       "lon": 139.798251,
       "ward": "Koto",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -304,7 +304,7 @@
       "lat": 35.696807,
       "lon": 139.797469,
       "ward": "Sumida",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -450,6 +450,23 @@
   ],
   "events": [
     {
+      "id": "mock-disruption-oedo-suspended",
+      "type": "train",
+      "severity": "critical",
+      "time": "2026-09-12T16:34:40+09:00",
+      "lat": 35.6586,
+      "lon": 139.7454,
+      "title": "Oedo Line: service suspended between Roppongi and Azabu-Juban",
+      "titleJa": "都営大江戸線 六本木〜麻布十番間で運転見合わせ",
+      "affects": [
+        "line:Toei-Oedo"
+      ],
+      "source": "mock",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    },
+    {
       "id": "odpt-train-Toei-Oedo",
       "type": "train",
       "severity": "info",
@@ -465,29 +482,12 @@
       "url": null,
       "magnitude": null,
       "maxScale": null
-    },
-    {
-      "id": "mock-disruption-oedo-suspended",
-      "type": "train",
-      "severity": "critical",
-      "time": "2026-09-12T15:59:00+09:00",
-      "lat": 35.6586,
-      "lon": 139.7454,
-      "title": "Oedo Line: service suspended between Roppongi and Azabu-Juban",
-      "titleJa": "都営大江戸線 六本木〜麻布十番間で運転見合わせ",
-      "affects": [
-        "line:Toei-Oedo"
-      ],
-      "source": "mock",
-      "url": null,
-      "magnitude": null,
-      "maxScale": null
     }
   ],
-  "stationsInFloodZone": 0,
+  "stationsInFloodZone": 5,
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T16:07:01+09:00",
+    "generatedAt": "2026-09-12T16:42:41+09:00",
     "degraded": false,
     "note": null
   }

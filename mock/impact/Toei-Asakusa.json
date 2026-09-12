@@ -50,7 +50,7 @@
       "lat": 35.708565,
       "lon": 139.804397,
       "ward": "Sumida",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -60,7 +60,7 @@
       "lat": 35.703128,
       "lon": 139.790858,
       "ward": "Sumida",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -80,7 +80,7 @@
       "lat": 35.70892,
       "lon": 139.796542,
       "ward": "Sumida",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -190,7 +190,7 @@
       "lat": 35.710824,
       "lon": 139.812993,
       "ward": "Sumida",
-      "inFloodZone": false,
+      "inFloodZone": true,
       "ridershipBand": 2
     },
     {
@@ -246,6 +246,23 @@
   ],
   "events": [
     {
+      "id": "mock-disruption-asakusa-signal",
+      "type": "train",
+      "severity": "warning",
+      "time": "2026-09-12T16:17:40+09:00",
+      "lat": 35.7038,
+      "lon": 139.7967,
+      "title": "Asakusa Line: signal fault causing ~10 min delays",
+      "titleJa": "都営浅草線 信号トラブルのため約10分の遅延",
+      "affects": [
+        "line:Toei-Asakusa"
+      ],
+      "source": "mock",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    },
+    {
       "id": "odpt-train-Toei-Asakusa",
       "type": "train",
       "severity": "info",
@@ -261,29 +278,12 @@
       "url": null,
       "magnitude": null,
       "maxScale": null
-    },
-    {
-      "id": "mock-disruption-asakusa-signal",
-      "type": "train",
-      "severity": "warning",
-      "time": "2026-09-12T15:42:00+09:00",
-      "lat": 35.7038,
-      "lon": 139.7967,
-      "title": "Asakusa Line: signal fault causing ~10 min delays",
-      "titleJa": "都営浅草線 信号トラブルのため約10分の遅延",
-      "affects": [
-        "line:Toei-Asakusa"
-      ],
-      "source": "mock",
-      "url": null,
-      "magnitude": null,
-      "maxScale": null
     }
   ],
-  "stationsInFloodZone": 0,
+  "stationsInFloodZone": 4,
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T16:07:01+09:00",
+    "generatedAt": "2026-09-12T16:42:41+09:00",
     "degraded": false,
     "note": null
   }
