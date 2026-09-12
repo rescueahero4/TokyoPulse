@@ -8,6 +8,65 @@
       "domesticTsunami": "None",
       "foreignTsunami": "Unknown",
       "hypocenter": {
+        "depth": 20,
+        "latitude": 35.2,
+        "longitude": 140.3,
+        "magnitude": 3.3,
+        "name": "千葉県南部"
+      },
+      "maxScale": 10,
+      "time": "2026/09/12 15:56:00"
+    },
+    "id": "6aa4f833e88ee598246bf2f0",
+    "issue": {
+      "correct": "None",
+      "source": "気象庁",
+      "time": "2026/09/12 15:58:58",
+      "type": "DetailScale"
+    },
+    "points": [
+      {
+        "addr": "睦沢町下之郷",
+        "isArea": false,
+        "pref": "千葉県",
+        "scale": 10
+      },
+      {
+        "addr": "勝浦市墨名",
+        "isArea": false,
+        "pref": "千葉県",
+        "scale": 10
+      },
+      {
+        "addr": "勝浦市新官",
+        "isArea": false,
+        "pref": "千葉県",
+        "scale": 10
+      },
+      {
+        "addr": "大多喜町大多喜",
+        "isArea": false,
+        "pref": "千葉県",
+        "scale": 10
+      }
+    ],
+    "time": "2026/09/12 15:58:59.623",
+    "timestamp": {
+      "convert": "2026/09/12 15:58:59.498",
+      "register": "2026/09/12 15:58:59.656"
+    },
+    "user_agent": "jmaxml-seis-parser-go, relay, register-api",
+    "ver": "20231023"
+  },
+  {
+    "code": 551,
+    "comments": {
+      "freeFormComment": ""
+    },
+    "earthquake": {
+      "domesticTsunami": "None",
+      "foreignTsunami": "Unknown",
+      "hypocenter": {
         "depth": 10,
         "latitude": 32.4,
         "longitude": 130.5,
@@ -10077,47 +10136,6 @@
     "timestamp": {
       "convert": "2026/08/28 13:34:44.526",
       "register": "2026/08/28 13:34:44.582"
-    },
-    "user_agent": "jmaxml-seis-parser-go, relay, register-api",
-    "ver": "20231023"
-  },
-  {
-    "code": 551,
-    "comments": {
-      "freeFormComment": ""
-    },
-    "earthquake": {
-      "domesticTsunami": "None",
-      "foreignTsunami": "Unknown",
-      "hypocenter": {
-        "depth": 10,
-        "latitude": 32.6,
-        "longitude": 130.6,
-        "magnitude": 2.7,
-        "name": "熊本県天草・芦北地方"
-      },
-      "maxScale": 10,
-      "time": "2026/08/28 08:49:00"
-    },
-    "id": "6a90cdc1e88ee598246bf28c",
-    "issue": {
-      "correct": "None",
-      "source": "気象庁",
-      "time": "2026/08/28 08:52:32",
-      "type": "DetailScale"
-    },
-    "points": [
-      {
-        "addr": "宇城市不知火町",
-        "isArea": false,
-        "pref": "熊本県",
-        "scale": 10
-      }
-    ],
-    "time": "2026/08/28 08:52:33.327",
-    "timestamp": {
-      "convert": "2026/08/28 08:52:33.273",
-      "register": "2026/08/28 08:52:33.327"
     },
     "user_agent": "jmaxml-seis-parser-go, relay, register-api",
     "ver": "20231023"

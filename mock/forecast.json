@@ -4,7 +4,7 @@
     "lon": 139.75,
     "name": "Tokyo"
   },
-  "nowIndex": 62,
+  "nowIndex": 64,
   "hourly": [
     {
       "time": "2026-09-10T00:00:00+09:00",
@@ -350,97 +350,97 @@
     },
     {
       "time": "2026-09-12T09:00:00+09:00",
-      "temperature": 21.3,
+      "temperature": 21.4,
       "precipitation": 0.2,
       "isPast": true
     },
     {
       "time": "2026-09-12T10:00:00+09:00",
-      "temperature": 22.2,
+      "temperature": 22.4,
       "precipitation": 0.0,
       "isPast": true
     },
     {
       "time": "2026-09-12T11:00:00+09:00",
-      "temperature": 22.9,
+      "temperature": 23.1,
       "precipitation": 0.0,
       "isPast": true
     },
     {
       "time": "2026-09-12T12:00:00+09:00",
-      "temperature": 23.6,
+      "temperature": 23.9,
       "precipitation": 0.0,
       "isPast": true
     },
     {
       "time": "2026-09-12T13:00:00+09:00",
-      "temperature": 24.3,
+      "temperature": 24.5,
       "precipitation": 0.0,
       "isPast": true
     },
     {
       "time": "2026-09-12T14:00:00+09:00",
-      "temperature": 24.7,
+      "temperature": 25.0,
       "precipitation": 0.0,
-      "isPast": false
+      "isPast": true
     },
     {
       "time": "2026-09-12T15:00:00+09:00",
-      "temperature": 24.9,
+      "temperature": 25.4,
       "precipitation": 0.0,
-      "isPast": false
+      "isPast": true
     },
     {
       "time": "2026-09-12T16:00:00+09:00",
-      "temperature": 24.9,
+      "temperature": 25.4,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-12T17:00:00+09:00",
-      "temperature": 24.6,
+      "temperature": 25.2,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-12T18:00:00+09:00",
-      "temperature": 24.1,
+      "temperature": 24.7,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-12T19:00:00+09:00",
-      "temperature": 23.7,
+      "temperature": 24.2,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-12T20:00:00+09:00",
-      "temperature": 23.4,
+      "temperature": 23.9,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-12T21:00:00+09:00",
-      "temperature": 23.2,
+      "temperature": 23.6,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-12T22:00:00+09:00",
-      "temperature": 23.0,
+      "temperature": 23.2,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-12T23:00:00+09:00",
-      "temperature": 22.9,
-      "precipitation": 0.0,
+      "temperature": 22.8,
+      "precipitation": 0.1,
       "isPast": false
     },
     {
       "time": "2026-09-13T00:00:00+09:00",
-      "temperature": 22.7,
+      "temperature": 22.6,
       "precipitation": 0.0,
       "isPast": false
     },
@@ -458,19 +458,19 @@
     },
     {
       "time": "2026-09-13T03:00:00+09:00",
-      "temperature": 22.3,
+      "temperature": 22.2,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-13T04:00:00+09:00",
-      "temperature": 22.1,
+      "temperature": 22.2,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-13T05:00:00+09:00",
-      "temperature": 22.0,
+      "temperature": 22.1,
       "precipitation": 0.0,
       "isPast": false
     },
@@ -482,116 +482,116 @@
     },
     {
       "time": "2026-09-13T07:00:00+09:00",
-      "temperature": 22.3,
-      "precipitation": 0.0,
+      "temperature": 22.0,
+      "precipitation": 0.1,
       "isPast": false
     },
     {
       "time": "2026-09-13T08:00:00+09:00",
-      "temperature": 23.1,
-      "precipitation": 0.0,
+      "temperature": 22.0,
+      "precipitation": 0.2,
       "isPast": false
     },
     {
       "time": "2026-09-13T09:00:00+09:00",
-      "temperature": 23.9,
-      "precipitation": 0.0,
+      "temperature": 22.1,
+      "precipitation": 0.3,
       "isPast": false
     },
     {
       "time": "2026-09-13T10:00:00+09:00",
-      "temperature": 24.7,
-      "precipitation": 0.0,
+      "temperature": 22.5,
+      "precipitation": 0.1,
       "isPast": false
     },
     {
       "time": "2026-09-13T11:00:00+09:00",
-      "temperature": 25.5,
+      "temperature": 23.3,
       "precipitation": 0.0,
       "isPast": false
     },
     {
       "time": "2026-09-13T12:00:00+09:00",
-      "temperature": 26.2,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T13:00:00+09:00",
-      "temperature": 26.9,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T14:00:00+09:00",
-      "temperature": 27.4,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T15:00:00+09:00",
-      "temperature": 27.6,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T16:00:00+09:00",
-      "temperature": 27.5,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T17:00:00+09:00",
-      "temperature": 27.0,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T18:00:00+09:00",
-      "temperature": 26.3,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T19:00:00+09:00",
-      "temperature": 25.8,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T20:00:00+09:00",
-      "temperature": 25.4,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T21:00:00+09:00",
-      "temperature": 25.1,
-      "precipitation": 0.0,
-      "isPast": false
-    },
-    {
-      "time": "2026-09-13T22:00:00+09:00",
       "temperature": 23.9,
       "precipitation": 0.0,
       "isPast": false
     },
     {
+      "time": "2026-09-13T13:00:00+09:00",
+      "temperature": 24.5,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T14:00:00+09:00",
+      "temperature": 25.3,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T15:00:00+09:00",
+      "temperature": 25.9,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T16:00:00+09:00",
+      "temperature": 26.3,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T17:00:00+09:00",
+      "temperature": 26.2,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T18:00:00+09:00",
+      "temperature": 25.7,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T19:00:00+09:00",
+      "temperature": 25.1,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T20:00:00+09:00",
+      "temperature": 24.7,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T21:00:00+09:00",
+      "temperature": 24.5,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
+      "time": "2026-09-13T22:00:00+09:00",
+      "temperature": 24.6,
+      "precipitation": 0.0,
+      "isPast": false
+    },
+    {
       "time": "2026-09-13T23:00:00+09:00",
-      "temperature": 24.0,
+      "temperature": 24.8,
       "precipitation": 0.0,
       "isPast": false
     }
   ],
   "summary": {
-    "maxPrecip24h": 0.0,
+    "maxPrecip24h": 0.3,
     "minTemp": 22.0,
-    "maxTemp": 27.6,
-    "rainHoursNext48": 0
+    "maxTemp": 26.3,
+    "rainHoursNext48": 5
   },
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "generatedAt": "2026-09-12T16:07:01+09:00",
     "degraded": false,
     "note": null
   }

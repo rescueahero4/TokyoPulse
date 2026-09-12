@@ -155,7 +155,7 @@
       "id": "odpt-train-Toei-NipporiToneri",
       "type": "train",
       "severity": "info",
-      "time": "2026-09-12T13:55:00+09:00",
+      "time": "2026-09-12T16:06:00+09:00",
       "lat": null,
       "lon": null,
       "title": "Nippori-Toneri Liner operating normally",
@@ -172,7 +172,7 @@
   "stationsInFloodZone": 0,
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "generatedAt": "2026-09-12T16:07:01+09:00",
     "degraded": false,
     "note": null
   }

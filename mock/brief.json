@@ -3,10 +3,10 @@
   "ja": "現在、都営線で2件の運行情報があります。過去7日間に39件の地震が観測されました。23区内でJMA気象警報・注意報の発表はありません。",
   "provider": "template",
   "providerLabel": "rule-based summary (no LLM key configured)",
-  "eventCount": 48,
+  "eventCount": 49,
   "meta": {
     "source": "live",
-    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "generatedAt": "2026-09-12T16:07:01+09:00",
     "degraded": false,
     "note": null
   }
