@@ -68,6 +68,7 @@ export function LineSearch(p: {
                 type="button"
                 key={line.lineId}
                 className={`tp-line-search-result${line.lineId === p.selectedLineId ? ' tp-row-selected' : ''}`}
+                style={{ borderLeft: `3px solid ${line.color || '#6b7280'}` }}
                 onMouseDown={(ev) => {
                   // onMouseDown fires before input's onBlur, so the click still registers.
                   ev.preventDefault();
@@ -76,9 +77,11 @@ export function LineSearch(p: {
                   setOpen(false);
                 }}
               >
+                {/* Status dot MUST encode line.status, never livery (P0-1) — livery shown via the row's left border above. */}
                 <span
                   className="tp-dot"
-                  style={{ backgroundColor: line.color || STATUS_COLOR[line.status] }}
+                  style={{ backgroundColor: STATUS_COLOR[line.status] }}
+                  title={line.statusText}
                   aria-hidden="true"
                 />
                 <span className="tp-line-search-name">{line.name}</span>

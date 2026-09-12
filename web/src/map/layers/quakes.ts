@@ -25,13 +25,12 @@ export function renderQuakes(
         name: label,
         description: 'M' + mag + (e.maxScale ? ' / shindo ' + e.maxScale : ''),
         properties: { kind: 'event', eventId: e.id },
-        position: Cesium.Cartesian3.fromDegrees(e.lon, e.lat),
+        position: Cesium.Cartesian3.fromDegrees(e.lon, e.lat, 40),
         point: {
           pixelSize: selected ? pixel + 6 : pixel,
           color: color.withAlpha(0.45),
           outlineColor: color,
           outlineWidth: selected ? 4 : 2,
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
         },
         label: {
@@ -42,7 +41,6 @@ export function renderQuakes(
           outlineWidth: 3,
           style: Cesium.LabelStyle.FILL_AND_OUTLINE,
           pixelOffset: new Cesium.Cartesian2(0, -(pixel / 2 + 10)),
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
           scaleByDistance: new Cesium.NearFarScalar(1.0e4, 1.0, 6.0e5, 0.6),
         },

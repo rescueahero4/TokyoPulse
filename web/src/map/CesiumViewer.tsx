@@ -1,13 +1,18 @@
 import * as Cesium from 'cesium';
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import type { Lang, PulseEvent } from '../lib/types';
 import type { LineCollection, StationCollection } from '../lib/geo';
+import { lineSegments } from '../lib/geo';
 import { renderRail } from './layers/rail';
 import { renderQuakes } from './layers/quakes';
 import { renderWarnings } from './layers/warnings';
 import { renderCrowd } from './layers/crowd';
 import { addFloodLayer } from './layers/flood';
 import { renderPeopleFlow } from './layers/peopleflow';
+import {
+  BASEMAPS, DEFAULT_BASEMAP_ID, basemapById, buildBasemapLayer, buildFirstWorkingBasemap,
+  buildLabelOverlay,
+} from './basemaps';
 
 /** Layer ids match GET /layers.json so LayerPanel toggles map 1:1 onto the map. */
 export const LAYER_IDS = ['trains', 'quakes', 'warnings', 'crowd', 'flood', 'peopleflow'] as const;
@@ -19,10 +24,14 @@ const HOME = {
   lon: Number(env.VITE_MAP_CENTER_LON ?? 139.7671) || 139.7671,
   height: Number(env.VITE_MAP_HEIGHT_M ?? 40000) || 40000,
 };
-const GSI_STD = env.VITE_GSI_STD_TILES || 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png';
-const OSM = env.VITE_OSM_FALLBACK_TILES || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+/** City-scale camera bounds: you cannot fall through the globe or get lost in space. */
+const MIN_ZOOM_M = Number(env.VITE_MAP_MIN_ZOOM_M ?? 120) || 120;
+const MAX_ZOOM_M = Number(env.VITE_MAP_MAX_ZOOM_M ?? 2_500_000) || 2_500_000;
 const GSI_FLOOD = env.VITE_GSI_FLOOD_TILES
   || 'https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png';
+
+const BASEMAP_STORAGE_KEY = 'tp.basemap';
+const LABELS_STORAGE_KEY = 'tp.basemapLabels';
 
 export interface MapHandle {
   flyTo(lat: number, lon: number, height?: number): void;
@@ -42,23 +51,14 @@ export interface CesiumViewerProps {
   onStats?(stats: Record<string, number>): void;
 }
 
-function baseImagery(): { layer: Cesium.ImageryLayer; label: string } {
+function initialBasemapId(): string {
   try {
-    const gsi = new Cesium.UrlTemplateImageryProvider({
-      url: GSI_STD,
-      maximumLevel: 18,
-      credit: new Cesium.Credit('地理院タイル (GSI)'),
-    });
-    return { layer: new Cesium.ImageryLayer(gsi), label: 'gsi-std' };
-  } catch (e) {
-    console.warn('[map] GSI imagery failed, falling back to OSM', e);
-    const osm = new Cesium.UrlTemplateImageryProvider({
-      url: OSM,
-      maximumLevel: 19,
-      credit: new Cesium.Credit('© OpenStreetMap contributors'),
-    });
-    return { layer: new Cesium.ImageryLayer(osm), label: 'osm-fallback' };
+    const saved = window.localStorage.getItem(BASEMAP_STORAGE_KEY);
+    if (saved && BASEMAPS.some((b) => b.id === saved)) return saved;
+  } catch {
+    /* private mode / blocked storage — fall through to the env default */
   }
+  return DEFAULT_BASEMAP_ID;
 }
 
 export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function CesiumViewer(props, ref) {
@@ -67,9 +67,19 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   const viewerRef = useRef<Cesium.Viewer | null>(null);
   const sourcesRef = useRef<Partial<Record<LayerId, Cesium.CustomDataSource>>>({});
   const floodRef = useRef<Cesium.ImageryLayer | null>(null);
+  const baseLayerRef = useRef<Cesium.ImageryLayer | null>(null);
+  const labelLayerRef = useRef<Cesium.ImageryLayer | null>(null);
+  const linesRef = useRef<LineCollection | null>(null);
   const [fatal, setFatal] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
+  const [basemapId, setBasemapId] = useState<string>(initialBasemapId);
+  const [labelsOn, setLabelsOn] = useState<boolean>(() => {
+    try { return window.localStorage.getItem(LABELS_STORAGE_KEY) !== '0'; } catch { return true; }
+  });
+  const [pickerOpen, setPickerOpen] = useState(false);
   const statsRef = useRef<Record<string, number>>({});
+
+  linesRef.current = props.lines;
 
   useImperativeHandle(ref, () => ({
     flyTo(lat: number, lon: number, height = 9000) {
@@ -77,7 +87,9 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       if (!v || typeof lat !== 'number' || typeof lon !== 'number') return;
       try {
         v.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(lon, lat, height),
+          destination: Cesium.Cartesian3.fromDegrees(
+            lon, lat, Math.min(MAX_ZOOM_M, Math.max(MIN_ZOOM_M, height)),
+          ),
           orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
           duration: 1.4,
         });
@@ -99,15 +111,18 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   // ---- create the viewer exactly once
   useEffect(() => {
     if (!hostRef.current || viewerRef.current) return;
-    // No ion token in this build and we must never request one.
+    // Ion token is optional and public by design. Nothing on the critical path
+    // needs it (all imagery here is keyless), but an ion asset — PLATEAU 3D
+    // Tiles — would. The env value may carry a trailing `#note`, so strip it.
     try {
-      (Cesium.Ion as unknown as { defaultAccessToken: string }).defaultAccessToken = '';
+      const raw = String(env.VITE_CESIUM_ION_TOKEN || '').split('#')[0].trim();
+      (Cesium.Ion as unknown as { defaultAccessToken: string }).defaultAccessToken = raw;
     } catch {
       /* ignore */
     }
 
     let viewer: Cesium.Viewer;
-    const { layer, label } = baseImagery();
+    const { layer, def } = buildFirstWorkingBasemap(initialBasemapId());
     try {
       viewer = new Cesium.Viewer(hostRef.current, {
         baseLayer: layer,
@@ -124,6 +139,9 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
         selectionIndicator: false,
         scene3DOnly: true,
         shouldAnimate: false,
+        shadows: false,
+        skyAtmosphere: false,
+        requestRenderMode: false,
         creditContainer: creditRef.current ?? undefined,
       });
     } catch (e) {
@@ -133,9 +151,11 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       return;
     }
     viewerRef.current = viewer;
+    baseLayerRef.current = layer;
+    if (def.id !== basemapId) setBasemapId(def.id);
     // Exposed for QA / e2e probing. Read-only debugging handle, no secrets.
     (window as unknown as { __tpViewer?: Cesium.Viewer }).__tpViewer = viewer;
-    console.info('[map] viewer up, imagery=' + label);
+    console.info('[map] viewer up, basemap=' + def.id);
     try {
       layer.imageryProvider.errorEvent.addEventListener((err: unknown) => {
         console.warn('[map] imagery tile error', err);
@@ -144,15 +164,45 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       /* ignore */
     }
 
+    // ---- scene: flat, dark, no atmospheric cost (godseye Globe.jsx:310-332)
     try {
-      viewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#0b0f14');
-      viewer.scene.globe.showGroundAtmosphere = false;
-      viewer.scene.skyAtmosphere.show = true;
-      viewer.scene.fog.enabled = false;
-      viewer.scene.globe.enableLighting = false;
-      viewer.scene.screenSpaceCameraController.enableCollisionDetection = false;
+      const scene = viewer.scene;
+      scene.backgroundColor = Cesium.Color.fromCssColorString('#05080b');
+      scene.globe.baseColor = Cesium.Color.fromCssColorString('#0a0a0f');
+      if (scene.skyBox) scene.skyBox.show = false;
+      scene.globe.showGroundAtmosphere = false;
+      scene.globe.enableLighting = false;       // a lit globe dims our tiles; HUD wants flat
+      scene.globe.depthTestAgainstTerrain = false;
+      scene.globe.maximumScreenSpaceError = 12; // less LOD work per frame
+      scene.fog.enabled = false;
+      scene.highDynamicRange = false;
+      try { scene.postProcessStages.fxaa.enabled = false; } catch { /* optional stage */ }
     } catch (e) {
       console.warn('[map] scene tuning skipped', e);
+    }
+
+    // ---- camera controls. Cesium's default inertia is what makes drag feel
+    // floaty and laggy; zeroing it is what makes the map feel immediate.
+    try {
+      const c = viewer.scene.screenSpaceCameraController;
+      c.inertiaSpin = 0;
+      c.inertiaTranslate = 0;
+      c.inertiaZoom = 0;
+      c.enableZoom = true;
+      c.enableRotate = true;
+      c.enableTranslate = true;
+      c.enableTilt = true;
+      c.enableLook = true;
+      c.minimumZoomDistance = MIN_ZOOM_M;
+      c.maximumZoomDistance = MAX_ZOOM_M;
+      c.enableCollisionDetection = true;
+      // Route wheel + trackpad pinch to Cesium instead of the page.
+      viewer.scene.canvas.style.touchAction = 'none';
+      console.info(
+        '[map] camera controls: inertia 0, zoom ' + MIN_ZOOM_M + '-' + MAX_ZOOM_M + 'm',
+      );
+    } catch (e) {
+      console.warn('[map] camera controller tuning skipped', e);
     }
 
     // Camera home: straight down over Tokyo Station.
@@ -213,9 +263,66 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       viewerRef.current = null;
       sourcesRef.current = {};
       floodRef.current = null;
+      baseLayerRef.current = null;
+      labelLayerRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // ---- basemap swap. The base layer always sits at index 0 so the label
+  // overlay and the flood raster (both added above it) keep compositing.
+  useEffect(() => {
+    if (!ready) return;
+    const viewer = viewerRef.current;
+    const current = baseLayerRef.current;
+    if (!viewer || !current) return;
+    const def = basemapById(basemapId);
+    if (!def) return;
+    try { window.localStorage.setItem(BASEMAP_STORAGE_KEY, def.id); } catch { /* ignore */ }
+    if (current.imageryProvider && (current.imageryProvider as { url?: string }).url === def.url) return;
+    try {
+      const built = buildBasemapLayer(def);
+      if (!built) return;
+      viewer.imageryLayers.add(built.layer, 0);
+      viewer.imageryLayers.remove(current, true);
+      baseLayerRef.current = built.layer;
+      built.layer.imageryProvider.errorEvent.addEventListener((err: unknown) => {
+        console.warn('[map] imagery tile error', err);
+      });
+      console.info('[map] basemap -> ' + def.id);
+      viewer.scene.requestRender();
+    } catch (e) {
+      console.warn('[map] basemap swap failed, keeping current surface', e);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, basemapId]);
+
+  // ---- minimal reference overlay (place names). Composited over the basemap,
+  // godseye-style, so plain satellite imagery still reads like a city map.
+  // Skipped for basemaps that already carry their own labels.
+  useEffect(() => {
+    if (!ready) return;
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+    const want = labelsOn && !basemapById(basemapId).hasOwnLabels;
+    try { window.localStorage.setItem(LABELS_STORAGE_KEY, labelsOn ? '1' : '0'); } catch { /* ignore */ }
+    try {
+      if (want && !labelLayerRef.current) {
+        const layer = buildLabelOverlay();
+        if (layer) {
+          // index 1 = directly above the basemap, below the flood raster.
+          viewer.imageryLayers.add(layer, 1);
+          labelLayerRef.current = layer;
+        }
+      } else if (!want && labelLayerRef.current) {
+        viewer.imageryLayers.remove(labelLayerRef.current, true);
+        labelLayerRef.current = null;
+      }
+      viewer.scene.requestRender();
+    } catch (e) {
+      console.warn('[map] label overlay toggle failed', e);
+    }
+  }, [ready, labelsOn, basemapId]);
 
   /** Report a layer's entity count upward, but only when it actually changed. */
   const bump = (k: string, n: number) => {
@@ -224,17 +331,35 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     props.onStats?.(statsRef.current);
   };
 
+  // /lines.geojson is re-polled every 30s and hands back a fresh object every
+  // time. Rebuilding the rail layer on object identity meant a full teardown
+  // twice a minute; key it on what actually affects the render instead.
+  const railSig = useMemo(() => {
+    const fc = props.lines;
+    if (!fc || !Array.isArray(fc.features)) return '';
+    return fc.features
+      .map((f) => {
+        const p = f.properties;
+        let pts = 0;
+        for (const s of lineSegments(f)) pts += s.length;
+        return (p?.lineId || '?') + '|' + (p?.status || '?') + '|' + (p?.color || '?') + '|' + pts;
+      })
+      .join(';');
+  }, [props.lines]);
+
   // ---- rail
   useEffect(() => {
     if (!ready) return;
     const ds = sourcesRef.current.trains;
     if (!ds) return;
     try {
-      bump('trains', renderRail(ds, props.lines, props.selectedLineId));
+      bump('trains', renderRail(ds, linesRef.current, props.selectedLineId));
+      viewerRef.current?.scene.requestRender();
     } catch (e) {
       console.warn('[map] rail layer failed', e);
     }
-  }, [ready, props.lines, props.selectedLineId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, railSig, props.selectedLineId]);
 
   // ---- quakes
   useEffect(() => {
@@ -312,9 +437,61 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     viewerRef.current?.scene.requestRender();
   }, [ready, props.visible, props.peopleFlowAvailable]);
 
+  const active = basemapById(basemapId);
+
   return (
     <div className="map-root">
       <div ref={hostRef} className="cesium-host" data-testid="cesium-host" />
+
+      {/* Basemap switcher — collapsed to one chip so it never covers the data
+          plane or the panels. Opens upward, bottom-left of the forecast strip. */}
+      <div className={'map-basemap' + (pickerOpen ? ' is-open' : '')}>
+        {pickerOpen && (
+          <div className="map-basemap-menu" role="listbox" aria-label="Basemap">
+            {BASEMAPS.map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                role="option"
+                aria-selected={b.id === basemapId}
+                className={'map-basemap-opt' + (b.id === basemapId ? ' is-active' : '')}
+                onClick={() => { setBasemapId(b.id); setPickerOpen(false); }}
+              >
+                <span className="map-basemap-swatch" data-bm={b.id} />
+                {b.label}
+              </button>
+            ))}
+            <button
+              type="button"
+              className={'map-basemap-opt map-basemap-labels' + (labelsOn ? ' is-active' : '')}
+              aria-pressed={labelsOn}
+              disabled={active.hasOwnLabels}
+              onClick={() => setLabelsOn((o) => !o)}
+              title={active.hasOwnLabels
+                ? 'This basemap already has its own labels'
+                : 'Thin place-name overlay on top of the imagery'}
+            >
+              <span className="map-basemap-switch" />
+              Place labels
+            </button>
+            <div className="map-basemap-note">
+              GSI = 国土地理院, the official Japanese government basemap — aerial and topo.
+            </div>
+          </div>
+        )}
+        <button
+          type="button"
+          className="map-basemap-toggle"
+          aria-expanded={pickerOpen}
+          onClick={() => setPickerOpen((o) => !o)}
+          title="Change basemap style"
+        >
+          <span className="map-basemap-swatch" data-bm={active.id} />
+          BASEMAP · {active.short}
+          <span className="map-basemap-caret">{pickerOpen ? '▾' : '▴'}</span>
+        </button>
+      </div>
+
       <div ref={creditRef} className="map-credits" />
       {fatal && (
         <div className="map-fatal" role="alert">

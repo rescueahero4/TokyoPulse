@@ -35,13 +35,12 @@ export function renderCrowd(
         name: p.name,
         description: (p.ward || '') + ' / band ' + band,
         properties: { kind: 'station', stationId: p.stationId, lat, lon },
-        position: Cesium.Cartesian3.fromDegrees(lon, lat),
+        position: Cesium.Cartesian3.fromDegrees(lon, lat, 20),
         point: {
           pixelSize: onLine ? size + 4 : size,
           color: color.withAlpha(dim ? 0.12 : 0.55),
           outlineColor: color.withAlpha(dim ? 0.2 : 0.95),
           outlineWidth: 1,
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
         },
       });

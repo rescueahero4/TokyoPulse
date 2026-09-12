@@ -132,7 +132,10 @@ export default function App() {
       let state: LayerState['state'] = a?.state ?? (origin === 'api' ? 'off' : 'mock');
       if (id === 'flood') state = 'live';           // GSI raster, keyless and live
       if (id === 'peopleflow') state = peopleFlow ? state : 'off';
-      const count = mapStats[id] ?? a?.count ?? 0;
+      // The API's count is the domain count (6 lines with live status); mapStats
+      // is the Cesium entity count, which is a rendering detail and must never
+      // be shown as if it were data. API first, map only as the fallback.
+      const count = a?.count ?? mapStats[id] ?? 0;
       return {
         id,
         label: a?.label || LAYER_LABELS[id] || id,

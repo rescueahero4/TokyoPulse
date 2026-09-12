@@ -67,7 +67,7 @@ Open `http://localhost:5173` in Chrome. Expected on screen within ~5 seconds: GS
 
 ## 2. The 2-minute script
 
-**Correction to `doc/prd.md` §9, beat 3:** the PRD says "click a delayed line" and names **Chuo**. Chuo is JR — the keyless ODPT mirror is **Toei-only**, so Chuo has no live status and renders grey. Use **Mita** or **Oedo** instead (both Toei, both have real status). The honest one-liner if a judge asks about a grey line: *"No keyless status feed for that operator — the graph models it, the feed doesn't cover it."*
+**Correction to `doc/prd.md` §9, beat 3:** the PRD says "click a delayed line" and names **Chuo**. Chuo is JR — the keyless ODPT mirror is **Toei-only**, so Chuo has no live status and renders grey. Use **Shinjuku** (`Toei-Shinjuku`) — adversarial QA measured all six Toei lines after a train replay and Shinjuku is the strongest beat-3 payload: **6 wards, 21 stations, 11 of them in flood zones, 2 active events**. Do NOT use Mita: it has 9 wards and 27 stations but **0 stations in a flood zone**, so the promised payoff renders a literal "0". The honest one-liner if a judge asks about a grey line: *"No keyless status feed for that operator — the graph models it, the feed doesn't cover it."*
 
 Immediately before you start, run the reset so the timeline opens clean and any earlier rehearsal replay doesn't confuse "now":
 ```
@@ -80,7 +80,7 @@ This deletes only `source:"replay"` events — nothing live or seeded is touched
 | 0:00 | "Every person in this room commutes through this map." | Nothing — let it sit | Populated Cesium map over Tokyo, GSI tiles, 149 crowd-weighted station dots, rail lines colored by live status, TIMELINE scrolling on the right (opens on `window=now` — ~20 current events: live train status, warnings, the past/next 48h weather edge, no clicks needed) |
 | 0:15 | "Watch — I'll trigger a real earthquake report." | Nothing yet — **fire the replay now, from a second terminal, while still talking** (see §3 for exact timing) | (nothing visible yet — it's in flight) |
 | 0:25 | "...and there it is." | Click the quake row / alert banner once it appears | Red-ringed alert banner flashes top-centre, a pulsing quake marker drops near Chiba, a new TIMELINE row appears at the top tagged `REPLAY`. Click either → camera flies to the epicenter. |
-| 0:50 | "Now watch what happens when I ask about a specific line — this is Neo4j answering what a table can't." | Type "Mita" in LINES (top-left), click the result | Camera flies to the Mita Line polyline; IMPACT PANEL opens (auto-scrolls into view) showing wards affected, station count, stations-in-flood-zone count, and the events actively affecting this line |
+| 0:50 | "Now watch what happens when I ask about a specific line — this is Neo4j answering what a table can't." | Type "Shinjuku" in LINES (top-left), click the result | Camera flies to the Shinjuku Line polyline; IMPACT PANEL opens (auto-scrolls into view) showing wards affected, station count, stations-in-flood-zone count, and the events actively affecting this line |
 | 1:15 | "Past, present, and what's coming — one graph." | Click the **7d** toggle (top-left, next to "Now") | Past week's quakes fade in on the map and timeline (note: repetitive same-status Toei rows auto-collapse into one "N lines: normal operation" row — click it to expand); the FORECAST strip (bottom-centre) already shows the past/next 48h precipitation + temperature with a "now" marker |
 | 1:40 | "Here's the JP/EN city brief — and yes, Nosana is the roadmap sponsor here; today it's served on Anthropic." | Point at CITY BRIEF (bottom-left); toggle EN/JA (top bar) | Brief text updates; footer reads its provider verbatim (currently "Claude via Anthropic API" — falls back to a rule-based summary if the LLM call fails, never blank) |
 | 1:55 | "Four Daytona sandboxes, created in parallel, each normalizing one live feed. Resident app today, ward dashboard tomorrow." | Point at the "⚡ 4 Daytona sandboxes" badge, top-left | Hover shows per-sandbox status/feed/event-count |
@@ -132,3 +132,30 @@ Reset between rehearsals: `curl -X POST http://127.0.0.1:8000/demo/reset` (delet
 - **Daytona:** "Four sandboxes, created in parallel — point at the badge — each one normalizing a different city feed at once; that fan-out is the whole ingestion pipeline, not a mockup."
 - **Neo4j:** "Click a line — point at the IMPACT PANEL — that ward/flood-zone breakdown is one Cypher query walking `(Line)-[:SERVES]->(Station)-[:IN]->(Ward)` and `(Event)-[:AFFECTS]->(Ward)` live against Aura; a table join can't answer 'which stations on this line are in a flood zone' as directly as a graph traversal does."
 - **Nosana / Anthropic:** "The brief you're reading — point at CITY BRIEF — is generated fresh from the same event graph every refresh; it's on Anthropic today, with Nosana as the intended host once the roadmap item lands, and the exact provider is printed in the card so we're never pretending."
+
+---
+
+## 6. Late QA findings the presenter must know
+
+- **Earthquake dots are Japan-wide, not Tokyo-only.** Measured over the live 7-day window, only **1 of 21**
+  quakes falls within 150 km of Tokyo. We ingest the national JMA / P2PQuake feed deliberately and label it
+  honestly. If a judge notices Kyushu or Iwate dots, the answer is: *"That's the national feed — the PRD's own
+  risk case is the Nankai Trough, which isn't under Tokyo. A quake anywhere on the arc is signal for Tokyo
+  readiness."* Do **not** imply the dots are Tokyo-local.
+- **Do not say "served on Nosana"** (PRD §9 beat 5 says this and it is now wrong). The CITY BRIEF footer reads
+  *"Claude via Anthropic API"* on screen, so a judge reading the card would catch the contradiction.
+  Say: *"Claude via the Anthropic API today, Nosana on the roadmap."*
+- **Click the ⟳ on CITY BRIEF before beat 5** if the demo has been open a while — the brief now refreshes on a
+  60s poll, but a manual refresh guarantees it matches the timeline a judge is looking at.
+- **Clicking a timeline row for an area-wide event** (one with no coordinates, e.g. a weather or ward warning)
+  flies to the ward centroid, not a pin. That is intended behaviour, not a miss.
+
+## 7. What is deliberately NOT real — say these plainly if asked
+
+| Thing | The honest answer |
+|---|---|
+| Bus layer | Cut. Needs an ODPT token with multi-day manual approval. |
+| People-flow heatmap | A **derived proxy** from static station ridership, distance-weighted. Not real telco people-flow; the real MLIT 人流 dataset is licence-gated. |
+| JR / Tokyo Metro line status | No keyless feed exists — the mirror is Toei-only. Those lines are in the graph with real OSM geometry but render grey `unknown`. We never fake a green. |
+| Daytona sandboxes | 4, created in parallel, **1.9-3.4s** each, each running a feed's `normalize()`. They have no outbound egress on this account, so the host fetches and writes. Not "5 sandboxes at 200ms". |
+| The brief | Anthropic today, Nosana roadmap. The provider is printed in the card so we cannot be accused of bluffing. |

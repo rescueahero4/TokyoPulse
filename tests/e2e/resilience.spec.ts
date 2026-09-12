@@ -4,14 +4,22 @@ import { captureConsole, assertNoConsoleErrors, canvasColorVariance, waitForView
 /**
  * QA-E2E — the godseye "every layer fails independently" guarantee
  * (contracts/AGENT-BRIEF.md rule 3, PRD §10 risk table, PRD 1:50 rehearsal).
+ *
+ * page.route() below intercepts 'http://localhost:8000' (not 127.0.0.1)
+ * deliberately - that's the literal string in web/.env.local's
+ * VITE_API_BASE_URL, so it's the exact request URL web/src/lib/api.ts's
+ * fetch() calls make from inside the page. This is unrelated to (and must
+ * not be "fixed" to match) playwright.config.ts's baseURL/127.0.0.1, which
+ * only works around an unrelated dev server on this machine answering
+ * "localhost:5173" over IPv6 - see the QA-E2E final report.
  */
 
 test.describe('Resilience: layers fail independently', () => {
   test('13. Forced-offline: app still renders map + timeline from checked-in mocks when the API is fully unreachable', async ({ page }) => {
     test.setTimeout(45_000);
-    const capture = captureConsole(page);
+    const capture = captureConsole(page, [/^http:\/\/localhost:8000\//]);
 
-    await page.route('http://127.0.0.1:8000/**', (route) => route.abort());
+    await page.route('http://localhost:8000/**', (route) => route.abort());
     await page.goto('/');
     await waitForViewer(page);
     await page.waitForTimeout(3000);
@@ -41,10 +49,10 @@ test.describe('Resilience: layers fail independently', () => {
 
   test('14. Partial failure: only /brief and /forecast.json down - map, timeline, alert banner stay fine; dead panels degrade honestly', async ({ page }) => {
     test.setTimeout(45_000);
-    const capture = captureConsole(page);
+    const capture = captureConsole(page, [/^http:\/\/localhost:8000\/brief/, /^http:\/\/localhost:8000\/forecast\.json/]);
 
-    await page.route('http://127.0.0.1:8000/brief**', (route) => route.abort());
-    await page.route('http://127.0.0.1:8000/forecast.json**', (route) => route.abort());
+    await page.route('http://localhost:8000/brief**', (route) => route.abort());
+    await page.route('http://localhost:8000/forecast.json**', (route) => route.abort());
     await page.goto('/');
     await waitForViewer(page);
     await page.waitForTimeout(3000);

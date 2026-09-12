@@ -59,10 +59,13 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await searchInput.click();
     await searchInput.fill('Mita');
     await page.waitForTimeout(300);
-    // Close the results dropdown via a real click elsewhere (its onBlur closes
-    // it) rather than a bare .blur() call, so it can't linger open and steal
-    // pointer events from the panels beneath it.
-    await page.locator('[data-testid="cesium-host"]').click({ position: { x: 10, y: 10 } });
+    // Close the results dropdown (LineSearch.tsx closes on onBlur). A DOM
+    // .blur() fires that handler directly and reliably, unlike clicking
+    // elsewhere on the HUD - the top-left corner is covered by StatusBar
+    // (ui-contract: "StatusBar very top-left corner strip"), so a synthetic
+    // click there is exactly the overlap this suite exists to catch, not a
+    // valid way to dismiss a dropdown.
+    await searchInput.evaluate((el: HTMLElement) => el.blur());
     await page.waitForTimeout(200);
 
     // time + language toggles
@@ -113,18 +116,34 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     // a group. That's a legitimate presentation choice on top of the DESC
     // feed, so assert newest-first on each section's plain (ungrouped) rows,
     // which is what "newest first" means for a person actually reading it.
+    //
+    // Compare via the "Xm/Xh/Xd ago" relative text (time.ts's
+    // formatRelative), not the bare "HH:MM" clock - a 7d/history view
+    // legitimately spans multiple days, where e.g. "20:42" from yesterday is
+    // OLDER than "14:57" from today despite sorting later by clock digits
+    // alone; only the relative "ago" figure is monotonic with real time.
     const nowRows = page.locator('.tp-timeline-row:not(.tp-timeline-row-upcoming):not(.tp-timeline-row-group)');
     const nowCount = await nowRows.count();
-    const times: number[] = [];
+    const minutesAgo: number[] = [];
     for (let i = 0; i < nowCount; i++) {
-      const text = await nowRows.nth(i).locator('.tp-timeline-time').textContent();
-      const m = text?.match(/(\d{2}):(\d{2})/);
-      if (m) times.push(Number(m[1]) * 60 + Number(m[2]));
+      const text = (await nowRows.nth(i).locator('.tp-timeline-time').textContent()) ?? '';
+      if (/just now/i.test(text)) {
+        minutesAgo.push(0);
+        continue;
+      }
+      const m = text.match(/(\d+)\s*(m|h|d)\s*ago/i);
+      if (!m) continue; // e.g. "in 5m" (future) shouldn't appear in the NOW section at all
+      const n = Number(m[1]);
+      const unit = m[2].toLowerCase();
+      const mins = unit === 'm' ? n : unit === 'h' ? n * 60 : n * 1440;
+      minutesAgo.push(mins);
     }
-    for (let i = 1; i < times.length; i++) {
-      // Allow wraparound at midnight (a 7d/history view can cross a day boundary).
-      const nonIncreasing = times[i] <= times[i - 1] || times[i - 1] < 60; // crude midnight-wrap allowance
-      expect(nonIncreasing, `NOW section row ${i} (${times[i]}) is not older than row ${i - 1} (${times[i - 1]}) - timeline is not newest-first`).toBeTruthy();
+    expect(minutesAgo.length, 'no parsable "...ago" timestamps found in the NOW section').toBeGreaterThan(0);
+    for (let i = 1; i < minutesAgo.length; i++) {
+      expect(
+        minutesAgo[i],
+        `NOW section row ${i} (${minutesAgo[i]}m ago) is newer than row ${i - 1} (${minutesAgo[i - 1]}m ago) - timeline is not newest-first`,
+      ).toBeGreaterThanOrEqual(minutesAgo[i - 1]);
     }
   });
 

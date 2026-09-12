@@ -1,13 +1,42 @@
-/* TokyoPulse — shell + map canvas (A1a owns this file).
-   Panel styling lives in panels.css (A1b). Palette per ui-contract.md rule 5. */
+/* TokyoPulse — shell + map canvas.
+   Visual language follows the godseye reference (doc/arch.md §2, principle 4):
+   dark tactical HUD, glass panels with a faint scanline, neon status colours,
+   mono type. Severity/status semantics from contracts/ui-contract.md rule 5 are
+   unchanged — only re-mapped onto the neon palette. */
 
 :root {
   color-scheme: dark;
-  --app-bg: #05080b;
-  --app-panel: rgba(11, 15, 20, 0.8);
-  --app-border: #1f2a37;
-  --app-text: #e6edf3;
-  --app-accent: #38bdf8;
+
+  /* godseye tokens */
+  --gs-bg-primary: #0a0a0f;
+  --gs-bg-panel: rgba(10, 10, 15, 0.85);
+  --gs-neon-green: #00ff41;
+  --gs-neon-amber: #ffaa00;
+  --gs-electric-blue: #00b4ff;
+  --gs-neon-red: #ff3333;
+  --gs-neon-cyan: #00ffff;
+  --gs-text-primary: #e0e0e0;
+  --gs-text-dim: #666680;
+  --gs-border-panel: rgba(0, 180, 255, 0.15);
+  --gs-font-mono: 'JetBrains Mono', 'Share Tech Mono', ui-monospace, 'SFMono-Regular', Menlo,
+    Consolas, monospace;
+
+  /* app aliases — existing rules (and panels.css) read these names */
+  --app-bg: var(--gs-bg-primary);
+  --app-panel: var(--gs-bg-panel);
+  --app-border: var(--gs-border-panel);
+  --app-text: var(--gs-text-primary);
+  --app-dim: var(--gs-text-dim);
+  --app-accent: var(--gs-electric-blue);
+
+  /* severity / line-status, re-mapped onto the neon palette */
+  --sev-info: var(--gs-electric-blue);
+  --sev-warning: var(--gs-neon-amber);
+  --sev-critical: var(--gs-neon-red);
+  --st-normal: var(--gs-neon-green);
+  --st-delay: var(--gs-neon-amber);
+  --st-suspended: var(--gs-neon-red);
+  --st-unknown: #6b7280;
 }
 
 * { box-sizing: border-box; }
@@ -20,11 +49,17 @@ html, body, #root {
   overflow: hidden;
   background: var(--app-bg);
   color: var(--app-text);
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Hiragino Kaku Gothic ProN',
-    'Noto Sans JP', sans-serif;
+  font-family: var(--gs-font-mono);
+  font-variant-ligatures: none;
 }
 
 .app-root { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+/* Thin neon scrollbars — the timeline is a long scroll list, this shows constantly. */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0, 180, 255, 0.3); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 180, 255, 0.55); }
 
 /* ---------- map ---------- */
 
@@ -34,33 +69,191 @@ html, body, #root {
 
 .cesium-host canvas { outline: none; }
 
-/* Cesium chrome we cannot disable by option: keep the canvas a clean tactical surface. */
+/* Cesium chrome we cannot disable by option: keep the canvas a clean tactical surface.
+   NB: the credit container is deliberately NOT hidden — CARTO and GSI both require
+   attribution. It is restyled small and unobtrusive below instead. */
 .cesium-viewer-bottom,
 .cesium-viewer-animationContainer,
 .cesium-viewer-timelineContainer,
 .cesium-viewer-toolbar,
 .cesium-viewer-fullscreenContainer,
 .cesium-viewer-vrContainer,
+.cesium-viewer-infoBoxContainer,
+.cesium-viewer-selectionIndicatorContainer,
+.cesium-viewer-geocoderContainer,
+.cesium-viewer-navigationHelpButtonContainer,
+.cesium-viewer-homeButtonContainer,
+.cesium-viewer-sceneModePicker,
+.cesium-viewer-projectionPicker,
+.cesium-viewer-baseLayerPickerContainer,
 .cesium-performanceDisplay-defaultContainer { display: none !important; }
+
+.cesium-viewer,
+.cesium-viewer-cesiumWidgetContainer,
+.cesium-widget,
+.cesium-widget canvas { width: 100% !important; height: 100% !important; }
+
+/* ---------- attribution (required: © OpenStreetMap contributors, © CARTO / GSI) ---------- */
 
 .map-credits {
   position: absolute;
   right: 352px;
   bottom: 4px;
   z-index: 5;
-  max-width: 320px;
-  font-size: 10px;
+  max-width: 340px;
+  font-size: 9px;
   line-height: 1.4;
-  color: #64748b;
+  letter-spacing: 0.02em;
+  color: var(--gs-text-dim);
   pointer-events: none;
   text-align: right;
 }
 
-.map-credits a { color: #64748b; text-decoration: none; }
+.map-credits a { color: var(--gs-text-dim); text-decoration: none; }
 .map-credits .cesium-credit-lightbox-overlay { display: none !important; }
-/* Keep attribution (GSI requires it) but shrink the ion logo to HUD scale. */
-.map-credits img { max-height: 12px; width: auto; opacity: 0.45; vertical-align: middle; }
-.map-credits .cesium-widget-credits { font-size: 10px; display: inline-flex; gap: 6px; align-items: center; }
+.map-credits img { max-height: 11px; width: auto; opacity: 0.45; vertical-align: middle; }
+.map-credits .cesium-widget-credits {
+  font-size: 9px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--gs-text-dim);
+}
+
+/* ---------- basemap switcher ---------- */
+
+.map-basemap {
+  position: absolute;
+  left: 332px;
+  bottom: 8px;
+  z-index: 40;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.map-basemap > * { pointer-events: auto; }
+
+.map-basemap-toggle,
+.map-basemap-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 9px;
+  border: 1px solid var(--gs-border-panel);
+  border-radius: 4px;
+  background: var(--gs-bg-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--gs-text-primary);
+  font-family: var(--gs-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.map-basemap-toggle:hover,
+.map-basemap-opt:hover {
+  border-color: var(--gs-electric-blue);
+  color: var(--gs-neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 180, 255, 0.25);
+}
+
+.map-basemap-caret { color: var(--gs-electric-blue); margin-left: 2px; font-size: 9px; }
+
+.map-basemap-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px;
+  border: 1px solid var(--gs-border-panel);
+  border-radius: 4px;
+  background: var(--gs-bg-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.6);
+}
+
+.map-basemap-opt { width: 100%; justify-content: flex-start; text-transform: none; letter-spacing: 0.04em; }
+
+.map-basemap-opt.is-active {
+  border-color: var(--gs-neon-green);
+  color: var(--gs-neon-green);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+.map-basemap-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex: 0 0 auto;
+}
+
+.map-basemap-swatch[data-bm='satellite'] { background: linear-gradient(135deg, #2f4f2a, #1d3b52); }
+.map-basemap-swatch[data-bm='gsi-photo'] { background: linear-gradient(135deg, #3d5a33, #214a60); }
+.map-basemap-swatch[data-bm='dark'] { background: #26282c; }
+.map-basemap-swatch[data-bm='dark-nolabels'] { background: #1b1d20; }
+.map-basemap-swatch[data-bm='light'] { background: #f2f0eb; }
+.map-basemap-swatch[data-bm='gsi-pale'] { background: #dfe6d9; }
+.map-basemap-swatch[data-bm='gsi-std'] { background: #bcd6a8; }
+.map-basemap-swatch[data-bm='osm'] { background: #aad3a1; }
+
+/* Godseye-style neon toggle switch for the place-label overlay. */
+.map-basemap-labels { margin-top: 2px; border-top-color: var(--gs-border-panel); }
+.map-basemap-labels:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+.map-basemap-switch {
+  position: relative;
+  width: 30px;
+  height: 15px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+.map-basemap-switch::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--gs-text-dim);
+  transition: all 0.25s ease;
+}
+
+.map-basemap-labels.is-active .map-basemap-switch {
+  background: rgba(0, 255, 65, 0.15);
+  border-color: var(--gs-neon-green);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+.map-basemap-labels.is-active .map-basemap-switch::after {
+  left: 16px;
+  background: var(--gs-neon-green);
+}
+
+.map-basemap-note {
+  max-width: 210px;
+  margin-top: 2px;
+  padding: 0 3px;
+  color: var(--gs-text-dim);
+  font-size: 9px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  white-space: normal;
+}
+
+/* ---------- fatal ---------- */
 
 .map-fatal {
   position: absolute;
@@ -71,9 +264,9 @@ html, body, #root {
   flex-direction: column;
   gap: 6px;
   padding: 16px 20px;
-  border: 1px solid #ef4444;
-  border-radius: 10px;
-  background: rgba(11, 15, 20, 0.92);
+  border: 1px solid var(--gs-neon-red);
+  border-radius: 4px;
+  background: rgba(10, 10, 15, 0.92);
   color: var(--app-text);
   font-size: 13px;
   z-index: 60;
@@ -81,7 +274,8 @@ html, body, #root {
 
 /* ---------- HUD layer ----------
    The HUD itself is click-through; each panel re-enables pointer events
-   (ui-contract.md rule 4), so the map between panels stays draggable. */
+   (ui-contract.md rule 4), so the map between panels stays draggable
+   AND stays wheel-zoomable. */
 
 .hud {
   position: absolute;
@@ -91,6 +285,47 @@ html, body, #root {
 }
 
 .hud > * { pointer-events: auto; }
+
+/* ---------- glass panel (godseye signature: faint scanline over blurred glass) ---------- */
+
+.tp-panel,
+.tp-line-search,
+.tp-layer-panel,
+.tp-impact-panel,
+.tp-alert-banner {
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.tp-panel::before,
+.tp-line-search::before,
+.tp-layer-panel::before,
+.tp-impact-panel::before,
+.tp-alert-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 180, 255, 0.02) 2px,
+      rgba(0, 180, 255, 0.02) 4px);
+}
+
+.tp-panel > *,
+.tp-line-search > *,
+.tp-layer-panel > *,
+.tp-impact-panel > *,
+.tp-alert-banner > * { position: relative; z-index: 1; }
+
+/* The timeline scrolls: a scanline pinned to the panel must not scroll with it,
+   and an overflow:hidden timeline would kill its own scrollbar. */
+.tp-timeline { overflow: hidden; }
+.tp-timeline::before { display: none; }
 
 /* ---------- error boundary fallback ---------- */
 
@@ -102,15 +337,15 @@ html, body, #root {
   margin: 8px;
   padding: 8px 10px;
   max-width: 240px;
-  border: 1px solid #f59e0b;
-  border-radius: 8px;
+  border: 1px solid var(--gs-neon-amber);
+  border-radius: 4px;
   background: var(--app-panel);
   color: var(--app-text);
   font-size: 11px;
   letter-spacing: 0.02em;
 }
 
-.panel-error strong { font-size: 11px; text-transform: uppercase; color: #f59e0b; }
+.panel-error strong { font-size: 11px; text-transform: uppercase; color: var(--gs-neon-amber); }
 
 /* ---------- data-source chip ---------- */
 
@@ -118,13 +353,15 @@ html, body, #root {
   position: absolute;
   bottom: 6px;
   left: 16px;
-  padding: 3px 8px;
+  padding: 4px 9px;
   border: 1px solid var(--app-border);
-  border-radius: 999px;
+  border-radius: 4px;
   background: var(--app-panel);
-  color: #8a99a8;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--gs-text-dim);
   font-size: 10px;
-  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
-  letter-spacing: 0.06em;
+  font-family: var(--gs-font-mono);
+  letter-spacing: 0.08em;
   z-index: 45;
 }

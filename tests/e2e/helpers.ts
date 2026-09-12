@@ -21,15 +21,63 @@ const ALLOWLIST_PATTERNS: RegExp[] = [
   /Download the React DevTools/i,
 ];
 
+/**
+ * Chromium logs a *generic*, URL-less "Failed to load resource: the server
+ * responded with a status of NNN" console error for every failed HTTP
+ * request, so we can't tell from the message text alone whether a given
+ * occurrence is one of the two confirmed-benign sources below or a real
+ * broken asset. We instead count matching network-level failures via
+ * page.on('response')/'requestfailed' and only forgive that many generic
+ * messages - anything beyond that budget still fails the run.
+ *
+ * Confirmed via a standalone debug run (see QA-E2E final report) - not
+ * guessed:
+ *   1. GET /mock/peopleflow.json and /fallback/peopleflow.json - 404 by
+ *      design. web/src/lib/api.ts's probePeopleFlow() deliberately probes
+ *      both paths and treats "not found" as "layer unavailable"; there is no
+ *      peopleflow data file in this build (contracts/AGENT-BRIEF.md: "we do
+ *      not claim live-ness we do not have").
+ *   2. GET https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png
+ *      at low zoom (z=0,1) - the external GSI flood-hazard tile server has no
+ *      whole-world overview tiles (Japan-only, higher-zoom coverage only).
+ *      Cesium's imagery LOD pyramid requests low-zoom tiles first; they 404,
+ *      the tile is just left transparent, and real coverage appears once
+ *      zoomed to city level. Harmless.
+ */
+// Two distinct generic, URL-less console.error shapes Chromium emits for a
+// failed request: a real HTTP error status, and a request that never got a
+// response at all (aborted, DNS failure, etc - what page.route(...).abort()
+// itself produces in tests 13/14, which is our own deliberate fault
+// injection, not an app bug).
+const GENERIC_HTTP_FAIL_RE = /^Failed to load resource: the server responded with a status of \d+/;
+const GENERIC_NET_FAIL_RE = /^Failed to load resource: net::/;
+const BENIGN_NETWORK_URL_PATTERNS: RegExp[] = [
+  /\/mock\/peopleflow\.json(\?|$)/,
+  /\/fallback\/peopleflow\.json(\?|$)/,
+  /disaportaldata\.gsi\.go\.jp\/raster\//,
+];
+
 export interface ConsoleCapture {
   errors: string[];
   pageErrors: string[];
   all: { type: string; text: string }[];
+  /** Count of >=400 responses / failed requests matched against the benign patterns for this capture. */
+  benignNetworkFailures: number;
+  /** Every >=400 response / failed request URL seen, for debugging a real failure. */
+  networkFailures: string[];
 }
 
-/** Attach console + pageerror listeners. Call before navigation. */
-export function captureConsole(page: Page): ConsoleCapture {
-  const capture: ConsoleCapture = { errors: [], pageErrors: [], all: [] };
+/**
+ * Attach console + pageerror + network-failure listeners. Call before navigation.
+ *
+ * @param extraBenignUrlPatterns Additional URL patterns to treat as expected
+ *   network failures for THIS test only - use this for a test's own
+ *   deliberate fault injection (e.g. resilience.spec.ts aborting
+ *   http://localhost:8000/** on purpose), never to paper over a real one.
+ */
+export function captureConsole(page: Page, extraBenignUrlPatterns: RegExp[] = []): ConsoleCapture {
+  const capture: ConsoleCapture = { errors: [], pageErrors: [], all: [], benignNetworkFailures: 0, networkFailures: [] };
+  const benignPatterns = [...BENIGN_NETWORK_URL_PATTERNS, ...extraBenignUrlPatterns];
   page.on('console', (msg: ConsoleMessage) => {
     capture.all.push({ type: msg.type(), text: msg.text() });
     if (msg.type() === 'error') {
@@ -42,15 +90,40 @@ export function captureConsole(page: Page): ConsoleCapture {
   page.on('pageerror', (err) => {
     capture.pageErrors.push(err.message + (err.stack ? `\n${err.stack}` : ''));
   });
+  const noteNetworkFailure = (url: string) => {
+    capture.networkFailures.push(url);
+    if (benignPatterns.some((re) => re.test(url))) capture.benignNetworkFailures += 1;
+  };
+  page.on('response', (res) => {
+    if (res.status() >= 400) noteNetworkFailure(res.url());
+  });
+  page.on('requestfailed', (req) => {
+    noteNetworkFailure(req.url());
+  });
   return capture;
 }
 
-/** Fails (throws) if any non-allowlisted console error or pageerror fired. */
+/**
+ * Fails (throws) if any non-allowlisted console error or pageerror fired.
+ * Generic "Failed to load resource" errors (HTTP-status or net::ERR_* shaped)
+ * are forgiven up to the number of confirmed-benign network failures observed
+ * (see BENIGN_NETWORK_URL_PATTERNS / captureConsole's extraBenignUrlPatterns) -
+ * any beyond that budget, or any other error, still fails.
+ */
 export function assertNoConsoleErrors(capture: ConsoleCapture) {
-  const problems = [...capture.pageErrors, ...capture.errors];
+  let genericBudget = capture.benignNetworkFailures;
+  const problems: string[] = [...capture.pageErrors];
+  for (const e of capture.errors) {
+    if ((GENERIC_HTTP_FAIL_RE.test(e) || GENERIC_NET_FAIL_RE.test(e)) && genericBudget > 0) {
+      genericBudget -= 1;
+      continue;
+    }
+    problems.push(e);
+  }
   if (problems.length) {
     throw new Error(
-      `Unexpected console/page errors (${problems.length}):\n` + problems.map((p, i) => `  [${i}] ${p}`).join('\n'),
+      `Unexpected console/page errors (${problems.length}):\n${problems.map((p, i) => `  [${i}] ${p}`).join('\n')}\n` +
+        `(network failures seen: ${capture.networkFailures.join(', ') || 'none'})`,
     );
   }
 }
