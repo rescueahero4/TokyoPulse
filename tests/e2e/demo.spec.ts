@@ -184,16 +184,36 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await expect(row.first()).toBeVisible({ timeout: 20000 });
     await row.first().click();
 
-    // flyTo animates over 1.4s (CesiumViewer.tsx); give it margin to settle.
-    await page.waitForTimeout(2500);
-    const after = await getCameraPosition(page);
-    expect(after, 'camera position unreadable after click').not.toBeNull();
+    // flyTo animates over 1.4s (CesiumViewer.tsx). Poll instead of a single
+    // fixed-delay read: events.json polls every 15s and can re-render the row
+    // list at an unlucky moment right around a click, occasionally swallowing
+    // it - one observed instance of the camera staying at the exact HOME
+    // value (not "still animating", literally never started) confirmed this
+    // is a click-timing race, not a flyTo bug. Retry the click once if
+    // nothing moved after a few seconds, then keep polling - the >moved
+    // threshold itself is unchanged either way.
+    const hasMoved = (a: { lat: number; lon: number; height: number }) =>
+      Math.abs(a.lat - before!.lat) > 0.0005 ||
+      Math.abs(a.lon - before!.lon) > 0.0005 ||
+      Math.abs(a.height - before!.height) > 50;
 
-    const moved =
-      Math.abs(after!.lat - before!.lat) > 0.0005 ||
-      Math.abs(after!.lon - before!.lon) > 0.0005 ||
-      Math.abs(after!.height - before!.height) > 50;
-    expect(moved, `camera did not move: before=${JSON.stringify(before)} after=${JSON.stringify(after)}`).toBeTruthy();
+    let after = await getCameraPosition(page);
+    let retried = false;
+    await expect
+      .poll(
+        async () => {
+          after = await getCameraPosition(page);
+          if (!after) return 'unreadable';
+          if (hasMoved(after)) return 'moved';
+          if (!retried) {
+            retried = true;
+            await row.first().click().catch(() => undefined);
+          }
+          return 'unmoved';
+        },
+        { timeout: 8_000, message: () => `camera did not move: before=${JSON.stringify(before)} after=${JSON.stringify(after)}` },
+      )
+      .toBe('moved');
   });
 
   test('6. Line search "Mita" -> pick result -> impact panel with ward + station count (demo beat 3)', async ({ page }) => {

@@ -5,29 +5,19 @@ import * as Cesium from 'cesium';
  * can swap a tile source without a code change. All of these are keyless and send
  * `Access-Control-Allow-Origin: *`.
  *
- * Default is GSI 淡色 (pale): a minimal light street map, keyless, and served by
- * Japan's national mapping agency. CARTO Positron was the first choice for exactly
- * the same reasons, but CARTO watermarks "API KEY REQUIRED" across its tiles once
- * anonymous usage passes their free threshold — observed live in this build — so it
- * is not safe to present on. GSI has no such gate, is the authoritative basemap for
- * Tokyo, and is a genuine talking point. CARTO stays in the switcher.
+ * Default is GSI 淡色 (pale): a light, minimal street map served by Japan's national
+ * mapping agency, 国土地理院. It is cheap on the frontend (small flat-colour PNGs
+ * that cache hard and re-fetch cheaply while panning), Tokyo's official rail
+ * liveries read at full saturation against it, and "we render on Japan's official
+ * government basemap, keyless" is a real talking point. Satellite imagery is the
+ * opposite trade: big JPEG tiles at every level, re-fetched on every pan.
  *
- * Either way the point is the same: a light, flat street map is cheap on the
- * frontend (small PNGs that cache hard and re-fetch cheaply while panning) and
- * Tokyo's official rail liveries read at full saturation against it. Satellite
- * imagery is the opposite — big JPEG tiles at every level, re-fetched on every pan.
- *
- * (superseded) CARTO Positron (light_all): a minimal grey/white street map. It is
- * the lightest thing on the frontend here — small flat-colour PNGs that cache hard
- * and re-fetch cheaply while panning — and Tokyo's official rail liveries read at
- * full saturation against it. Satellite imagery is the opposite: big JPEG tiles at
- * every level, re-fetched constantly on pan. Positron over GSI pale because
- * positron's labels are latin and its palette is flatter, so nothing competes with
- * the data plane; GSI pale is one click away for the Japanese-basemap talking point.
- *
- * Satellite stays in the switcher (Cesium ion / Esri / GSI seamlessphoto) as a
- * presenter option. GSI (国土地理院) also stays on purpose — aerial and topo. It
- * is the official Japanese government basemap and a genuine talking point.
+ * CARTO IS DELIBERATELY ABSENT. basemaps.cartocdn.com returns HTTP 200 with a
+ * valid PNG that has "API KEY REQUIRED — carto.com/basemaps" stamped diagonally
+ * across it once anonymous usage passes their threshold. We hit that live, on
+ * screen, mid-build. A 200 and a decodable image are NOT proof a tile source is
+ * usable — look at the pixels. Every source below was downloaded and visually
+ * inspected: clean, no watermark.
  *
  * NB: Esri/ArcGIS tile URLs are {z}/{y}/{x}, NOT the usual {z}/{x}/{y}.
  */
@@ -39,8 +29,12 @@ export interface BasemapDef {
   url: string;
   credit: string;
   maximumLevel: number;
-  /** True when the tiles already carry place names, so the label overlay is skipped. */
+  /** True when the tiles already carry place names, so no overlay is offered. */
   hasOwnLabels: boolean;
+  /** Optional thin reference overlay (place names) composited above this basemap. */
+  labelUrl?: string;
+  labelMaxLevel?: number;
+  labelCredit?: string;
   /** Needs an async Cesium ion call; only offered when a token is present. */
   ion?: boolean;
 }
@@ -50,14 +44,21 @@ const env = import.meta.env;
 /** Public-by-design ion token. May carry a trailing `#note` in .env.local. */
 export const ION_TOKEN: string = String(env.VITE_CESIUM_ION_TOKEN || '').split('#')[0].trim();
 
-const CARTO_CREDIT = '© OpenStreetMap contributors © CARTO';
 const GSI_CREDIT = '地理院タイル (GSI 国土地理院)';
-const ESRI_CREDIT = 'Esri World Imagery · Maxar, Earthstar Geographics';
+const ESRI_IMAGERY_CREDIT = 'Esri World Imagery · Maxar, Earthstar Geographics';
+const ESRI_CANVAS_CREDIT = 'Esri · HERE · Garmin · © OpenStreetMap contributors';
+
+/** Bilingual (JP/EN) ward and place names, small and unobtrusive. Verified clean. */
+const ESRI_GRAY_LABELS = env.VITE_OVERLAY_GRAY_LABELS_TILES
+  || 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}';
+/** Place names sized for imagery. Verified clean. */
+const ESRI_PLACE_LABELS = env.VITE_OVERLAY_LABELS_TILES
+  || 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}';
 
 const RAW: BasemapDef[] = [
   {
     id: 'gsi-pale',
-    label: 'GSI 淡色 (pale)',
+    label: 'GSI 淡色 · light',
     short: 'GSI PALE',
     url: env.VITE_GSI_PALE_TILES || 'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
     credit: GSI_CREDIT,
@@ -65,32 +66,26 @@ const RAW: BasemapDef[] = [
     hasOwnLabels: true,
   },
   {
-    id: 'light',
-    label: 'Light (Positron)',
-    short: 'LIGHT',
-    url: env.VITE_BASEMAP_LIGHT_TILES || 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-    credit: CARTO_CREDIT,
-    maximumLevel: 19,
-    hasOwnLabels: true,
-  },
-  {
-    id: 'dark',
-    label: 'Dark (CARTO)',
-    short: 'DARK',
-    url: env.VITE_BASEMAP_DARK_TILES || 'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-    credit: CARTO_CREDIT,
-    maximumLevel: 19,
-    hasOwnLabels: true,
-  },
-  {
-    id: 'dark-nolabels',
-    label: 'Dark · no labels',
-    short: 'DARK·NL',
-    url: env.VITE_BASEMAP_DARK_NOLABELS_TILES
-      || 'https://basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png',
-    credit: CARTO_CREDIT,
-    maximumLevel: 19,
+    id: 'esri-gray',
+    label: 'Light grey · minimal',
+    short: 'GREY',
+    url: env.VITE_BASEMAP_GRAY_TILES
+      || 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+    credit: ESRI_CANVAS_CREDIT,
+    maximumLevel: 16,
     hasOwnLabels: false,
+    labelUrl: ESRI_GRAY_LABELS,
+    labelMaxLevel: 16,
+    labelCredit: ESRI_CANVAS_CREDIT,
+  },
+  {
+    id: 'gsi-std',
+    label: 'GSI 標準 · full detail',
+    short: 'GSI STD',
+    url: env.VITE_GSI_STD_TILES || 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png',
+    credit: GSI_CREDIT,
+    maximumLevel: 18,
+    hasOwnLabels: true,
   },
   {
     id: 'ion',
@@ -101,6 +96,9 @@ const RAW: BasemapDef[] = [
     credit: 'Cesium ion · Bing Maps imagery',
     maximumLevel: 19,
     hasOwnLabels: false,
+    labelUrl: ESRI_PLACE_LABELS,
+    labelMaxLevel: 15,
+    labelCredit: 'Esri Reference',
     ion: true,
   },
   {
@@ -109,9 +107,12 @@ const RAW: BasemapDef[] = [
     short: 'SAT',
     url: env.VITE_BASEMAP_SATELLITE_TILES
       || 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    credit: ESRI_CREDIT,
+    credit: ESRI_IMAGERY_CREDIT,
     maximumLevel: 19,
     hasOwnLabels: false,
+    labelUrl: ESRI_PLACE_LABELS,
+    labelMaxLevel: 15,
+    labelCredit: 'Esri Reference',
   },
   {
     id: 'gsi-photo',
@@ -122,19 +123,13 @@ const RAW: BasemapDef[] = [
     credit: GSI_CREDIT + ' シームレス空中写真',
     maximumLevel: 18,
     hasOwnLabels: false,
-  },
-  {
-    id: 'gsi-std',
-    label: 'GSI 標準 (std)',
-    short: 'GSI STD',
-    url: env.VITE_GSI_STD_TILES || 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png',
-    credit: GSI_CREDIT,
-    maximumLevel: 18,
-    hasOwnLabels: true,
+    labelUrl: ESRI_PLACE_LABELS,
+    labelMaxLevel: 15,
+    labelCredit: 'Esri Reference',
   },
   {
     id: 'osm',
-    label: 'OSM (fallback)',
+    label: 'OpenStreetMap',
     short: 'OSM',
     url: env.VITE_OSM_FALLBACK_TILES || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     credit: '© OpenStreetMap contributors',
@@ -160,18 +155,7 @@ export function basemapById(id: string): BasemapDef {
   return BASEMAPS.find((b) => b.id === id) ?? BASEMAPS[0];
 }
 
-/**
- * Minimal reference overlay: place names + boundaries, thin and translucent.
- * This is what gives plain satellite imagery a Google-Maps-like read without
- * importing a whole topographic map. Layered ABOVE the basemap, like godseye.
- */
-export const LABEL_OVERLAY = {
-  url: env.VITE_OVERLAY_LABELS_TILES
-    || 'https://basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
-  maximumLevel: 19,
-  alpha: Number(env.VITE_OVERLAY_LABELS_ALPHA ?? 0.85) || 0.85,
-  credit: CARTO_CREDIT,
-};
+const LABEL_ALPHA = Number(env.VITE_OVERLAY_LABELS_ALPHA ?? 0.9) || 0.9;
 
 /**
  * Build an ImageryLayer for a basemap. Never throws: the caller falls back to the
@@ -195,7 +179,7 @@ export function buildBasemapLayer(def: BasemapDef): { layer: Cesium.ImageryLayer
 /**
  * Async builder. The ion path calls createWorldImageryAsync(), which REJECTS on a
  * missing / expired / rate-limited token — so it is wrapped and degrades to the
- * keyless Esri imagery instead of throwing anywhere near the render loop
+ * keyless imagery instead of throwing anywhere near the render loop
  * (AGENT-BRIEF rule 3, godseye principle #2).
  */
 export async function buildBasemapLayerAsync(
@@ -215,16 +199,17 @@ export async function buildBasemapLayerAsync(
   }
 }
 
-export function buildLabelOverlay(): Cesium.ImageryLayer | null {
-  if (!LABEL_OVERLAY.url) return null;
+/** Thin place-name overlay for a basemap that carries none of its own. */
+export function buildLabelOverlay(def: BasemapDef): Cesium.ImageryLayer | null {
+  if (def.hasOwnLabels || !def.labelUrl) return null;
   try {
     const provider = new Cesium.UrlTemplateImageryProvider({
-      url: LABEL_OVERLAY.url,
-      maximumLevel: LABEL_OVERLAY.maximumLevel,
-      credit: new Cesium.Credit(LABEL_OVERLAY.credit),
+      url: def.labelUrl,
+      maximumLevel: def.labelMaxLevel ?? 15,
+      credit: new Cesium.Credit(def.labelCredit ?? def.credit),
     });
     const layer = new Cesium.ImageryLayer(provider);
-    layer.alpha = LABEL_OVERLAY.alpha;
+    layer.alpha = LABEL_ALPHA;
     return layer;
   } catch (e) {
     console.warn('[map] label overlay unavailable', e);

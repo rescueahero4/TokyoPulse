@@ -37,12 +37,15 @@ const ALLOWLIST_PATTERNS: RegExp[] = [
  *      both paths and treats "not found" as "layer unavailable"; there is no
  *      peopleflow data file in this build (contracts/AGENT-BRIEF.md: "we do
  *      not claim live-ness we do not have").
- *   2. GET https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png
- *      at low zoom (z=0,1) - the external GSI flood-hazard tile server has no
- *      whole-world overview tiles (Japan-only, higher-zoom coverage only).
- *      Cesium's imagery LOD pyramid requests low-zoom tiles first; they 404,
- *      the tile is just left transparent, and real coverage appears once
- *      zoomed to city level. Harmless.
+ *   2. GET https://disaportaldata.gsi.go.jp/raster/.../{z}/{x}/{y}.png (flood
+ *      hazard overlay) and https://cyberjapandata.gsi.go.jp/xyz/.../{z}/{x}/{y}.png
+ *      (std/pale basemap tiles) at low zoom (z=0,1) - GSI's tile servers are
+ *      Japan-only, higher-zoom-only rasters with no whole-world overview
+ *      tiles. Cesium's imagery LOD pyramid requests low-zoom tiles first;
+ *      they 404, the tile is just left transparent, and real coverage
+ *      appears once zoomed to city level. Harmless, and confirmed for two
+ *      independent GSI tile sets (flood + pale basemap) via standalone debug
+ *      runs, not guessed.
  */
 // Two distinct generic, URL-less console.error shapes Chromium emits for a
 // failed request: a real HTTP error status, and a request that never got a
@@ -55,6 +58,7 @@ const BENIGN_NETWORK_URL_PATTERNS: RegExp[] = [
   /\/mock\/peopleflow\.json(\?|$)/,
   /\/fallback\/peopleflow\.json(\?|$)/,
   /disaportaldata\.gsi\.go\.jp\/raster\//,
+  /cyberjapandata\.gsi\.go\.jp\/xyz\//,
 ];
 
 export interface ConsoleCapture {

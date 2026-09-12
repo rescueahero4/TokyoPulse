@@ -72,7 +72,10 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   const baseLayerRef = useRef<Cesium.ImageryLayer | null>(null);
   const labelLayerRef = useRef<Cesium.ImageryLayer | null>(null);
   const appliedBasemapRef = useRef<string>('');
+  const labelSrcRef = useRef<string>('');
   const linesRef = useRef<LineCollection | null>(null);
+  /** Kept fresh every render: the once-registered pick handler reads it instead of `props`. */
+  const onLinePickRef = useRef<CesiumViewerProps['onLinePick']>(undefined);
   const [fatal, setFatal] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [basemapId, setBasemapId] = useState<string>(initialBasemapId);
@@ -83,6 +86,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   const statsRef = useRef<Record<string, number>>({});
 
   linesRef.current = props.lines;
+  onLinePickRef.current = props.onLinePick;
 
   useImperativeHandle(ref, () => ({
     flyTo(lat: number, lon: number, height = 9000) {
@@ -249,15 +253,31 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     // Cesium re-request its imagery, so we add/remove the layer instead.
 
     // Click a rail polyline to select the line.
+    // Two things this has to get right:
+    //  1. The handler is registered once, so it must NOT close over `props` — that
+    //     captures the mount-time callback and silently stops working.
+    //     onLinePickRef is refreshed every render instead.
+    //  2. drillPick, not pick: station markers sit above the lines with
+    //     disableDepthTestDistance, so a plain pick loses a click that visually
+    //     landed on a line. Drill through and take the first line we find.
     try {
       const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
       handler.setInputAction((click: { position: Cesium.Cartesian2 }) => {
-        const picked = viewer.scene.pick(click.position);
-        const entity = picked && (picked.id as Cesium.Entity | undefined);
-        const kind = entity?.properties?.kind?.getValue?.(Cesium.JulianDate.now());
-        if (kind === 'line') {
-          const lineId = entity?.properties?.lineId?.getValue?.(Cesium.JulianDate.now());
-          if (lineId && props.onLinePick) props.onLinePick(String(lineId));
+        try {
+          const now = Cesium.JulianDate.now();
+          const picks = viewer.scene.drillPick(click.position, 8, 12, 12) || [];
+          for (const p of picks) {
+            const entity = p && (p.id as Cesium.Entity | undefined);
+            const kind = entity?.properties?.kind?.getValue?.(now);
+            if (kind !== 'line') continue;
+            const lineId = entity?.properties?.lineId?.getValue?.(now);
+            if (lineId) {
+              onLinePickRef.current?.(String(lineId));
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn('[map] line pick failed', err);
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     } catch (e) {
@@ -332,19 +352,26 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     if (!ready) return;
     const viewer = viewerRef.current;
     if (!viewer) return;
-    const want = labelsOn && !basemapById(basemapId).hasOwnLabels;
+    const def = basemapById(basemapId);
+    const want = labelsOn && !def.hasOwnLabels && !!def.labelUrl;
     try { window.localStorage.setItem(LABELS_STORAGE_KEY, labelsOn ? '1' : '0'); } catch { /* ignore */ }
     try {
+      // Different basemaps want different label tiles (ward-scale over the grey
+      // canvas, place-scale over imagery), so a stale overlay is torn down too.
+      const wantSrc = want ? String(def.labelUrl) : '';
+      if (labelLayerRef.current && labelSrcRef.current !== wantSrc) {
+        viewer.imageryLayers.remove(labelLayerRef.current, true);
+        labelLayerRef.current = null;
+        labelSrcRef.current = '';
+      }
       if (want && !labelLayerRef.current) {
-        const layer = buildLabelOverlay();
+        const layer = buildLabelOverlay(def);
         if (layer) {
           // index 1 = directly above the basemap, below the flood raster.
           viewer.imageryLayers.add(layer, 1);
           labelLayerRef.current = layer;
+          labelSrcRef.current = wantSrc;
         }
-      } else if (!want && labelLayerRef.current) {
-        viewer.imageryLayers.remove(labelLayerRef.current, true);
-        labelLayerRef.current = null;
       }
       viewer.scene.requestRender();
     } catch (e) {
