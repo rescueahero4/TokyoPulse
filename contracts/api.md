@@ -91,9 +91,17 @@ Past 48h + next 48h, Open-Meteo, hourly. Single flat array; `isPast` marks the s
   "nowIndex": 48,                       // index into hourly[] of the current hour
   "hourly": [{ "time": "2026-09-10T14:00+09:00", "temperature": 27.4, "precipitation": 0.0, "isPast": true }],
   "summary": { "maxPrecip24h": 12.5, "minTemp": 21.1, "maxTemp": 31.2, "rainHoursNext48": 7 },
+  "sourceUrl": "https://api.open-meteo.com/v1/forecast?latitude=35.68&...",
+  "sourceName": "Open-Meteo",
+  "attribution": "Weather data by Open-Meteo.com (CC BY 4.0)",
   "meta": {...}
 }
 ```
+**AMENDED post-freeze (orchestrator broadcast):** `sourceUrl`, `sourceName` and `attribution` added so the
+UI can link users to the exact upstream query and let them verify the numbers themselves. Additive only —
+existing consumers are unaffected. `sourceUrl` MUST be the real request URL actually used (not a homepage),
+so clicking it returns the same data we rendered. When serving from cache/mock, still return the URL that
+produced the cached payload and let `meta.degraded` convey the staleness.
 
 ## GET /brief
 ```jsonc
