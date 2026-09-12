@@ -82,12 +82,12 @@ function freshness(meta: Meta | null | undefined): string {
   return bits.join(' · ');
 }
 
-function SourceFooter(p: { text: string; meta?: Meta | null; note?: string }): JSX.Element {
+function SourceFooter(p: { text: string; meta?: Meta | null; note?: string; fresh?: string }): JSX.Element {
   return (
     <div className="tp-insp-source">
       <div className="tp-insp-source-head">
         <span className="tp-insp-source-label">Source</span>
-        <span className="tp-insp-source-fresh">{freshness(p.meta)}</span>
+        <span className="tp-insp-source-fresh">{p.fresh ?? freshness(p.meta)}</span>
       </div>
       <div className="tp-insp-source-text">{p.text}</div>
       {p.note ? <div className="tp-insp-source-note">{p.note}</div> : null}
@@ -376,6 +376,7 @@ export function InspectorPanel(p: {
     footer = (
       <SourceFooter
         text="GSI 国土地理院 flood hazard tiles (01_flood_l2_shinsuishin_data)"
+        fresh="STATIC TILES · no timestamp"
         note="STATIC hazard map. Station flood-zone flags elsewhere in this HUD are derived from the same dataset."
       />
     );

@@ -400,8 +400,8 @@
 .tp-alert-banner {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 16px;
+  gap: 6px;
+  padding: 9px 10px 9px 16px;
   border-radius: 4px;
   border: 1px solid var(--tp-border);
   background: var(--tp-bg);
@@ -410,9 +410,78 @@
   color: var(--tp-text);
   font-family: var(--tp-font);
   font-size: 14px;
-  cursor: pointer;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  max-width: 640px;
+  max-width: 680px;
+}
+
+/* The banner body is the click target for fly-to; the × is a sibling button so
+   dismissing never triggers a camera move (nested buttons are invalid HTML). */
+.tp-alert-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tp-alert-dismiss {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: 1px solid var(--tp-border);
+  border-radius: 3px;
+  color: var(--tp-text-muted);
+  font-family: var(--tp-font);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tp-alert-dismiss:hover {
+  color: var(--tp-critical);
+  border-color: var(--tp-critical);
+  box-shadow: 0 0 8px rgba(255, 51, 51, 0.3);
+}
+
+/* Shown only when every qualifying alert has been dismissed. */
+.tp-alert-restore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--tp-border);
+  background: var(--tp-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--tp-text-muted);
+  font-family: var(--tp-font);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tp-alert-restore:hover {
+  border-color: var(--tp-accent);
+  color: var(--tp-text);
+}
+
+.tp-alert-restore-cta {
+  color: var(--tp-accent);
+  border-left: 1px solid var(--tp-border);
+  padding-left: 8px;
 }
 
 .tp-alert-banner.tp-severity-warning { border-color: var(--tp-warning); box-shadow: 0 0 12px rgba(255, 170, 0, 0.18), 0 4px 24px rgba(0, 0, 0, 0.5); }
@@ -1139,6 +1208,19 @@
   flex-direction: column;
   box-shadow: 0 0 0 1px rgba(0, 180, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.6);
 }
+
+/* Entity titles (a JA epicentre name, a long advisory) must not be truncated to
+   an ellipsis here — this card IS the explanation. Let the header wrap and put
+   the kind label on its own line. */
+.tp-inspector .tp-panel-heading { flex-wrap: wrap; }
+.tp-inspector .tp-panel-title {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.4;
+}
+.tp-inspector .tp-panel-sub { flex-basis: 100%; overflow: visible; white-space: normal; }
+.tp-inspector .tp-chevron { align-self: flex-start; margin-top: 2px; }
 
 .tp-insp-body {
   overflow-y: auto;

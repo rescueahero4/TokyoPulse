@@ -51,24 +51,38 @@ function resolvePick(viewer: Cesium.Viewer, position: Cesium.Cartesian2): MapPic
     picks = [];
   }
 
-  for (const raw of picks) {
-    const entity = (raw as { id?: Cesium.Entity } | undefined)?.id;
-    const props = entity?.properties;
-    if (!props) continue;
-    const kind = props.kind?.getValue?.(now);
-    // The rail "casing" entities deliberately carry no kind, so they can never
-    // win a pick over the line they sit under.
-    if (kind === 'station') {
-      const stationId = props.stationId?.getValue?.(now);
-      if (stationId) return { kind: 'station', stationId: String(stationId) };
-    }
-    if (kind === 'event') {
-      const eventId = props.eventId?.getValue?.(now);
-      if (eventId) return { kind: 'event', eventId: String(eventId) };
-    }
-    if (kind === 'line') {
-      const lineId = props.lineId?.getValue?.(now);
-      if (lineId) return { kind: 'line', lineId: String(lineId) };
+  // Two passes, deliberately. Point markers (stations, quakes, warnings) are
+  // drawn ON TOP of the rail polylines with disableDepthTestDistance, but
+  // drillPick does not always return them first — at Hakusan the Mita Line
+  // polyline came back ahead of the station dot sitting on it. Whatever is
+  // visually on top is what the user meant to click, so markers win pass 1 and
+  // lines are the pass-2 fallback. A click on bare track still resolves to the
+  // line, and A6's own handler keeps opening the Impact panel either way.
+  const markerKinds = new Set(['station', 'event']);
+
+  for (const pass of [1, 2]) {
+    for (const raw of picks) {
+      const entity = (raw as { id?: Cesium.Entity } | undefined)?.id;
+      const props = entity?.properties;
+      if (!props) continue;
+      const kind = props.kind?.getValue?.(now);
+      // The rail "casing" entities deliberately carry no kind, so they can never
+      // win a pick over the line they sit under.
+      if (pass === 1 && !markerKinds.has(String(kind))) continue;
+      if (pass === 2 && kind !== 'line') continue;
+
+      if (kind === 'station') {
+        const stationId = props.stationId?.getValue?.(now);
+        if (stationId) return { kind: 'station', stationId: String(stationId) };
+      }
+      if (kind === 'event') {
+        const eventId = props.eventId?.getValue?.(now);
+        if (eventId) return { kind: 'event', eventId: String(eventId) };
+      }
+      if (kind === 'line') {
+        const lineId = props.lineId?.getValue?.(now);
+        if (lineId) return { kind: 'line', lineId: String(lineId) };
+      }
     }
   }
 
