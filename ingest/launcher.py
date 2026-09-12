@@ -236,17 +236,21 @@ def _sandbox_files(fd: dict[str, Any]) -> list[tuple[Path, str]]:
 
 
 def _create_one_sandbox(daytona: Any, fd: dict[str, Any], env_vars: dict[str, str]) -> dict[str, Any]:
+    import uuid
+
     from daytona import CreateSandboxFromSnapshotParams
 
     snapshot = get_env("DAYTONA_SNAPSHOT") or None
+    unique = uuid.uuid4().hex[:8]
     t0 = time.monotonic()
     try:
         sandbox = daytona.create(
             CreateSandboxFromSnapshotParams(
-                name=f"tokyopulse-{fd['feed']}",
+                name=f"tokyopulse-{fd['feed']}-{unique}",
                 snapshot=snapshot,
                 env_vars=env_vars,
                 labels={"project": "tokyopulse", "feed": fd["feed"]},
+                auto_stop_interval=0,
             ),
             timeout=90,
         )
@@ -410,11 +414,19 @@ def _push_bootstrap_one(daytona: Any, fd: dict[str, Any]) -> Optional[dict[str, 
     secrets, no pip install -- normalize() is pure stdlib."""
     t0 = time.monotonic()
     try:
+        import uuid
+
         from daytona import CreateSandboxFromSnapshotParams
 
+        # Unique per bootstrap call (not just per feed): a sandbox orphaned by
+        # an abrupt kill (process killed before its teardown ran) or a delete()
+        # that hasn't finished propagating yet must NEVER block a fresh
+        # create() with a "name already exists" error -- that collision is
+        # exactly what silently degraded a real push run to --local earlier.
+        unique = uuid.uuid4().hex[:8]
         sandbox = daytona.create(
             CreateSandboxFromSnapshotParams(
-                name=f"tokyopulse-{fd['feed']}-normalize",
+                name=f"tokyopulse-{fd['feed']}-normalize-{unique}",
                 snapshot=get_env("DAYTONA_SNAPSHOT") or None,
                 labels={"project": "tokyopulse", "feed": fd["feed"], "role": "normalize"},
                 # 0 = never idle-auto-stop. Prevents the SANDBOX_NOT_RUNNING
@@ -439,9 +451,16 @@ def _push_bootstrap_one(daytona: Any, fd: dict[str, Any]) -> Optional[dict[str, 
             (ROOT / "ingest" / "sink.py", f"{root}/tokyopulse/ingest/sink.py"),
             (ROOT / "ingest" / "feeds" / "__init__.py", f"{root}/tokyopulse/ingest/feeds/__init__.py"),
             (ROOT / "ingest" / "feeds" / fd["filename"], f"{root}/tokyopulse/ingest/feeds/{fd['filename']}"),
+            # Always upload both CSVs: common.py's odpt_railway_to_line_id/
+            # line_id_to_name/ward_centroid are shared helpers any feed's
+            # normalize() may call (warnings.py started calling
+            # ward_centroid() -> load_wards_csv() after this was written,
+            # which is exactly the kind of cross-feed dependency that's too
+            # easy to miss one-by-one -- uploading both unconditionally is
+            # two small CSV files, cheap insurance against the next one).
+            (ROOT / "contracts" / "lines.csv", f"{root}/tokyopulse/contracts/lines.csv"),
+            (ROOT / "contracts" / "wards.csv", f"{root}/tokyopulse/contracts/wards.csv"),
         ]
-        if fd["feed"] in ("odpt", "jreast"):  # both join against contracts/lines.csv
-            uploads.append((ROOT / "contracts" / "lines.csv", f"{root}/tokyopulse/contracts/lines.csv"))
         for local_path, remote_path in uploads:
             sandbox.fs.upload_file(str(local_path), remote_path)
     except Exception as e:

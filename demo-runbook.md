@@ -180,3 +180,23 @@ Reset between rehearsals: `curl -X POST http://127.0.0.1:8000/demo/reset` (delet
   chip, and Weather / Flood / Buses / People-flow layers are OFF. That is the clean opening view —
   expand deliberately as you narrate, do not pre-expand everything.
 - **Fire the reset before you start:** `curl -X POST http://127.0.0.1:8000/demo/reset`.
+
+### The one failure that is SILENT — read this
+
+The ingest launcher can die without any error appearing anywhere. It was observed being reaped by the
+agent harness about an hour after starting, with no crash and no traceback — `launcher.log` simply stops.
+`ingest/state/sandboxes.json` is written BY the launcher, so a dead launcher leaves a **stale but
+perfectly healthy-looking file**, and the "5 Daytona sandboxes" badge keeps showing green while nothing
+is ingesting.
+
+**Run the launcher from your OWN terminal before the demo, not from an agent session:**
+```
+.venv\Scripts\python.exe -m ingest.launcher
+```
+Leave that window open. Then the 60-second pre-flight check is:
+```
+tail -3 ingest/state/launcher.log      # timestamps must be within the last minute
+curl http://127.0.0.1:8000/health      # ok:true, neo4j:up
+```
+If the log is stale, restart the launcher — it recreates all 5 sandboxes in ~1.5s each and self-heals
+from there.
