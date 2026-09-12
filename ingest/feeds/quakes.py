@@ -31,6 +31,12 @@ log = get_logger("ingest.quakes")
 
 QUAKE_CODE = 551
 
+# Human request (provenance links): point each quake Event at a page a viewer
+# can open to verify it themselves. P2PQuake has no public per-event page, so
+# we link the service's own site rather than the raw JSON history endpoint —
+# contracts/feeds.json pins both; the site is the human-readable one.
+SOURCE_URL = "https://www.p2pquake.net/"
+
 
 def _parse_p2p_time(raw: Optional[str]) -> str:
     """P2PQuake times look like '2026/09/11 20:42:08.524', naive, Asia/Tokyo."""
@@ -81,7 +87,7 @@ def normalize_one(item: dict[str, Any]) -> Optional[dict[str, Any]]:
         lon=hypo.get("longitude"),
         affects=[],
         source="p2pquake",
-        url=None,
+        url=SOURCE_URL,
         magnitude=magnitude if isinstance(magnitude, (int, float)) else None,
         maxScale=max_scale,
     )

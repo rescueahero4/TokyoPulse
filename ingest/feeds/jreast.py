@@ -146,6 +146,10 @@ def _page_timestamp(html: str) -> Optional[str]:
         return None
 
 
+def _source_url() -> str:
+    return get_env("FEED_JREAST_KANTO_STATUS", FEED_URL_DEFAULT)
+
+
 def _event(
     *,
     id: str,
@@ -154,6 +158,7 @@ def _event(
     title: str,
     titleJa: Optional[str],
     affects: list[str],
+    url: Optional[str] = None,
 ) -> dict[str, Any]:
     """Build an Event dict with EXACTLY the fields in
     contracts/event.schema.json (additionalProperties:false) -- mirrors
@@ -171,7 +176,7 @@ def _event(
         "titleJa": titleJa,
         "affects": affects,
         "source": "jreast",
-        "url": None,
+        "url": url,
         "magnitude": None,
         "maxScale": None,
     }
@@ -196,6 +201,7 @@ def normalize(raw: str) -> list[dict[str, Any]]:
     line_map = _jreast_line_map()  # jreastLineId -> our lineId
     line_names = line_id_to_name()
     page_time = _page_timestamp(html) or now_jst_iso()
+    source_url = _source_url()
 
     matches = _ROW_RE.findall(html)
     if not matches:
@@ -242,6 +248,7 @@ def normalize(raw: str) -> list[dict[str, Any]]:
                 title=title,
                 titleJa=title_ja,
                 affects=[f"line:{line_id}"],
+                url=source_url,
             )
         )
     return events

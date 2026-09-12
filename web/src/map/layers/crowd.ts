@@ -7,28 +7,39 @@ import { css } from '../colors';
 const BAND_PX: Record<number, number> = { 1: 6, 2: 9, 3: 12, 4: 15, 5: 18 };
 
 /**
- * Camera distance (m) at which a band's label starts showing. Busiest first:
- * at the 40,000m demo view only the major interchanges are named, and detail
- * appears as the presenter zooms — which also shows off the continuous zoom.
+ * Furthest camera distance (m) at which a station may be named, by importance.
+ *
+ * `ridershipBand` alone is no longer a good importance signal: the 239 JR/Metro
+ * stations imported from OSM have no ridership data and all carry a fallback
+ * band of 2 or 3, so band 4/5 is effectively Toei-only. Interchange count
+ * (`lineIds.length`) is the better proxy and is populated for every station —
+ * a station serving three of our lines is a major interchange whoever runs it.
  */
-const BAND_LABEL_DISTANCE: Record<number, number> = {
-  5: 100_000,
-  4: 50_000,
-  3: 25_000,
-  2: 12_000,
-  1: 6_000,
-};
+function importanceCeiling(interchanges: number, band: number): number {
+  if (interchanges >= 3 || band >= 5) return 120_000;
+  if (interchanges === 2 || band >= 4) return 60_000;
+  if (band >= 3) return 30_000;
+  return 18_000;
+}
+
+/** Bigger is more important; drives which station wins a crowded spot. */
+function importance(s: { lineIds: string[]; band: number }): number {
+  return s.lineIds.length * 10 + s.band;
+}
 
 /**
  * Ground separation required between two labels, as a fraction of the camera
  * distance at which they appear. Derived from screen geometry: visible ground
  * width ~= 2*d*tan(fov/2), so a fixed pixel gap is a fixed fraction of d.
- * 0.045 ~= a 75px gap on a 1900px canvas. Tunable without a rebuild.
+ * 0.04 ~= a 66px gap on a 1900px canvas. Tunable without a rebuild.
  */
 const LABEL_SPACING = (() => {
   const n = Number(import.meta.env.VITE_LABEL_SPACING);
-  return Number.isFinite(n) && n > 0 ? n : 0.045;
+  return Number.isFinite(n) && n > 0 ? n : 0.04;
 })();
+
+/** Below this the label would never realistically be read; skip the entity. */
+const MIN_LABEL_DISTANCE = 600;
 
 /** Stations closer than this AND sharing a name are the same physical station. */
 const DEDUPE_M = 400;
@@ -92,27 +103,38 @@ function dedupe(fc: StationCollection): Spot[] {
 }
 
 /**
- * Decide which spots get a label. Greedy, busiest first: a label is kept only if
- * no already-kept label sits within its own separation radius. Higher bands are
- * considered first and claim the larger radii, so a dense cluster resolves to
- * its most important station rather than to whichever happened to be first in
- * the file. Computed once per render, not per frame.
+ * Give every station its OWN label display distance, rather than choosing a
+ * fixed subset. This is what makes label density scale with zoom: a station is
+ * named from as far out as it can be without colliding with a more important
+ * neighbour, so descending steadily reveals more names instead of jumping
+ * between hand-picked tiers.
+ *
+ * Greedy, most important first. Two labels collide when the camera distance h
+ * puts them closer than `h * LABEL_SPACING` on the ground, so the furthest a
+ * station can be shown before clashing with neighbour k is `dist(s,k)/SPACING`.
+ * Take the tightest such limit, capped by the station's importance ceiling.
+ *
+ * Separation is then guaranteed at every altitude: whenever two labels are both
+ * visible, h <= min(D_s, D_k) <= dist/SPACING, so the required gap is met.
+ *
+ * O(n^2) over ~350 stations, once per render — not per frame.
  */
-function chooseLabels(spots: Spot[]): Set<string> {
-  const ordered = [...spots].sort((a, b) => b.band - a.band);
-  const kept: Spot[] = [];
-  const ids = new Set<string>();
+function labelDistances(spots: Spot[]): Map<string, number> {
+  const ordered = [...spots].sort((a, b) => importance(b) - importance(a));
+  const placed: { lat: number; lon: number }[] = [];
+  const out = new Map<string, number>();
+
   for (const s of ordered) {
-    const sep = (BAND_LABEL_DISTANCE[s.band] ?? 6000) * LABEL_SPACING;
-    let clash = false;
-    for (const k of kept) {
-      if (metres(s.lat, s.lon, k.lat, k.lon) < sep) { clash = true; break; }
+    let d = importanceCeiling(s.lineIds.length, s.band);
+    for (const k of placed) {
+      const gap = metres(s.lat, s.lon, k.lat, k.lon) / LABEL_SPACING;
+      if (gap < d) d = gap;
+      if (d < MIN_LABEL_DISTANCE) break;
     }
-    if (clash) continue;
-    kept.push(s);
-    ids.add(s.stationId);
+    placed.push({ lat: s.lat, lon: s.lon });
+    if (d >= MIN_LABEL_DISTANCE) out.set(s.stationId, d);
   }
-  return ids;
+  return out;
 }
 
 /**
@@ -124,16 +146,64 @@ export function renderCrowd(
   fc: StationCollection | null,
   highlightLineId: string | null,
   lang: Lang = 'en',
+  showLabels = true,
 ): number {
   ds.entities.removeAll();
   if (!fc || !Array.isArray(fc.features)) return 0;
 
   const spots = dedupe(fc);
-  const labelled = chooseLabels(spots);
+  const distances = labelDistances(spots);
+
+  // Pinned labels bypass the declutter, so on a dense line the chips still
+  // collide — the Oedo loop's stops sit ~32px apart at the altitude the camera
+  // settles on. Walk the selected line in geographic order and rotate each label
+  // through four sides of its dot (above / right / below / left). Two phases was
+  // not enough around Shinjuku, where the stops are ~500m apart; four gives each
+  // label its own quadrant without hiding anything the user just asked to see.
+  const stagger = new Map<string, number>();
+  if (highlightLineId) {
+    const onLine = spots
+      .filter((s) => s.lineIds.indexOf(highlightLineId) >= 0)
+      .sort((a, b) => (a.lon - b.lon) || (a.lat - b.lat));
+    onLine.forEach((s, i) => stagger.set(s.stationId, i % 4));
+  }
+
+  /** Label anchor for a pinned station: 0 above, 1 right, 2 below, 3 left. */
+  const anchor = (id: string, size: number) => {
+    const phase = stagger.get(id) ?? 0;
+    const gap = size / 2 + 6;
+    if (phase === 1) {
+      return {
+        h: Cesium.HorizontalOrigin.LEFT,
+        v: Cesium.VerticalOrigin.CENTER,
+        off: new Cesium.Cartesian2(gap, 0),
+      };
+    }
+    if (phase === 2) {
+      return {
+        h: Cesium.HorizontalOrigin.CENTER,
+        v: Cesium.VerticalOrigin.TOP,
+        off: new Cesium.Cartesian2(0, gap),
+      };
+    }
+    if (phase === 3) {
+      return {
+        h: Cesium.HorizontalOrigin.RIGHT,
+        v: Cesium.VerticalOrigin.CENTER,
+        off: new Cesium.Cartesian2(-gap, 0),
+      };
+    }
+    return {
+      h: Cesium.HorizontalOrigin.CENTER,
+      v: Cesium.VerticalOrigin.BOTTOM,
+      off: new Cesium.Cartesian2(0, -gap),
+    };
+  };
   const accent = css('#00b4ff');
   const base = css('#7dd3fc');
   let drawn = 0;
   let labels = 0;
+  let pinned = 0;
 
   ds.entities.suspendEvents();
   try {
@@ -145,8 +215,12 @@ export function renderCrowd(
 
       // Never render the string "null": fall back to the romanised name.
       const text = (lang === 'ja' && s.nameJa ? s.nameJa : s.name) || '';
-      const far = BAND_LABEL_DISTANCE[s.band] ?? 6000;
-      const showLabel = labelled.has(s.stationId) && !!text && !dim;
+      // Selecting a line is exactly when the user wants its stops named, and the
+      // set is small (14-42 stations), so selection OVERRIDES the declutter and
+      // the distance tiers entirely: every stop on the selected line is labelled
+      // at any zoom. Stations not on it lose their label along with their dot.
+      const far = distances.get(s.stationId) ?? 0;
+      const showLabel = showLabels && !!text && (onLine || (!highlightLineId && far > 0));
 
       try {
         ds.entities.add({
@@ -177,17 +251,24 @@ export function renderCrowd(
               showBackground: true,
               backgroundColor: Cesium.Color.fromCssColorString('rgba(5,8,11,0.82)'),
               backgroundPadding: new Cesium.Cartesian2(5, 3),
-              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-              pixelOffset: new Cesium.Cartesian2(0, -(size / 2) - 6),
+              horizontalOrigin: anchor(s.stationId, size).h,
+              verticalOrigin: anchor(s.stationId, size).v,
+              pixelOffset: anchor(s.stationId, size).off,
               disableDepthTestDistance: Number.POSITIVE_INFINITY,
-              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, far),
+              // A pinned (selected-line) label has no distance limit at all.
+              distanceDisplayCondition: onLine
+                ? undefined
+                : new Cesium.DistanceDisplayCondition(0, far),
               // Soft fade in over the last 30% rather than a hard pop.
-              translucencyByDistance: new Cesium.NearFarScalar(far * 0.7, 1.0, far, 0.0),
+              translucencyByDistance: onLine
+                ? undefined
+                : new Cesium.NearFarScalar(far * 0.7, 1.0, far, 0.0),
             }
             : undefined,
         });
         drawn += 1;
         if (showLabel) labels += 1;
+        if (showLabel && onLine) pinned += 1;
       } catch (err) {
         console.warn('[map] station entity failed for ' + s.stationId, err);
       }
@@ -198,7 +279,10 @@ export function renderCrowd(
 
   console.info(
     '[map] crowd: ' + fc.features.length + ' features -> ' + drawn + ' markers ('
-    + (fc.features.length - drawn) + ' transfer duplicates merged), ' + labels + ' labels',
+    + (fc.features.length - drawn) + ' transfer duplicates merged), '
+    + distances.size + ' labellable, ' + labels + ' labels'
+    + (showLabels ? '' : ' (names OFF)')
+    + (highlightLineId ? ' (' + pinned + ' pinned to ' + highlightLineId + ')' : ''),
   );
   return drawn;
 }

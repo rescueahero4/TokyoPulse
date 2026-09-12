@@ -32,6 +32,19 @@ from ingest.sink import upsert
 FEED_NAME = "weather"
 log = get_logger("ingest.weather")
 
+# Same default as fetch_once() below. Event.url needs the REAL request URL so
+# a viewer can click through and verify the numbers themselves (human request,
+# contracts/api.md /forecast.json amendment). normalize() stays import-safe
+# for the Daytona --push sandbox (no network call here, just an env read).
+FEED_URL_DEFAULT = (
+    "https://api.open-meteo.com/v1/forecast?latitude=35.68&longitude=139.76"
+    "&hourly=temperature_2m,precipitation&past_days=2&forecast_days=2&timezone=Asia%2FTokyo"
+)
+
+
+def _source_url() -> str:
+    return get_env("FEED_OPEN_METEO", FEED_URL_DEFAULT)
+
 
 def _parse_local(time_str: str) -> datetime:
     """Open-Meteo hourly times are naive local strings ('2026-09-10T14:00')
@@ -80,6 +93,7 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
     if not future:
         future = rows[-48:]
 
+    source_url = _source_url()
     events: list[dict[str, Any]] = []
 
     precip_rows = [r for r in future if isinstance(r[2], (int, float))]
@@ -100,7 +114,7 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 lon=lon,
                 affects=[],
                 source="open-meteo",
-                url=None,
+                url=source_url,
             )
         )
 
@@ -122,7 +136,7 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 lon=lon,
                 affects=[],
                 source="open-meteo",
-                url=None,
+                url=source_url,
             )
         )
 
@@ -132,11 +146,7 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
 def fetch_once() -> dict[str, Any]:
     import httpx  # lazy: normalize() (the --push sandbox path) needs no HTTP client
 
-    url = get_env(
-        "FEED_OPEN_METEO",
-        "https://api.open-meteo.com/v1/forecast?latitude=35.68&longitude=139.76"
-        "&hourly=temperature_2m,precipitation&past_days=2&forecast_days=2&timezone=Asia%2FTokyo",
-    )
+    url = _source_url()
     resp = httpx.get(url, timeout=15.0)
     resp.raise_for_status()
     data = resp.json()

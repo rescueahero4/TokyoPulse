@@ -29,6 +29,10 @@ from ingest.sink import upsert
 FEED_NAME = "warnings"
 log = get_logger("ingest.warnings")
 
+# Human request (provenance links): the JMA warning map for Tokyo (130000),
+# not the raw JSON endpoint, so a viewer lands on a page that reads.
+SOURCE_URL = "https://www.jma.go.jp/bosai/warning/#area_type=class20s&area_code=130000"
+
 INACTIVE_STATUSES = {"発表警報・注意報はなし", "解除"}
 
 
@@ -110,7 +114,7 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
                         titleJa=title_ja,
                         affects=affects,
                         source="jma",
-                        url=None,
+                        url=SOURCE_URL,
                     )
                 )
     return events

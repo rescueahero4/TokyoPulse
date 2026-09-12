@@ -47,6 +47,36 @@ function Legend(): JSX.Element {
   );
 }
 
+// Human request: "show the link of the source so users can verify the weather
+// data". sourceUrl is the REAL Open-Meteo request URL that produced this
+// payload (contracts/api.md AMENDED post-freeze) -- clicking it returns the
+// same numbers rendered above. Degrades to plain text if an older cached
+// payload has no sourceUrl; never renders an empty/undefined href.
+function SourceLine(p: { forecast: Forecast }): JSX.Element | null {
+  const name = p.forecast.sourceName || 'Open-Meteo';
+  const url = p.forecast.sourceUrl || null;
+  const attribution = p.forecast.attribution || null;
+  if (!name && !attribution) return null;
+  return (
+    <div className="tp-wx-source">
+      {url ? (
+        <a
+          className="tp-wx-source-link"
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={url}
+        >
+          SOURCE: {name} ↗
+        </a>
+      ) : (
+        <span className="tp-wx-source-link tp-wx-source-text">SOURCE: {name}</span>
+      )}
+      {attribution ? <span className="tp-wx-attribution">{attribution}</span> : null}
+    </div>
+  );
+}
+
 function Shell(p: { collapsed: boolean; onToggle(): void; sub: string; children: ReactNode }) {
   return (
     <div className={`tp-panel tp-forecast-strip${p.collapsed ? ' tp-panel-collapsed' : ''}`}>
@@ -183,6 +213,7 @@ export function ForecastStrip(p: {
         </span>
         <span>{formatDayClock(hourly[n - 1]?.time)}</span>
       </div>
+      <SourceLine forecast={forecast} />
     </Shell>
   );
 }

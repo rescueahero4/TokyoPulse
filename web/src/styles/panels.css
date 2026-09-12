@@ -281,6 +281,9 @@
   transform: translateX(-50%);
   z-index: 40;
   pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .tp-status-bar {
@@ -395,13 +398,15 @@
   flex-direction: column;
 }
 
-/* ---------- AlertBanner ---------- */
+/* ---------- AlertBanner: collapsed chip -> carousel ----------
+   Collapsed by default: the map is the hero. The chip still names the top alert
+   (and carries its REPLAY chip) so the alert text is in the DOM without expanding. */
 
 .tp-alert-banner {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 9px 10px 9px 16px;
+  padding: 9px 10px 9px 14px;
   border-radius: 4px;
   border: 1px solid var(--tp-border);
   background: var(--tp-bg);
@@ -409,13 +414,79 @@
   -webkit-backdrop-filter: blur(20px);
   color: var(--tp-text);
   font-family: var(--tp-font);
-  font-size: 14px;
+  font-size: 13px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  max-width: 680px;
+  max-width: 720px;
 }
 
-/* The banner body is the click target for fly-to; the × is a sibling button so
-   dismissing never triggers a camera move (nested buttons are invalid HTML). */
+.tp-alert-banner.tp-severity-warning {
+  border-color: var(--tp-warning);
+  box-shadow: 0 0 12px rgba(255, 170, 0, 0.18), 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.tp-alert-banner.tp-severity-critical {
+  border-color: var(--tp-critical);
+  box-shadow: 0 0 16px rgba(255, 51, 51, 0.32), 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.tp-alert-banner:focus-visible { outline: 1px solid var(--tp-accent); outline-offset: 2px; }
+
+/* ---- collapsed chip ---- */
+
+.tp-alert-chip {
+  border-radius: 999px;
+  padding: 5px 12px 5px 13px;
+  font-size: 11px;
+  cursor: pointer;
+  max-width: 560px;
+  transition: all 0.2s ease;
+}
+
+.tp-alert-chip:hover { background: rgba(10, 10, 15, 0.95); border-color: var(--tp-accent); }
+
+.tp-alert-chip-count {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tp-text-muted);
+  white-space: nowrap;
+}
+
+.tp-alert-chip-sep {
+  width: 1px;
+  height: 11px;
+  background: var(--tp-border);
+  flex-shrink: 0;
+}
+
+.tp-alert-chip-title {
+  font-size: 11px;
+  max-width: 340px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tp-alert-chip-cta { color: var(--tp-accent); font-size: 10px; flex-shrink: 0; }
+
+/* A critical alert escalates the chip visually as well as auto-expanding. */
+.tp-alert-chip.tp-severity-critical { animation: tp-alert-pulse 1.8s ease-in-out infinite; }
+
+@keyframes tp-alert-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 51, 51, 0.25), 0 4px 24px rgba(0, 0, 0, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.55), 0 4px 24px rgba(0, 0, 0, 0.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-alert-chip.tp-severity-critical { animation: none; }
+}
+
+/* ---- expanded carousel ---- */
+
+.tp-alert-carousel { padding: 7px 8px 7px 6px; }
+
+.tp-alert-icon { font-size: 18px; flex-shrink: 0; }
+
 .tp-alert-main {
   display: flex;
   align-items: center;
@@ -424,12 +495,71 @@
   min-width: 0;
   background: transparent;
   border: none;
-  padding: 0;
+  padding: 2px 4px;
   margin: 0;
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
+  border-radius: 3px;
+}
+
+.tp-alert-main:hover { background: rgba(0, 180, 255, 0.07); }
+
+.tp-alert-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 3px;
+  min-width: 0;
+}
+
+.tp-alert-title { font-size: 13px; letter-spacing: 0.01em; overflow-wrap: anywhere; }
+
+.tp-alert-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tp-text-muted);
+}
+
+.tp-severity-warning .tp-alert-meta,
+.tp-timeline-row.tp-severity-warning .tp-timeline-time { color: var(--tp-warning); }
+.tp-severity-critical .tp-alert-meta { color: var(--tp-critical); }
+
+.tp-alert-arrow {
+  flex-shrink: 0;
+  width: 24px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--tp-accent);
+  font-family: var(--tp-font);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tp-alert-arrow:hover:not(:disabled) {
+  border-color: var(--tp-accent);
+  background: rgba(0, 180, 255, 0.1);
+}
+
+.tp-alert-arrow:disabled { color: var(--tp-text-muted); opacity: 0.35; cursor: default; }
+
+.tp-alert-counter {
+  flex-shrink: 0;
+  padding: 0 6px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--tp-text-muted);
+  white-space: nowrap;
 }
 
 .tp-alert-dismiss {
@@ -453,30 +583,56 @@
   box-shadow: 0 0 8px rgba(255, 51, 51, 0.3);
 }
 
-/* Shown only when every qualifying alert has been dismissed. */
-.tp-alert-restore {
-  display: inline-flex;
+/* ---- position dots ---- */
+
+/* The dots sit over the map, so they carry their own glass pill — plain dots
+   vanished against a satellite basemap. */
+.tp-alert-dots {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 12px;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 6px;
+  padding: 4px 9px;
   border-radius: 999px;
   border: 1px solid var(--tp-border);
   background: var(--tp-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  color: var(--tp-text-muted);
-  font-family: var(--tp-font);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+}
+
+.tp-alert-dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.38);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.tp-alert-restore:hover {
-  border-color: var(--tp-accent);
-  color: var(--tp-text);
+.tp-alert-dot:hover { background: rgba(255, 255, 255, 0.75); }
+
+.tp-alert-dot-on { width: 16px; border-radius: 3px; background: var(--tp-accent); }
+.tp-alert-dot-on.tp-alert-dot-warning { background: var(--tp-warning); }
+.tp-alert-dot-on.tp-alert-dot-critical { background: var(--tp-critical); }
+
+/* ---- everything dismissed ---- */
+
+.tp-alert-restore {
+  border-radius: 999px;
+  padding: 5px 12px;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tp-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
+
+.tp-alert-restore:hover { border-color: var(--tp-accent); color: var(--tp-text); }
 
 .tp-alert-restore-cta {
   color: var(--tp-accent);
@@ -484,31 +640,6 @@
   padding-left: 8px;
 }
 
-.tp-alert-banner.tp-severity-warning { border-color: var(--tp-warning); box-shadow: 0 0 12px rgba(255, 170, 0, 0.18), 0 4px 24px rgba(0, 0, 0, 0.5); }
-.tp-alert-banner.tp-severity-critical { border-color: var(--tp-critical); box-shadow: 0 0 16px rgba(255, 51, 51, 0.3), 0 4px 24px rgba(0, 0, 0, 0.5); }
-
-.tp-alert-icon { font-size: 20px; }
-
-.tp-alert-body {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 2px;
-}
-
-.tp-alert-title { font-size: 14px; letter-spacing: 0.02em; }
-
-.tp-alert-meta {
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--tp-text-muted);
-}
-
-.tp-severity-warning .tp-alert-meta,
-.tp-timeline-row.tp-severity-warning .tp-timeline-time { color: var(--tp-warning); }
-.tp-severity-critical .tp-alert-meta { color: var(--tp-critical); }
 
 /* ---------- CityFeed: brief section ---------- */
 
@@ -612,7 +743,7 @@
 .tp-timeline-row {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 4px;
   width: 100%;
   padding: 8px 9px;
   background: transparent;
@@ -630,6 +761,48 @@
 .tp-timeline-row.tp-row-selected {
   background: rgba(0, 180, 255, 0.14);
   border-color: rgba(0, 180, 255, 0.6);
+}
+
+/* The row's main click target (select + fly-to-camera). A sibling <button>,
+   not the row itself, so the provenance link below can sit next to it
+   without nesting an <a> inside a <button> (invalid HTML). */
+.tp-timeline-row-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Quiet provenance affordance: a small ↗, never competing with the row. */
+.tp-timeline-link {
+  flex-shrink: 0;
+  align-self: flex-start;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tp-text-muted);
+  text-decoration: none;
+  font-size: 11px;
+  border-radius: 3px;
+  opacity: 0.7;
+  transition: all 0.15s ease;
+}
+
+.tp-timeline-link:hover {
+  color: var(--tp-accent);
+  opacity: 1;
+  background: rgba(0, 180, 255, 0.12);
 }
 
 .tp-timeline-icon { font-size: 14px; line-height: 1.3; }
@@ -747,6 +920,101 @@
 }
 
 .tp-layer-count { color: var(--tp-accent); }
+
+.tp-layer-block { display: flex; flex-direction: column; }
+
+.tp-layer-name-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
+
+/* ⓘ — "what is this data, and where did it come from" */
+.tp-layer-info-btn {
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 180, 255, 0.45);
+  background: transparent;
+  color: rgba(0, 180, 255, 0.9);
+  font-family: var(--tp-font);
+  font-size: 9px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tp-layer-info-btn:hover,
+.tp-layer-info-btn-open {
+  background: rgba(0, 180, 255, 0.16);
+  border-color: var(--tp-accent);
+  color: #dff6ff;
+  box-shadow: 0 0 8px rgba(0, 180, 255, 0.3);
+}
+
+.tp-layer-info {
+  margin: 2px 0 8px;
+  padding: 8px 9px;
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  border-left: 2px solid var(--tp-accent);
+  background: rgba(0, 180, 255, 0.05);
+  border-radius: 3px;
+}
+
+.tp-layer-info p { margin: 0 0 5px; font-size: 10px; line-height: 1.55; }
+.tp-layer-info p:last-of-type { margin-bottom: 0; }
+
+.tp-layer-info-what { color: var(--tp-text); }
+.tp-layer-info-source { color: var(--tp-text-muted); }
+
+.tp-layer-info-key {
+  color: var(--tp-accent);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* The caveat is the feature, not the small print. */
+.tp-layer-info-caveat { color: var(--gs-neon-amber); opacity: 0.92; }
+
+.tp-layer-info-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tp-accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 180, 255, 0.4);
+}
+
+.tp-layer-info-link:hover { color: #dff6ff; border-bottom-color: var(--tp-accent); }
+
+/* Station-name sub-toggle: visually subordinate to the layer it belongs to. */
+.tp-layer-subrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 6px 12px;
+  padding: 4px 3px 6px;
+  border-left: 1px solid var(--tp-border);
+  padding-left: 10px;
+}
+
+.tp-layer-sublabel {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tp-text-muted);
+}
+
+.tp-toggle-switch-sm {
+  width: 28px;
+  height: 14px;
+  border-radius: 7px;
+}
+
+.tp-toggle-switch-sm::after { width: 10px; height: 10px; top: 1px; left: 1px; }
+.tp-toggle-switch-sm.tp-toggle-on::after { left: 15px; }
 
 /* ---------- LayerPanel collapsed: vertical rail docked on the left edge ---------- */
 
@@ -957,6 +1225,44 @@
 }
 
 .tp-forecast-axis-mid { color: var(--tp-accent); opacity: 0.8; }
+
+/* Quiet provenance line (human request: link the weather widget to its
+   upstream source so a viewer can verify the numbers themselves). Deliberately
+   small and muted -- a caption, not a call-to-action competing with the data. */
+.tp-wx-source {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 1px 12px 5px;
+  flex-shrink: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tp-wx-source-link {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tp-accent);
+  opacity: 0.85;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.tp-wx-source-link:hover { opacity: 1; text-decoration: underline; }
+
+.tp-wx-source-text { cursor: default; color: var(--tp-text-muted); }
+
+.tp-wx-attribution {
+  font-size: 8px;
+  letter-spacing: 0.02em;
+  color: var(--tp-text-muted);
+  opacity: 0.7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
 
 /* ---------- Brief (standalone card + CityFeed header section) ---------- */
 

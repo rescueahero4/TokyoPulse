@@ -51,6 +51,12 @@ export interface Forecast {
   nowIndex: number;
   hourly: ForecastHour[];
   summary: { maxPrecip24h: number; minTemp: number; maxTemp: number; rainHoursNext48: number };
+  /** contracts/api.md AMENDED post-freeze: the real upstream request URL, so a
+   *  viewer can click through and verify the numbers themselves. Optional/null
+   *  on an older cached payload that predates the amendment. */
+  sourceUrl?: string | null;
+  sourceName?: string | null;
+  attribution?: string | null;
   meta: Meta;
 }
 

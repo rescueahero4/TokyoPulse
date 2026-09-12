@@ -17,6 +17,7 @@ import type { ReactNode } from 'react';
 import type { Lang, Meta, PulseEvent } from '../lib/types';
 import type { LineCollection, StationCollection } from '../lib/geo';
 import { attachInspector, type MapPick } from '../map/inspector';
+import { LAYER_INFO, railSource } from './dataSources';
 import { wardCentroid } from '../lib/wards';
 import { formatClock, formatClockWithRelative } from './time';
 import { PanelHeader } from './PanelHeader';
@@ -173,11 +174,7 @@ export function InspectorPanel(p: {
       <div className="tp-empty-row">Station {pick.stationId} is not in the loaded station set.</div>
     );
     footer = (
-      <SourceFooter
-        text="ODPT odpt:passengerSurvey (via /stations.geojson)"
-        meta={p.stationsMeta}
-        note="STATIC annual passenger survey — marker size is average yearly ridership, NOT live crowding. Nobody is counting people right now."
-      />
+      <SourceFooter text={LAYER_INFO.crowd.source} meta={p.stationsMeta} note={LAYER_INFO.crowd.caveat} />
     );
   } else if (pick.kind === 'line') {
     const f = (p.lines?.features ?? []).find((x) => x.properties?.lineId === pick.lineId);
@@ -227,26 +224,16 @@ export function InspectorPanel(p: {
     ) : (
       <div className="tp-empty-row">Line {pick.lineId} is not in the loaded line set.</div>
     );
-    footer = !hasFeed ? (
+    // Same strings the LayerPanel ⓘ popover shows — one source of truth.
+    const rail = railSource(operator, hasFeed);
+    footer = (
       <SourceFooter
-        text="Geometry: OpenStreetMap via Overpass. Status: NO LIVE FEED."
+        text={rail.source}
         meta={p.linesMeta}
-        // The /lines payload itself is live; this LINE's status is not. Saying
-        // "LIVE" here would undo the whole point of the card.
-        fresh="NO STATUS FEED · geometry only"
-        note={`There is no keyless live-status feed for ${operator || 'this operator'}, so this line renders grey/unknown rather than a faked 'normal'.`}
-      />
-    ) : isJr ? (
-      <SourceFooter
-        text="JR East traininfo.jreast.co.jp (live, 30min+ delay threshold) · geometry from OpenStreetMap via Overpass"
-        meta={p.linesMeta}
-        note="JR East only publishes delays of 30 minutes or more — the Toei/ODPT feed publishes 15+. A JR line reading 'normal' can still be running 20 minutes late."
-      />
-    ) : (
-      <SourceFooter
-        text="ODPT odpt:TrainInformation (live, 15min+ delay threshold) · geometry from odpt:Railway stationOrder × odpt:Station coords"
-        meta={p.linesMeta}
-        note="Live status covers Toei and JR East lines; Tokyo Metro remains unknown."
+        // The /lines payload itself is live; a Metro LINE's status is not. Saying
+        // "LIVE" there would undo the whole point of the card.
+        fresh={hasFeed ? undefined : 'NO STATUS FEED · geometry only'}
+        note={rail.caveat}
       />
     );
   } else if (pick.kind === 'event') {
@@ -290,13 +277,18 @@ export function InspectorPanel(p: {
               {Math.round(dist)} km from Tokyo — felt shaking in Tokyo from this event is unlikely.
             </div>
           ) : null}
+          {e.url ? (
+            <a className="tp-insp-action" href={e.url} target="_blank" rel="noopener noreferrer">
+              Verify on P2PQuake ↗
+            </a>
+          ) : null}
         </>
       );
       footer = (
         <SourceFooter
-          text={`P2PQuake / JMA seismic feed${e.source === 'replay' ? ' (REPLAYED for the demo)' : ''}`}
+          text={`${LAYER_INFO.quakes.source}${e.source === 'replay' ? ' (REPLAYED for the demo)' : ''}`}
           meta={p.eventsMeta}
-          note="NATIONAL feed, not Tokyo-only — most events on it are hundreds of km away. Distance above is measured from Tokyo Station."
+          note={LAYER_INFO.quakes.caveat}
         />
       );
     } else {
@@ -318,25 +310,17 @@ export function InspectorPanel(p: {
           <Row label="Issued" value={formatClockWithRelative(e.time)} mono />
           <Row label="Feed" value={e.source} mono />
           {e.url ? (
-            <a className="tp-insp-action" href={e.url} target="_blank" rel="noreferrer">
-              Open the original advisory →
+            <a className="tp-insp-action" href={e.url} target="_blank" rel="noopener noreferrer">
+              Open the original advisory ↗
             </a>
           ) : null}
         </>
       );
       footer = (
         <SourceFooter
-          text={
-            e.type === 'warning'
-              ? 'JMA 気象庁 warning feed (Tokyo area code 130000)'
-              : 'Open-Meteo hourly forecast for Tokyo'
-          }
+          text={e.type === 'warning' ? LAYER_INFO.warnings.source : 'Open-Meteo hourly forecast for Tokyo'}
           meta={p.eventsMeta}
-          note={
-            e.type === 'warning'
-              ? 'Government-issued advisory. Pinned at the affected ward centroid, not at a measured point.'
-              : 'Model forecast, not an observation.'
-          }
+          note={e.type === 'warning' ? LAYER_INFO.warnings.caveat : 'Model forecast, not an observation.'}
         />
       );
     }
@@ -364,9 +348,9 @@ export function InspectorPanel(p: {
     );
     footer = (
       <SourceFooter
-        text="Derived proxy from ODPT odpt:passengerSurvey ridership"
+        text={LAYER_INFO.peopleflow.source}
         meta={p.stationsMeta}
-        note="Labelled 'typical pattern' everywhere in this HUD. We do not claim live-ness we do not have."
+        note={LAYER_INFO.peopleflow.caveat}
       />
     );
   } else if (pick.kind === 'ground') {
@@ -393,9 +377,9 @@ export function InspectorPanel(p: {
     );
     footer = (
       <SourceFooter
-        text="GSI 国土地理院 flood hazard tiles (01_flood_l2_shinsuishin_data)"
+        text={LAYER_INFO.flood.source}
         fresh="STATIC TILES · no timestamp"
-        note="STATIC hazard map. Station flood-zone flags elsewhere in this HUD are derived from the same dataset."
+        note={LAYER_INFO.flood.caveat}
       />
     );
   }

@@ -541,6 +541,21 @@ def _empty_forecast() -> dict[str, Any]:
                         "maxTemp": None, "rainHoursNext48": 0}}
 
 
+# Open-Meteo source metadata (contracts/api.md AMENDED post-freeze). sourceUrl
+# is the REAL request URL actually used — same one for every tier, since the
+# live fetch, the cached mock payload, and the empty fallback all describe the
+# same upstream query. Never emit null here if FEED_OPEN_METEO is set.
+OPEN_METEO_SOURCE_NAME = "Open-Meteo"
+OPEN_METEO_ATTRIBUTION = "Weather data by Open-Meteo.com (CC BY 4.0)"
+
+
+def _attach_open_meteo_source(data: dict[str, Any]) -> dict[str, Any]:
+    data["sourceUrl"] = env_str("FEED_OPEN_METEO") or None
+    data["sourceName"] = OPEN_METEO_SOURCE_NAME
+    data["attribution"] = OPEN_METEO_ATTRIBUTION
+    return data
+
+
 def _produce_forecast() -> dict[str, Any]:
     def live():
         # Weather is not a graph entity: tier 1 here is the live Open-Meteo feed,
@@ -568,7 +583,8 @@ def _produce_forecast() -> dict[str, Any]:
         raw.pop("meta", None)
         return raw
 
-    return three_tier(live, cache_tier, _empty_forecast, "forecast.json")
+    data = three_tier(live, cache_tier, _empty_forecast, "forecast.json")
+    return _attach_open_meteo_source(data)
 
 
 def _empty_brief() -> dict[str, Any]:

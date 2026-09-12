@@ -64,6 +64,9 @@ export interface CesiumViewerProps {
   selectedEventId: string | null;
   lang: Lang;
   peopleFlowAvailable: boolean;
+  /** Presenter toggle for station name labels. Owned by App/LayerPanel (A8);
+   *  the map only consumes it. Defaults to on when the prop is absent. */
+  showStationLabels?: boolean;
   onLinePick?(lineId: string): void;
   onStats?(stats: Record<string, number>): void;
 }
@@ -646,12 +649,17 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     const ds = sourcesRef.current.crowd;
     if (!ds) return;
     try {
-      bump('crowd', renderCrowd(ds, props.stations, props.selectedLineId, props.lang));
+      bump('crowd', renderCrowd(
+        ds, props.stations, props.selectedLineId, props.lang,
+        props.showStationLabels !== false,
+      ));
       viewerRef.current?.scene.requestRender();
     } catch (e) {
       console.warn('[map] crowd layer failed', e);
     }
-  }, [ready, props.stations, props.selectedLineId, props.lang]);
+    // showStationLabels is in the deps so flipping it repaints immediately
+    // instead of waiting for the next zoom or pan.
+  }, [ready, props.stations, props.selectedLineId, props.lang, props.showStationLabels]);
 
   // ---- peopleflow (declared, unavailable)
   useEffect(() => {

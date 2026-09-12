@@ -100,26 +100,42 @@ export function TimelineFeed(p: {
     const icon = TYPE_ICON[e.type] ?? '\u{2139}\u{FE0F}';
     const selected = p.selectedId === e.id;
     return (
-      <button
+      <div
         key={e.id}
-        type="button"
         role="listitem"
         className={`tp-timeline-row tp-severity-${e.severity}${selected ? ' tp-row-selected' : ''}${
           opts?.upcoming ? ' tp-timeline-row-upcoming' : ''
         }`}
-        onClick={() => p.onSelect(e)}
       >
-        <span className={`tp-dot tp-severity-dot-${e.severity}`} aria-hidden="true" />
-        <span className="tp-timeline-icon" aria-hidden="true">{icon}</span>
-        <span className="tp-timeline-text">
-          <span className="tp-timeline-title">{titleFor(e, p.lang)}</span>
-          <span className="tp-timeline-sub">
-            <span className="tp-timeline-time">{formatClockWithRelative(e.time)}</span>
-            {opts?.upcoming ? <span className="tp-chip tp-chip-upcoming">UPCOMING</span> : null}
-            {e.source === 'replay' ? <span className="tp-chip tp-chip-replay">REPLAY</span> : null}
+        <button type="button" className="tp-timeline-row-main" onClick={() => p.onSelect(e)}>
+          <span className={`tp-dot tp-severity-dot-${e.severity}`} aria-hidden="true" />
+          <span className="tp-timeline-icon" aria-hidden="true">{icon}</span>
+          <span className="tp-timeline-text">
+            <span className="tp-timeline-title">{titleFor(e, p.lang)}</span>
+            <span className="tp-timeline-sub">
+              <span className="tp-timeline-time">{formatClockWithRelative(e.time)}</span>
+              {opts?.upcoming ? <span className="tp-chip tp-chip-upcoming">UPCOMING</span> : null}
+              {e.source === 'replay' ? <span className="tp-chip tp-chip-replay">REPLAY</span> : null}
+            </span>
           </span>
-        </span>
-      </button>
+        </button>
+        {/* Provenance affordance: opens the feed this event actually came from.
+            Sibling of the select button (not nested -- invalid HTML) and
+            stopPropagation'd so it never also fires the row's fly-to-camera. */}
+        {e.url ? (
+          <a
+            className="tp-timeline-link"
+            href={e.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`Open source: ${e.url}`}
+            aria-label="Open source in a new tab"
+            onClick={(ev) => ev.stopPropagation()}
+          >
+            ↗
+          </a>
+        ) : null}
+      </div>
     );
   }
 

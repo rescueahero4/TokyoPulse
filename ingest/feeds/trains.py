@@ -76,6 +76,7 @@ _ENGLISH_BY_SEVERITY = {
 def normalize(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rail_to_line = odpt_railway_to_line_id()
     line_names = line_id_to_name()
+    source_url = _feed_url()
     events: list[dict[str, Any]] = []
     for item in items:
         railway = item.get("odpt:railway")
@@ -106,7 +107,7 @@ def normalize(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 titleJa=text_ja,
                 affects=[f"line:{line_id}"],
                 source="odpt",
-                url=None,
+                url=source_url,
             )
         )
     return events

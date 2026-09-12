@@ -32,6 +32,9 @@ const DEFAULT_VISIBLE: Record<string, boolean> = {
   peopleflow: false,
 };
 
+/** Shared with the map (A6) and the LayerPanel control (A8). */
+const STATION_LABELS_KEY = 'tp.showStationLabels';
+
 /** Stable empty collections: identity churn here re-fires the map layer effects. */
 const EMPTY_EVENTS: PulseEvent[] = [];
 const EMPTY_SANDBOXES: SandboxInfo[] = [];
@@ -60,6 +63,16 @@ export default function App() {
   const [impactLoading, setImpactLoading] = useState(false);
   const [mapStats, setMapStats] = useState<Record<string, number>>({});
   const [peopleFlow, setPeopleFlow] = useState(false);
+  // Station name labels: presenter toggle in LayerPanel, consumed by the map.
+  // Persisted so the layout survives a reload; localStorage can throw in a
+  // private window, so every read/write is guarded.
+  const [showStationLabels, setShowStationLabels] = useState<boolean>(() => {
+    try {
+      return window.localStorage.getItem(STATION_LABELS_KEY) !== '0';
+    } catch {
+      return true;
+    }
+  });
 
   // ---- data (polling intervals per the brief)
   const eventsRes = usePolling(() => fetchEvents(timeWindow), 15_000, [timeWindow]);
@@ -158,6 +171,14 @@ export default function App() {
     setVisible((v) => ({ ...v, [id]: !v[id] }));
   }, []);
 
+  const onToggleStationLabels = useCallback(() => {
+    setShowStationLabels((prev) => {
+      const next = !prev;
+      try { window.localStorage.setItem(STATION_LABELS_KEY, next ? '1' : '0'); } catch { /* private window */ }
+      return next;
+    });
+  }, []);
+
   const onSelectEvent = useCallback((e: PulseEvent) => {
     setSelectedEventId(e.id);
     if (typeof e.lat === 'number' && typeof e.lon === 'number') {
@@ -213,6 +234,7 @@ export default function App() {
         selectedEventId={selectedEventId}
         lang={lang}
         peopleFlowAvailable={peopleFlow}
+        showStationLabels={showStationLabels}
         onLinePick={(id) => { setSearch(''); onPickLine(id); }}
         onStats={setMapStats}
       />
@@ -247,7 +269,13 @@ export default function App() {
           </ErrorBoundary>
 
           <ErrorBoundary label="LayerPanel">
-            <LayerPanel layers={layerStates} visible={visible} onToggle={onToggleLayer} />
+            <LayerPanel
+              layers={layerStates}
+              visible={visible}
+              onToggle={onToggleLayer}
+              showStationLabels={showStationLabels}
+              onToggleStationLabels={onToggleStationLabels}
+            />
           </ErrorBoundary>
 
           {selectedLineId && (
