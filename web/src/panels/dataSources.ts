@@ -67,6 +67,14 @@ export const LAYER_INFO: Record<string, DataSourceInfo> = {
     url: 'https://disaportal.gsi.go.jp/',
     urlLabel: 'GSI ハザードマップ',
   },
+  buses: {
+    what: 'Live Toei bus positions — roughly 360 vehicles in service.',
+    source: 'ODPT odpt:Bus (keyless public mirror); route shapes from odpt:BusroutePattern.',
+    caveat:
+      'NOT GPS tracking. ODPT publishes no coordinates for buses — each vehicle reports only the stop it last left, the stop it is heading to, and the departure time. Positions here are INTERPOLATED along the road geometry at a measured 12.3 km/h (median of 416 real scheduled legs), so a mid-route bus can be off by roughly ±30% of the leg. A bus shown as "at-stop" is at a known real location; an "interpolated" one is an estimate.',
+    url: 'https://api-public.odpt.org/api/v4/odpt:Bus',
+    urlLabel: 'odpt:Bus',
+  },
   peopleflow: {
     what: 'Typical movement density across the city.',
     source: 'Derived proxy from static station ridership, distance-weighted.',

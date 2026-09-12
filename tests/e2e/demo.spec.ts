@@ -78,7 +78,12 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await page.locator('.tp-status-toggles').getByRole('button', { name: 'EN', exact: true }).click();
     await page.waitForTimeout(300);
 
-    // one layer toggle off/on
+    // one layer toggle off/on - LayerPanel now docks bottom-left, collapsed
+    // by default (a "Layers N/6" chip); expand it before its switches exist.
+    const layerChip = page.locator('.tp-layer-chip');
+    if (await layerChip.count()) {
+      await layerChip.click();
+    }
     const firstCheckbox = page.locator('.tp-layer-row .tp-toggle-switch:not([disabled])').first();
     if (await firstCheckbox.count()) {
       await firstCheckbox.scrollIntoViewIfNeeded();
@@ -147,17 +152,31 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     }
   });
 
-  test('4. Alert banner renders for a severity >= warning event', async ({ page }) => {
+  test('4. Alert banner renders for a severity >= warning event (collapsed chip + expanded carousel)', async ({ page }) => {
     test.setTimeout(45_000);
     await page.goto('/');
     await waitForViewer(page);
 
+    // AlertBanner is collapsed-by-default (a compact chip) so the map stays
+    // the hero. The chip still carries the top alert's title (and its REPLAY
+    // chip if any) directly in the DOM - assert that first.
     const banner = page.locator('.tp-alert-banner');
     await expect(banner).toBeVisible({ timeout: 20000 });
-    const text = (await banner.textContent())?.trim() ?? '';
-    expect(text.length).toBeGreaterThan(0);
-    const hasSeverityTag = /WARNING|CRITICAL/.test(text);
-    expect(hasSeverityTag, `alert banner text did not show a WARNING/CRITICAL tag: "${text}"`).toBeTruthy();
+    const chip = page.locator('.tp-alert-chip');
+    await expect(chip).toBeVisible({ timeout: 5000 });
+    const chipText = (await chip.textContent())?.trim() ?? '';
+    expect(chipText.length).toBeGreaterThan(0);
+    const chipTitle = (await chip.locator('.tp-alert-chip-title').textContent())?.trim() ?? '';
+    expect(chipTitle.length, 'collapsed alert chip has no title text').toBeGreaterThan(0);
+
+    // Expanding reveals the carousel, where the severity tag lives (WARNING/
+    // CRITICAL is only ever printed in the expanded .tp-alert-meta, per the
+    // component - the collapsed chip deliberately omits it to stay compact).
+    await chip.click();
+    const carousel = page.locator('.tp-alert-carousel');
+    await expect(carousel).toBeVisible({ timeout: 5000 });
+    const metaText = (await page.locator('.tp-alert-meta').first().textContent()) ?? '';
+    expect(/WARNING|CRITICAL/.test(metaText), `expanded alert meta did not show a WARNING/CRITICAL tag: "${metaText}"`).toBeTruthy();
   });
 
   test('5. Timeline click flies the camera to the event location (demo beat 2)', async ({ page, request }) => {
@@ -216,11 +235,15 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
       .toBe('moved');
   });
 
-  test('6. Line search "Mita" -> pick result -> impact panel with ward + station count (demo beat 3)', async ({ page }) => {
+  test('6. Line search "Mita" -> pick result -> line detail with ward + station count (demo beat 3)', async ({ page }) => {
     test.setTimeout(45_000);
     await page.goto('/');
     await waitForViewer(page);
 
+    // LineSearch + ImpactPanel are now ONE widget, LinePanel: picking a line
+    // expands its detail INSIDE the panel (.tp-line-detail), not a second
+    // floating .tp-impact-panel (that class only appears if ImpactPanel is
+    // mounted standalone, which the app no longer does).
     const input = page.locator('.tp-line-search-input');
     await input.click();
     await input.fill('Mita');
@@ -229,10 +252,12 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await expect(result.first()).toBeVisible({ timeout: 15000 });
     await result.first().click();
 
-    const impact = page.locator('.tp-impact-panel');
-    await expect(impact).toBeVisible({ timeout: 20000 });
+    const detail = page.locator('.tp-line-detail');
+    await expect(detail).toBeVisible({ timeout: 20000 });
+    await expect(page.locator('.tp-line-detail-head')).toBeVisible();
+    expect(await page.locator('.tp-impact-panel').count(), '.tp-impact-panel should not be mounted standalone by App').toBe(0);
 
-    const wardRows = impact.locator('.tp-impact-ward-row');
+    const wardRows = detail.locator('.tp-impact-ward-row');
     await expect(wardRows.first()).toBeVisible({ timeout: 10000 });
     expect(await wardRows.count()).toBeGreaterThan(0);
 
@@ -240,6 +265,23 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     expect(firstWardText, 'ward row does not show a station count').toMatch(/stations?/i);
 
     await page.screenshot({ path: 'e2e/screenshots/02-line-search-impact.png', fullPage: true });
+
+    // Clear and repeat with a JR East line - live status coverage grew from
+    // 6 to 11 lines (Toei-only -> +JR East), so this is now real, populated
+    // data rather than an empty "no live feed" placeholder.
+    await page.locator('.tp-line-search-clear').click();
+    await input.click();
+    await input.fill('Chuo');
+    const chuoResult = page.locator('.tp-line-search-result', { hasText: 'Chuo' });
+    await expect(chuoResult.first()).toBeVisible({ timeout: 15000 });
+    await chuoResult.first().click();
+
+    await expect(detail).toBeVisible({ timeout: 20000 });
+    const chuoWardRows = detail.locator('.tp-impact-ward-row');
+    await expect(chuoWardRows.first()).toBeVisible({ timeout: 10000 });
+    expect(await chuoWardRows.count(), 'Chuo (JR East, live status) should have a populated ward list, not an empty one').toBeGreaterThan(0);
+    const chuoStationRows = detail.locator('.tp-impact-station-row');
+    expect(await chuoStationRows.count(), 'Chuo should have a populated station list').toBeGreaterThan(0);
   });
 
   test('7. Layer toggles: each switch flips off/on without throwing', async ({ page }) => {
@@ -252,6 +294,13 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     await page.goto('/');
     await waitForViewer(page);
     await page.waitForTimeout(1000);
+
+    // LayerPanel now defaults to collapsed (a "Layers N/6" chip docked
+    // bottom-left) - expand it before its switches are reachable.
+    const layerChip = page.locator('.tp-layer-chip');
+    await expect(layerChip).toBeVisible({ timeout: 10000 });
+    await layerChip.click();
+    await expect(page.locator('.tp-layer-panel')).toBeVisible({ timeout: 10000 });
 
     const checkboxes = page.locator('.tp-layer-row .tp-toggle-switch');
     const n = await checkboxes.count();
@@ -373,5 +422,82 @@ test.describe('TokyoPulse demo script (PRD §9)', () => {
     // i.e. the first row that isn't tagged upcoming.
     const topNowRow = page.locator('.tp-timeline-row:not(.tp-timeline-row-upcoming)').first();
     await expect(topNowRow.locator('.tp-chip-replay')).toBeVisible({ timeout: 20000 });
+  });
+
+  test('12b. Regression: dismiss-all alerts, then /demo/replay must still surface an alert', async ({ page, request }) => {
+    // A8 found and fixed: /demo/replay reuses the stable id "replay-quake",
+    // so dismissing everything and then firing the replay showed NOTHING -
+    // the scripted earthquake would have silently failed on stage. The fix
+    // keys dismissal on id+time (AlertBanner.tsx's dismissKey), so a replay's
+    // fresh timestamp makes it "news again" even if every alert was just
+    // dismissed. This test pins exactly that sequence.
+    test.setTimeout(45_000);
+
+    await page.goto('/');
+    await waitForViewer(page);
+
+    // There must be something to dismiss - live JMA warning-level events are
+    // present on this deployment; if that ever isn't true, seed one via replay
+    // first so the test still exercises the real dismiss-all path.
+    let chip = page.locator('.tp-alert-chip');
+    if (!(await chip.isVisible().catch(() => false))) {
+      const seed = await request.post(`${API_BASE}/demo/replay`, { data: { scenario: 'quake' } });
+      expect(seed.ok(), 'could not seed an alert via /demo/replay to set up the dismiss-all regression test').toBeTruthy();
+      await page.waitForTimeout(16_000); // one poll cycle
+      chip = page.locator('.tp-alert-chip');
+    }
+    await expect(chip).toBeVisible({ timeout: 20000 });
+
+    // Expand -> dismiss ALL.
+    await chip.click();
+    const carousel = page.locator('.tp-alert-carousel');
+    await expect(carousel).toBeVisible({ timeout: 5000 });
+    await page.locator('.tp-alert-dismiss').click();
+
+    // Everything qualifying was just dismissed: the banner must show the
+    // honest "N alerts dismissed / show" state, not the chip or carousel.
+    await expect(page.locator('.tp-alert-restore')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('.tp-alert-chip')).toHaveCount(0);
+    await expect(page.locator('.tp-alert-carousel')).toHaveCount(0);
+
+    // Fire the scripted replay exactly as the demo does.
+    const res = await request.post(`${API_BASE}/demo/replay`, { data: { scenario: 'quake' } });
+    expect(res.ok(), `POST /demo/replay failed: ${res.status()} ${await res.text().catch(() => '')}`).toBeTruthy();
+    const body = await res.json();
+    expect(body.injected, 'replay response reported zero injected events').toBeGreaterThan(0);
+
+    // The alert must resurface (collapsed chip is enough - the new replay
+    // event is severity "warning", so it won't auto-force-expand; only a
+    // never-before-seen CRITICAL does that). Assert on the REPLAY chip
+    // anywhere inside .tp-alert-banner so this holds regardless of whether
+    // it renders collapsed or expanded.
+    await expect(
+      page.locator('.tp-alert-banner .tp-chip-replay'),
+      'the alert did not resurface after dismiss-all + replay - this is the exact bug A8 fixed',
+    ).toBeVisible({ timeout: 20000 });
+  });
+
+  test('API regression: /lines.geojson and /impact/{lineId} must never disagree on a line\'s status', async ({ request }) => {
+    test.setTimeout(45_000);
+    const linesRes = await request.get(`${API_BASE}/lines.geojson`);
+    expect(linesRes.ok()).toBeTruthy();
+    const linesBody = await linesRes.json();
+    const lines: { properties: { lineId: string; status: string; name: string } }[] = linesBody.features ?? [];
+    expect(lines.length, '/lines.geojson returned zero features').toBeGreaterThan(0);
+
+    const mismatches: string[] = [];
+    for (const f of lines) {
+      const { lineId, status, name } = f.properties;
+      const impactRes = await request.get(`${API_BASE}/impact/${encodeURIComponent(lineId)}`);
+      if (!impactRes.ok()) {
+        mismatches.push(`${lineId} (${name}): /impact/${lineId} returned ${impactRes.status()}`);
+        continue;
+      }
+      const impact = await impactRes.json();
+      if (impact.status !== status) {
+        mismatches.push(`${lineId} (${name}): /lines.geojson says "${status}", /impact/${lineId} says "${impact.status}"`);
+      }
+    }
+    expect(mismatches, `status disagreement between /lines.geojson and /impact/{lineId}:\n${mismatches.join('\n')}`).toEqual([]);
   });
 });

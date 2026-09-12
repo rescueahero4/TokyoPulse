@@ -17,6 +17,7 @@ import { LayerPanel } from './panels/LayerPanel';
 import { LinePanel } from './panels/LinePanel';
 import { ForecastStrip } from './panels/ForecastStrip';
 import { InspectorPanel } from './panels/InspectorPanel';
+import { fetchBuses } from './panels/busData';
 import { StatusBar } from './panels/StatusBar';
 
 import './styles/app.css';
@@ -29,7 +30,17 @@ const DEFAULT_VISIBLE: Record<string, boolean> = {
   crowd: true,
   flood: false,
   peopleflow: false,
+  buses: false,   // ~360 vehicles: opt-in, never on by default
 };
+
+/**
+ * Rows the LayerPanel shows. LAYER_IDS is the map's own list; `buses` is served
+ * by /layers.json and rendered by the map, but is not in LAYER_IDS yet — without
+ * this it would simply never appear in the panel (confirmed against the live
+ * endpoint, which returns it). De-duped, so it becomes a no-op the moment the
+ * map adds it to LAYER_IDS.
+ */
+const PANEL_LAYER_IDS: string[] = Array.from(new Set<string>([...LAYER_IDS, 'buses']));
 
 /** Shared with the map (A6) and the LayerPanel control (A8). */
 const STATION_LABELS_KEY = 'tp.showStationLabels';
@@ -45,6 +56,7 @@ const LAYER_LABELS: Record<string, string> = {
   crowd: 'Station crowding',
   flood: 'Flood hazard (GSI)',
   peopleflow: PEOPLEFLOW_LABEL,
+  buses: 'Toei buses (derived)',
 };
 
 export default function App() {
@@ -84,6 +96,13 @@ export default function App() {
   // scrolling timeline. /brief is already cached 60s server-side, so this costs
   // nothing extra.
   const briefRes = usePolling(fetchBrief, 60_000);
+  // Bus vehicles: only polled while the layer is on (~360 features, and each
+  // payload is valid for ~30s). Feeds the inspector's bus card.
+  const busesRes = usePolling(
+    () => (visible.buses ? fetchBuses() : Promise.resolve(null)),
+    visible.buses ? 15_000 : 0,
+    [visible.buses],
+  );
 
   useEffect(() => {
     let alive = true;
@@ -142,7 +161,7 @@ export default function App() {
     const api = layersRes.data?.data.layers ?? [];
     const origin = layersRes.data?.origin ?? 'none';
     const byId = new Map(api.map((l) => [l.id, l]));
-    return LAYER_IDS.map((id) => {
+    return PANEL_LAYER_IDS.map((id) => {
       const a = byId.get(id);
       let state: LayerState['state'] = a?.state ?? (origin === 'api' ? 'off' : 'mock');
       // P1-5: flood used to be force-pinned 'live' here regardless of what the
@@ -317,6 +336,7 @@ export default function App() {
             eventsMeta={eventsMeta}
             linesMeta={lines?.meta ?? null}
             stationsMeta={stations?.meta ?? null}
+            buses={busesRes.data ?? null}
             onOpenImpact={onPickLine}
           />
         </ErrorBoundary>

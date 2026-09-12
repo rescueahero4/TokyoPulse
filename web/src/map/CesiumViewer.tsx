@@ -11,6 +11,9 @@ import { renderWarnings } from './layers/warnings';
 import { renderCrowd } from './layers/crowd';
 import { addFloodLayer } from './layers/flood';
 import { renderPeopleFlow } from './layers/peopleflow';
+import {
+  fetchBusRoute, fetchBuses, renderBusRoute, renderBuses, type BusCollection,
+} from './layers/buses';
 // Shared collapsible header owned by the panels agent. Imported, never edited,
 // so the MAP cluster's collapse affordance matches every other HUD widget.
 import { PanelHeader } from '../panels/PanelHeader';
@@ -20,7 +23,9 @@ import {
 } from './basemaps';
 
 /** Layer ids match GET /layers.json so LayerPanel toggles map 1:1 onto the map. */
-export const LAYER_IDS = ['trains', 'quakes', 'warnings', 'crowd', 'flood', 'peopleflow'] as const;
+export const LAYER_IDS = [
+  'trains', 'quakes', 'warnings', 'crowd', 'buses', 'flood', 'peopleflow',
+] as const;
 export type LayerId = (typeof LAYER_IDS)[number];
 
 const env = import.meta.env;
@@ -111,6 +116,12 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     try { return window.localStorage.getItem(COLLAPSE_STORAGE_KEY) !== '1'; } catch { return true; }
   });
   const clusterRef = useRef<HTMLDivElement | null>(null);
+  const busRouteDsRef = useRef<Cesium.CustomDataSource | null>(null);
+  const [buses, setBuses] = useState<BusCollection | null>(null);
+  const [selectedBusId, setSelectedBusId] = useState<string | null>(null);
+  const [selectedBusRouteId, setSelectedBusRouteId] = useState<string | null>(null);
+  /** Fresh every render so the once-registered pick handler never goes stale. */
+  const onBusPickRef = useRef<((busId: string, routeId: string) => void) | null>(null);
   const [introFlying, setIntroFlying] = useState(false);
   const introTimerRef = useRef<number | null>(null);
   const atmosphereRef = useRef<boolean | null>(null);
@@ -157,6 +168,10 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
 
   linesRef.current = props.lines;
   onLinePickRef.current = props.onLinePick;
+  onBusPickRef.current = (busId: string, routeId: string) => {
+    setSelectedBusId(busId);
+    setSelectedBusRouteId(routeId || null);
+  };
 
   /** Straight down over Tokyo Station. Shared by the home button, the map handle
    *  and the tail of the intro flight — one definition, three callers. */
@@ -489,6 +504,17 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       }
     }
 
+    // The selected bus route lives in its own source so refreshing the vehicle
+    // positions (every 20s) never wipes the route the user is looking at.
+    try {
+      const routeDs = new Cesium.CustomDataSource('busroute');
+      routeDs.show = false;
+      void viewer.dataSources.add(routeDs);
+      busRouteDsRef.current = routeDs;
+    } catch (e) {
+      console.warn('[map] bus route source could not be created', e);
+    }
+
     // The flood raster is added on first enable (see the visibility effect):
     // toggling `show` on a layer that was added hidden does not always make
     // Cesium re-request its imagery, so we add/remove the layer instead.
@@ -507,6 +533,18 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
         try {
           const now = Cesium.JulianDate.now();
           const picks = viewer.scene.drillPick(click.position, 8, 12, 12) || [];
+          // A vehicle is a small target drawn above the lines, so it wins the
+          // click; bare track still falls through to the line below.
+          for (const p of picks) {
+            const entity = p && (p.id as Cesium.Entity | undefined);
+            if (entity?.properties?.kind?.getValue?.(now) !== 'bus') continue;
+            const busId = entity?.properties?.busId?.getValue?.(now);
+            const routeId = entity?.properties?.routeId?.getValue?.(now);
+            if (busId) {
+              onBusPickRef.current?.(String(busId), String(routeId || ''));
+              return;
+            }
+          }
           for (const p of picks) {
             const entity = p && (p.id as Cesium.Entity | undefined);
             const kind = entity?.properties?.kind?.getValue?.(now);
@@ -541,6 +579,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       pinchCleanupRef.current?.();
       pinchCleanupRef.current = null;
       floodRef.current = null;
+      busRouteDsRef.current = null;
       baseLayerRef.current = null;
       labelLayerRef.current = null;
     };
@@ -717,6 +756,78 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     }
   }, [ready, props.peopleFlowAvailable]);
 
+  // ---- buses.
+  // This layer fetches its own data, unlike every other layer here. App owns
+  // fetching for the core planes, but buses are an opt-in bonus layer living
+  // entirely inside web/src/map/**, and wiring them through App would mean
+  // editing a file another agent is actively in. The poll only runs while the
+  // layer is visible, so the default demo costs zero bus requests.
+  const busesOn = props.visible.buses === true;
+
+  useEffect(() => {
+    if (!ready || !busesOn) {
+      setBuses(null);
+      return;
+    }
+    let alive = true;
+    const ctrl = new AbortController();
+    const load = () => {
+      void fetchBuses(ctrl.signal).then((fc) => { if (alive && fc) setBuses(fc); });
+    };
+    load();
+    const t = window.setInterval(load, 20_000);
+    return () => {
+      alive = false;
+      ctrl.abort();
+      window.clearInterval(t);
+    };
+  }, [ready, busesOn]);
+
+  useEffect(() => {
+    if (!ready) return;
+    const ds = sourcesRef.current.buses;
+    if (!ds) return;
+    try {
+      const n = renderBuses(ds, busesOn ? buses : null, props.lang, selectedBusId);
+      bump('buses', n);
+      if (busesOn && buses) {
+        const at = (buses.features || []).filter((f) => f.properties?.positionSource === 'at-stop').length;
+        console.info(
+          '[map] buses: ' + n + ' vehicles (' + at + ' at-stop, ' + (n - at)
+          + ' interpolated - schedule-derived, not GPS)',
+        );
+      }
+      viewerRef.current?.scene.requestRender();
+    } catch (e) {
+      console.warn('[map] bus layer failed', e);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, buses, busesOn, props.lang, selectedBusId]);
+
+  // Selected bus -> its route only. Never `?all=1` (651 features).
+  useEffect(() => {
+    const ds = busRouteDsRef.current;
+    if (!ds) return;
+    if (!ready || !busesOn || !selectedBusRouteId) {
+      try { renderBusRoute(ds, null); } catch { /* ignore */ }
+      return;
+    }
+    let alive = true;
+    const ctrl = new AbortController();
+    void fetchBusRoute(selectedBusRouteId, ctrl.signal).then((fc) => {
+      if (!alive || !fc) return;
+      try {
+        const n = renderBusRoute(ds, fc);
+        ds.show = true;
+        console.info('[map] bus route ' + selectedBusRouteId + ': ' + n + ' polylines');
+        viewerRef.current?.scene.requestRender();
+      } catch (e) {
+        console.warn('[map] bus route render failed', e);
+      }
+    });
+    return () => { alive = false; ctrl.abort(); };
+  }, [ready, busesOn, selectedBusRouteId]);
+
   // ---- visibility, each toggle isolated
   useEffect(() => {
     if (!ready) return;
@@ -737,6 +848,14 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
         }
         const ds = sourcesRef.current[id];
         if (!ds) continue;
+        if (id === 'buses') {
+          // Opt-in, like flood: an absent key must not read as visible, or the
+          // demo would open with 360 vehicles the human did not ask for.
+          const wantBuses = props.visible.buses === true;
+          ds.show = wantBuses;
+          if (busRouteDsRef.current) busRouteDsRef.current.show = wantBuses;
+          continue;
+        }
         ds.show = id === 'peopleflow' ? props.peopleFlowAvailable && on : on;
       } catch (e) {
         console.warn('[map] toggle ' + id + ' failed', e);

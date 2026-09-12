@@ -109,14 +109,19 @@ test.describe('Resilience: layers fail independently', () => {
       // (web/src/panels/CityFeed.tsx) - .tp-timeline/.tp-brief-card are no
       // longer rendered by App.tsx (still exported standalone per the frozen
       // ui-contract, just unused). .tp-city-feed is the actual live rail.
+      // LineSearch + ImpactPanel similarly merged into LinePanel
+      // (.tp-line-panel, no more standalone .tp-line-search/.tp-impact-panel).
+      // LayerPanel moved to a bottom-left, collapsed-by-default chip
+      // (.tp-layer-chip); check its bounds in that default state, since
+      // that's what's actually on screen for most of the demo.
       const cityFeed = page.locator('.tp-city-feed');
       await expect(cityFeed).toBeVisible({ timeout: 15000 });
 
       const panelSelectors = [
         '.tp-status-bar',
         '.tp-alert-banner-wrap',
-        '.tp-line-search',
-        '.tp-layer-panel',
+        '.tp-line-panel',
+        '.tp-layer-chip',
         '.tp-left-column',
         '.tp-city-feed',
         '.tp-forecast-strip',

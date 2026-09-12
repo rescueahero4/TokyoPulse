@@ -14,6 +14,9 @@ import * as Cesium from 'cesium';
 
 export type MapPick =
   | { kind: 'station'; stationId: string }
+  /** A Toei bus. `positionSource` matters to the card copy: an interpolated
+   *  position is schedule-derived, NOT GPS, and must be labelled as such. */
+  | { kind: 'bus'; busId: string; routeId: string | null; positionSource: string | null }
   | { kind: 'event'; eventId: string }
   | { kind: 'line'; lineId: string }
   /** Nothing pickable under the cursor — i.e. basemap or a raster overlay. */
@@ -58,7 +61,9 @@ function resolvePick(viewer: Cesium.Viewer, position: Cesium.Cartesian2): MapPic
   // visually on top is what the user meant to click, so markers win pass 1 and
   // lines are the pass-2 fallback. A click on bare track still resolves to the
   // line, and A6's own handler keeps opening the Impact panel either way.
-  const markerKinds = new Set(['station', 'event']);
+  // Buses are billboards drawn above everything and are the smallest target on
+  // screen, so they join stations and events in the pass-1 "visually on top" set.
+  const markerKinds = new Set(['station', 'event', 'bus']);
 
   for (const pass of [1, 2]) {
     for (const raw of picks) {
@@ -71,6 +76,19 @@ function resolvePick(viewer: Cesium.Viewer, position: Cesium.Cartesian2): MapPic
       if (pass === 1 && !markerKinds.has(String(kind))) continue;
       if (pass === 2 && kind !== 'line') continue;
 
+      if (kind === 'bus') {
+        const busId = props.busId?.getValue?.(now);
+        if (busId) {
+          const routeId = props.routeId?.getValue?.(now);
+          const positionSource = props.positionSource?.getValue?.(now);
+          return {
+            kind: 'bus',
+            busId: String(busId),
+            routeId: routeId ? String(routeId) : null,
+            positionSource: positionSource ? String(positionSource) : null,
+          };
+        }
+      }
       if (kind === 'station') {
         const stationId = props.stationId?.getValue?.(now);
         if (stationId) return { kind: 'station', stationId: String(stationId) };
