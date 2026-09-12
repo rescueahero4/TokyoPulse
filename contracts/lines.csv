@@ -5,11 +5,11 @@ Toei-Shinjuku,Shinjuku Line,都営新宿線,Toei,#6cbb5a,odpt.Railway:Toei.Shinj
 Toei-Oedo,Oedo Line,都営大江戸線,Toei,#b6007a,odpt.Railway:Toei.Oedo,都営地下鉄大江戸線,live,
 Toei-Arakawa,Tokyo Sakura Tram,東京さくらトラム,Toei,#f08300,odpt.Railway:Toei.Arakawa,都電荒川線,live,
 Toei-NipporiToneri,Nippori-Toneri Liner,日暮里・舎人ライナー,Toei,#cfba00,odpt.Railway:Toei.NipporiToneri,日暮里・舎人ライナー,live,
-JR-Yamanote,Yamanote Line,山手線,JR-East,#9acd32,,山手線,none,yamanoteline
-JR-Chuo-Rapid,Chuo Rapid Line,中央線快速,JR-East,#f15a22,,中央線快速,none,chuoline_rapidservice
-JR-Chuo-Sobu,Chuo-Sobu Line,中央・総武線各駅停車,JR-East,#ffd400,,中央・総武線,none,chuo_sobuline_local
-JR-Keihin-Tohoku,Keihin-Tohoku Line,京浜東北線,JR-East,#00b2e5,,京浜東北線,none,keihin-tohokuline
-JR-Saikyo,Saikyo Line,埼京線,JR-East,#2cb431,,埼京線,none,saikyoline
+JR-Yamanote,Yamanote Line,山手線,JR-East,#9acd32,,山手線,live,yamanoteline
+JR-Chuo-Rapid,Chuo Rapid Line,中央線快速,JR-East,#f15a22,,中央線快速,live,chuoline_rapidservice
+JR-Chuo-Sobu,Chuo-Sobu Line,中央・総武線各駅停車,JR-East,#ffd400,,中央・総武線,live,chuo_sobuline_local
+JR-Keihin-Tohoku,Keihin-Tohoku Line,京浜東北線,JR-East,#00b2e5,,京浜東北線,live,keihin-tohokuline
+JR-Saikyo,Saikyo Line,埼京線,JR-East,#2cb431,,埼京線,live,saikyoline
 Metro-Ginza,Ginza Line,銀座線,TokyoMetro,#ff9500,,東京メトロ銀座線,none,
 Metro-Marunouchi,Marunouchi Line,丸ノ内線,TokyoMetro,#f62e36,,東京メトロ丸ノ内線,none,
 Metro-Hibiya,Hibiya Line,日比谷線,TokyoMetro,#b5b5ac,,東京メトロ日比谷線,none,
