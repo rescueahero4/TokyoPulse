@@ -1123,15 +1123,178 @@
   box-shadow: inset 0 0 10px rgba(0, 180, 255, 0.08);
 }
 
+/* ---------- InspectorPanel (map click -> what is this + where is it from) ----------
+   Second column, right of the left stack: clear of the left column (ends 316px),
+   clear of the top-centre AlertBanner (top 72px), and its max-height stops above
+   the bottom weather strip so the two never collide. */
+
+.tp-inspector {
+  position: absolute;
+  top: 72px;
+  left: 332px;
+  width: 330px;
+  max-height: calc(100vh - 250px);
+  z-index: 35;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 0 1px rgba(0, 180, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.tp-insp-body {
+  overflow-y: auto;
+  min-height: 0;
+  padding: 2px 0 0;
+}
+
+.tp-insp-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.tp-insp-row-label {
+  flex: 0 0 104px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tp-text-dim, var(--gs-text-dim));
+}
+
+.tp-insp-row-value {
+  flex: 1;
+  min-width: 0;
+  color: var(--tp-text);
+  overflow-wrap: anywhere;
+}
+
+.tp-insp-mono { letter-spacing: 0.04em; }
+.tp-insp-empty { color: var(--tp-text-muted); }
+
+.tp-insp-swatch-wrap { display: inline-flex; align-items: center; gap: 7px; }
+
+.tp-insp-swatch {
+  display: inline-block;
+  width: 22px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.tp-insp-band { display: inline-flex; align-items: center; gap: 3px; }
+
+.tp-insp-band-pip {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.tp-insp-band-pip-on {
+  background: var(--tp-accent);
+  box-shadow: 0 0 5px rgba(0, 180, 255, 0.5);
+}
+
+.tp-insp-band-num { margin-left: 5px; font-size: 10px; color: var(--tp-text-muted); }
+
+.tp-insp-callout {
+  margin: 8px 12px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 170, 0, 0.45);
+  background: rgba(255, 170, 0, 0.08);
+  border-radius: 3px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--gs-neon-amber);
+}
+
+.tp-insp-action {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 8px 12px;
+  padding: 7px 9px;
+  background: rgba(0, 180, 255, 0.08);
+  border: 1px solid rgba(0, 180, 255, 0.4);
+  border-radius: 3px;
+  color: var(--tp-accent);
+  font-family: var(--tp-font);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tp-insp-action:hover {
+  background: rgba(0, 180, 255, 0.16);
+  box-shadow: 0 0 10px rgba(0, 180, 255, 0.25);
+}
+
+/* The SOURCE footer is the honesty commitment made clickable — it must never
+   read as a disclaimer bolted on, so it gets its own bordered block. */
+.tp-insp-source {
+  margin-top: 2px;
+  padding: 8px 12px 10px;
+  border-top: 1px solid var(--tp-border);
+  background: rgba(0, 180, 255, 0.03);
+}
+
+.tp-insp-source-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.tp-insp-source-label {
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--tp-accent);
+}
+
+.tp-insp-source-fresh {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gs-neon-green);
+  opacity: 0.8;
+  text-align: right;
+}
+
+.tp-insp-source-text {
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--tp-text);
+  overflow-wrap: anywhere;
+}
+
+.tp-insp-source-note {
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1.55;
+  color: var(--gs-neon-amber);
+  opacity: 0.9;
+}
+
 /* ---------- responsive floor (projector uses a large fixed window) ---------- */
 
 @media (max-width: 1100px) {
   .tp-city-feed, .tp-timeline { width: 300px; }
   .tp-left-column { width: 276px; }
+  .tp-inspector { left: 292px; width: 300px; }
 }
 
 @media (max-width: 900px) {
   .tp-city-feed, .tp-timeline { width: 260px; }
   .tp-left-column { width: 236px; }
   .tp-forecast-strip { width: calc(100vw - 280px); }
+  .tp-inspector { left: 252px; width: 280px; }
 }

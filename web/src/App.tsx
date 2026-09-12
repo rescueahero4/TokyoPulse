@@ -17,6 +17,7 @@ import { LayerPanel } from './panels/LayerPanel';
 import { LineSearch } from './panels/LineSearch';
 import { ForecastStrip } from './panels/ForecastStrip';
 import { ImpactPanel } from './panels/ImpactPanel';
+import { InspectorPanel } from './panels/InspectorPanel';
 import { StatusBar } from './panels/StatusBar';
 
 import './styles/app.css';
@@ -275,6 +276,24 @@ export default function App() {
             brief={briefRes.data?.data ?? null}
             briefLoading={briefRes.loading}
             onRefreshBrief={briefRes.refresh}
+          />
+        </ErrorBoundary>
+
+        {/* Map-click inspector. It subscribes to its own Cesium pick handler
+            (panels/../map/inspector.ts), so no map file changes; it only reads
+            data App already holds. */}
+        <ErrorBoundary label="InspectorPanel">
+          <InspectorPanel
+            events={events}
+            lines={lines}
+            stations={stations}
+            lang={lang}
+            floodVisible={!!visible.flood}
+            peopleFlowVisible={!!visible.peopleflow && peopleFlow}
+            eventsMeta={eventsMeta}
+            linesMeta={lines?.meta ?? null}
+            stationsMeta={stations?.meta ?? null}
+            onOpenImpact={onPickLine}
           />
         </ErrorBoundary>
 

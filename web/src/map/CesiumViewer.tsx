@@ -103,6 +103,9 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   const introTimerRef = useRef<number | null>(null);
   const atmosphereRef = useRef<boolean | null>(null);
   const skipCleanupRef = useRef<(() => void) | null>(null);
+  const pinchCleanupRef = useRef<(() => void) | null>(null);
+  /** Fresh every render so the once-registered pinch listener never goes stale. */
+  const zoomInstantRef = useRef<((f: number) => void) | null>(null);
   const statsRef = useRef<Record<string, number>>({});
 
   linesRef.current = props.lines;
@@ -143,6 +146,8 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       console.warn('[map] pinch zoom failed', e);
     }
   }, []);
+
+  zoomInstantRef.current = zoomInstant;
 
   /** Multiply/divide camera height, clamped to the same bounds the wheel obeys. */
   const zoomByFactor = useCallback((factor: number) => {
@@ -388,6 +393,26 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       console.warn('[map] intro skip handler unavailable', e);
     }
 
+    // Trackpad pinch. Browsers deliver a pinch as a `wheel` event with
+    // ctrlKey=true, and Cesium's ScreenSpaceCameraController ignores those
+    // outright — so on a laptop the natural zoom gesture silently does nothing.
+    // Measured: three ctrl+wheel events left the camera at 27,776m unchanged.
+    // Handle it ourselves, instantly, against the same clamps the wheel obeys.
+    try {
+      const onPinch = (e: WheelEvent) => {
+        if (!e.ctrlKey) return;           // plain wheel is Cesium's job
+        e.preventDefault();
+        const f = Math.min(2, Math.max(0.5, Math.exp(e.deltaY * 0.002)));
+        zoomInstantRef.current?.(f);
+      };
+      viewer.scene.canvas.addEventListener('wheel', onPinch, { passive: false });
+      pinchCleanupRef.current = () => {
+        try { viewer.scene.canvas.removeEventListener('wheel', onPinch); } catch { /* ignore */ }
+      };
+    } catch (e) {
+      console.warn('[map] pinch-zoom handler unavailable', e);
+    }
+
     // Globe dressing above GLOBE_ALTITUDE_M, flat tactical city view below it.
     // Guarded by a ref so this writes only when the threshold is actually crossed.
     try {
@@ -466,6 +491,8 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       introTimerRef.current = null;
       skipCleanupRef.current?.();
       skipCleanupRef.current = null;
+      pinchCleanupRef.current?.();
+      pinchCleanupRef.current = null;
       floodRef.current = null;
       baseLayerRef.current = null;
       labelLayerRef.current = null;
