@@ -568,13 +568,40 @@ def part_b15(ctx: dict[str, Any]) -> None:
                    "Ensure three_tier() tier-2/3 fallback always sets degraded=true.")
     finally:
         if proc is not None:
+            pid = proc.pid
             proc.terminate()
             try:
                 proc.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 proc.kill()
-                proc.wait(timeout=5)
-            print("    (killed degraded API instance on :8001)")
+                try:
+                    proc.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    pass
+            # Belt and braces on Windows: terminate()/kill() occasionally fails
+            # to bring down a uvicorn process promptly. Force it via taskkill
+            # and CONFIRM the port is actually free before moving on — this
+            # script must never leave a stray API process behind.
+            if os.name == "nt":
+                subprocess.run(["taskkill", "/F", "/T", "/PID", str(pid)],
+                               capture_output=True)
+            still_up = False
+            try:
+                with httpx.Client(timeout=1.0) as client:
+                    client.get("http://127.0.0.1:8001/health")
+                    still_up = True
+            except httpx.HTTPError:
+                still_up = False
+            print(f"    (killed degraded API instance on :8001, pid={pid}, "
+                  f"port still responding={still_up})")
+            if still_up:
+                record("B15-cleanup", False,
+                       "port 8001 still serving requests after kill attempt — manual cleanup needed")
+                defect("tests/contract/validate.py", "QA-CONTRACT",
+                       "degraded-instance cleanup did not free port 8001",
+                       "Investigate why the spawned uvicorn process on :8001 outlived terminate()/kill()/taskkill.")
+            else:
+                record("B15-cleanup", True, "port 8001 confirmed free after cleanup")
 
 
 def part_b_retry(event_validator: Draft7Validator) -> None:

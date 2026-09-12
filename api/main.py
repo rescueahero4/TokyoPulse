@@ -714,7 +714,9 @@ def _replay_quake(now: datetime) -> list[dict[str, Any]]:
     if shindo:
         title_ja += f"（最大震度{shindo}）"
     return [{
-        "id": f"replay-quake-{int(now.timestamp())}",
+        # Deterministic id: re-firing the quake beat MERGEs the same node with a
+        # fresh timestamp instead of stacking a duplicate earthquake.
+        "id": "replay-quake",
         "type": "quake", "severity": severity,
         "time": now.isoformat(),
         "lat": hypo.get("latitude"), "lon": hypo.get("longitude"),
@@ -751,7 +753,7 @@ def _replay_train(now: datetime) -> list[dict[str, Any]]:
             title_ja = f"{row['nameJa']}：約15分の遅れ（リプレイ）"
             sev = "warning"
         out.append({
-            "id": f"replay-train-{row['lineId']}-{ts}",
+            "id": f"replay-train-{row['lineId']}",
             "type": "train", "severity": sev, "time": now.isoformat(),
             "lat": None, "lon": None,
             "title": title, "titleJa": title_ja,
@@ -765,11 +767,10 @@ def _replay_warning(now: datetime) -> list[dict[str, Any]]:
     """Inject the cached JMA Tokyo (130000) warning payload as fresh Events."""
     raw = read_mock("raw/jma-warning-130000.json") or {}
     head = (raw.get("headlineText") or "").strip()
-    ts = int(now.timestamp())
     out: list[dict[str, Any]] = []
     if head:
         out.append({
-            "id": f"replay-warning-headline-{ts}",
+            "id": "replay-warning-headline",
             "type": "warning", "severity": "warning", "time": now.isoformat(),
             "lat": None, "lon": None,
             "title": "JMA advisory headline for Tokyo (see Japanese text)",
@@ -792,7 +793,7 @@ def _replay_warning(now: datetime) -> list[dict[str, Any]]:
                 continue
             w = wards[idx]
             out.append({
-                "id": f"replay-warning-{w['ward']}-{ts}",
+                "id": f"replay-warning-{w['ward']}",
                 "type": "warning", "severity": "warning", "time": now.isoformat(),
                 "lat": float(w["lat"]), "lon": float(w["lon"]),
                 "title": f"JMA weather advisory active for {w['ward']} "
@@ -808,7 +809,7 @@ def _replay_warning(now: datetime) -> list[dict[str, Any]]:
         # Cached snapshot had no ward-level advisories: give the beat one event.
         w = next((x for x in wards if x["ward"] == "Koto"), wards[0])
         out.append({
-            "id": f"replay-warning-{w['ward']}-{ts}",
+            "id": f"replay-warning-{w['ward']}",
             "type": "warning", "severity": "warning", "time": now.isoformat(),
             "lat": float(w["lat"]), "lon": float(w["lon"]),
             "title": f"Heavy rain advisory for {w['ward']} (replay)",
@@ -836,9 +837,11 @@ def demo_replay(body: dict[str, Any] = Body(default=None)) -> dict[str, Any]:
         log.exception("replay builder failed")
         events, note = [], f"replay builder failed: {type(exc).__name__}"
 
-    # In-memory first: the beat fires even with Neo4j down.
-    REPLAY.extend(events)
-    del REPLAY[:-REPLAY_CAP]
+    # In-memory first: the beat fires even with Neo4j down. Same-id events
+    # REPLACE the previous copy, matching the graph's MERGE semantics.
+    new_ids = {e.get("id") for e in events}
+    kept = [e for e in REPLAY if e.get("id") not in new_ids]
+    REPLAY[:] = (kept + events)[-REPLAY_CAP:]
 
     written = 0
     try:
@@ -859,6 +862,35 @@ def demo_replay(body: dict[str, Any] = Body(default=None)) -> dict[str, Any]:
 
     return {"injected": len(events), "scenario": scenario, "written": written,
             "events": events, "meta": meta(src, degraded, note)}
+
+
+@app.post("/demo/reset")
+def demo_reset() -> dict[str, Any]:
+    """Demo-control: wipe everything `/demo/replay` injected, leaving real
+    ingested events untouched. Use between a rehearsal and the live run.
+
+        curl -X POST http://127.0.0.1:8000/demo/reset
+
+    Returns {"deleted": <Events removed from the graph>, "cleared": <held in
+    memory>, "meta": {...}}. Never 500s: if Neo4j is unreachable the in-memory
+    replay list is still cleared and `meta` says so.
+    """
+    held = len(REPLAY)
+    REPLAY.clear()
+    deleted, src, degraded, note = 0, "live", False, None
+    try:
+        deleted = graph.delete_replay_events()
+    except Exception as exc:
+        src, degraded = "mock", True
+        note = (f"Neo4j unavailable ({type(exc).__name__}) — cleared {held} in-memory "
+                f"replay events only")
+        log.warning("demo/reset: %s", note)
+
+    for prefix in ("events:", "layers.json", "brief", "impact:", "health"):
+        cache.invalidate(prefix)
+
+    return {"deleted": deleted, "cleared": held,
+            "meta": meta(src, degraded, note)}
 
 
 # ─────────────────────────── startup: warm everything ────────────────────────

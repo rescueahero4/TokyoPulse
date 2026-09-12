@@ -529,6 +529,23 @@ def upsert_events(events: list[dict]) -> int:
     return len(rows)
 
 
+def delete_replay_events() -> int:
+    """Delete ONLY Events written by /demo/replay (`source = "replay"`).
+
+    Demo-control helper for `POST /demo/reset`: lets us wipe a rehearsal's
+    injected events so the timeline is clean for the live run. Strictly scoped —
+    real ingested events (odpt / p2pquake / jma / open-meteo) are never touched.
+    Returns the number of Event nodes deleted. Raises GraphUnavailable if the
+    graph is unreachable.
+    """
+    rows = run("MATCH (e:Event) WHERE e.source = 'replay' RETURN count(e) AS n")
+    n = int(rows[0]["n"]) if rows else 0
+    if n:
+        # DETACH so the (Event)-[:AFFECTS]->(Line|Ward) edges go with it.
+        run("MATCH (e:Event) WHERE e.source = 'replay' DETACH DELETE e")
+    return n
+
+
 # ──────────────────────────────── read path ──────────────────────────────────
 
 SEVERITY_ORDER = {"info": 0, "warning": 1, "critical": 2}
