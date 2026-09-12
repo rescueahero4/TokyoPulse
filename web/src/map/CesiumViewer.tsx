@@ -1,5 +1,7 @@
 import * as Cesium from 'cesium';
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import {
+  forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState,
+} from 'react';
 import type { Lang, PulseEvent } from '../lib/types';
 import type { LineCollection, StationCollection } from '../lib/geo';
 import { lineSegments } from '../lib/geo';
@@ -24,9 +26,22 @@ const HOME = {
   lon: Number(env.VITE_MAP_CENTER_LON ?? 139.7671) || 139.7671,
   height: Number(env.VITE_MAP_HEIGHT_M ?? 40000) || 40000,
 };
-/** City-scale camera bounds: you cannot fall through the globe or get lost in space. */
+/**
+ * Camera bounds. The far end must clear Earth's radius (~6,371km) or the camera
+ * can never retreat far enough to see the globe — it hits an invisible wall and
+ * reads as "zoom is broken". That was a real bug here: the cap was 2,500km.
+ * 30,000km gives one continuous zoom: globe -> country -> city -> street.
+ */
 const MIN_ZOOM_M = Number(env.VITE_MAP_MIN_ZOOM_M ?? 120) || 120;
-const MAX_ZOOM_M = Number(env.VITE_MAP_MAX_ZOOM_M ?? 2_500_000) || 2_500_000;
+const MAX_ZOOM_M = Number(env.VITE_MAP_MAX_ZOOM_M ?? 30_000_000) || 30_000_000;
+/** Altitude at which the scene switches between globe dressing and flat city view. */
+const GLOBE_ALTITUDE_M = Number(env.VITE_MAP_GLOBE_ALTITUDE_M ?? 1_000_000) || 1_000_000;
+/** Opening shot altitude: Earth framed, Japan facing the viewer. */
+const INTRO_HEIGHT_M = Number(env.VITE_MAP_INTRO_HEIGHT_M ?? 24_000_000) || 24_000_000;
+const INTRO_SECONDS = Number(env.VITE_INTRO_DURATION_S ?? 3.6) || 3.6;
+const INTRO_ENABLED = String(env.VITE_INTRO_FLIGHT ?? 'true') !== 'false';
+/** One wheel-equivalent step for the +/- buttons. */
+const ZOOM_STEP = 1.6;
 const GSI_FLOOD = env.VITE_GSI_FLOOD_TILES
   || 'https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png';
 
@@ -83,10 +98,123 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     try { return window.localStorage.getItem(LABELS_STORAGE_KEY) !== '0'; } catch { return true; }
   });
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [controlsOpen, setControlsOpen] = useState(true);
+  const [introFlying, setIntroFlying] = useState(false);
+  const introTimerRef = useRef<number | null>(null);
+  const atmosphereRef = useRef<boolean | null>(null);
+  const skipCleanupRef = useRef<(() => void) | null>(null);
   const statsRef = useRef<Record<string, number>>({});
 
   linesRef.current = props.lines;
   onLinePickRef.current = props.onLinePick;
+
+  /** Straight down over Tokyo Station. Shared by the home button, the map handle
+   *  and the tail of the intro flight — one definition, three callers. */
+  const flyHome = useCallback((duration = 1.2) => {
+    const v = viewerRef.current;
+    if (!v) return;
+    try {
+      v.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(HOME.lon, HOME.lat, HOME.height),
+        orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
+        duration,
+        easingFunction: Cesium.EasingFunction.QUADRATIC_IN_OUT,
+      });
+    } catch (e) {
+      console.warn('[map] flyHome failed', e);
+    }
+  }, []);
+
+  /** Instant height change, clamped. Used by the pinch handler where any
+   *  animation would fight the gesture. */
+  const zoomInstant = useCallback((factor: number) => {
+    const v = viewerRef.current;
+    if (!v) return;
+    try {
+      const cam = v.camera;
+      const c = cam.positionCartographic;
+      const target = Math.min(MAX_ZOOM_M, Math.max(MIN_ZOOM_M, c.height * factor));
+      const delta = c.height - target;
+      if (Math.abs(delta) < 0.5) return;
+      if (delta > 0) cam.zoomIn(delta);
+      else cam.zoomOut(-delta);
+      v.scene.requestRender();
+    } catch (e) {
+      console.warn('[map] pinch zoom failed', e);
+    }
+  }, []);
+
+  /** Multiply/divide camera height, clamped to the same bounds the wheel obeys. */
+  const zoomByFactor = useCallback((factor: number) => {
+    const v = viewerRef.current;
+    if (!v) return;
+    try {
+      const cam = v.camera;
+      const c = cam.positionCartographic;
+      const target = Math.min(MAX_ZOOM_M, Math.max(MIN_ZOOM_M, c.height * factor));
+      if (Math.abs(target - c.height) < 1) return;
+      cam.flyTo({
+        destination: Cesium.Cartesian3.fromRadians(c.longitude, c.latitude, target),
+        orientation: { heading: cam.heading, pitch: cam.pitch, roll: cam.roll },
+        duration: 0.32,
+        easingFunction: Cesium.EasingFunction.QUADRATIC_OUT,
+      });
+    } catch (e) {
+      console.warn('[map] zoom button failed', e);
+    }
+  }, []);
+
+  /**
+   * Opening shot: full globe with Japan facing the viewer, a beat, then a
+   * cinematic descent into central Tokyo (PRD §9 beat 1 — the first thing the
+   * judges see). Any input cancels it instantly; a presenter is never trapped
+   * inside an animation. Data keeps loading throughout — this touches only the
+   * camera. Honours prefers-reduced-motion and VITE_INTRO_FLIGHT.
+   */
+  const runIntro = useCallback((force = false) => {
+    const v = viewerRef.current;
+    if (!v) return;
+    const reduced = (() => {
+      try { return window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; }
+    })();
+    if (!force && (!INTRO_ENABLED || reduced)) {
+      v.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(HOME.lon, HOME.lat, HOME.height),
+        orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
+      });
+      return;
+    }
+    try {
+      v.camera.cancelFlight();
+      v.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(HOME.lon, HOME.lat, INTRO_HEIGHT_M),
+        orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
+      });
+      setIntroFlying(true);
+      if (introTimerRef.current) window.clearTimeout(introTimerRef.current);
+      // Hold on the globe for a beat before the descent reads as deliberate.
+      introTimerRef.current = window.setTimeout(() => {
+        const vv = viewerRef.current;
+        if (!vv) return;
+        try {
+          vv.camera.flyTo({
+            destination: Cesium.Cartesian3.fromDegrees(HOME.lon, HOME.lat, HOME.height),
+            orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
+            duration: INTRO_SECONDS,
+            easingFunction: Cesium.EasingFunction.QUADRATIC_IN_OUT,
+            complete: () => setIntroFlying(false),
+            cancel: () => setIntroFlying(false),
+          });
+        } catch {
+          setIntroFlying(false);
+        }
+      }, 700);
+    } catch (e) {
+      console.warn('[map] intro flight skipped', e);
+      setIntroFlying(false);
+      flyHome(0);
+    }
+  }, [flyHome]);
 
   useImperativeHandle(ref, () => ({
     flyTo(lat: number, lon: number, height = 9000) {
@@ -105,13 +233,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       }
     },
     home() {
-      const v = viewerRef.current;
-      if (!v) return;
-      v.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(HOME.lon, HOME.lat, HOME.height),
-        orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
-        duration: 1.2,
-      });
+      flyHome();
     },
   }));
 
@@ -149,7 +271,6 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
         scene3DOnly: true,
         shouldAnimate: false,
         shadows: false,
-        skyAtmosphere: false,
         requestRenderMode: false,
         creditContainer: creditRef.current ?? undefined,
       });
@@ -182,6 +303,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       scene.backgroundColor = Cesium.Color.fromCssColorString('#05080b');
       scene.globe.baseColor = Cesium.Color.fromCssColorString('#0a0a0f');
       if (scene.skyBox) scene.skyBox.show = false;
+      if (scene.skyAtmosphere) scene.skyAtmosphere.show = false;
       scene.globe.showGroundAtmosphere = false;
       scene.globe.enableLighting = false;       // a lit globe dims our tiles; HUD wants flat
       scene.globe.depthTestAgainstTerrain = false;
@@ -220,20 +342,67 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       console.warn('[map] camera controller tuning skipped', e);
     }
 
-    // Camera home: straight down over Tokyo Station.
+    // Opening shot. Camera only - every layer keeps loading behind it.
     try {
-      viewer.camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(HOME.lon, HOME.lat, HOME.height),
-        orientation: { heading: 0, pitch: -Cesium.Math.PI_OVER_TWO, roll: 0 },
-      });
-      const c = viewer.camera.positionCartographic;
+      runIntro();
       console.info(
-        '[map] camera home lat=' + Cesium.Math.toDegrees(c.latitude).toFixed(4)
-        + ' lon=' + Cesium.Math.toDegrees(c.longitude).toFixed(4)
-        + ' h=' + Math.round(c.height),
+        '[map] intro flight ' + (INTRO_ENABLED ? 'armed' : 'disabled')
+        + ', globe ' + Math.round(INTRO_HEIGHT_M / 1000) + 'km -> Tokyo '
+        + Math.round(HOME.height / 1000) + 'km over ' + INTRO_SECONDS + 's',
       );
     } catch (e) {
-      console.warn('[map] setView failed', e);
+      console.warn('[map] intro flight failed, jumping to Tokyo', e);
+      flyHome(0);
+    }
+
+    // Any input cancels the flight where it stands - never trap the presenter.
+    try {
+      const skip = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+      const cancel = () => {
+        try {
+          // `flying` is present at runtime but absent from Cesium's .d.ts.
+          const flying = (viewer.camera as unknown as { flying?: boolean }).flying;
+          if (flying || introTimerRef.current) {
+            if (introTimerRef.current) {
+              window.clearTimeout(introTimerRef.current);
+              introTimerRef.current = null;
+            }
+            viewer.camera.cancelFlight();
+            setIntroFlying(false);
+          }
+        } catch { /* ignore */ }
+      };
+      for (const t of [
+        Cesium.ScreenSpaceEventType.LEFT_DOWN,
+        Cesium.ScreenSpaceEventType.RIGHT_DOWN,
+        Cesium.ScreenSpaceEventType.MIDDLE_DOWN,
+        Cesium.ScreenSpaceEventType.WHEEL,
+        Cesium.ScreenSpaceEventType.PINCH_START,
+      ]) skip.setInputAction(cancel, t);
+      window.addEventListener('keydown', cancel);
+      skipCleanupRef.current = () => {
+        window.removeEventListener('keydown', cancel);
+        try { skip.destroy(); } catch { /* ignore */ }
+      };
+    } catch (e) {
+      console.warn('[map] intro skip handler unavailable', e);
+    }
+
+    // Globe dressing above GLOBE_ALTITUDE_M, flat tactical city view below it.
+    // Guarded by a ref so this writes only when the threshold is actually crossed.
+    try {
+      viewer.scene.preRender.addEventListener(() => {
+        const high = viewer.camera.positionCartographic.height > GLOBE_ALTITUDE_M;
+        if (atmosphereRef.current === high) return;
+        atmosphereRef.current = high;
+        try {
+          if (viewer.scene.skyAtmosphere) viewer.scene.skyAtmosphere.show = high;
+          viewer.scene.globe.showGroundAtmosphere = high;
+          if (viewer.scene.skyBox) viewer.scene.skyBox.show = high;
+        } catch { /* ignore */ }
+      });
+    } catch (e) {
+      console.warn('[map] atmosphere altitude hook unavailable', e);
     }
 
     // One CustomDataSource per layer, each added independently.
@@ -293,6 +462,10 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       }
       viewerRef.current = null;
       sourcesRef.current = {};
+      if (introTimerRef.current) window.clearTimeout(introTimerRef.current);
+      introTimerRef.current = null;
+      skipCleanupRef.current?.();
+      skipCleanupRef.current = null;
       floodRef.current = null;
       baseLayerRef.current = null;
       labelLayerRef.current = null;
@@ -498,19 +671,40 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     <div className="map-root">
       <div ref={hostRef} className="cesium-host" data-testid="cesium-host" />
 
-      {/* Rail status legend. Lines are painted in their official livery colour,
-          so status has to be readable as a modifier without explanation. */}
-      <div className="map-legend" aria-label="Rail line status legend">
-        <span className="map-legend-title">RAIL</span>
-        <span className="map-legend-item"><i className="map-legend-swatch is-normal" />normal</span>
-        <span className="map-legend-item"><i className="map-legend-swatch is-delay" />delay</span>
-        <span className="map-legend-item"><i className="map-legend-swatch is-suspended" />suspended</span>
-        <span className="map-legend-item"><i className="map-legend-swatch is-unknown" />no feed</span>
-      </div>
+      {/* One bottom-left control cluster: camera buttons, basemap chip and the
+          rail legend, stacked. Kept clear of the weather strip (bottom-centre),
+          the left-edge LAYERS dock and the API chip in the corner. */}
+      <div className={'map-controls' + (controlsOpen ? '' : ' is-collapsed')}>
+        <div className="map-controls-row">
+          <button
+            type="button"
+            className="map-controls-collapse"
+            aria-expanded={controlsOpen}
+            onClick={() => setControlsOpen((o) => !o)}
+            title={controlsOpen ? 'Hide map controls' : 'Show map controls'}
+          >
+            {controlsOpen ? '▾' : '▸'} MAP
+          </button>
+          <div className="map-zoom" role="group" aria-label="Zoom">
+            <button type="button" onClick={() => zoomByFactor(1 / ZOOM_STEP)} title="Zoom in" aria-label="Zoom in">+</button>
+            <button type="button" onClick={() => zoomByFactor(ZOOM_STEP)} title="Zoom out" aria-label="Zoom out">−</button>
+            <button type="button" onClick={() => flyHome()} title="Reset view to central Tokyo" aria-label="Reset to Tokyo">⌂</button>
+            <button
+              type="button"
+              className={introFlying ? 'is-active' : ''}
+              onClick={() => runIntro(true)}
+              title="Replay the globe → Tokyo intro flight"
+              aria-label="Replay intro flight"
+            >
+              ⟳
+            </button>
+          </div>
+        </div>
 
-      {/* Basemap switcher — collapsed to one chip so it never covers the data
-          plane or the panels. Opens upward, bottom-left of the forecast strip. */}
-      <div className={'map-basemap' + (pickerOpen ? ' is-open' : '')}>
+        {controlsOpen && (
+          <>
+            {/* Basemap switcher — one chip; the menu opens upward. */}
+            <div className={'map-basemap' + (pickerOpen ? ' is-open' : '')}>
         {pickerOpen && (
           <div className="map-basemap-menu" role="listbox" aria-label="Basemap">
             {BASEMAPS.map((b) => (
@@ -561,6 +755,19 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
           BASEMAP · {active.short}
           <span className="map-basemap-caret">{pickerOpen ? '▾' : '▴'}</span>
         </button>
+            </div>
+
+            {/* Rail status legend. Lines carry their official livery colour, so
+                the status encoding has to be readable without explanation. */}
+            <div className="map-legend" aria-label="Rail line status legend">
+              <span className="map-legend-title">RAIL</span>
+              <span className="map-legend-item"><i className="map-legend-swatch is-normal" />normal</span>
+              <span className="map-legend-item"><i className="map-legend-swatch is-delay" />delay</span>
+              <span className="map-legend-item"><i className="map-legend-swatch is-suspended" />suspended</span>
+              <span className="map-legend-item"><i className="map-legend-swatch is-unknown" />no feed</span>
+            </div>
+          </>
+        )}
       </div>
 
       <div ref={creditRef} className="map-credits" />

@@ -36,6 +36,11 @@ CACHE_TTL = 60.0
 _cache: dict[str, Any] = {"key": None, "at": 0.0, "value": None}
 _warm: dict[str, Any] = {"inflight": False, "last": 0.0}
 import threading as _threading
+
+
+# Human-readable provider names for the BriefCard footer (a judge reads this verbatim).
+PROVIDER_DISPLAY = {"anthropic": "Anthropic", "nosana": "Nosana", "template": "template"}
+
 _warm_lock = _threading.Lock()
 
 TYPE_EN = {"quake": "earthquake", "train": "rail", "warning": "weather warning",
@@ -314,7 +319,7 @@ def build_brief(events: list[dict], window: str = "now") -> dict[str, Any]:
         "provider": "template",
         "providerLabel": ("rule-based summary (no LLM reachable)"
                           if provider == "template"
-                          else f"rule-based summary (warming {provider})"),
+                          else f"rule-based summary ({PROVIDER_DISPLAY.get(provider, provider)} warming up)"),
         "eventCount": len(events), "note": None,
     }
 

@@ -6,7 +6,11 @@ One page. Read this while presenting. If something breaks, the **Failure Playboo
 
 ## 0. Before you touch anything
 
-- Use **`http://127.0.0.1:8000`**, never `http://localhost:8000`, in every command below. On this Windows machine `localhost` costs ~200ms extra in DNS resolution; `127.0.0.1` answers in 2-12ms.
+- Use **`http://127.0.0.1:8000`** and **`http://127.0.0.1:5173`**, never `localhost`, anywhere.
+- **CRITICAL (verified twice):** on this machine `http://localhost:5173` resolves over IPv6 to a **different project's**
+  dev server (an unrelated app titled "Asset Group - Treeview v2"). TokyoPulse binds IPv4-only on purpose.
+  If the browser shows the wrong app, you typed `localhost`. **Open `http://127.0.0.1:5173`.**
+  Before going live, confirm no other dev server is running on port 5173 on the presenting machine. On this Windows machine `localhost` costs ~200ms extra in DNS resolution; `127.0.0.1` answers in 2-12ms.
 - Three processes must be running: **API** (:8000), **web** (:5173), **ingest** (writing to Neo4j Aura in the background). All three are already up as of the last check. Don't kill or restart any of them mid-demo unless the Failure Playbook tells you to.
 
 ---
