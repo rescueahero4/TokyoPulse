@@ -16,7 +16,7 @@ import {
   fetchBusRoute, fetchBuses, renderBusRoute, renderBuses, type BusCollection,
 } from './layers/buses';
 import {
-  addWeatherLayer, fetchWeatherGrid, range, sample,
+  addWeatherLayer, fetchWeatherGrid, range, renderWeatherValues, sample,
   type WeatherGrid, type WeatherVar,
 } from './layers/weathergrid';
 // Shared collapsible header owned by the panels agent. Imported, never edited,
@@ -65,6 +65,7 @@ const GSI_FLOOD = env.VITE_GSI_FLOOD_TILES
 const COLLAPSE_STORAGE_KEY = 'tp.collapsed.map.v2';
 const BASEMAP_STORAGE_KEY = 'tp.basemap.v3';
 const LABELS_STORAGE_KEY = 'tp.basemapLabels.v3';
+const WX_VALUES_KEY = 'tp.wxValues';
 
 export interface MapHandle {
   flyTo(lat: number, lon: number, height?: number): void;
@@ -133,6 +134,10 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   const [wxVar, setWxVar] = useState<WeatherVar>('temperature_2m');
   const [wxAlpha, setWxAlpha] = useState(0.55);
   const [wxProbe, setWxProbe] = useState<number | null>(null);
+  const [wxValues, setWxValues] = useState<boolean>(() => {
+    try { return window.localStorage.getItem(WX_VALUES_KEY) === '1'; } catch { return false; }
+  });
+  const wxValuesDsRef = useRef<Cesium.CustomDataSource | null>(null);
   const [buses, setBuses] = useState<BusCollection | null>(null);
   const [selectedBusId, setSelectedBusId] = useState<string | null>(null);
   const [selectedBusRouteId, setSelectedBusRouteId] = useState<string | null>(null);
@@ -565,6 +570,16 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       }
     }
 
+    // Numeric weather values ride in their own source: they are labels, not part
+    // of the imagery layer, and must toggle independently of the surface.
+    try {
+      const wxDs = new Cesium.CustomDataSource('wxvalues');
+      void viewer.dataSources.add(wxDs);
+      wxValuesDsRef.current = wxDs;
+    } catch (e) {
+      console.warn('[map] weather value source could not be created', e);
+    }
+
     // The selected bus route lives in its own source so refreshing the vehicle
     // positions (every 20s) never wipes the route the user is looking at.
     try {
@@ -641,6 +656,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       pinchCleanupRef.current = null;
       floodRef.current = null;
       weatherLayerRef.current = null;
+      wxValuesDsRef.current = null;
       busRouteDsRef.current = null;
       baseLayerRef.current = null;
       labelLayerRef.current = null;
@@ -945,6 +961,37 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     }
   }, [wxAlpha]);
 
+  // Numeric values at the lattice points. Keyed on the variable too, so a TEMP
+  // reading can never survive a switch to RAIN wearing a "mm" unit.
+  useEffect(() => {
+    const ds = wxValuesDsRef.current;
+    if (!ds) return;
+    try {
+      const n = renderWeatherValues(
+        ds, weatherOn ? wxGrid : null, wxVar, weatherOn && wxValues,
+      );
+      if (weatherOn && wxValues) {
+        console.info('[map] weather values: ' + n + ' labels at lattice points (' + wxVar + ')');
+      }
+      viewerRef.current?.scene.requestRender();
+    } catch (e) {
+      console.warn('[map] weather value labels failed', e);
+    }
+  }, [ready, weatherOn, wxGrid, wxVar, wxValues]);
+
+  useEffect(() => {
+    try { window.localStorage.setItem(WX_VALUES_KEY, wxValues ? '1' : '0'); } catch { /* private window */ }
+  }, [wxValues]);
+
+  // Turning the weather layer on from the LayerPanel brings controls with it
+  // (variable, opacity, values). The MAP cluster is collapsed by default, so
+  // open it once on that transition rather than leaving them undiscoverable.
+  const weatherWasOn = useRef(false);
+  useEffect(() => {
+    if (weatherOn && !weatherWasOn.current) setControlsOpen(true);
+    weatherWasOn.current = weatherOn;
+  }, [weatherOn]);
+
   // Hover probe: read the interpolated value under the cursor. Throttled to
   // ~8/s so a mousemove storm cannot drive React re-renders.
   useEffect(() => {
@@ -1115,6 +1162,17 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
                     )}
                     <span>{r.max.toFixed(1)}{unit}</span>
                   </div>
+                  <button
+                    type="button"
+                    className={'map-wx-values' + (wxValues ? ' is-active' : '')}
+                    aria-pressed={wxValues}
+                    onClick={() => setWxValues((o) => !o)}
+                    title={'Print the sampled ' + (isTemp ? 'temperatures' : 'rainfall')
+                      + ' at the model grid points'}
+                  >
+                    <span className="map-basemap-switch" />
+                    Show values
+                  </button>
                   <label className="map-wx-row map-wx-opacity">
                     OPACITY
                     <input
@@ -1130,6 +1188,10 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
                     {isTemp
                       ? 'Bilinearly interpolated between a 7×9 lattice — smoothing only, no added detail. Model resolution ~5km.'
                       : 'Quantised bands, not smoothed: rainfall is genuinely patchy and a smooth surface would imply detail we do not have.'}
+                    {wxValues && (
+                      <> {' '}Values shown at the model grid points — the actual samples, not
+                      interpolated readings{!isTemp && ', and only where rain is forecast'}.</>
+                    )}
                   </div>
                 </div>
               );

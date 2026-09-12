@@ -11,6 +11,8 @@
 export interface DataSourceInfo {
   /** One line: what the layer actually shows. */
   what: string;
+  /** Optional: how the data is positioned/derived, when that is the confusing part. */
+  how?: string;
   /** Where the bytes come from. */
   source: string;
   /** The thing we are NOT claiming. Rendered in amber. Omit only when there is genuinely nothing to warn about. */
@@ -44,12 +46,17 @@ export const LAYER_INFO: Record<string, DataSourceInfo> = {
     urlLabel: 'P2PQuake v2 history',
   },
   warnings: {
-    what: 'Government weather advisories and warnings, pinned at the affected ward centroid.',
+    what: 'Official JMA (気象庁) weather advisories and warnings for Tokyo, positioned PER WARD.',
+    // The mechanism IS the explanation here: the layer looks broken when it is
+    // empty, and the only way to tell the difference is to say how positioning
+    // works. See doc/jma-warnings.md.
+    how:
+      'JMA publishes at two granularities. The coarse tier (class10s) treats all 23 wards as one region — positioning from it would put every Tokyo warning on a single pin. We use the municipality tier (class20s), where each ward has its own code (1310100 Chiyoda … 1312300 Edogawa), so an advisory attaches to the specific ward it covers. Only issued (発表) and continuing (継続) advisories are shown; cancelled (解除) ones are dropped.',
     source: 'JMA 気象庁 warning feed, Tokyo area code 130000.',
     caveat:
-      'Pinned at a ward centroid, not at a measured point. Advisories with no ward in their affects list are listed in the feed but cannot be placed on the map.',
-    url: 'https://www.jma.go.jp/bosai/warning/data/warning/130000.json',
-    urlLabel: 'JMA warning 130000',
+      'A ward-level advisory is drawn at its ward, not at a measured point. Areas outside the 23 wards (Tama cities, Izu / Ogasawara island municipalities) are never forced onto a ward — they are listed in the feed and labelled "outside 23-ward scope" instead.',
+    url: 'https://www.jma.go.jp/bosai/warning/#area_type=class20s&area_code=130000',
+    urlLabel: 'JMA warnings (class20s)',
   },
   crowd: {
     what: 'Station markers sized by passenger volume.',
@@ -107,4 +114,40 @@ export function railSource(operator: string, hasFeed: boolean): DataSourceInfo {
       'ODPT odpt:TrainInformation (live, 15min+ delay threshold) · geometry from odpt:Railway stationOrder × odpt:Station coords',
     caveat: 'Live status covers Toei and JR East lines; Tokyo Metro remains unknown.',
   };
+}
+
+/**
+ * The live "right now" line for the JMA warnings layer, DERIVED from the events
+ * in props — never hardcoded. An empty ward layer is usually correct rather than
+ * broken (all of Tokyo's active advisories are routinely island municipalities),
+ * but writing that as a fixed string would become a lie the moment a ward
+ * advisory fires.
+ *
+ * Ward-level is decided the same way the map decides it: the event carries a
+ * `ward:` token in `affects` (set by the ingestor from the class20s code).
+ */
+export function wardAdvisorySummary(
+  events: { type: string; affects?: string[] | null }[] | null | undefined,
+): { ward: number; outside: number; line: string } {
+  let ward = 0;
+  let outside = 0;
+  for (const e of events ?? []) {
+    if (e?.type !== 'warning') continue;
+    const hasWard = (e.affects ?? []).some((t) => typeof t === 'string' && t.startsWith('ward:'));
+    if (hasWard) ward += 1;
+    else outside += 1;
+  }
+
+  let line: string;
+  if (ward > 0) {
+    line = `${ward} ward-level advisor${ward === 1 ? 'y is' : 'ies are'} active and drawn on the ward it covers.`;
+    if (outside > 0) {
+      line += ` A further ${outside} ${outside === 1 ? 'is' : 'are'} for Tokyo areas outside the 23 wards.`;
+    }
+  } else if (outside > 0) {
+    line = `No ward-level advisories are active. ${outside} ${outside === 1 ? 'advisory is' : 'advisories are'} active for Tokyo areas outside the 23 wards (Tama cities, Izu / Ogasawara islands), so an empty ward layer is correct, not a bug.`;
+  } else {
+    line = 'No JMA advisories are active for Tokyo right now.';
+  }
+  return { ward, outside, line };
 }

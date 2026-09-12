@@ -224,3 +224,94 @@ export async function addWeatherLayer(
     return null;
   }
 }
+
+/* ---------------- numeric values at the lattice points ---------------- */
+
+/**
+ * Draw the ACTUAL sampled values, at the 63 real lattice points.
+ *
+ * Deliberately not at interpolated positions: the surface is smoothed, but a
+ * number printed to one decimal reads as a measurement, and mid-cell it would be
+ * a computed estimate dressed up as one. The colour ramp carries the shape of
+ * the field; these carry the facts behind it.
+ *
+ * Reuses the station-label rule — a label is shown only out to the distance at
+ * which its neighbours are still clear, spacing/LABEL_SPACING. At 0.125 degrees
+ * the lattice is ~11-14km apart, so they stay separated well past city zoom.
+ */
+export function renderWeatherValues(
+  ds: Cesium.CustomDataSource,
+  grid: WeatherGrid | null,
+  variable: WeatherVar,
+  show: boolean,
+): number {
+  ds.entities.removeAll();
+  if (!show || !grid) return 0;
+  const v = grid.values[variable];
+  if (!v) return 0;
+
+  const unit = grid.units?.[variable] || '';
+  const isPrecip = variable === 'precipitation';
+
+  // Same geometry as the station declutter: a fixed pixel gap is a fixed
+  // fraction of camera distance, so distance = ground spacing / spacing-fraction.
+  const spacingFrac = (() => {
+    const n = Number(import.meta.env.VITE_LABEL_SPACING);
+    return Number.isFinite(n) && n > 0 ? n : 0.04;
+  })();
+  const midLat = (grid.bbox.latMin + grid.bbox.latMax) / 2;
+  const spacingM = Math.min(
+    grid.step * 111_320,
+    grid.step * 111_320 * Math.cos((midLat * Math.PI) / 180),
+  );
+  const far = Math.max(20_000, Math.min(400_000, spacingM / spacingFrac));
+
+  let drawn = 0;
+  ds.entities.suspendEvents();
+  try {
+    for (let r = 0; r < grid.rows; r += 1) {
+      for (let c = 0; c < grid.cols; c += 1) {
+        const value = v[r * grid.cols + c];
+        if (!Number.isFinite(value)) continue;
+        // 63 labels all reading "0.0mm" say nothing; show only where it rains.
+        if (isPrecip && value < 0.05) continue;
+        const lat = grid.lats[r];
+        const lon = grid.lons[c];
+        if (typeof lat !== 'number' || typeof lon !== 'number') continue;
+        try {
+          ds.entities.add({
+            id: 'wxval:' + variable + ':' + r + ':' + c,
+            position: Cesium.Cartesian3.fromDegrees(lon, lat, 60),
+            properties: { kind: 'wxvalue', variable },
+            label: {
+              text: value.toFixed(1) + unit,
+              font: '600 10px "JetBrains Mono", ui-monospace, monospace',
+              fillColor: Cesium.Color.fromCssColorString('#7fe3ff'),
+              // NEVER FILL_AND_OUTLINE: Cesium's SDF label atlas bleeds
+              // neighbouring glyphs through the outline pass and renders a black
+              // scribble. A chip gives contrast over both ends of the ramp.
+              style: Cesium.LabelStyle.FILL,
+              showBackground: true,
+              backgroundColor: Cesium.Color.fromCssColorString('rgba(0,40,60,0.82)'),
+              backgroundPadding: new Cesium.Cartesian2(4, 2),
+              horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+              // Station labels sit ABOVE their dot; these sit BELOW their lattice
+              // point. The two layers are independent so neither can declutter
+              // against the other — opposite offsets turn most near-collisions
+              // into vertical separation instead.
+              verticalOrigin: Cesium.VerticalOrigin.TOP,
+              pixelOffset: new Cesium.Cartesian2(0, 10),
+              disableDepthTestDistance: Number.POSITIVE_INFINITY,
+              distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, far),
+              translucencyByDistance: new Cesium.NearFarScalar(far * 0.75, 1.0, far, 0.0),
+            },
+          });
+          drawn += 1;
+        } catch { /* one bad point must not kill the layer */ }
+      }
+    }
+  } finally {
+    ds.entities.resumeEvents();
+  }
+  return drawn;
+}

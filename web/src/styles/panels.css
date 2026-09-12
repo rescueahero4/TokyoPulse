@@ -1027,6 +1027,16 @@
 .tp-layer-info p:last-of-type { margin-bottom: 0; }
 
 .tp-layer-info-what { color: var(--tp-text); }
+.tp-layer-info-how { color: var(--tp-text-muted); }
+
+/* live, derived from the events in props — visually distinct from the static copy */
+.tp-layer-info-live {
+  color: var(--gs-neon-green);
+  opacity: 0.95;
+  border-top: 1px dashed var(--tp-border);
+  border-bottom: 1px dashed var(--tp-border);
+  padding: 5px 0;
+}
 .tp-layer-info-source { color: var(--tp-text-muted); }
 
 .tp-layer-info-key {

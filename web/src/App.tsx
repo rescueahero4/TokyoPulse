@@ -303,6 +303,7 @@ export default function App() {
             onToggle={onToggleLayer}
             showStationLabels={showStationLabels}
             onToggleStationLabels={onToggleStationLabels}
+            events={events}
           />
         </ErrorBoundary>
 

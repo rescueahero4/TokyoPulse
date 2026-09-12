@@ -314,6 +314,23 @@ html, body, #root {
 .map-wx-scale { color: var(--gs-text-primary); }
 .map-wx-probe { color: var(--gs-neon-cyan); font-weight: 600; }
 
+.map-wx-values {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 7px;
+  border: 1px solid var(--gs-border-panel);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--gs-text-dim);
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.map-wx-values.is-active { border-color: var(--gs-neon-green); color: var(--gs-neon-green); }
+
 .map-wx-opacity { gap: 8px; }
 .map-wx-opacity input { flex: 1; accent-color: var(--gs-electric-blue); height: 12px; }
 

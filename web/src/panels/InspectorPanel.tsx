@@ -17,7 +17,7 @@ import type { ReactNode } from 'react';
 import type { Lang, Meta, PulseEvent } from '../lib/types';
 import type { LineCollection, StationCollection } from '../lib/geo';
 import { attachInspector, type MapPick } from '../map/inspector';
-import { LAYER_INFO, railSource } from './dataSources';
+import { LAYER_INFO, railSource, wardAdvisorySummary } from './dataSources';
 import { findBus, type BusCollection } from './busData';
 
 /**
@@ -386,7 +386,13 @@ export function InspectorPanel(p: {
       body = (
         <>
           <Row label="Title (JA)" value={e.titleJa} />
-          <Row label="Affected ward(s)" value={wards || 'Tokyo-wide / not ward-scoped'} />
+          <Row
+            label="Affected ward(s)"
+            value={
+              wards ||
+              'Not ward-scoped — published for a coarser JMA area (Tama city, or an Izu / Ogasawara island municipality)'
+            }
+          />
           <Row label="Severity" value={e.severity.toUpperCase()} accent={SEVERITY_COLOR[e.severity]} />
           <Row label="Issued" value={formatClockWithRelative(e.time)} mono />
           <Row label="Feed" value={e.source} mono />
@@ -401,7 +407,11 @@ export function InspectorPanel(p: {
         <SourceFooter
           text={e.type === 'warning' ? LAYER_INFO.warnings.source : 'Open-Meteo hourly forecast for Tokyo'}
           meta={p.eventsMeta}
-          note={e.type === 'warning' ? LAYER_INFO.warnings.caveat : 'Model forecast, not an observation.'}
+          note={
+            e.type === 'warning'
+              ? `${LAYER_INFO.warnings.caveat} Right now: ${wardAdvisorySummary(p.events).line}`
+              : 'Model forecast, not an observation.'
+          }
         />
       );
     }
