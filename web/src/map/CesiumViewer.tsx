@@ -646,11 +646,12 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     const ds = sourcesRef.current.crowd;
     if (!ds) return;
     try {
-      bump('crowd', renderCrowd(ds, props.stations, props.selectedLineId));
+      bump('crowd', renderCrowd(ds, props.stations, props.selectedLineId, props.lang));
+      viewerRef.current?.scene.requestRender();
     } catch (e) {
       console.warn('[map] crowd layer failed', e);
     }
-  }, [ready, props.stations, props.selectedLineId]);
+  }, [ready, props.stations, props.selectedLineId, props.lang]);
 
   // ---- peopleflow (declared, unavailable)
   useEffect(() => {

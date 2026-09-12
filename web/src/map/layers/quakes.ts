@@ -35,11 +35,15 @@ export function renderQuakes(
         },
         label: {
           text: 'M' + mag,
-          font: '600 12px ui-monospace, monospace',
+          font: '600 12px "JetBrains Mono", ui-monospace, monospace',
           fillColor: Cesium.Color.WHITE,
-          outlineColor: Cesium.Color.BLACK,
-          outlineWidth: 3,
-          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          // No text outline: Cesium's SDF label atlas bleeds neighbouring glyphs
+          // through FILL_AND_OUTLINE and renders a black scribble instead of the
+          // text. A chip background gives the same contrast with none of that.
+          style: Cesium.LabelStyle.FILL,
+          showBackground: true,
+          backgroundColor: Cesium.Color.fromCssColorString('rgba(5,8,11,0.82)'),
+          backgroundPadding: new Cesium.Cartesian2(5, 3),
           pixelOffset: new Cesium.Cartesian2(0, -(pixel / 2 + 10)),
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
           scaleByDistance: new Cesium.NearFarScalar(1.0e4, 1.0, 6.0e5, 0.6),
