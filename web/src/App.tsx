@@ -109,16 +109,18 @@ export default function App() {
   // ImpactPanel renders as the last item in the scrollable left column, below
   // LineSearch + LayerPanel — auto-scroll it into view so demo beat 3 ("click a
   // delayed line") shows the ward/flood breakdown immediately, no manual scroll.
+  // Depends on `impact` too: ImpactPanel renders nothing until the fetch resolves,
+  // so the .tp-impact-panel node doesn't exist yet on the tick selectedLineId changes.
   useEffect(() => {
     const col = leftColumnRef.current;
     if (!col) return;
-    if (selectedLineId) {
+    if (selectedLineId && impact) {
       const panel = col.querySelector('.tp-impact-panel');
       panel?.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    } else {
+    } else if (!selectedLineId) {
       col.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [selectedLineId]);
+  }, [selectedLineId, impact]);
 
   // ---- layer health rows for LayerPanel (always all layers, never hidden)
   const layerStates: LayerState[] = useMemo(() => {
