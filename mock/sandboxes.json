@@ -1,0 +1,43 @@
+{
+  "count": 4,
+  "sandboxes": [
+    {
+      "name": "ingest-trains",
+      "feed": "odpt",
+      "status": "running",
+      "eventsWritten": 8,
+      "lastWriteAt": "2026-09-12T14:11:03+09:00",
+      "startupMs": 180
+    },
+    {
+      "name": "ingest-quakes",
+      "feed": "p2pquake",
+      "status": "running",
+      "eventsWritten": 39,
+      "lastWriteAt": "2026-09-12T14:11:03+09:00",
+      "startupMs": 210
+    },
+    {
+      "name": "ingest-warnings",
+      "feed": "jma",
+      "status": "running",
+      "eventsWritten": 0,
+      "lastWriteAt": "2026-09-12T14:11:03+09:00",
+      "startupMs": 150
+    },
+    {
+      "name": "ingest-weather",
+      "feed": "open-meteo",
+      "status": "running",
+      "eventsWritten": 1,
+      "lastWriteAt": "2026-09-12T14:11:03+09:00",
+      "startupMs": 140
+    }
+  ],
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

@@ -1,0 +1,3289 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.752134,
+          35.721682
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Hakusan",
+        "name": "Hakusan",
+        "nameJa": "白山",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 48388,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.645421,
+          35.791965
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.NishiTakashimadaira",
+        "name": "Nishi-takashimadaira",
+        "nameJa": "西高島平",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Nerima",
+        "ridership": 12970,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.804397,
+          35.708565
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.HonjoAzumabashi",
+        "name": "Honjo-azumabashi",
+        "nameJa": "本所吾妻橋",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Sumida",
+        "ridership": 21482,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.757517,
+          35.750646
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.ArakawaYuenchimae",
+        "name": "Arakawa-yuenchimae",
+        "nameJa": "荒川遊園地前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.788841,
+          35.733768
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.ArakawaItchumae",
+        "name": "Arakawa-itchumae",
+        "nameJa": "荒川一中前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.78421,
+          35.741923
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.ArakawaNanachome",
+        "name": "Arakawa-nanachome",
+        "nameJa": "荒川七丁目",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.784704,
+          35.738573
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.ArakawaNichome",
+        "name": "Arakawa-nichome",
+        "nameJa": "荒川二丁目",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.752461,
+          35.750865
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.ArakawaShakomae",
+        "name": "Arakawa-shakomae",
+        "nameJa": "荒川車庫前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.786416,
+          35.734913
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Arakawakuyakushomae",
+        "name": "Arakawakuyakushomae",
+        "nameJa": "荒川区役所前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.737333,
+          35.750109
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Asukayama",
+        "name": "Asukayama",
+        "nameJa": "飛鳥山",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.712529,
+          35.716347
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Gakushuinshita",
+        "name": "Gakushuinshita",
+        "nameJa": "学習院下",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.720404,
+          35.725398
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.HigashiIkebukuroYonchome",
+        "name": "Higashi-ikebukuro-yonchome",
+        "nameJa": "東池袋四丁目",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.773867,
+          35.745626
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.HigashiOguSanchome",
+        "name": "Higashi-ogu-sanchome",
+        "nameJa": "東尾久三丁目",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.747268,
+          35.75107
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Kajiwara",
+        "name": "Kajiwara",
+        "nameJa": "梶原",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71516,
+          35.720569
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Kishibojimmae",
+        "name": "Kishibojimmae",
+        "nameJa": "鬼子母神前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.729625,
+          35.739504
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Koshinzuka",
+        "name": "Koshinzuka",
+        "nameJa": "庚申塚",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.790858,
+          35.703128
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Kuramae",
+        "name": "Kuramae",
+        "nameJa": "蔵前",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Sumida",
+        "ridership": 42345,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.769859,
+          35.748487
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Kumanomae",
+        "name": "Kumanomae",
+        "nameJa": "熊野前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.780891,
+          35.742783
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.MachiyaEkimae",
+        "name": "Machiya-ekimae",
+        "nameJa": "町屋駅前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.776416,
+          35.743919
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.MachiyaNichome",
+        "name": "Machiya-nichome",
+        "nameJa": "町屋二丁目",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.791509,
+          35.732207
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Minowabashi",
+        "name": "Minowabashi",
+        "nameJa": "三ノ輪橋",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76619,
+          35.749811
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Miyanomae",
+        "name": "Miyanomae",
+        "nameJa": "宮ノ前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.724759,
+          35.728775
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Mukohara",
+        "name": "Mukohara",
+        "nameJa": "向原",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.732665,
+          35.744222
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.NishigaharaYonchome",
+        "name": "Nishigahara-yonchome",
+        "nameJa": "西ヶ原四丁目",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.761739,
+          35.750477
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Odai",
+        "name": "Odai",
+        "nameJa": "小台",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Arakawa",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.738045,
+          35.752982
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.OjiEkimae",
+        "name": "Oji-ekimae",
+        "nameJa": "王子駅前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.714199,
+          35.713012
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Omokagebashi",
+        "name": "Omokagebashi",
+        "nameJa": "面影橋",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.729098,
+          35.731188
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.OtsukaEkimae",
+        "name": "Otsuka-ekimae",
+        "nameJa": "大塚駅前",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.742186,
+          35.750865
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Sakaecho",
+        "name": "Sakaecho",
+        "nameJa": "栄町",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.730344,
+          35.74107
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.ShinKoshinzuka",
+        "name": "Shin-koshinzuka",
+        "nameJa": "新庚申塚",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.727684,
+          35.735682
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Sugamoshinden",
+        "name": "Sugamoshinden",
+        "nameJa": "巣鴨新田",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73542,
+          35.747283
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.TakinogawaItchome",
+        "name": "Takinogawa-itchome",
+        "nameJa": "滝野川一丁目",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Kita",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.717835,
+          35.724081
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.TodenZoshigaya",
+        "name": "Toden-zoshigaya",
+        "nameJa": "都電雑司ヶ谷",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.719003,
+          35.71176
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Arakawa.Waseda",
+        "name": "Waseda",
+        "nameJa": "早稲田",
+        "lineIds": [
+          "Toei-Arakawa"
+        ],
+        "ward": "Toshima",
+        "ridership": null,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.786335,
+          35.697494
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Asakusabashi",
+        "name": "Asakusabashi",
+        "nameJa": "浅草橋",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Taito",
+        "ridership": 60025,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.796542,
+          35.70892
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Asakusa",
+        "name": "Asakusa",
+        "nameJa": "浅草",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Sumida",
+        "ridership": 59010,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.754679,
+          35.65687
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Daimon",
+        "name": "Daimon",
+        "nameJa": "大門",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Minato",
+        "ridership": 103281,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.723965,
+          35.626878
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Gotanda",
+        "name": "Gotanda",
+        "nameJa": "五反田",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Shinagawa",
+        "ridership": 59177,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.76735,
+          35.669915
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.HigashiGinza",
+        "name": "Higashi-ginza",
+        "nameJa": "東銀座",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Chuo",
+        "ridership": 85509,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.784886,
+          35.692123
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.HigashiNihombashi",
+        "name": "Higashi-nihombashi",
+        "nameJa": "東日本橋",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Taito",
+        "ridership": 79857,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.711884,
+          35.596773
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Magome",
+        "name": "Magome",
+        "nameJa": "馬込",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Shinagawa",
+        "ridership": 26346,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.746877,
+          35.646749
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Mita",
+        "name": "Mita",
+        "nameJa": "三田",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Minato",
+        "ridership": 107560,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.713645,
+          35.605274
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Nakanobu",
+        "name": "Nakanobu",
+        "nameJa": "中延",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Shinagawa",
+        "ridership": 27903,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.775814,
+          35.681796
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Nihombashi",
+        "name": "Nihombashi",
+        "nameJa": "日本橋",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Chuo",
+        "ridership": 94679,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.782276,
+          35.686345
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Ningyocho",
+        "name": "Ningyocho",
+        "nameJa": "人形町",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Chuo",
+        "ridership": 54690,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.706086,
+          35.58705
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.NishiMagome",
+        "name": "Nishi-magome",
+        "nameJa": "西馬込",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Ota",
+        "ridership": 43636,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.812993,
+          35.710824
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Oshiage",
+        "name": "Oshiage",
+        "nameJa": "押上",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Sumida",
+        "ridership": 227566,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.739993,
+          35.638715
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Sengakuji",
+        "name": "Sengakuji",
+        "nameJa": "泉岳寺",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Minato",
+        "ridership": 209882,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.748998,
+          35.64865
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Mita",
+        "name": "Mita",
+        "nameJa": "三田",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Minato",
+        "ridership": 105092,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.759338,
+          35.665386
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Shimbashi",
+        "name": "Shimbashi",
+        "nameJa": "新橋",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Minato",
+        "ridership": 88540,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.730384,
+          35.631751
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Takanawadai",
+        "name": "Takanawadai",
+        "nameJa": "高輪台",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Shinagawa",
+        "ridership": 13969,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.771966,
+          35.675606
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Takaracho",
+        "name": "Takaracho",
+        "nameJa": "宝町",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Chuo",
+        "ridership": 31022,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.716315,
+          35.614421
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Asakusa.Togoshi",
+        "name": "Togoshi",
+        "nameJa": "戸越",
+        "lineIds": [
+          "Toei-Asakusa"
+        ],
+        "ward": "Shinagawa",
+        "ridership": 21299,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.678947,
+          35.784262
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Hasune",
+        "name": "Hasune",
+        "nameJa": "蓮根",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 19363,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.760274,
+          35.676585
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Hibiya",
+        "name": "Hibiya",
+        "nameJa": "日比谷",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Chuo",
+        "ridership": 85848,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.71012,
+          35.751372
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.ItabashiKuyakushomae",
+        "name": "Itabashi-kuyakushomae",
+        "nameJa": "板橋区役所前",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 35514,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.705544,
+          35.761309
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Itabashihoncho",
+        "name": "Itabashihoncho",
+        "nameJa": "板橋本町",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 37555,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.758213,
+          35.695331
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Jimbocho",
+        "name": "Jimbocho",
+        "nameJa": "神保町",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Chiyoda",
+        "ridership": 139451,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.753287,
+          35.709532
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Kasuga",
+        "name": "Kasuga",
+        "nameJa": "春日",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 71886,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.715444,
+          35.633635
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Meguro",
+        "name": "Meguro",
+        "nameJa": "目黒",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Meguro",
+        "ridership": 108156,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.70241,
+          35.768566
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Motohasunuma",
+        "name": "Motohasunuma",
+        "nameJa": "本蓮沼",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 25190,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.728703,
+          35.743568
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.NishiSugamo",
+        "name": "Nishi-sugamo",
+        "nameJa": "西巣鴨",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Kita",
+        "ridership": 29560,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.672867,
+          35.787074
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Nishidai",
+        "name": "Nishidai",
+        "nameJa": "西台",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 25605,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.751366,
+          35.660774
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Onarimon",
+        "name": "Onarimon",
+        "nameJa": "御成門",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Minato",
+        "ridership": 43230,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.762798,
+          35.684093
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Otemachi",
+        "name": "Otemachi",
+        "nameJa": "大手町",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Chiyoda",
+        "ridership": 109600,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.744984,
+          35.727772
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Sengoku",
+        "name": "Sengoku",
+        "nameJa": "千石",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 31304,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.74985,
+          35.654186
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Shibakoen",
+        "name": "Shibakoen",
+        "nameJa": "芝公園",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Minato",
+        "ridership": 28023,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.695097,
+          35.776082
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.ShimuraSakaue",
+        "name": "Shimura-sakaue",
+        "nameJa": "志村坂上",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 30150,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.685751,
+          35.777468
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.ShimuraSanchome",
+        "name": "Shimura-sanchome",
+        "nameJa": "志村三丁目",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 30055,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.719808,
+          35.748772
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.ShinItabashi",
+        "name": "Shin-itabashi",
+        "nameJa": "新板橋",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Itabashi",
+        "ridership": 29972,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.65405,
+          35.790289
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.ShinTakashimadaira",
+        "name": "Shin-takashimadaira",
+        "nameJa": "新高島平",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Nerima",
+        "ridership": 9534,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.734344,
+          35.643283
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.ShirokaneTakanawa",
+        "name": "Shirokane-takanawa",
+        "nameJa": "白金高輪",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Minato",
+        "ridership": 24798,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.726007,
+          35.637851
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Shirokanedai",
+        "name": "Shirokanedai",
+        "nameJa": "白金台",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Meguro",
+        "ridership": 10310,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.738154,
+          35.733793
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Sugamo",
+        "name": "Sugamo",
+        "nameJa": "巣鴨",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Toshima",
+        "ridership": 88108,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.755147,
+          35.70346
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Suidobashi",
+        "name": "Suidobashi",
+        "nameJa": "水道橋",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 47236,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.661361,
+          35.788908
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Takashimadaira",
+        "name": "Takashimadaira",
+        "nameJa": "高島平",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Nerima",
+        "ridership": 27789,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.75533,
+          35.669344
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Mita.Uchisaiwaicho",
+        "name": "Uchisaiwaicho",
+        "nameJa": "内幸町",
+        "lineIds": [
+          "Toei-Mita"
+        ],
+        "ward": "Minato",
+        "ridership": 38025,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770376,
+          35.754655
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.AdachiOdai",
+        "name": "Adachi-odai",
+        "nameJa": "足立小台",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Arakawa",
+        "ridership": 3596,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.769025,
+          35.742868
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.AkadoShogakkomae",
+        "name": "Akado-shogakkomae",
+        "nameJa": "赤土小学校前",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Arakawa",
+        "ridership": 5318,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.77029,
+          35.773954
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.Kohoku",
+        "name": "Kohoku",
+        "nameJa": "江北",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 12626,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770692,
+          35.768351
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.Koya",
+        "name": "Koya",
+        "nameJa": "高野",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 6207,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.769828,
+          35.748513
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.Kumanomae",
+        "name": "Kumanomae",
+        "nameJa": "熊野前",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Arakawa",
+        "ridership": 8714,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770707,
+          35.814541
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.MinumadaiShinsuikoen",
+        "name": "Minumadai-shinsuikoen",
+        "nameJa": "見沼代親水公園",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 13251,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.771121,
+          35.728793
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.Nippori",
+        "name": "Nippori",
+        "nameJa": "日暮里",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Arakawa",
+        "ridership": 52085,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.743989,
+          35.654985
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Akabanebashi",
+        "name": "Akabanebashi",
+        "nameJa": "赤羽橋",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Minato",
+        "ridership": 37465,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.768169,
+          35.733739
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.NishiNippori",
+        "name": "Nishi-nippori",
+        "nameJa": "西日暮里",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Arakawa",
+        "ridership": 31946,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770077,
+          35.78151
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.NishiaraidaishiNishi",
+        "name": "Nishiaraidaishi-nishi",
+        "nameJa": "西新井大師西",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 11848,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770798,
+          35.763906
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.OgiOhashi",
+        "name": "Ogi-ohashi",
+        "nameJa": "扇大橋",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 9914,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770159,
+          35.796384
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.ToneriKoen",
+        "name": "Toneri-koen",
+        "nameJa": "舎人公園",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 4820,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770069,
+          35.80569
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.Toneri",
+        "name": "Toneri",
+        "nameJa": "舎人",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 9145,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.770036,
+          35.788787
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.NipporiToneri.Yazaike",
+        "name": "Yazaike",
+        "nameJa": "谷在家",
+        "lineIds": [
+          "Toei-NipporiToneri"
+        ],
+        "ward": "Adachi",
+        "ridership": 10579,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.723925,
+          35.673067
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.AoyamaItchome",
+        "name": "Aoyama-itchome",
+        "nameJa": "青山一丁目",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shibuya",
+        "ridership": 68934,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.73633,
+          35.656448
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.AzabuJuban",
+        "name": "Azabu-juban",
+        "nameJa": "麻布十番",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Minato",
+        "ridership": 32029,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.755696,
+          35.656671
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Daimon",
+        "name": "Daimon",
+        "nameJa": "大門",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Minato",
+        "ridership": 116169,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.683112,
+          35.70716
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.HigashiNakano",
+        "name": "Higashi-nakano",
+        "nameJa": "東中野",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nakano",
+        "ridership": 25362,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.707434,
+          35.697957
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.HigashiShinjuku",
+        "name": "Higashi-shinjuku",
+        "nameJa": "東新宿",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 37339,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.628901,
+          35.758527
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Hikarigaoka",
+        "name": "Hikarigaoka",
+        "nameJa": "光が丘",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nerima",
+        "ridership": 56838,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.760524,
+          35.70751
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.HongoSanchome",
+        "name": "Hongo-sanchome",
+        "nameJa": "本郷三丁目",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 22043,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.745257,
+          35.702952
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Iidabashi",
+        "name": "Iidabashi",
+        "nameJa": "飯田橋",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 28807,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.777138,
+          35.658934
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Kachidoki",
+        "name": "Kachidoki",
+        "nameJa": "勝どき",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Chuo",
+        "ridership": 91189,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.752487,
+          35.708493
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Kasuga",
+        "name": "Kasuga",
+        "nameJa": "春日",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 60957,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.798758,
+          35.682355
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.KiyosumiShirakawa",
+        "name": "Kiyosumi-shirakawa",
+        "nameJa": "清澄白河",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Koto",
+        "ridership": 40727,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.714667,
+          35.679896
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.KokuritsuKyogijo",
+        "name": "Kokuritsu-kyogijo",
+        "nameJa": "国立競技場",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 13711,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.792244,
+          35.705587
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Kuramae",
+        "name": "Kuramae",
+        "nameJa": "蔵前",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Sumida",
+        "ridership": 37966,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.795124,
+          35.672772
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.MonzenNakacho",
+        "name": "Monzen-nakacho",
+        "nameJa": "門前仲町",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Koto",
+        "ridership": 81017,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.798251,
+          35.687926
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Morishita",
+        "name": "Morishita",
+        "nameJa": "森下",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Koto",
+        "ridership": 65316,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.686296,
+          35.713935
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Nakai",
+        "name": "Nakai",
+        "nameJa": "中井",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nakano",
+        "ridership": 25182,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.682899,
+          35.697887
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.NakanoSakaue",
+        "name": "Nakano-sakaue",
+        "nameJa": "中野坂上",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 40469,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.6403,
+          35.75141
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.NerimaKasugacho",
+        "name": "Nerima-kasugacho",
+        "nameJa": "練馬春日町",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nerima",
+        "ridership": 22655,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.654762,
+          35.737411
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Nerima",
+        "name": "Nerima",
+        "nameJa": "練馬",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nerima",
+        "ridership": 78323,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.684545,
+          35.689892
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.NishiShinjukuGochome",
+        "name": "Nishi-shinjuku-gochome",
+        "nameJa": "西新宿五丁目",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 32776,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.683389,
+          35.723435
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.OchiaiMinamiNagasaki",
+        "name": "Ochiai-minami-nagasaki",
+        "nameJa": "落合南長崎",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nakano",
+        "ridership": 27118,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.731354,
+          35.664106
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Roppongi",
+        "name": "Roppongi",
+        "nameJa": "六本木",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Minato",
+        "ridership": 83043,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.797469,
+          35.696807
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Ryogoku",
+        "name": "Ryogoku",
+        "nameJa": "両国",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Sumida",
+        "ridership": 34318,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.670498,
+          35.732579
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.ShinEgota",
+        "name": "Shin-egota",
+        "nameJa": "新江古田",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nerima",
+        "ridership": 28904,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.782166,
+          35.707009
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.ShinOkachimachi",
+        "name": "Shin-okachimachi",
+        "nameJa": "新御徒町",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Taito",
+        "ridership": 58639,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.699121,
+          35.693367
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.ShinjukuNishiguchi",
+        "name": "Shinjuku-nishiguchi",
+        "nameJa": "新宿西口",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 53643,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.699019,
+          35.688462
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Shinjuku",
+        "name": "Shinjuku",
+        "nameJa": "新宿",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 128940,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.760225,
+          35.663193
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Shiodome",
+        "name": "Shiodome",
+        "nameJa": "汐留",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Minato",
+        "ridership": 39331,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.692677,
+          35.690607
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Tochomae",
+        "name": "Tochomae",
+        "nameJa": "都庁前",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 49779,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.649116,
+          35.741711
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Toshimaen",
+        "name": "Toshimaen",
+        "nameJa": "豊島園",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Nerima",
+        "ridership": 14294,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.766929,
+          35.664919
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Tsukijishijo",
+        "name": "Tsukijishijo",
+        "nameJa": "築地市場",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Chuo",
+        "ridership": 23281,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.783912,
+          35.663757
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Tsukishima",
+        "name": "Tsukishima",
+        "nameJa": "月島",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Chuo",
+        "ridership": 69362,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.773351,
+          35.707949
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.UenoOkachimachi",
+        "name": "Ueno-okachimachi",
+        "nameJa": "上野御徒町",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Taito",
+        "ridership": 56630,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.735894,
+          35.700911
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.UshigomeKagurazaka",
+        "name": "Ushigome-kagurazaka",
+        "nameJa": "牛込神楽坂",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Bunkyo",
+        "ridership": 13686,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.72504,
+          35.699501
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.UshigomeYanagicho",
+        "name": "Ushigome-yanagicho",
+        "nameJa": "牛込柳町",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 19954,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.718043,
+          35.699188
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.WakamatsuKawada",
+        "name": "Wakamatsu-kawada",
+        "nameJa": "若松河田",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 28849,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.701603,
+          35.683505
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Oedo.Yoyogi",
+        "name": "Yoyogi",
+        "nameJa": "代々木",
+        "lineIds": [
+          "Toei-Oedo"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 32870,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.722317,
+          35.692402
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Akebonobashi",
+        "name": "Akebonobashi",
+        "nameJa": "曙橋",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 36403,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.783006,
+          35.69193
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.BakuroYokoyama",
+        "name": "Bakuro-yokoyama",
+        "nameJa": "馬喰横山",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Taito",
+        "ridership": 112233,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.863955,
+          35.68376
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Funabori",
+        "name": "Funabori",
+        "nameJa": "船堀",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Edogawa",
+        "ridership": 58409,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.787725,
+          35.688601
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Hamacho",
+        "name": "Hamacho",
+        "nameJa": "浜町",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Chuo",
+        "ridership": 21447,
+        "ridershipBand": 1,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.847255,
+          35.689959
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.HigashiOjima",
+        "name": "Higashi-ojima",
+        "nameJa": "東大島",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Edogawa",
+        "ridership": 30424,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.751738,
+          35.695546
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Kudanshita",
+        "name": "Kudanshita",
+        "nameJa": "九段下",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Chiyoda",
+        "ridership": 111197,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.737588,
+          35.69153
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Ichigaya",
+        "name": "Ichigaya",
+        "nameJa": "市ヶ谷",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Chiyoda",
+        "ridership": 90108,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.882586,
+          35.685987
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Ichinoe",
+        "name": "Ichinoe",
+        "nameJa": "一之江",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Edogawa",
+        "ridership": 43043,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.775115,
+          35.695607
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Iwamotocho",
+        "name": "Iwamotocho",
+        "nameJa": "岩本町",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Taito",
+        "ridership": 52330,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.757981,
+          35.695972
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Jimbocho",
+        "name": "Jimbocho",
+        "nameJa": "神保町",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Chiyoda",
+        "ridership": 123381,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.806057,
+          35.688399
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Kikukawa",
+        "name": "Kikukawa",
+        "nameJa": "菊川",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Koto",
+        "ridership": 24573,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.815723,
+          35.68904
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Sumiyoshi",
+        "name": "Sumiyoshi",
+        "nameJa": "住吉",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Koto",
+        "ridership": 41577,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.8977,
+          35.69351
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Mizue",
+        "name": "Mizue",
+        "nameJa": "瑞江",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Edogawa",
+        "ridership": 55028,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.796623,
+          35.687982
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Morishita",
+        "name": "Morishita",
+        "nameJa": "森下",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Koto",
+        "ridership": 74094,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.926613,
+          35.722819
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Motoyawata",
+        "name": "Motoyawata",
+        "nameJa": "本八幡",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Edogawa",
+        "ridership": 72322,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.826231,
+          35.689391
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.NishiOjima",
+        "name": "Nishi-ojima",
+        "nameJa": "西大島",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Koto",
+        "ridership": 27698,
+        "ridershipBand": 2,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.766449,
+          35.695005
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Ogawamachi",
+        "name": "Ogawamachi",
+        "nameJa": "小川町",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Chiyoda",
+        "ridership": 73254,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.834705,
+          35.689752
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Ojima",
+        "name": "Ojima",
+        "nameJa": "大島",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Koto",
+        "ridership": 31661,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.706794,
+          35.691016
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.ShinjukuSanchome",
+        "name": "Shinjuku-sanchome",
+        "nameJa": "新宿三丁目",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 72667,
+        "ridershipBand": 4,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.698418,
+          35.688433
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Shinjuku",
+        "name": "Shinjuku",
+        "nameJa": "新宿",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Shinjuku",
+        "ridership": 289400,
+        "ridershipBand": 5,
+        "inFloodZone": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.903796,
+          35.706022
+        ]
+      },
+      "properties": {
+        "stationId": "Toei.Shinjuku.Shinozaki",
+        "name": "Shinozaki",
+        "nameJa": "篠崎",
+        "lineIds": [
+          "Toei-Shinjuku"
+        ],
+        "ward": "Edogawa",
+        "ridership": 39512,
+        "ridershipBand": 3,
+        "inFloodZone": false
+      }
+    }
+  ],
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

@@ -1,0 +1,361 @@
+{
+  "lineId": "Toei-Mita",
+  "name": "Mita Line",
+  "nameJa": "都営三田線",
+  "status": "normal",
+  "statusText": "Normal operation",
+  "wards": [
+    {
+      "ward": "Bunkyo",
+      "wardJa": "文京区",
+      "stationCount": 4,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Nerima",
+      "wardJa": "練馬区",
+      "stationCount": 3,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Minato",
+      "wardJa": "港区",
+      "stationCount": 5,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Itabashi",
+      "wardJa": "板橋区",
+      "stationCount": 8,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Chuo",
+      "wardJa": "中央区",
+      "stationCount": 1,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Chiyoda",
+      "wardJa": "千代田区",
+      "stationCount": 2,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Meguro",
+      "wardJa": "目黒区",
+      "stationCount": 2,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Kita",
+      "wardJa": "北区",
+      "stationCount": 1,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Toshima",
+      "wardJa": "豊島区",
+      "stationCount": 1,
+      "activeEventCount": 0
+    }
+  ],
+  "stations": [
+    {
+      "stationId": "Toei.Mita.Hakusan",
+      "name": "Hakusan",
+      "nameJa": "白山",
+      "lat": 35.721682,
+      "lon": 139.752134,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.NishiTakashimadaira",
+      "name": "Nishi-takashimadaira",
+      "nameJa": "西高島平",
+      "lat": 35.791965,
+      "lon": 139.645421,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Mita",
+      "name": "Mita",
+      "nameJa": "三田",
+      "lat": 35.64865,
+      "lon": 139.748998,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Hasune",
+      "name": "Hasune",
+      "nameJa": "蓮根",
+      "lat": 35.784262,
+      "lon": 139.678947,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Hibiya",
+      "name": "Hibiya",
+      "nameJa": "日比谷",
+      "lat": 35.676585,
+      "lon": 139.760274,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.ItabashiKuyakushomae",
+      "name": "Itabashi-kuyakushomae",
+      "nameJa": "板橋区役所前",
+      "lat": 35.751372,
+      "lon": 139.71012,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Itabashihoncho",
+      "name": "Itabashihoncho",
+      "nameJa": "板橋本町",
+      "lat": 35.761309,
+      "lon": 139.705544,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Jimbocho",
+      "name": "Jimbocho",
+      "nameJa": "神保町",
+      "lat": 35.695331,
+      "lon": 139.758213,
+      "ward": "Chiyoda",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Kasuga",
+      "name": "Kasuga",
+      "nameJa": "春日",
+      "lat": 35.709532,
+      "lon": 139.753287,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Meguro",
+      "name": "Meguro",
+      "nameJa": "目黒",
+      "lat": 35.633635,
+      "lon": 139.715444,
+      "ward": "Meguro",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Motohasunuma",
+      "name": "Motohasunuma",
+      "nameJa": "本蓮沼",
+      "lat": 35.768566,
+      "lon": 139.70241,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.NishiSugamo",
+      "name": "Nishi-sugamo",
+      "nameJa": "西巣鴨",
+      "lat": 35.743568,
+      "lon": 139.728703,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Nishidai",
+      "name": "Nishidai",
+      "nameJa": "西台",
+      "lat": 35.787074,
+      "lon": 139.672867,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Onarimon",
+      "name": "Onarimon",
+      "nameJa": "御成門",
+      "lat": 35.660774,
+      "lon": 139.751366,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Otemachi",
+      "name": "Otemachi",
+      "nameJa": "大手町",
+      "lat": 35.684093,
+      "lon": 139.762798,
+      "ward": "Chiyoda",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Sengoku",
+      "name": "Sengoku",
+      "nameJa": "千石",
+      "lat": 35.727772,
+      "lon": 139.744984,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Shibakoen",
+      "name": "Shibakoen",
+      "nameJa": "芝公園",
+      "lat": 35.654186,
+      "lon": 139.74985,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.ShimuraSakaue",
+      "name": "Shimura-sakaue",
+      "nameJa": "志村坂上",
+      "lat": 35.776082,
+      "lon": 139.695097,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.ShimuraSanchome",
+      "name": "Shimura-sanchome",
+      "nameJa": "志村三丁目",
+      "lat": 35.777468,
+      "lon": 139.685751,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.ShinItabashi",
+      "name": "Shin-itabashi",
+      "nameJa": "新板橋",
+      "lat": 35.748772,
+      "lon": 139.719808,
+      "ward": "Itabashi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.ShinTakashimadaira",
+      "name": "Shin-takashimadaira",
+      "nameJa": "新高島平",
+      "lat": 35.790289,
+      "lon": 139.65405,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.ShirokaneTakanawa",
+      "name": "Shirokane-takanawa",
+      "nameJa": "白金高輪",
+      "lat": 35.643283,
+      "lon": 139.734344,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Shirokanedai",
+      "name": "Shirokanedai",
+      "nameJa": "白金台",
+      "lat": 35.637851,
+      "lon": 139.726007,
+      "ward": "Meguro",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Sugamo",
+      "name": "Sugamo",
+      "nameJa": "巣鴨",
+      "lat": 35.733793,
+      "lon": 139.738154,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Suidobashi",
+      "name": "Suidobashi",
+      "nameJa": "水道橋",
+      "lat": 35.70346,
+      "lon": 139.755147,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Takashimadaira",
+      "name": "Takashimadaira",
+      "nameJa": "高島平",
+      "lat": 35.788908,
+      "lon": 139.661361,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Mita.Uchisaiwaicho",
+      "name": "Uchisaiwaicho",
+      "nameJa": "内幸町",
+      "lat": 35.669344,
+      "lon": 139.75533,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "odpt-train-Toei-Mita",
+      "type": "train",
+      "severity": "info",
+      "time": "2026-09-12T13:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "title": "Mita Line operating normally",
+      "titleJa": "現在、１５分以上の遅延はありません。",
+      "affects": [
+        "line:Toei-Mita"
+      ],
+      "source": "odpt",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    }
+  ],
+  "stationsInFloodZone": 0,
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

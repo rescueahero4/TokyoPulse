@@ -1,0 +1,283 @@
+{
+  "lineId": "Toei-Shinjuku",
+  "name": "Shinjuku Line",
+  "nameJa": "都営新宿線",
+  "status": "normal",
+  "statusText": "Normal operation",
+  "wards": [
+    {
+      "ward": "Shinjuku",
+      "wardJa": "新宿区",
+      "stationCount": 3,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Taito",
+      "wardJa": "台東区",
+      "stationCount": 2,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Edogawa",
+      "wardJa": "江戸川区",
+      "stationCount": 6,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Chuo",
+      "wardJa": "中央区",
+      "stationCount": 1,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Chiyoda",
+      "wardJa": "千代田区",
+      "stationCount": 4,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Koto",
+      "wardJa": "江東区",
+      "stationCount": 5,
+      "activeEventCount": 0
+    }
+  ],
+  "stations": [
+    {
+      "stationId": "Toei.Shinjuku.Akebonobashi",
+      "name": "Akebonobashi",
+      "nameJa": "曙橋",
+      "lat": 35.692402,
+      "lon": 139.722317,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.BakuroYokoyama",
+      "name": "Bakuro-yokoyama",
+      "nameJa": "馬喰横山",
+      "lat": 35.69193,
+      "lon": 139.783006,
+      "ward": "Taito",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Funabori",
+      "name": "Funabori",
+      "nameJa": "船堀",
+      "lat": 35.68376,
+      "lon": 139.863955,
+      "ward": "Edogawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Hamacho",
+      "name": "Hamacho",
+      "nameJa": "浜町",
+      "lat": 35.688601,
+      "lon": 139.787725,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.HigashiOjima",
+      "name": "Higashi-ojima",
+      "nameJa": "東大島",
+      "lat": 35.689959,
+      "lon": 139.847255,
+      "ward": "Edogawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Kudanshita",
+      "name": "Kudanshita",
+      "nameJa": "九段下",
+      "lat": 35.695546,
+      "lon": 139.751738,
+      "ward": "Chiyoda",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Ichigaya",
+      "name": "Ichigaya",
+      "nameJa": "市ヶ谷",
+      "lat": 35.69153,
+      "lon": 139.737588,
+      "ward": "Chiyoda",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Ichinoe",
+      "name": "Ichinoe",
+      "nameJa": "一之江",
+      "lat": 35.685987,
+      "lon": 139.882586,
+      "ward": "Edogawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Iwamotocho",
+      "name": "Iwamotocho",
+      "nameJa": "岩本町",
+      "lat": 35.695607,
+      "lon": 139.775115,
+      "ward": "Taito",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Jimbocho",
+      "name": "Jimbocho",
+      "nameJa": "神保町",
+      "lat": 35.695972,
+      "lon": 139.757981,
+      "ward": "Chiyoda",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Kikukawa",
+      "name": "Kikukawa",
+      "nameJa": "菊川",
+      "lat": 35.688399,
+      "lon": 139.806057,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Sumiyoshi",
+      "name": "Sumiyoshi",
+      "nameJa": "住吉",
+      "lat": 35.68904,
+      "lon": 139.815723,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Mizue",
+      "name": "Mizue",
+      "nameJa": "瑞江",
+      "lat": 35.69351,
+      "lon": 139.8977,
+      "ward": "Edogawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Morishita",
+      "name": "Morishita",
+      "nameJa": "森下",
+      "lat": 35.687982,
+      "lon": 139.796623,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Motoyawata",
+      "name": "Motoyawata",
+      "nameJa": "本八幡",
+      "lat": 35.722819,
+      "lon": 139.926613,
+      "ward": "Edogawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.NishiOjima",
+      "name": "Nishi-ojima",
+      "nameJa": "西大島",
+      "lat": 35.689391,
+      "lon": 139.826231,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Ogawamachi",
+      "name": "Ogawamachi",
+      "nameJa": "小川町",
+      "lat": 35.695005,
+      "lon": 139.766449,
+      "ward": "Chiyoda",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Ojima",
+      "name": "Ojima",
+      "nameJa": "大島",
+      "lat": 35.689752,
+      "lon": 139.834705,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.ShinjukuSanchome",
+      "name": "Shinjuku-sanchome",
+      "nameJa": "新宿三丁目",
+      "lat": 35.691016,
+      "lon": 139.706794,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Shinjuku",
+      "name": "Shinjuku",
+      "nameJa": "新宿",
+      "lat": 35.688433,
+      "lon": 139.698418,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Shinjuku.Shinozaki",
+      "name": "Shinozaki",
+      "nameJa": "篠崎",
+      "lat": 35.706022,
+      "lon": 139.903796,
+      "ward": "Edogawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "odpt-train-Toei-Shinjuku",
+      "type": "train",
+      "severity": "info",
+      "time": "2026-09-12T13:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "title": "Shinjuku Line operating normally",
+      "titleJa": "現在、１５分以上の遅延はありません。",
+      "affects": [
+        "line:Toei-Shinjuku"
+      ],
+      "source": "odpt",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    }
+  ],
+  "stationsInFloodZone": 0,
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

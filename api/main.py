@@ -1,0 +1,796 @@
+"""TokyoPulse — FastAPI app (owner: A3). Implements contracts/api.md exactly.
+
+Start it:  .venv\\Scripts\\python.exe scripts\\run_api.py
+           (or: .venv\\Scripts\\python.exe -m uvicorn api.main:app --host 0.0.0.0 --port 8000)
+
+Every endpoint resolves its payload through api.envelope.three_tier
+(Neo4j -> mock/ -> empty) and is wrapped in @safe_endpoint, so **no endpoint can
+return 500 for a data-path problem**. The single documented non-200 is the 404
+on an unknown lineId, which is a genuine client error.
+"""
+
+from __future__ import annotations
+
+import json
+import logging
+import os
+import time
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any
+
+from fastapi import Body, FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+from . import brief as brief_mod
+from . import graph
+from .envelope import (JST, MOCK_DIR, NoLiveData, ROOT, env_str, lines_csv,
+                       meta, now_iso, now_jst, read_mock, safe_endpoint,
+                       three_tier, wards_csv)
+
+logging.basicConfig(
+    level=os.getenv("LOG_LEVEL", "INFO"),
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+)
+log = logging.getLogger("tokyopulse.api")
+# The driver warns on every query that mentions a label/rel type not yet in the
+# database (normal before the first ingest). Keep the demo log readable.
+logging.getLogger("neo4j.notifications").setLevel(logging.ERROR)
+
+app = FastAPI(title="TokyoPulse API", version="1.0.0",
+              description="Live Tokyo city-operations graph. contracts/api.md is frozen.")
+
+_origins = [o.strip() for o in
+            (env_str("CORS_ORIGINS") or "http://localhost:5173,http://127.0.0.1:5173").split(",")
+            if o.strip()]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_origins,
+    allow_origin_regex=r"http://(localhost|127\.0\.0\.1):\d+",
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+SEV_RANK = {"info": 0, "warning": 1, "critical": 2}
+TYPES = ("quake", "train", "warning", "weather")
+EMPTY_COUNTS = {"quake": 0, "train": 0, "warning": 0, "weather": 0,
+                "critical": 0, "warning_level": 0}
+
+# Replayed events survive a dead Neo4j: /events.json always merges these in.
+REPLAY: list[dict[str, Any]] = []
+REPLAY_CAP = 200
+
+_forecast_cache: dict[str, Any] = {"at": 0.0, "value": None}
+
+
+# ───────────────────────────────── helpers ───────────────────────────────────
+
+def _clamp_limit(raw: Any, default: int = 30, lo: int = 1, hi: int = 200) -> int:
+    try:
+        n = int(str(raw))
+    except (TypeError, ValueError):
+        return default
+    return max(lo, min(hi, n))
+
+
+def _csv_list(raw: str | None, allowed: tuple[str, ...] | None = None) -> list[str] | None:
+    if not raw:
+        return None
+    items = [x.strip().lower() for x in str(raw).split(",") if x.strip()]
+    if allowed:
+        items = [x for x in items if x in allowed]
+    return items or None
+
+
+def _severities_at_least(minimum: str | None) -> list[str] | None:
+    if not minimum:
+        return None
+    floor = SEV_RANK.get(str(minimum).strip().lower())
+    if floor is None:
+        return None
+    return [s for s, r in SEV_RANK.items() if r >= floor]
+
+
+def _since_iso(window: str | None, since: str | None) -> str:
+    if since:
+        iso = graph.normalise_time(since)
+        if iso:
+            return iso
+    hours = 24 * 7 if (window or "now").lower() == "7d" else 6
+    return (now_jst() - timedelta(hours=hours)).isoformat()
+
+
+def _counts(events: list[dict]) -> dict[str, int]:
+    c = dict(EMPTY_COUNTS)
+    for ev in events:
+        t = ev.get("type")
+        if t in c:
+            c[t] += 1
+        if ev.get("severity") == "critical":
+            c["critical"] += 1
+        if SEV_RANK.get(ev.get("severity"), 0) >= 1:
+            c["warning_level"] += 1
+    return c
+
+
+def _filter_events(events: list[dict], since_iso: str, types: list[str] | None,
+                   severities: list[str] | None, limit: int) -> list[dict]:
+    out = []
+    for ev in events:
+        if not isinstance(ev, dict):
+            continue
+        t = graph.normalise_time(ev.get("time"))
+        if not t or t < since_iso:
+            continue
+        if types and ev.get("type") not in types:
+            continue
+        if severities and ev.get("severity") not in severities:
+            continue
+        e = dict(ev)
+        e["time"] = t
+        e.setdefault("affects", [])
+        out.append(e)
+    out.sort(key=lambda e: e.get("time") or "", reverse=True)
+    return out[:limit]
+
+
+def _merge_replay(events: list[dict], since_iso: str, types, severities, limit) -> list[dict]:
+    """Replayed events are merged into every events view, graph up or down."""
+    if not REPLAY:
+        return events[:limit]
+    have = {e.get("id") for e in events}
+    extra = [e for e in _filter_events(REPLAY, since_iso, types, severities, limit)
+             if e.get("id") not in have]
+    merged = events + extra
+    merged.sort(key=lambda e: e.get("time") or "", reverse=True)
+    return merged[:limit]
+
+
+def _resolve_events(limit: int, types: list[str] | None, severities: list[str] | None,
+                    since_iso: str) -> dict[str, Any]:
+    def live():
+        try:
+            evs = graph.fetch_events(since_iso, limit=limit, types=types,
+                                     severities=severities)
+        except graph.NoGraphData:
+            # A live graph that simply has nothing matching this filter is a
+            # legitimate empty answer, not a degradation.
+            if graph.event_count() <= 0:
+                raise
+            evs = []
+        evs = _merge_replay(evs, since_iso, types, severities, limit)
+        return {"events": evs, "counts": _counts(evs)}
+
+    def cache():
+        raw = read_mock("events.json")
+        if not raw:
+            return None
+        evs = _filter_events(raw.get("events") or [], since_iso, types, severities, limit)
+        evs = _merge_replay(evs, since_iso, types, severities, limit)
+        if not evs:
+            return None
+        return {"events": evs, "counts": _counts(evs)}
+
+    def empty():
+        evs = _merge_replay([], since_iso, types, severities, limit)
+        return {"events": evs, "counts": _counts(evs)}
+
+    return three_tier(live, cache, empty, "events.json")
+
+
+# ───────────────────────────────── /health ───────────────────────────────────
+
+@app.get("/health")
+@safe_endpoint(lambda: {"ok": True, "neo4j": "down", "eventCount": 0}, "health")
+async def health() -> dict[str, Any]:
+    up, note = graph.neo4j_status()
+    count = 0
+    src, degraded, meta_note = "mock", True, note
+    if up:
+        try:
+            count = graph.event_count()
+            src, degraded = "live", False
+            meta_note = None if count else "graph reachable but empty — run scripts/seed.py"
+            if not count:
+                degraded = True
+                src = "live"
+        except Exception as exc:
+            up = False
+            meta_note = f"{type(exc).__name__}: {str(exc)[:90]}"
+    if not up:
+        raw = read_mock("events.json") or {}
+        count = len(raw.get("events") or []) + len(REPLAY)
+        src, degraded = "cache", True
+    return {
+        "ok": True,
+        "neo4j": "up" if up else "down",
+        "eventCount": count,
+        "meta": meta(src, degraded, meta_note),
+    }
+
+
+# ────────────────────────────── /events.json ─────────────────────────────────
+
+@app.get("/events.json")
+@safe_endpoint(lambda: {"events": [], "counts": dict(EMPTY_COUNTS)}, "events.json")
+async def events_json(
+    limit: str | None = Query(None, description="default 30, max 200"),
+    type: str | None = Query(None, description="csv of quake,train,warning,weather"),
+    severity: str | None = Query(None, description="minimum level: info|warning|critical"),
+    since: str | None = Query(None, description="ISO8601"),
+    window: str | None = Query(None, description="now (last 6h, default) | 7d"),
+) -> dict[str, Any]:
+    n = _clamp_limit(limit)
+    types = _csv_list(type, TYPES)
+    sevs = _severities_at_least(severity)
+    return _resolve_events(n, types, sevs, _since_iso(window, since))
+
+
+# ───────────────────────────── /lines.geojson ────────────────────────────────
+
+def _mock_line_props() -> dict[str, dict[str, Any]]:
+    raw = read_mock("lines.geojson") or {}
+    out = {}
+    for f in raw.get("features") or []:
+        p = (f or {}).get("properties") or {}
+        if p.get("lineId"):
+            out[p["lineId"]] = {"geometry": (f or {}).get("geometry"), "props": p}
+    return out
+
+
+def _line_features(status_map: dict[str, dict[str, Any]] | None,
+                   geometry_src: dict[str, dict[str, Any]],
+                   fallback_source: str) -> list[dict[str, Any]]:
+    """All 20 contract lines, ALWAYS — the UI's line-search list depends on it."""
+    feats = []
+    for row in lines_csv():
+        lid = row.get("lineId")
+        if not lid:
+            continue
+        geo = (geometry_src.get(lid) or {}).get("geometry") or {
+            "type": "LineString", "coordinates": []}
+        mock_props = (geometry_src.get(lid) or {}).get("props") or {}
+        has_feed = (row.get("statusFeed") or "none").strip().lower() == "live"
+        st = (status_map or {}).get(lid) or {}
+        if not has_feed:
+            # Honest labelling: no live feed => unknown/grey, never a faked 'normal'.
+            status, text, text_ja, source, updated = (
+                "unknown", "No live status feed", None, "none", None)
+        elif st:
+            status = st.get("status") or "unknown"
+            text = st.get("statusText") or "No live status feed"
+            text_ja = st.get("statusTextJa")
+            source = st.get("statusSource") or fallback_source
+            updated = st.get("updatedAt")
+        else:
+            status = mock_props.get("status") or "unknown"
+            text = mock_props.get("statusText") or "No live status feed"
+            text_ja = mock_props.get("statusTextJa")
+            source = mock_props.get("statusSource") or fallback_source
+            updated = mock_props.get("updatedAt")
+        feats.append({
+            "type": "Feature",
+            "geometry": geo,
+            "properties": {
+                "lineId": lid,
+                "name": row.get("name"), "nameJa": row.get("nameJa"),
+                "operator": row.get("operator"),
+                "status": status, "statusText": text, "statusTextJa": text_ja,
+                "color": row.get("color") or "#888888",
+                "statusSource": source if status != "unknown" else ("none" if not has_feed else source),
+                "updatedAt": updated,
+            },
+        })
+    return feats
+
+
+@app.get("/lines.geojson")
+@safe_endpoint(lambda: {"type": "FeatureCollection",
+                        "features": _line_features(None, {}, "mock")}, "lines.geojson")
+async def lines_geojson() -> dict[str, Any]:
+    geom = _mock_line_props()
+
+    def live():
+        status = graph.fetch_line_status()
+        return {"type": "FeatureCollection",
+                "features": _line_features(status, geom, "live")}
+
+    def cache():
+        if not geom:
+            return None
+        return {"type": "FeatureCollection",
+                "features": _line_features(None, geom, "cache")}
+
+    def empty():
+        return {"type": "FeatureCollection",
+                "features": _line_features(None, geom, "mock")}
+
+    payload = three_tier(live, cache, empty, "lines.geojson")
+    missing = sum(1 for f in payload["features"]
+                  if not (f.get("geometry") or {}).get("coordinates"))
+    if missing:
+        m = payload["meta"]
+        extra = f"geometry pending for {missing}/{len(payload['features'])} lines"
+        m["note"] = f"{m['note']}; {extra}" if m.get("note") else extra
+    return payload
+
+
+# ──────────────────────────── /stations.geojson ──────────────────────────────
+
+def _station_feature(s: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "type": "Feature",
+        "geometry": {"type": "Point",
+                     "coordinates": [s.get("lon"), s.get("lat")]},
+        "properties": {
+            "stationId": s.get("stationId"),
+            "name": s.get("name"), "nameJa": s.get("nameJa"),
+            "lineIds": s.get("lineIds") or [],
+            "ward": s.get("ward"),
+            "ridership": s.get("ridership"),
+            "ridershipBand": s.get("ridershipBand") or 1,
+            "inFloodZone": bool(s.get("inFloodZone")),
+        },
+    }
+
+
+@app.get("/stations.geojson")
+@safe_endpoint(lambda: {"type": "FeatureCollection", "features": []}, "stations.geojson")
+async def stations_geojson() -> dict[str, Any]:
+    def live():
+        rows = graph.fetch_stations()
+        feats = [_station_feature(r) for r in rows
+                 if r.get("lat") is not None and r.get("lon") is not None]
+        if not feats:
+            raise NoLiveData("stations in graph have no coordinates")
+        return {"type": "FeatureCollection", "features": feats}
+
+    def cache():
+        raw = read_mock("stations.geojson")
+        if not raw or not raw.get("features"):
+            return None
+        return {"type": "FeatureCollection", "features": raw["features"]}
+
+    def empty():
+        return {"type": "FeatureCollection", "features": []}
+
+    return three_tier(live, cache, empty, "stations.geojson")
+
+
+# ───────────────────────────── /impact/{lineId} ──────────────────────────────
+
+@app.get("/impact/{lineId}")
+async def impact(lineId: str):
+    row = next((r for r in lines_csv() if r.get("lineId") == lineId), None)
+    if row is None:
+        # The one legitimate non-200 in this API: a genuine client error.
+        # Body is exactly as documented in contracts/api.md (no FastAPI "detail").
+        return JSONResponse(status_code=404,
+                            content={"error": "unknown lineId", "lineId": lineId})
+
+    since = (now_jst() - timedelta(hours=6)).isoformat()
+
+    def live():
+        data = graph.fetch_impact(lineId, since)
+        if not data:
+            raise NoLiveData(f"Line {lineId} is not in the graph (run scripts/seed.py)")
+        if not data.get("stations"):
+            raise NoLiveData(f"Line {lineId} has no stations in the graph")
+        return data
+
+    def cache():
+        raw = read_mock(f"impact/{lineId}.json")
+        if not raw:
+            return None
+        raw.pop("meta", None)
+        return raw
+
+    def empty():
+        return {
+            "lineId": lineId, "name": row.get("name"), "nameJa": row.get("nameJa"),
+            "status": "unknown", "statusText": "No live status feed",
+            "wards": [], "stations": [], "events": [], "stationsInFloodZone": 0,
+        }
+
+    try:
+        payload = three_tier(live, cache, empty, f"impact/{lineId}")
+    except Exception as exc:                      # belt and braces, never 500
+        log.exception("impact handler failed")
+        payload = empty()
+        payload["meta"] = meta("mock", True, f"handler error: {type(exc).__name__}")
+    payload.setdefault("stationsInFloodZone",
+                       sum(1 for s in payload.get("stations") or []
+                           if s.get("inFloodZone")))
+    return payload
+
+
+# ───────────────────────────── /forecast.json ────────────────────────────────
+
+def _transform_open_meteo(raw: dict[str, Any]) -> dict[str, Any] | None:
+    h = (raw or {}).get("hourly") or {}
+    times = h.get("time") or []
+    temps = h.get("temperature_2m") or []
+    precs = h.get("precipitation") or []
+    if not times:
+        return None
+    now = now_jst()
+    hourly, now_index = [], 0
+    for i, t in enumerate(times):
+        iso = graph.normalise_time(t) or t
+        try:
+            dt = datetime.fromisoformat(iso)
+        except ValueError:
+            dt = now
+        is_past = dt <= now
+        if is_past:
+            now_index = i
+        hourly.append({
+            "time": iso,
+            "temperature": temps[i] if i < len(temps) else None,
+            "precipitation": precs[i] if i < len(precs) else None,
+            "isPast": is_past,
+        })
+    fut = hourly[now_index:]
+    nums = [x["temperature"] for x in hourly if isinstance(x["temperature"], (int, float))]
+    p24 = [x["precipitation"] for x in fut[:24] if isinstance(x["precipitation"], (int, float))]
+    p48 = [x["precipitation"] for x in fut[:48] if isinstance(x["precipitation"], (int, float))]
+    return {
+        "location": {"lat": raw.get("latitude", 35.68), "lon": raw.get("longitude", 139.76),
+                     "name": "Tokyo"},
+        "nowIndex": now_index,
+        "hourly": hourly,
+        "summary": {
+            "maxPrecip24h": round(max(p24), 1) if p24 else 0.0,
+            "minTemp": round(min(nums), 1) if nums else None,
+            "maxTemp": round(max(nums), 1) if nums else None,
+            "rainHoursNext48": sum(1 for p in p48 if p and p > 0.0),
+        },
+    }
+
+
+@app.get("/forecast.json")
+@safe_endpoint(lambda: {"location": {"lat": 35.6895, "lon": 139.6917, "name": "Tokyo"},
+                        "nowIndex": 0, "hourly": [],
+                        "summary": {"maxPrecip24h": 0.0, "minTemp": None,
+                                    "maxTemp": None, "rainHoursNext48": 0}},
+               "forecast.json")
+async def forecast_json() -> dict[str, Any]:
+    def live():
+        # Weather is not a graph entity: tier 1 here is the live Open-Meteo feed,
+        # cached for 10 minutes so the demo never waits on it twice.
+        if _forecast_cache["value"] and (time.monotonic() - _forecast_cache["at"]) < 600:
+            return dict(_forecast_cache["value"])
+        url = env_str("FEED_OPEN_METEO")
+        if not url:
+            raise NoLiveData("FEED_OPEN_METEO not set")
+        import httpx
+        with httpx.Client(timeout=4.0) as client:
+            r = client.get(url)
+            r.raise_for_status()
+            data = _transform_open_meteo(r.json())
+        if not data:
+            raise NoLiveData("Open-Meteo returned no hourly series")
+        _forecast_cache.update(at=time.monotonic(), value=data)
+        return dict(data)
+
+    def cache():
+        raw = read_mock("forecast.json")
+        if not raw or not raw.get("hourly"):
+            raw2 = read_mock("raw/open-meteo-forecast.json")
+            return _transform_open_meteo(raw2) if raw2 else None
+        raw.pop("meta", None)
+        return raw
+
+    def empty():
+        return {"location": {"lat": 35.6895, "lon": 139.6917, "name": "Tokyo"},
+                "nowIndex": 0, "hourly": [],
+                "summary": {"maxPrecip24h": 0.0, "minTemp": None,
+                            "maxTemp": None, "rainHoursNext48": 0}}
+
+    return three_tier(live, cache, empty, "forecast.json")
+
+
+# ─────────────────────────────────── /brief ──────────────────────────────────
+
+@app.get("/brief")
+@safe_endpoint(lambda: {"en": "City brief unavailable.", "ja": "シティブリーフは現在利用できません。",
+                        "provider": "template",
+                        "providerLabel": "rule-based summary (no data)",
+                        "eventCount": 0}, "brief")
+async def brief() -> dict[str, Any]:
+    window = "now"
+    ev_payload = _resolve_events(10, None, None, _since_iso(window, None))
+    events = ev_payload.get("events") or []
+    result = brief_mod.build_brief(events, window)
+    src_meta = ev_payload.get("meta") or meta("mock", True, "no event source")
+    note = result.pop("note", None)
+    if note:
+        src_meta = dict(src_meta)
+        src_meta["note"] = f"{src_meta['note']}; {note}" if src_meta.get("note") else note
+    result["meta"] = src_meta
+    return result
+
+
+# ──────────────────────────── /sandboxes.json ────────────────────────────────
+
+SANDBOX_STATE = ROOT / "ingest" / "state" / "sandboxes.json"
+
+
+@app.get("/sandboxes.json")
+@safe_endpoint(lambda: {"count": 0, "sandboxes": []}, "sandboxes.json")
+async def sandboxes_json() -> dict[str, Any]:
+    def live():
+        # A2 writes ingest/state/sandboxes.json from the Daytona launcher.
+        if not SANDBOX_STATE.is_file():
+            raise NoLiveData("ingest/state/sandboxes.json not written yet")
+        data = json.loads(SANDBOX_STATE.read_text(encoding="utf-8"))
+        boxes = data.get("sandboxes") if isinstance(data, dict) else data
+        if not boxes:
+            raise NoLiveData("sandbox state file has no sandboxes")
+        return {"count": len(boxes), "sandboxes": boxes}
+
+    def cache():
+        raw = read_mock("sandboxes.json")
+        if not raw or not raw.get("sandboxes"):
+            return None
+        boxes = raw["sandboxes"]
+        return {"count": raw.get("count") or len(boxes), "sandboxes": boxes}
+
+    def empty():
+        return {"count": 0, "sandboxes": []}
+
+    return three_tier(live, cache, empty, "sandboxes.json")
+
+
+# ────────────────────────────── /layers.json ─────────────────────────────────
+
+LAYER_LABELS = {
+    "trains": "Train lines", "quakes": "Earthquakes", "warnings": "JMA warnings",
+    "weather": "Weather", "flood": "Flood hazard", "crowd": "Station crowding",
+    "peopleflow": "People flow (typical)",
+}
+
+
+@app.get("/layers.json")
+@safe_endpoint(lambda: {"layers": [{"id": k, "label": v, "state": "mock", "count": 0,
+                                    "lastUpdate": now_iso()}
+                                   for k, v in LAYER_LABELS.items()]}, "layers.json")
+async def layers_json() -> dict[str, Any]:
+    stamp = now_iso()
+    ev = _resolve_events(200, None, None, _since_iso("now", None))
+    ev_state = (ev.get("meta") or {}).get("source", "mock")
+    counts = ev.get("counts") or dict(EMPTY_COUNTS)
+
+    lines = await lines_geojson()
+    line_state = (lines.get("meta") or {}).get("source", "mock")
+    live_lines = sum(1 for f in lines.get("features") or []
+                     if (f.get("properties") or {}).get("statusSource") == "live")
+    train_count = live_lines or sum(1 for f in lines.get("features") or []
+                                   if (f.get("properties") or {}).get("status") != "unknown")
+
+    stations = await stations_geojson()
+    st_state = (stations.get("meta") or {}).get("source", "mock")
+    st_feats = stations.get("features") or []
+    flood_count = sum(1 for f in st_feats
+                      if (f.get("properties") or {}).get("inFloodZone"))
+
+    layers = [
+        {"id": "trains", "label": LAYER_LABELS["trains"], "state": line_state,
+         "count": train_count, "lastUpdate": stamp},
+        {"id": "quakes", "label": LAYER_LABELS["quakes"], "state": ev_state,
+         "count": counts.get("quake", 0), "lastUpdate": stamp},
+        {"id": "warnings", "label": LAYER_LABELS["warnings"], "state": ev_state,
+         "count": counts.get("warning", 0), "lastUpdate": stamp},
+        {"id": "weather", "label": LAYER_LABELS["weather"], "state": ev_state,
+         "count": counts.get("weather", 0), "lastUpdate": stamp},
+        {"id": "flood", "label": LAYER_LABELS["flood"], "state": st_state,
+         "count": flood_count, "lastUpdate": stamp},
+        {"id": "crowd", "label": LAYER_LABELS["crowd"], "state": st_state,
+         "count": len(st_feats), "lastUpdate": stamp},
+        # Honest: no people-flow dataset is wired in this build.
+        {"id": "peopleflow", "label": LAYER_LABELS["peopleflow"], "state": "off",
+         "count": 0, "lastUpdate": stamp},
+    ]
+    up, note = graph.neo4j_status()
+    return {"layers": layers,
+            "meta": meta("live" if up else "cache", not up,
+                         None if up else f"Neo4j down: {note}" if note else "Neo4j down")}
+
+
+# ──────────────────────────── POST /demo/replay ──────────────────────────────
+
+def _ward_ja_map() -> list[tuple[str, str]]:
+    return [(r["ward"], r.get("wardJa") or "") for r in wards_csv() if r.get("ward")]
+
+
+def _replay_quake(now: datetime) -> list[dict[str, Any]]:
+    """Inject a real cached P2PQuake record as a fresh Event."""
+    hist = read_mock("raw/p2pquake-history.json") or []
+    recs = [r for r in hist if isinstance(r, dict) and r.get("earthquake")]
+    if not recs:
+        return []
+
+    def tokyo_points(r):
+        return [p for p in (r.get("points") or []) if p.get("pref") == "東京都"]
+
+    tokyo = [r for r in recs if tokyo_points(r)]
+    pool = tokyo or recs
+    rec = max(pool, key=lambda r: (r.get("earthquake", {}).get("maxScale") or 0))
+    eq = rec.get("earthquake") or {}
+    hypo = eq.get("hypocenter") or {}
+    scale = eq.get("maxScale") or 0
+    severity = "critical" if scale >= 45 else "warning" if scale >= 30 else "info"
+    shindo = round(scale / 10, 1) if scale else None
+    place = hypo.get("name") or "Tokyo area"
+    mag = hypo.get("magnitude")
+    affects = []
+    for ward, ja in _ward_ja_map():
+        if ja and any(ja in (p.get("addr") or "") for p in tokyo_points(rec)):
+            affects.append(f"ward:{ward}")
+    title = f"M{mag} earthquake near {place}" if mag else f"Earthquake near {place}"
+    if shindo:
+        title += f" — max JMA intensity {shindo}"
+    title_ja = f"{place}でM{mag}の地震" if mag else f"{place}で地震"
+    if shindo:
+        title_ja += f"（最大震度{shindo}）"
+    return [{
+        "id": f"replay-quake-{int(now.timestamp())}",
+        "type": "quake", "severity": severity,
+        "time": now.isoformat(),
+        "lat": hypo.get("latitude"), "lon": hypo.get("longitude"),
+        "title": title, "titleJa": title_ja,
+        "affects": affects[:6], "source": "replay", "url": None,
+        "magnitude": mag, "maxScale": scale or None,
+    }]
+
+
+def _replay_train(now: datetime) -> list[dict[str, Any]]:
+    """Inject the cached ODPT TrainInformation snapshot as fresh train Events."""
+    raw = read_mock("raw/odpt-traininformation.json") or []
+    by_railway = {r.get("odpt:railway"): r for r in raw if isinstance(r, dict)}
+    rows = [r for r in lines_csv() if (r.get("statusFeed") or "") == "live"]
+    out: list[dict[str, Any]] = []
+    ts = int(now.timestamp())
+    for row in rows[:3]:
+        rec = by_railway.get(row.get("odptRailway")) or {}
+        text_ja = ((rec.get("odpt:trainInformationText") or {}) or {}).get("ja") or ""
+        status_ja = ((rec.get("odpt:trainInformationStatus") or {}) or {}).get("ja") or ""
+        blob = text_ja + status_ja
+        # "現在、１５分以上の遅延はありません。" contains 遅延 but means NORMAL.
+        normal = any(k in blob for k in ("ありません", "平常運転", "平常"))
+        delayed = (not normal) and any(
+            k in blob for k in ("遅延", "運転見合わせ", "運休", "見合わせ", "折り返し"))
+        if delayed:
+            title = f"{row['name']}: service disruption reported"
+            title_ja = f"{row['nameJa']}：{status_ja or text_ja}"
+            sev = "critical" if "見合わせ" in (text_ja + status_ja) else "warning"
+        else:
+            # The cached snapshot is clean; the demo beat needs a delay, so this
+            # is an explicitly REPLAY-sourced injection (contract: source=replay).
+            title = f"{row['name']}: delays of approx 15 min (replay)"
+            title_ja = f"{row['nameJa']}：約15分の遅れ（リプレイ）"
+            sev = "warning"
+        out.append({
+            "id": f"replay-train-{row['lineId']}-{ts}",
+            "type": "train", "severity": sev, "time": now.isoformat(),
+            "lat": None, "lon": None,
+            "title": title, "titleJa": title_ja,
+            "affects": [f"line:{row['lineId']}"],
+            "source": "replay", "url": None, "magnitude": None, "maxScale": None,
+        })
+    return out
+
+
+def _replay_warning(now: datetime) -> list[dict[str, Any]]:
+    """Inject the cached JMA Tokyo (130000) warning payload as fresh Events."""
+    raw = read_mock("raw/jma-warning-130000.json") or {}
+    head = (raw.get("headlineText") or "").strip()
+    ts = int(now.timestamp())
+    out: list[dict[str, Any]] = []
+    if head:
+        out.append({
+            "id": f"replay-warning-headline-{ts}",
+            "type": "warning", "severity": "warning", "time": now.isoformat(),
+            "lat": None, "lon": None,
+            "title": "JMA advisory headline for Tokyo (see Japanese text)",
+            "titleJa": head[:180],
+            "affects": [], "source": "replay",
+            "url": env_str("FEED_JMA_WARNING") or None,
+            "magnitude": None, "maxScale": None,
+        })
+    wards = wards_csv()
+    for at in raw.get("areaTypes") or []:
+        for area in at.get("areas") or []:
+            code = str(area.get("code") or "")
+            if not code.startswith("131") or len(code) != 7:
+                continue
+            codes = [w.get("code") for w in area.get("warnings") or [] if w.get("code")]
+            if not codes:
+                continue
+            idx = (int(code) - 1310100) // 100
+            if not (0 <= idx < len(wards)):
+                continue
+            w = wards[idx]
+            out.append({
+                "id": f"replay-warning-{w['ward']}-{ts}",
+                "type": "warning", "severity": "warning", "time": now.isoformat(),
+                "lat": float(w["lat"]), "lon": float(w["lon"]),
+                "title": f"JMA weather advisory active for {w['ward']} "
+                         f"(code {'/'.join(codes)})",
+                "titleJa": f"{w['wardJa']}に気象注意報が発表中（コード{'/'.join(codes)}）",
+                "affects": [f"ward:{w['ward']}"], "source": "replay",
+                "url": env_str("FEED_JMA_WARNING") or None,
+                "magnitude": None, "maxScale": None,
+            })
+            if len(out) >= 5:
+                return out
+    if len(out) <= 1:
+        # Cached snapshot had no ward-level advisories: give the beat one event.
+        w = next((x for x in wards if x["ward"] == "Koto"), wards[0])
+        out.append({
+            "id": f"replay-warning-{w['ward']}-{ts}",
+            "type": "warning", "severity": "warning", "time": now.isoformat(),
+            "lat": float(w["lat"]), "lon": float(w["lon"]),
+            "title": f"Heavy rain advisory for {w['ward']} (replay)",
+            "titleJa": f"{w['wardJa']}に大雨注意報（リプレイ）",
+            "affects": [f"ward:{w['ward']}"], "source": "replay",
+            "url": env_str("FEED_JMA_WARNING") or None, "magnitude": None, "maxScale": None,
+        })
+    return out
+
+
+SCENARIOS = {"quake": _replay_quake, "train": _replay_train, "warning": _replay_warning}
+
+
+@app.post("/demo/replay")
+@safe_endpoint(lambda: {"injected": 0, "scenario": "quake", "events": []}, "demo/replay")
+async def demo_replay(body: dict[str, Any] = Body(default=None)) -> dict[str, Any]:
+    raw_scenario = str(((body or {}).get("scenario") or "quake")).strip().lower()
+    scenario = raw_scenario if raw_scenario in SCENARIOS else "quake"
+    note = None if scenario == raw_scenario else f"unknown scenario {raw_scenario!r}, replayed quake"
+
+    now = now_jst().replace(microsecond=0)
+    try:
+        events = SCENARIOS[scenario](now) or []
+    except Exception as exc:
+        log.exception("replay builder failed")
+        events, note = [], f"replay builder failed: {type(exc).__name__}"
+
+    # In-memory first: the beat fires even with Neo4j down.
+    REPLAY.extend(events)
+    del REPLAY[:-REPLAY_CAP]
+
+    written = 0
+    try:
+        written = graph.upsert_events(events)
+        src, degraded = "live", False
+    except Exception as exc:
+        src, degraded = "mock", True
+        reason = f"Neo4j unavailable ({type(exc).__name__}) — events held in API memory"
+        note = f"{note}; {reason}" if note else reason
+
+    if not events:
+        src, degraded = "mock", True
+        note = note or "no cached payload in mock/raw for this scenario"
+
+    return {
+        "injected": len(events), "scenario": scenario, "written": written,
+        "events": events,
+        "meta": meta(src, degraded, note),
+    }
+
+
+# ─────────────────────────────────── root ────────────────────────────────────
+
+@app.get("/")
+async def root() -> dict[str, Any]:
+    up, _ = graph.neo4j_status()
+    return {
+        "service": "TokyoPulse API", "neo4j": "up" if up else "down",
+        "endpoints": ["/health", "/events.json", "/lines.geojson", "/stations.geojson",
+                      "/impact/{lineId}", "/forecast.json", "/brief",
+                      "/sandboxes.json", "/layers.json", "POST /demo/replay"],
+        "meta": meta("live" if up else "cache", not up),
+    }

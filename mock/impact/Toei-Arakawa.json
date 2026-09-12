@@ -1,0 +1,355 @@
+{
+  "lineId": "Toei-Arakawa",
+  "name": "Tokyo Sakura Tram",
+  "nameJa": "東京さくらトラム",
+  "status": "normal",
+  "statusText": "Normal operation",
+  "wards": [
+    {
+      "ward": "Kita",
+      "wardJa": "北区",
+      "stationCount": 10,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Arakawa",
+      "wardJa": "荒川区",
+      "stationCount": 11,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Toshima",
+      "wardJa": "豊島区",
+      "stationCount": 9,
+      "activeEventCount": 0
+    }
+  ],
+  "stations": [
+    {
+      "stationId": "Toei.Arakawa.ArakawaYuenchimae",
+      "name": "Arakawa-yuenchimae",
+      "nameJa": "荒川遊園地前",
+      "lat": 35.750646,
+      "lon": 139.757517,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.ArakawaItchumae",
+      "name": "Arakawa-itchumae",
+      "nameJa": "荒川一中前",
+      "lat": 35.733768,
+      "lon": 139.788841,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.ArakawaNanachome",
+      "name": "Arakawa-nanachome",
+      "nameJa": "荒川七丁目",
+      "lat": 35.741923,
+      "lon": 139.78421,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.ArakawaNichome",
+      "name": "Arakawa-nichome",
+      "nameJa": "荒川二丁目",
+      "lat": 35.738573,
+      "lon": 139.784704,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.ArakawaShakomae",
+      "name": "Arakawa-shakomae",
+      "nameJa": "荒川車庫前",
+      "lat": 35.750865,
+      "lon": 139.752461,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Arakawakuyakushomae",
+      "name": "Arakawakuyakushomae",
+      "nameJa": "荒川区役所前",
+      "lat": 35.734913,
+      "lon": 139.786416,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Asukayama",
+      "name": "Asukayama",
+      "nameJa": "飛鳥山",
+      "lat": 35.750109,
+      "lon": 139.737333,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Gakushuinshita",
+      "name": "Gakushuinshita",
+      "nameJa": "学習院下",
+      "lat": 35.716347,
+      "lon": 139.712529,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.HigashiIkebukuroYonchome",
+      "name": "Higashi-ikebukuro-yonchome",
+      "nameJa": "東池袋四丁目",
+      "lat": 35.725398,
+      "lon": 139.720404,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.HigashiOguSanchome",
+      "name": "Higashi-ogu-sanchome",
+      "nameJa": "東尾久三丁目",
+      "lat": 35.745626,
+      "lon": 139.773867,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Kajiwara",
+      "name": "Kajiwara",
+      "nameJa": "梶原",
+      "lat": 35.75107,
+      "lon": 139.747268,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Kishibojimmae",
+      "name": "Kishibojimmae",
+      "nameJa": "鬼子母神前",
+      "lat": 35.720569,
+      "lon": 139.71516,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Koshinzuka",
+      "name": "Koshinzuka",
+      "nameJa": "庚申塚",
+      "lat": 35.739504,
+      "lon": 139.729625,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Kumanomae",
+      "name": "Kumanomae",
+      "nameJa": "熊野前",
+      "lat": 35.748487,
+      "lon": 139.769859,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.MachiyaEkimae",
+      "name": "Machiya-ekimae",
+      "nameJa": "町屋駅前",
+      "lat": 35.742783,
+      "lon": 139.780891,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.MachiyaNichome",
+      "name": "Machiya-nichome",
+      "nameJa": "町屋二丁目",
+      "lat": 35.743919,
+      "lon": 139.776416,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Minowabashi",
+      "name": "Minowabashi",
+      "nameJa": "三ノ輪橋",
+      "lat": 35.732207,
+      "lon": 139.791509,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Miyanomae",
+      "name": "Miyanomae",
+      "nameJa": "宮ノ前",
+      "lat": 35.749811,
+      "lon": 139.76619,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Mukohara",
+      "name": "Mukohara",
+      "nameJa": "向原",
+      "lat": 35.728775,
+      "lon": 139.724759,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.NishigaharaYonchome",
+      "name": "Nishigahara-yonchome",
+      "nameJa": "西ヶ原四丁目",
+      "lat": 35.744222,
+      "lon": 139.732665,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Odai",
+      "name": "Odai",
+      "nameJa": "小台",
+      "lat": 35.750477,
+      "lon": 139.761739,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.OjiEkimae",
+      "name": "Oji-ekimae",
+      "nameJa": "王子駅前",
+      "lat": 35.752982,
+      "lon": 139.738045,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Omokagebashi",
+      "name": "Omokagebashi",
+      "nameJa": "面影橋",
+      "lat": 35.713012,
+      "lon": 139.714199,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.OtsukaEkimae",
+      "name": "Otsuka-ekimae",
+      "nameJa": "大塚駅前",
+      "lat": 35.731188,
+      "lon": 139.729098,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Sakaecho",
+      "name": "Sakaecho",
+      "nameJa": "栄町",
+      "lat": 35.750865,
+      "lon": 139.742186,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.ShinKoshinzuka",
+      "name": "Shin-koshinzuka",
+      "nameJa": "新庚申塚",
+      "lat": 35.74107,
+      "lon": 139.730344,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Sugamoshinden",
+      "name": "Sugamoshinden",
+      "nameJa": "巣鴨新田",
+      "lat": 35.735682,
+      "lon": 139.727684,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.TakinogawaItchome",
+      "name": "Takinogawa-itchome",
+      "nameJa": "滝野川一丁目",
+      "lat": 35.747283,
+      "lon": 139.73542,
+      "ward": "Kita",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.TodenZoshigaya",
+      "name": "Toden-zoshigaya",
+      "nameJa": "都電雑司ヶ谷",
+      "lat": 35.724081,
+      "lon": 139.717835,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Arakawa.Waseda",
+      "name": "Waseda",
+      "nameJa": "早稲田",
+      "lat": 35.71176,
+      "lon": 139.719003,
+      "ward": "Toshima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "odpt-train-Toei-Arakawa",
+      "type": "train",
+      "severity": "info",
+      "time": "2026-09-12T13:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "title": "Tokyo Sakura Tram operating normally",
+      "titleJa": "現在、１５分以上の遅延はありません。",
+      "affects": [
+        "line:Toei-Arakawa"
+      ],
+      "source": "odpt",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    }
+  ],
+  "stationsInFloodZone": 0,
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

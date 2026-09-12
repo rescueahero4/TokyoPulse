@@ -1,0 +1,5781 @@
+[
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FAF",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.AkadoShogakkomae",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.AkadoShogakkomae"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 5016
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 5206
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 5216
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 4484
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 4764
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 5055
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 5318
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FEC",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Akebonobashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Akebonobashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 38039
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 39127
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 39245
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 28828
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 30749
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 33879
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 35291
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 36403
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FC7",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.AoyamaItchome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.AoyamaItchome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 77999
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 78357
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 77984
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 46635
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 48578
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 55950
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 64794
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 68934
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F7F",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Asakusa.Daimon",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Daimon"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 109543
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 112622
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 113928
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 70861
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 72155
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 82083
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 95470
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 103281
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F85",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Magome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Magome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 27720
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 28981
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 29491
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 21803
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 21836
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 23527
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 25129
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 26346
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F84",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Asakusa.Kuramae",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Kuramae"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 36154
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 37591
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 37943
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 25954
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 28211
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 33542
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 39247
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 42345
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F86",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Asakusa.Mita",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Mita"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 109196
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 112555
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 114102
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 72091
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 74938
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 86130
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 99494
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 107560
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F98",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Meguro",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Meguro"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 97236
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 102086
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 105218
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 68840
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 71285
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 81374
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 98854
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 108156
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F7E",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Asakusabashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Asakusabashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 60454
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 61500
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 60380
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 39826
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 42918
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 50828
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 57015
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 60025
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F7D",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Asakusa",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Asakusa"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 54556
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 56549
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 55671
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 29467
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 33309
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 45976
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 56120
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 59010
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FC8",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.AzabuJuban",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.AzabuJuban"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 38261
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 38177
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 37018
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 24235
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25437
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 28082
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 30698
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 32029
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FB7",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.MinumadaiShinsuikoen",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.MinumadaiShinsuikoen"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 13013
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 13371
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 13719
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 10856
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 11348
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 12258
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 13251
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FBB",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NishiNippori",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.NishiNippori"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 29150
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 30249
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 30858
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 25032
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 27618
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 30119
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 31946
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FC5",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Yazaike",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.Yazaike"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 9892
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 10532
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 10870
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 8681
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 9246
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 9863
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 10579
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FED",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.BakuroYokoyama",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.BakuroYokoyama"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 115517
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 117738
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 118024
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 82627
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 86237
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 96253
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 106131
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 112233
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FEE",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Funabori",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Funabori"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 63212
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 64560
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 64062
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 48301
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 50855
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 53981
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 56792
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 58409
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F80",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Gotanda",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Gotanda"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 70376
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 71269
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 71027
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 47946
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 48571
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 52651
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 56569
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 59177
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F91",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Hakusan",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Hakusan"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 51263
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 51351
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 51183
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 25012
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 29146
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 42662
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 45428
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 48388
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FEF",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Hamacho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Hamacho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 22335
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 23189
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 23188
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 16408
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 16602
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 18635
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 20676
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 21447
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F92",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Hasune",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Hasune"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 19566
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 19682
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 19459
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 15476
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 16260
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 17632
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 18624
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 19363
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F93",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Hibiya",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Hibiya"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 86185
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 92589
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 95622
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 60530
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 62501
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 71530
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 80027
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 85848
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F81",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.HigashiGinza",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.HigashiGinza"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 83607
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 86157
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 86726
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 55887
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 58095
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 67709
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 79058
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 85509
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FCA",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.HigashiNakano",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.HigashiNakano"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 27933
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 27755
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 27654
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 20748
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 21552
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 22842
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 24189
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 25362
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F82",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.HigashiNihombashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.HigashiNihombashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 83290
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 85113
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 84888
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 57830
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 60624
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 67896
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 75870
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 79857
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF0",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.HigashiOjima",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.HigashiOjima"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 32646
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 32728
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 32240
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 24491
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25683
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 27592
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 29477
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 30424
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF2",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Ichinoe",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Ichinoe"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 43548
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 44627
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 44708
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 34960
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 36592
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 39354
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 41531
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 43043
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FCE",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Iidabashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Iidabashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 33273
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 34278
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 34055
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 22323
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 22404
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 24744
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 27039
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 28807
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FB5",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Kumanomae",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.Kumanomae"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 9532
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 9722
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 9677
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 7453
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 7874
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 8259
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 8714
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FAD",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.AdachiOdai",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.AdachiOdai"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 3938
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 3931
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 3875
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 3162
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 3272
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 3424
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 3596
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FC6",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Akabanebashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Akabanebashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 40429
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 43070
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 42784
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 25126
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25190
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 29896
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 34237
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 37465
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FCB",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.HigashiShinjuku",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.HigashiShinjuku"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 41560
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 42629
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 42014
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 27925
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 28280
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 31429
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 35979
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 37339
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FCC",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Hikarigaoka",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Hikarigaoka"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 62937
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 63584
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 63120
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 47683
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 49778
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 52831
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 54950
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 56838
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FCD",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.HongoSanchome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.HongoSanchome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 21554
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 22216
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 22270
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 15135
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 16293
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 18389
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 20607
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 22043
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F83",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.HonjoAzumabashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.HonjoAzumabashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 19111
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 19361
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 19630
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 14500
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 15226
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 17554
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 20350
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 21482
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF1",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Ichigaya",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Ichigaya"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 98926
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 101106
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 101093
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 66889
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 70806
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 78112
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 85603
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 90108
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F95",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ItabashiKuyakushomae",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.ItabashiKuyakushomae"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 34647
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 35198
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 35277
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 27871
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 29174
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 31287
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 33494
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 35514
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F94",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Itabashihoncho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Itabashihoncho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 34846
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 35670
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 36282
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 28087
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 29887
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 32635
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 35317
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 37555
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF3",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Iwamotocho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Iwamotocho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 53741
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 55325
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 55446
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 39912
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 40568
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 45991
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 49899
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 52330
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FCF",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Kachidoki",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Kachidoki"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 102315
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 102086
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 108147
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 74928
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 73964
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 74776
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 81077
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 91189
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF5",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Kikukawa",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Kikukawa"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 25620
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 25721
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 25887
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 20096
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 20121
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 21160
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 23140
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 24573
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD1",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.KiyosumiShirakawa",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.KiyosumiShirakawa"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 41892
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 42770
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 43537
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 30132
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 31220
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 34819
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 38213
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 40727
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FB1",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Kohoku",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.Kohoku"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 10177
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 10503
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 10912
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 9498
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 10368
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 12107
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 12626
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FB9",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Nippori",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.Nippori"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 51496
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 53093
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 54253
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 42113
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 44135
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 48252
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 52085
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD2",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.KokuritsuKyogijo",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.KokuritsuKyogijo"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 10366
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 10307
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 10764
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 5799
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 7274
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 10424
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 12767
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 13711
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FB3",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Koya",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.Koya"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 5862
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 6174
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 6295
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 5080
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 5456
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 5917
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 6207
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF6",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Kudanshita",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Kudanshita"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 111410
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 115672
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 115034
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 75175
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 80312
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 95386
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 104820
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 111197
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F96",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Mita.Jimbocho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Jimbocho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 144596
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 147059
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 147942
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 95660
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 102905
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 117659
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 130940
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 139451
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F97",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Mita.Kasuga",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Kasuga"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 68823
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 69902
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 70535
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 49957
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 53674
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 60591
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 67327
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 71886
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F99",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Mita.Mita",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Mita"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 106988
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 109806
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 111202
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 67771
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 71106
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 82921
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 96021
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 105092
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF7",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Mizue",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Mizue"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 56546
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 57142
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 57071
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 44803
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 46834
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 49991
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 52849
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 55028
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FBF",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.OgiOhashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.OgiOhashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 9565
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 9874
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 10144
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 8184
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 8801
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 9289
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 9914
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD4",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.MonzenNakacho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.MonzenNakacho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 87957
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 88002
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 88879
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 62745
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 63318
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 68596
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 75746
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 81017
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F9A",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Motohasunuma",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Motohasunuma"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 24960
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 25738
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 26019
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 19518
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 20520
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 22378
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 23943
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 25190
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF9",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Motoyawata",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Motoyawata"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 77907
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 80470
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 81242
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 60603
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 63077
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 66008
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 69549
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 72322
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD6",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Nakai",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Nakai"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 25482
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 25798
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 25767
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 18252
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 19784
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 22186
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 23955
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 25182
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD7",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NakanoSakaue",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.NakanoSakaue"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 40788
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 41522
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 41990
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 30796
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 32147
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 34883
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 38114
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 40469
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F87",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Nakanobu",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Nakanobu"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 31144
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 31921
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 31947
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 23398
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 23394
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 24417
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 26456
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 27903
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD9",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NerimaKasugacho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.NerimaKasugacho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 22260
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 23000
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 23110
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 18330
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 19287
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 20673
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 21703
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 22655
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD8",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Nerima",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Nerima"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 80302
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 81459
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 82576
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 62604
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 64586
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 69511
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 74420
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 78323
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F88",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Nihombashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Nihombashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 96939
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 100408
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 101779
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 68084
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 69772
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 78113
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 87756
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 94679
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F89",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Ningyocho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Ningyocho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 52172
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 55032
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 56210
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 38287
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 39471
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 45135
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 51427
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 54690
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F8A",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NishiMagome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.NishiMagome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 47457
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 48687
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 49538
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 37273
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 37078
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 39302
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 42045
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 43636
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FFA",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NishiOjima",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.NishiOjima"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 28711
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 29314
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 29561
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 22149
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 22963
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 24873
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 26736
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 27698
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FDA",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NishiShinjukuGochome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.NishiShinjukuGochome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 33348
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 36090
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 36022
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 25342
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25319
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 27336
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 31076
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 32776
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F9B",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NishiSugamo",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.NishiSugamo"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 30037
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 30549
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 30335
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 20630
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 23246
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 26467
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 28375
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 29560
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F9C",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NishiTakashimadaira",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.NishiTakashimadaira"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 12914
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 13397
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 13606
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 10988
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 10968
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 11687
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 12229
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 12970
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FBD",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.NishiaraidaishiNishi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.NishiaraidaishiNishi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 11701
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 11978
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 12163
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 9783
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 10337
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 11172
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 11848
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F9D",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Nishidai",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Nishidai"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 26106
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 27418
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 27098
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 20986
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 21430
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 22647
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 24284
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 25605
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FDB",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.OchiaiMinamiNagasaki",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.OchiaiMinamiNagasaki"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 27147
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 28006
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 28212
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 21881
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 22758
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 24517
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 25931
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 27118
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FC9",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Oedo.Daimon",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Daimon"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 131584
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 135039
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 137102
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 83715
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 83897
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 94195
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 108152
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 116169
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD0",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Oedo.Kasuga",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Kasuga"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 58904
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 60579
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 61322
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 43443
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 46253
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 52296
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 57449
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 60957
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD3",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Oedo.Kuramae",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Kuramae"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 33503
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 35273
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 35663
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 23750
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25239
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 29569
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 34226
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 37966
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FD5",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Oedo.Morishita",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Morishita"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 69904
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 71654
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 71964
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 50540
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 51740
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 55917
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 61803
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 65316
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE0",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Oedo.Shinjuku",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Shinjuku"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 142296
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 145334
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 143843
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 89533
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 95507
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 108458
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 122382
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 128940
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FFB",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Ogawamachi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Ogawamachi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 72113
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 73552
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 74725
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 54567
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 55919
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 62423
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 69171
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 73254
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FFC",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Ojima",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Ojima"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 33113
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 34348
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 34111
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 26093
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 27127
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 28834
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 30671
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 31661
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F9E",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Onarimon",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Onarimon"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 46629
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 49149
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 52228
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 34968
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 34788
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 38199
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 40727
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 43230
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F8B",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Oshiage",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Oshiage"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 219904
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 226868
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 228418
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 159170
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 163122
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 187689
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 213651
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 227566
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F9F",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Otemachi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Otemachi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 104455
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 107746
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 110710
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 74039
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 78183
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 88646
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 100353
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 109600
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FDC",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Roppongi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Roppongi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 100587
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 103793
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 98539
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 53553
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 60155
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 70822
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 79608
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 83043
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FDD",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Ryogoku",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Ryogoku"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 33839
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 35313
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 36066
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 24875
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25852
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 28397
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 32005
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 34318
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F8C",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Sengakuji",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Sengakuji"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 218883
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 224434
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 223574
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 136738
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 144789
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 170671
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 195118
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 209882
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA0",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Sengoku",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Sengoku"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 31936
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 31373
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 30729
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 22882
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 24687
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 28140
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 30408
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 31304
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA1",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shibakoen",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Shibakoen"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 31368
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 32260
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 33271
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 21480
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 20767
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 23262
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 26633
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 28023
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F8D",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shimbashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Shimbashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 98317
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 101126
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 100183
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 59834
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 60172
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 71376
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 83515
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 88540
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA2",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShimuraSakaue",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.ShimuraSakaue"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 31211
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 31301
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 30924
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 24635
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25588
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 27062
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 28843
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 30150
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA3",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShimuraSanchome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.ShimuraSanchome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 32427
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 32385
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 32536
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 25444
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 26227
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 28004
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 29443
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 30055
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FDE",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShinEgota",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.ShinEgota"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 28035
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 28824
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 30008
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 22998
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 24317
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 26088
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 27685
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 28904
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA4",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShinItabashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.ShinItabashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 30711
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 30973
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 30233
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 23239
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 24331
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 26262
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 28249
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 29972
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FDF",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShinOkachimachi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.ShinOkachimachi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 52281
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 54911
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 57712
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 41489
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 43149
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 48246
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 54204
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 58639
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA5",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShinTakashimadaira",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.ShinTakashimadaira"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 10025
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 9997
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 10000
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 8116
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 8235
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 8637
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 9044
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 9534
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF4",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shinjuku.Jimbocho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Jimbocho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 134890
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 138035
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 139149
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 88724
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 95191
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 106478
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 116012
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 123381
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FF8",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shinjuku.Morishita",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Morishita"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 77157
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 79271
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 79392
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 56043
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 58541
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 63689
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 70246
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 74094
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FFD",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shinjuku.Shinjuku",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Shinjuku"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 302124
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 312312
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 313339
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 205908
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 219197
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 247955
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 273623
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 289400
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE1",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShinjukuNishiguchi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.ShinjukuNishiguchi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 59709
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 62082
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 61649
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 41640
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 42938
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 46745
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 51581
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 53643
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FFE",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShinjukuSanchome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.ShinjukuSanchome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 73148
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 74634
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 74576
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 48589
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 52411
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 61167
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 68174
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 72667
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FFF",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shinozaki",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Shinozaki"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 39858
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 41007
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 41165
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 32730
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 34557
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 36382
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 38263
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 39512
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE2",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shiodome",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Shiodome"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 54276
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 54532
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 53734
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 25610
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 22324
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 27203
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 34991
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 39331
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA6",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ShirokaneTakanawa",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.ShirokaneTakanawa"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 27061
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 28206
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 28223
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 17795
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 18789
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 20533
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 23526
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 24798
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA7",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Shirokanedai",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Shirokanedai"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 10819
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 10875
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 10663
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 6895
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 7707
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 8727
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 9663
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 10310
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA8",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Sugamo",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Sugamo"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 96125
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 95847
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 94567
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 67471
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 72595
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 82086
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 85434
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 88108
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FA9",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Suidobashi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Suidobashi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 48084
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 48493
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 47746
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 26278
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 31011
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 39938
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 44674
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 47236
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003195000",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Sumiyoshi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Shinjuku"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Shinjuku.Sumiyoshi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 44268
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 44760
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 44974
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 32983
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 34365
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 37040
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 39815
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 41577
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F8E",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Takanawadai",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Takanawadai"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 14822
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 15024
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 14863
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 10410
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 11180
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 12110
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 13185
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 13969
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F8F",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Takaracho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Takaracho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 30176
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 32242
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 32982
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 23151
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 22738
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 25109
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 28494
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 31022
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FAA",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Takashimadaira",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Takashimadaira"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 30582
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 30767
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 30651
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 24025
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 24189
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 25179
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 26750
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 27789
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE3",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Tochomae",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Tochomae"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 50008
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 52192
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 51967
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 34114
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 35587
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 39957
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 46002
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 49779
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194F90",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Togoshi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Asakusa"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Asakusa.Togoshi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 21786
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 22384
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 22712
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 16699
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 17072
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 18291
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 20035
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 21299
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FC3",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.ToneriKoen",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.ToneriKoen"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 4496
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 4561
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 4760
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 3537
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 4044
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 4446
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 4820
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FC1",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2025-09-29T08:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Toneri",
+    "odpt:railway": [
+      "odpt.Railway:Toei.NipporiToneri"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.NipporiToneri.Toneri"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 8173
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 8513
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 8733
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 7174
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 7753
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 8480
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 9145
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE4",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Toshimaen",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Toshimaen"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 11716
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 12233
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 12410
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 8746
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 8579
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 9698
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 13526
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 14294
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE5",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Tsukijishijo",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Tsukijishijo"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 32729
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 30264
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 26265
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 16394
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 17473
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 19620
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 23148
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 23281
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE6",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Tsukishima",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Tsukishima"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 73692
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 75269
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 75411
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 49363
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 51820
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 59007
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 65675
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 69362
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FAB",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Uchisaiwaicho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Mita"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Mita.Uchisaiwaicho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 45317
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 45660
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 44741
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 29655
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 27026
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 29846
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 35015
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 38025
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE7",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.UenoOkachimachi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.UenoOkachimachi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 58303
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 60000
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 59753
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 41290
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 41968
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 47215
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 52906
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 56630
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE8",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.UshigomeKagurazaka",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.UshigomeKagurazaka"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 14841
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 15237
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 15243
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 10996
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 11380
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 12431
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 13232
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 13686
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FE9",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.UshigomeYanagicho",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.UshigomeYanagicho"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 20596
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 21158
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 21251
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 16250
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 17507
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 18826
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 19728
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 19954
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FEA",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.WakamatsuKawada",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.WakamatsuKawada"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 31796
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 32363
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 32326
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 24879
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 25790
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 26565
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 27802
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 28849
+      }
+    ]
+  },
+  {
+    "@id": "urn:ucode:_00001C00000000000001000003194FEB",
+    "@type": "odpt:PassengerSurvey",
+    "dc:date": "2026-01-05T11:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_PassengerSurvey.jsonld",
+    "owl:sameAs": "odpt.PassengerSurvey:Toei.Yoyogi",
+    "odpt:railway": [
+      "odpt.Railway:Toei.Oedo"
+    ],
+    "odpt:station": [
+      "odpt.Station:Toei.Oedo.Yoyogi"
+    ],
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:includeAlighting": true,
+    "odpt:passengerSurveyObject": [
+      {
+        "odpt:surveyYear": 2017,
+        "odpt:passengerJourneys": 37678
+      },
+      {
+        "odpt:surveyYear": 2018,
+        "odpt:passengerJourneys": 38758
+      },
+      {
+        "odpt:surveyYear": 2019,
+        "odpt:passengerJourneys": 38284
+      },
+      {
+        "odpt:surveyYear": 2020,
+        "odpt:passengerJourneys": 23965
+      },
+      {
+        "odpt:surveyYear": 2021,
+        "odpt:passengerJourneys": 24812
+      },
+      {
+        "odpt:surveyYear": 2022,
+        "odpt:passengerJourneys": 27628
+      },
+      {
+        "odpt:surveyYear": 2023,
+        "odpt:passengerJourneys": 30760
+      },
+      {
+        "odpt:surveyYear": 2024,
+        "odpt:passengerJourneys": 32870
+      }
+    ]
+  }
+]

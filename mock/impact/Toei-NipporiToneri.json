@@ -1,0 +1,179 @@
+{
+  "lineId": "Toei-NipporiToneri",
+  "name": "Nippori-Toneri Liner",
+  "nameJa": "日暮里・舎人ライナー",
+  "status": "normal",
+  "statusText": "Normal operation",
+  "wards": [
+    {
+      "ward": "Arakawa",
+      "wardJa": "荒川区",
+      "stationCount": 5,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Adachi",
+      "wardJa": "足立区",
+      "stationCount": 8,
+      "activeEventCount": 0
+    }
+  ],
+  "stations": [
+    {
+      "stationId": "Toei.NipporiToneri.AdachiOdai",
+      "name": "Adachi-odai",
+      "nameJa": "足立小台",
+      "lat": 35.754655,
+      "lon": 139.770376,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.AkadoShogakkomae",
+      "name": "Akado-shogakkomae",
+      "nameJa": "赤土小学校前",
+      "lat": 35.742868,
+      "lon": 139.769025,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.Kohoku",
+      "name": "Kohoku",
+      "nameJa": "江北",
+      "lat": 35.773954,
+      "lon": 139.77029,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.Koya",
+      "name": "Koya",
+      "nameJa": "高野",
+      "lat": 35.768351,
+      "lon": 139.770692,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.Kumanomae",
+      "name": "Kumanomae",
+      "nameJa": "熊野前",
+      "lat": 35.748513,
+      "lon": 139.769828,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.MinumadaiShinsuikoen",
+      "name": "Minumadai-shinsuikoen",
+      "nameJa": "見沼代親水公園",
+      "lat": 35.814541,
+      "lon": 139.770707,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.Nippori",
+      "name": "Nippori",
+      "nameJa": "日暮里",
+      "lat": 35.728793,
+      "lon": 139.771121,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.NishiNippori",
+      "name": "Nishi-nippori",
+      "nameJa": "西日暮里",
+      "lat": 35.733739,
+      "lon": 139.768169,
+      "ward": "Arakawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.NishiaraidaishiNishi",
+      "name": "Nishiaraidaishi-nishi",
+      "nameJa": "西新井大師西",
+      "lat": 35.78151,
+      "lon": 139.770077,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.OgiOhashi",
+      "name": "Ogi-ohashi",
+      "nameJa": "扇大橋",
+      "lat": 35.763906,
+      "lon": 139.770798,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.ToneriKoen",
+      "name": "Toneri-koen",
+      "nameJa": "舎人公園",
+      "lat": 35.796384,
+      "lon": 139.770159,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.Toneri",
+      "name": "Toneri",
+      "nameJa": "舎人",
+      "lat": 35.80569,
+      "lon": 139.770069,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.NipporiToneri.Yazaike",
+      "name": "Yazaike",
+      "nameJa": "谷在家",
+      "lat": 35.788787,
+      "lon": 139.770036,
+      "ward": "Adachi",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "odpt-train-Toei-NipporiToneri",
+      "type": "train",
+      "severity": "info",
+      "time": "2026-09-12T13:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "title": "Nippori-Toneri Liner operating normally",
+      "titleJa": "現在、１５分以上の遅延はありません。",
+      "affects": [
+        "line:Toei-NipporiToneri"
+      ],
+      "source": "odpt",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    }
+  ],
+  "stationsInFloodZone": 0,
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

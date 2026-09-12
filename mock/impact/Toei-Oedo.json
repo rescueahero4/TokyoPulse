@@ -1,0 +1,494 @@
+{
+  "lineId": "Toei-Oedo",
+  "name": "Oedo Line",
+  "nameJa": "都営大江戸線",
+  "status": "normal",
+  "statusText": "Normal operation",
+  "wards": [
+    {
+      "ward": "Minato",
+      "wardJa": "港区",
+      "stationCount": 5,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Shibuya",
+      "wardJa": "渋谷区",
+      "stationCount": 1,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Nakano",
+      "wardJa": "中野区",
+      "stationCount": 3,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Shinjuku",
+      "wardJa": "新宿区",
+      "stationCount": 10,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Nerima",
+      "wardJa": "練馬区",
+      "stationCount": 5,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Bunkyo",
+      "wardJa": "文京区",
+      "stationCount": 4,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Chuo",
+      "wardJa": "中央区",
+      "stationCount": 3,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Koto",
+      "wardJa": "江東区",
+      "stationCount": 3,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Sumida",
+      "wardJa": "墨田区",
+      "stationCount": 2,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Taito",
+      "wardJa": "台東区",
+      "stationCount": 2,
+      "activeEventCount": 0
+    }
+  ],
+  "stations": [
+    {
+      "stationId": "Toei.Oedo.Akabanebashi",
+      "name": "Akabanebashi",
+      "nameJa": "赤羽橋",
+      "lat": 35.654985,
+      "lon": 139.743989,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.AoyamaItchome",
+      "name": "Aoyama-itchome",
+      "nameJa": "青山一丁目",
+      "lat": 35.673067,
+      "lon": 139.723925,
+      "ward": "Shibuya",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.AzabuJuban",
+      "name": "Azabu-juban",
+      "nameJa": "麻布十番",
+      "lat": 35.656448,
+      "lon": 139.73633,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Daimon",
+      "name": "Daimon",
+      "nameJa": "大門",
+      "lat": 35.656671,
+      "lon": 139.755696,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.HigashiNakano",
+      "name": "Higashi-nakano",
+      "nameJa": "東中野",
+      "lat": 35.70716,
+      "lon": 139.683112,
+      "ward": "Nakano",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.HigashiShinjuku",
+      "name": "Higashi-shinjuku",
+      "nameJa": "東新宿",
+      "lat": 35.697957,
+      "lon": 139.707434,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Hikarigaoka",
+      "name": "Hikarigaoka",
+      "nameJa": "光が丘",
+      "lat": 35.758527,
+      "lon": 139.628901,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.HongoSanchome",
+      "name": "Hongo-sanchome",
+      "nameJa": "本郷三丁目",
+      "lat": 35.70751,
+      "lon": 139.760524,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Iidabashi",
+      "name": "Iidabashi",
+      "nameJa": "飯田橋",
+      "lat": 35.702952,
+      "lon": 139.745257,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Kachidoki",
+      "name": "Kachidoki",
+      "nameJa": "勝どき",
+      "lat": 35.658934,
+      "lon": 139.777138,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Kasuga",
+      "name": "Kasuga",
+      "nameJa": "春日",
+      "lat": 35.708493,
+      "lon": 139.752487,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.KiyosumiShirakawa",
+      "name": "Kiyosumi-shirakawa",
+      "nameJa": "清澄白河",
+      "lat": 35.682355,
+      "lon": 139.798758,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.KokuritsuKyogijo",
+      "name": "Kokuritsu-kyogijo",
+      "nameJa": "国立競技場",
+      "lat": 35.679896,
+      "lon": 139.714667,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Kuramae",
+      "name": "Kuramae",
+      "nameJa": "蔵前",
+      "lat": 35.705587,
+      "lon": 139.792244,
+      "ward": "Sumida",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.MonzenNakacho",
+      "name": "Monzen-nakacho",
+      "nameJa": "門前仲町",
+      "lat": 35.672772,
+      "lon": 139.795124,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Morishita",
+      "name": "Morishita",
+      "nameJa": "森下",
+      "lat": 35.687926,
+      "lon": 139.798251,
+      "ward": "Koto",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Nakai",
+      "name": "Nakai",
+      "nameJa": "中井",
+      "lat": 35.713935,
+      "lon": 139.686296,
+      "ward": "Nakano",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.NakanoSakaue",
+      "name": "Nakano-sakaue",
+      "nameJa": "中野坂上",
+      "lat": 35.697887,
+      "lon": 139.682899,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.NerimaKasugacho",
+      "name": "Nerima-kasugacho",
+      "nameJa": "練馬春日町",
+      "lat": 35.75141,
+      "lon": 139.6403,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Nerima",
+      "name": "Nerima",
+      "nameJa": "練馬",
+      "lat": 35.737411,
+      "lon": 139.654762,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.NishiShinjukuGochome",
+      "name": "Nishi-shinjuku-gochome",
+      "nameJa": "西新宿五丁目",
+      "lat": 35.689892,
+      "lon": 139.684545,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.OchiaiMinamiNagasaki",
+      "name": "Ochiai-minami-nagasaki",
+      "nameJa": "落合南長崎",
+      "lat": 35.723435,
+      "lon": 139.683389,
+      "ward": "Nakano",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Roppongi",
+      "name": "Roppongi",
+      "nameJa": "六本木",
+      "lat": 35.664106,
+      "lon": 139.731354,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Ryogoku",
+      "name": "Ryogoku",
+      "nameJa": "両国",
+      "lat": 35.696807,
+      "lon": 139.797469,
+      "ward": "Sumida",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.ShinEgota",
+      "name": "Shin-egota",
+      "nameJa": "新江古田",
+      "lat": 35.732579,
+      "lon": 139.670498,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.ShinOkachimachi",
+      "name": "Shin-okachimachi",
+      "nameJa": "新御徒町",
+      "lat": 35.707009,
+      "lon": 139.782166,
+      "ward": "Taito",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.ShinjukuNishiguchi",
+      "name": "Shinjuku-nishiguchi",
+      "nameJa": "新宿西口",
+      "lat": 35.693367,
+      "lon": 139.699121,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Shinjuku",
+      "name": "Shinjuku",
+      "nameJa": "新宿",
+      "lat": 35.688462,
+      "lon": 139.699019,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Shiodome",
+      "name": "Shiodome",
+      "nameJa": "汐留",
+      "lat": 35.663193,
+      "lon": 139.760225,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Tochomae",
+      "name": "Tochomae",
+      "nameJa": "都庁前",
+      "lat": 35.690607,
+      "lon": 139.692677,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Toshimaen",
+      "name": "Toshimaen",
+      "nameJa": "豊島園",
+      "lat": 35.741711,
+      "lon": 139.649116,
+      "ward": "Nerima",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Tsukijishijo",
+      "name": "Tsukijishijo",
+      "nameJa": "築地市場",
+      "lat": 35.664919,
+      "lon": 139.766929,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Tsukishima",
+      "name": "Tsukishima",
+      "nameJa": "月島",
+      "lat": 35.663757,
+      "lon": 139.783912,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.UenoOkachimachi",
+      "name": "Ueno-okachimachi",
+      "nameJa": "上野御徒町",
+      "lat": 35.707949,
+      "lon": 139.773351,
+      "ward": "Taito",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.UshigomeKagurazaka",
+      "name": "Ushigome-kagurazaka",
+      "nameJa": "牛込神楽坂",
+      "lat": 35.700911,
+      "lon": 139.735894,
+      "ward": "Bunkyo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.UshigomeYanagicho",
+      "name": "Ushigome-yanagicho",
+      "nameJa": "牛込柳町",
+      "lat": 35.699501,
+      "lon": 139.72504,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.WakamatsuKawada",
+      "name": "Wakamatsu-kawada",
+      "nameJa": "若松河田",
+      "lat": 35.699188,
+      "lon": 139.718043,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Oedo.Yoyogi",
+      "name": "Yoyogi",
+      "nameJa": "代々木",
+      "lat": 35.683505,
+      "lon": 139.701603,
+      "ward": "Shinjuku",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "mock-disruption-oedo-suspended",
+      "type": "train",
+      "severity": "critical",
+      "time": "2026-09-12T14:03:03+09:00",
+      "lat": 35.6586,
+      "lon": 139.7454,
+      "title": "Oedo Line: service suspended between Roppongi and Azabu-Juban",
+      "titleJa": "都営大江戸線 六本木〜麻布十番間で運転見合わせ",
+      "affects": [
+        "line:Toei-Oedo"
+      ],
+      "source": "mock",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    },
+    {
+      "id": "odpt-train-Toei-Oedo",
+      "type": "train",
+      "severity": "info",
+      "time": "2026-09-12T13:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "title": "Oedo Line operating normally",
+      "titleJa": "現在、１５分以上の遅延はありません。",
+      "affects": [
+        "line:Toei-Oedo"
+      ],
+      "source": "odpt",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    }
+  ],
+  "stationsInFloodZone": 0,
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

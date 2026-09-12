@@ -1,0 +1,290 @@
+{
+  "lineId": "Toei-Asakusa",
+  "name": "Asakusa Line",
+  "nameJa": "都営浅草線",
+  "status": "normal",
+  "statusText": "Normal operation",
+  "wards": [
+    {
+      "ward": "Sumida",
+      "wardJa": "墨田区",
+      "stationCount": 4,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Taito",
+      "wardJa": "台東区",
+      "stationCount": 2,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Minato",
+      "wardJa": "港区",
+      "stationCount": 4,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Shinagawa",
+      "wardJa": "品川区",
+      "stationCount": 5,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Chuo",
+      "wardJa": "中央区",
+      "stationCount": 4,
+      "activeEventCount": 0
+    },
+    {
+      "ward": "Ota",
+      "wardJa": "大田区",
+      "stationCount": 1,
+      "activeEventCount": 0
+    }
+  ],
+  "stations": [
+    {
+      "stationId": "Toei.Asakusa.HonjoAzumabashi",
+      "name": "Honjo-azumabashi",
+      "nameJa": "本所吾妻橋",
+      "lat": 35.708565,
+      "lon": 139.804397,
+      "ward": "Sumida",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Kuramae",
+      "name": "Kuramae",
+      "nameJa": "蔵前",
+      "lat": 35.703128,
+      "lon": 139.790858,
+      "ward": "Sumida",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Asakusabashi",
+      "name": "Asakusabashi",
+      "nameJa": "浅草橋",
+      "lat": 35.697494,
+      "lon": 139.786335,
+      "ward": "Taito",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Asakusa",
+      "name": "Asakusa",
+      "nameJa": "浅草",
+      "lat": 35.70892,
+      "lon": 139.796542,
+      "ward": "Sumida",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Daimon",
+      "name": "Daimon",
+      "nameJa": "大門",
+      "lat": 35.65687,
+      "lon": 139.754679,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Gotanda",
+      "name": "Gotanda",
+      "nameJa": "五反田",
+      "lat": 35.626878,
+      "lon": 139.723965,
+      "ward": "Shinagawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.HigashiGinza",
+      "name": "Higashi-ginza",
+      "nameJa": "東銀座",
+      "lat": 35.669915,
+      "lon": 139.76735,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.HigashiNihombashi",
+      "name": "Higashi-nihombashi",
+      "nameJa": "東日本橋",
+      "lat": 35.692123,
+      "lon": 139.784886,
+      "ward": "Taito",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Magome",
+      "name": "Magome",
+      "nameJa": "馬込",
+      "lat": 35.596773,
+      "lon": 139.711884,
+      "ward": "Shinagawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Mita",
+      "name": "Mita",
+      "nameJa": "三田",
+      "lat": 35.646749,
+      "lon": 139.746877,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Nakanobu",
+      "name": "Nakanobu",
+      "nameJa": "中延",
+      "lat": 35.605274,
+      "lon": 139.713645,
+      "ward": "Shinagawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Nihombashi",
+      "name": "Nihombashi",
+      "nameJa": "日本橋",
+      "lat": 35.681796,
+      "lon": 139.775814,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Ningyocho",
+      "name": "Ningyocho",
+      "nameJa": "人形町",
+      "lat": 35.686345,
+      "lon": 139.782276,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.NishiMagome",
+      "name": "Nishi-magome",
+      "nameJa": "西馬込",
+      "lat": 35.58705,
+      "lon": 139.706086,
+      "ward": "Ota",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Oshiage",
+      "name": "Oshiage",
+      "nameJa": "押上",
+      "lat": 35.710824,
+      "lon": 139.812993,
+      "ward": "Sumida",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Sengakuji",
+      "name": "Sengakuji",
+      "nameJa": "泉岳寺",
+      "lat": 35.638715,
+      "lon": 139.739993,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Shimbashi",
+      "name": "Shimbashi",
+      "nameJa": "新橋",
+      "lat": 35.665386,
+      "lon": 139.759338,
+      "ward": "Minato",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Takanawadai",
+      "name": "Takanawadai",
+      "nameJa": "高輪台",
+      "lat": 35.631751,
+      "lon": 139.730384,
+      "ward": "Shinagawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Takaracho",
+      "name": "Takaracho",
+      "nameJa": "宝町",
+      "lat": 35.675606,
+      "lon": 139.771966,
+      "ward": "Chuo",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    },
+    {
+      "stationId": "Toei.Asakusa.Togoshi",
+      "name": "Togoshi",
+      "nameJa": "戸越",
+      "lat": 35.614421,
+      "lon": 139.716315,
+      "ward": "Shinagawa",
+      "inFloodZone": false,
+      "ridershipBand": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "odpt-train-Toei-Asakusa",
+      "type": "train",
+      "severity": "info",
+      "time": "2026-09-12T13:55:00+09:00",
+      "lat": null,
+      "lon": null,
+      "title": "Asakusa Line operating normally",
+      "titleJa": "現在、１５分以上の遅延はありません。",
+      "affects": [
+        "line:Toei-Asakusa"
+      ],
+      "source": "odpt",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    },
+    {
+      "id": "mock-disruption-asakusa-signal",
+      "type": "train",
+      "severity": "warning",
+      "time": "2026-09-12T13:46:03+09:00",
+      "lat": 35.7038,
+      "lon": 139.7967,
+      "title": "Asakusa Line: signal fault causing ~10 min delays",
+      "titleJa": "都営浅草線 信号トラブルのため約10分の遅延",
+      "affects": [
+        "line:Toei-Asakusa"
+      ],
+      "source": "mock",
+      "url": null,
+      "magnitude": null,
+      "maxScale": null
+    }
+  ],
+  "stationsInFloodZone": 0,
+  "meta": {
+    "source": "live",
+    "generatedAt": "2026-09-12T14:11:03+09:00",
+    "degraded": false,
+    "note": null
+  }
+}

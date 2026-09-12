@@ -1,0 +1,997 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      139.706086,
+      35.58705
+     ],
+     [
+      139.711884,
+      35.596773
+     ],
+     [
+      139.713645,
+      35.605274
+     ],
+     [
+      139.716315,
+      35.614421
+     ],
+     [
+      139.723965,
+      35.626878
+     ],
+     [
+      139.730384,
+      35.631751
+     ],
+     [
+      139.739993,
+      35.638715
+     ],
+     [
+      139.746877,
+      35.646749
+     ],
+     [
+      139.754679,
+      35.65687
+     ],
+     [
+      139.759338,
+      35.665386
+     ],
+     [
+      139.76735,
+      35.669915
+     ],
+     [
+      139.771966,
+      35.675606
+     ],
+     [
+      139.775814,
+      35.681796
+     ],
+     [
+      139.782276,
+      35.686345
+     ],
+     [
+      139.784886,
+      35.692123
+     ],
+     [
+      139.786335,
+      35.697494
+     ],
+     [
+      139.790858,
+      35.703128
+     ],
+     [
+      139.796542,
+      35.70892
+     ],
+     [
+      139.804397,
+      35.708565
+     ],
+     [
+      139.812993,
+      35.710824
+     ]
+    ]
+   },
+   "properties": {
+    "lineId": "Toei-Asakusa",
+    "name": "Asakusa Line",
+    "nameJa": "都営浅草線",
+    "operator": "Toei",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#e85298",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      139.715444,
+      35.633635
+     ],
+     [
+      139.726007,
+      35.637851
+     ],
+     [
+      139.734344,
+      35.643283
+     ],
+     [
+      139.748998,
+      35.64865
+     ],
+     [
+      139.74985,
+      35.654186
+     ],
+     [
+      139.751366,
+      35.660774
+     ],
+     [
+      139.75533,
+      35.669344
+     ],
+     [
+      139.760274,
+      35.676585
+     ],
+     [
+      139.762798,
+      35.684093
+     ],
+     [
+      139.758213,
+      35.695331
+     ],
+     [
+      139.755147,
+      35.70346
+     ],
+     [
+      139.753287,
+      35.709532
+     ],
+     [
+      139.752134,
+      35.721682
+     ],
+     [
+      139.744984,
+      35.727772
+     ],
+     [
+      139.738154,
+      35.733793
+     ],
+     [
+      139.728703,
+      35.743568
+     ],
+     [
+      139.719808,
+      35.748772
+     ],
+     [
+      139.71012,
+      35.751372
+     ],
+     [
+      139.705544,
+      35.761309
+     ],
+     [
+      139.70241,
+      35.768566
+     ],
+     [
+      139.695097,
+      35.776082
+     ],
+     [
+      139.685751,
+      35.777468
+     ],
+     [
+      139.678947,
+      35.784262
+     ],
+     [
+      139.672867,
+      35.787074
+     ],
+     [
+      139.661361,
+      35.788908
+     ],
+     [
+      139.65405,
+      35.790289
+     ],
+     [
+      139.645421,
+      35.791965
+     ]
+    ]
+   },
+   "properties": {
+    "lineId": "Toei-Mita",
+    "name": "Mita Line",
+    "nameJa": "都営三田線",
+    "operator": "Toei",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#0079c2",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      139.698418,
+      35.688433
+     ],
+     [
+      139.706794,
+      35.691016
+     ],
+     [
+      139.722317,
+      35.692402
+     ],
+     [
+      139.737588,
+      35.69153
+     ],
+     [
+      139.751738,
+      35.695546
+     ],
+     [
+      139.757981,
+      35.695972
+     ],
+     [
+      139.766449,
+      35.695005
+     ],
+     [
+      139.775115,
+      35.695607
+     ],
+     [
+      139.783006,
+      35.69193
+     ],
+     [
+      139.787725,
+      35.688601
+     ],
+     [
+      139.796623,
+      35.687982
+     ],
+     [
+      139.806057,
+      35.688399
+     ],
+     [
+      139.815723,
+      35.68904
+     ],
+     [
+      139.826231,
+      35.689391
+     ],
+     [
+      139.834705,
+      35.689752
+     ],
+     [
+      139.847255,
+      35.689959
+     ],
+     [
+      139.863955,
+      35.68376
+     ],
+     [
+      139.882586,
+      35.685987
+     ],
+     [
+      139.8977,
+      35.69351
+     ],
+     [
+      139.903796,
+      35.706022
+     ],
+     [
+      139.926613,
+      35.722819
+     ]
+    ]
+   },
+   "properties": {
+    "lineId": "Toei-Shinjuku",
+    "name": "Shinjuku Line",
+    "nameJa": "都営新宿線",
+    "operator": "Toei",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#6cbb5a",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      139.692677,
+      35.690607
+     ],
+     [
+      139.699121,
+      35.693367
+     ],
+     [
+      139.707434,
+      35.697957
+     ],
+     [
+      139.718043,
+      35.699188
+     ],
+     [
+      139.72504,
+      35.699501
+     ],
+     [
+      139.735894,
+      35.700911
+     ],
+     [
+      139.745257,
+      35.702952
+     ],
+     [
+      139.752487,
+      35.708493
+     ],
+     [
+      139.760524,
+      35.70751
+     ],
+     [
+      139.773351,
+      35.707949
+     ],
+     [
+      139.782166,
+      35.707009
+     ],
+     [
+      139.792244,
+      35.705587
+     ],
+     [
+      139.797469,
+      35.696807
+     ],
+     [
+      139.798251,
+      35.687926
+     ],
+     [
+      139.798758,
+      35.682355
+     ],
+     [
+      139.795124,
+      35.672772
+     ],
+     [
+      139.783912,
+      35.663757
+     ],
+     [
+      139.777138,
+      35.658934
+     ],
+     [
+      139.766929,
+      35.664919
+     ],
+     [
+      139.760225,
+      35.663193
+     ],
+     [
+      139.755696,
+      35.656671
+     ],
+     [
+      139.743989,
+      35.654985
+     ],
+     [
+      139.73633,
+      35.656448
+     ],
+     [
+      139.731354,
+      35.664106
+     ],
+     [
+      139.723925,
+      35.673067
+     ],
+     [
+      139.714667,
+      35.679896
+     ],
+     [
+      139.701603,
+      35.683505
+     ],
+     [
+      139.699019,
+      35.688462
+     ],
+     [
+      139.692677,
+      35.690607
+     ],
+     [
+      139.684545,
+      35.689892
+     ],
+     [
+      139.682899,
+      35.697887
+     ],
+     [
+      139.683112,
+      35.70716
+     ],
+     [
+      139.686296,
+      35.713935
+     ],
+     [
+      139.683389,
+      35.723435
+     ],
+     [
+      139.670498,
+      35.732579
+     ],
+     [
+      139.654762,
+      35.737411
+     ],
+     [
+      139.649116,
+      35.741711
+     ],
+     [
+      139.6403,
+      35.75141
+     ],
+     [
+      139.628901,
+      35.758527
+     ]
+    ]
+   },
+   "properties": {
+    "lineId": "Toei-Oedo",
+    "name": "Oedo Line",
+    "nameJa": "都営大江戸線",
+    "operator": "Toei",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#b6007a",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      139.791509,
+      35.732207
+     ],
+     [
+      139.788841,
+      35.733768
+     ],
+     [
+      139.786416,
+      35.734913
+     ],
+     [
+      139.784704,
+      35.738573
+     ],
+     [
+      139.78421,
+      35.741923
+     ],
+     [
+      139.780891,
+      35.742783
+     ],
+     [
+      139.776416,
+      35.743919
+     ],
+     [
+      139.773867,
+      35.745626
+     ],
+     [
+      139.769859,
+      35.748487
+     ],
+     [
+      139.76619,
+      35.749811
+     ],
+     [
+      139.761739,
+      35.750477
+     ],
+     [
+      139.757517,
+      35.750646
+     ],
+     [
+      139.752461,
+      35.750865
+     ],
+     [
+      139.747268,
+      35.75107
+     ],
+     [
+      139.742186,
+      35.750865
+     ],
+     [
+      139.738045,
+      35.752982
+     ],
+     [
+      139.737333,
+      35.750109
+     ],
+     [
+      139.73542,
+      35.747283
+     ],
+     [
+      139.732665,
+      35.744222
+     ],
+     [
+      139.730344,
+      35.74107
+     ],
+     [
+      139.729625,
+      35.739504
+     ],
+     [
+      139.727684,
+      35.735682
+     ],
+     [
+      139.729098,
+      35.731188
+     ],
+     [
+      139.724759,
+      35.728775
+     ],
+     [
+      139.720404,
+      35.725398
+     ],
+     [
+      139.717835,
+      35.724081
+     ],
+     [
+      139.71516,
+      35.720569
+     ],
+     [
+      139.712529,
+      35.716347
+     ],
+     [
+      139.714199,
+      35.713012
+     ],
+     [
+      139.719003,
+      35.71176
+     ]
+    ]
+   },
+   "properties": {
+    "lineId": "Toei-Arakawa",
+    "name": "Tokyo Sakura Tram",
+    "nameJa": "東京さくらトラム",
+    "operator": "Toei",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#f08300",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      139.771121,
+      35.728793
+     ],
+     [
+      139.768169,
+      35.733739
+     ],
+     [
+      139.769025,
+      35.742868
+     ],
+     [
+      139.769828,
+      35.748513
+     ],
+     [
+      139.770376,
+      35.754655
+     ],
+     [
+      139.770798,
+      35.763906
+     ],
+     [
+      139.770692,
+      35.768351
+     ],
+     [
+      139.77029,
+      35.773954
+     ],
+     [
+      139.770077,
+      35.78151
+     ],
+     [
+      139.770036,
+      35.788787
+     ],
+     [
+      139.770159,
+      35.796384
+     ],
+     [
+      139.770069,
+      35.80569
+     ],
+     [
+      139.770707,
+      35.814541
+     ]
+    ]
+   },
+   "properties": {
+    "lineId": "Toei-NipporiToneri",
+    "name": "Nippori-Toneri Liner",
+    "nameJa": "日暮里・舎人ライナー",
+    "operator": "Toei",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#cfba00",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "JR-Yamanote",
+    "name": "Yamanote Line",
+    "nameJa": "山手線",
+    "operator": "JR-East",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#9acd32",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "JR-Chuo-Rapid",
+    "name": "Chuo Rapid Line",
+    "nameJa": "中央線快速",
+    "operator": "JR-East",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#f15a22",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "JR-Chuo-Sobu",
+    "name": "Chuo-Sobu Line",
+    "nameJa": "中央・総武線各駅停車",
+    "operator": "JR-East",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#ffd400",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "JR-Keihin-Tohoku",
+    "name": "Keihin-Tohoku Line",
+    "nameJa": "京浜東北線",
+    "operator": "JR-East",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#00b2e5",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "JR-Saikyo",
+    "name": "Saikyo Line",
+    "nameJa": "埼京線",
+    "operator": "JR-East",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#2cb431",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Ginza",
+    "name": "Ginza Line",
+    "nameJa": "銀座線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#ff9500",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Marunouchi",
+    "name": "Marunouchi Line",
+    "nameJa": "丸ノ内線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#f62e36",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Hibiya",
+    "name": "Hibiya Line",
+    "nameJa": "日比谷線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#b5b5ac",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Tozai",
+    "name": "Tozai Line",
+    "nameJa": "東西線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#009bbf",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Chiyoda",
+    "name": "Chiyoda Line",
+    "nameJa": "千代田線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#00bb85",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Yurakucho",
+    "name": "Yurakucho Line",
+    "nameJa": "有楽町線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#c1a470",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Hanzomon",
+    "name": "Hanzomon Line",
+    "nameJa": "半蔵門線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#8f76d6",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Namboku",
+    "name": "Namboku Line",
+    "nameJa": "南北線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#00ac9b",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": []
+   },
+   "properties": {
+    "lineId": "Metro-Fukutoshin",
+    "name": "Fukutoshin Line",
+    "nameJa": "副都心線",
+    "operator": "TokyoMetro",
+    "status": "unknown",
+    "statusText": "No live status feed",
+    "statusTextJa": null,
+    "color": "#9c5e31",
+    "statusSource": "none",
+    "updatedAt": null
+   }
+  }
+ ],
+ "meta": {
+  "source": "mock",
+  "generatedAt": "2026-09-12T04:57:11.118+00:00",
+  "degraded": true,
+  "note": "built from checked-in ODPT snapshot (mock/raw) - geometry real, status not live"
+ }
+}

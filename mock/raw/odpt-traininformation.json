@@ -1,0 +1,86 @@
+[
+  {
+    "@id": "urn:uuid:f62e0218-096d-48de-9436-163f9eb89da9",
+    "@type": "odpt:TrainInformation",
+    "dc:date": "2026-09-12T13:55:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_TrainInformation.jsonld",
+    "dct:valid": "2026-09-12T14:00:00+09:00",
+    "owl:sameAs": "odpt.TrainInformation:Toei.Asakusa",
+    "odpt:railway": "odpt.Railway:Toei.Asakusa",
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:timeOfOrigin": "2026-09-11T21:59:00+09:00",
+    "odpt:trainInformationText": {
+      "ja": "現在、１５分以上の遅延はありません。"
+    }
+  },
+  {
+    "@id": "urn:uuid:1a9edd52-26d9-42ce-939d-3174e17d8489",
+    "@type": "odpt:TrainInformation",
+    "dc:date": "2026-09-12T13:55:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_TrainInformation.jsonld",
+    "dct:valid": "2026-09-12T14:00:00+09:00",
+    "owl:sameAs": "odpt.TrainInformation:Toei.Mita",
+    "odpt:railway": "odpt.Railway:Toei.Mita",
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:timeOfOrigin": "2026-09-11T14:49:00+09:00",
+    "odpt:trainInformationText": {
+      "ja": "現在、１５分以上の遅延はありません。"
+    }
+  },
+  {
+    "@id": "urn:uuid:6c814c0a-5915-4c55-90ae-8a6b88751b80",
+    "@type": "odpt:TrainInformation",
+    "dc:date": "2026-09-12T13:55:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_TrainInformation.jsonld",
+    "dct:valid": "2026-09-12T14:00:00+09:00",
+    "owl:sameAs": "odpt.TrainInformation:Toei.Shinjuku",
+    "odpt:railway": "odpt.Railway:Toei.Shinjuku",
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:timeOfOrigin": "2026-09-12T00:00:00+09:00",
+    "odpt:trainInformationText": {
+      "ja": "現在、１５分以上の遅延はありません。"
+    }
+  },
+  {
+    "@id": "urn:uuid:5a74c6a6-5e9a-47f7-a102-c46e1db7bb61",
+    "@type": "odpt:TrainInformation",
+    "dc:date": "2026-09-12T13:55:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_TrainInformation.jsonld",
+    "dct:valid": "2026-09-12T14:00:00+09:00",
+    "owl:sameAs": "odpt.TrainInformation:Toei.Oedo",
+    "odpt:railway": "odpt.Railway:Toei.Oedo",
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:timeOfOrigin": "2026-09-10T12:15:00+09:00",
+    "odpt:trainInformationText": {
+      "ja": "現在、１５分以上の遅延はありません。"
+    }
+  },
+  {
+    "@id": "urn:uuid:d8bb443f-9e47-4a8b-91a0-a7bdfd8d9e3d",
+    "@type": "odpt:TrainInformation",
+    "dc:date": "2026-09-12T13:55:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_TrainInformation.jsonld",
+    "dct:valid": "2026-09-12T14:00:00+09:00",
+    "owl:sameAs": "odpt.TrainInformation:Toei.Arakawa",
+    "odpt:railway": "odpt.Railway:Toei.Arakawa",
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:timeOfOrigin": "2026-09-07T10:03:00+09:00",
+    "odpt:trainInformationText": {
+      "ja": "現在、１５分以上の遅延はありません。"
+    }
+  },
+  {
+    "@id": "urn:uuid:46bec218-2253-40ec-b148-c35b29cb9db0",
+    "@type": "odpt:TrainInformation",
+    "dc:date": "2026-09-12T13:55:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt_TrainInformation.jsonld",
+    "dct:valid": "2026-09-12T14:00:00+09:00",
+    "owl:sameAs": "odpt.TrainInformation:Toei.NipporiToneri",
+    "odpt:railway": "odpt.Railway:Toei.NipporiToneri",
+    "odpt:operator": "odpt.Operator:Toei",
+    "odpt:timeOfOrigin": "2026-09-12T00:00:00+09:00",
+    "odpt:trainInformationText": {
+      "ja": "現在、１５分以上の遅延はありません。"
+    }
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "name": "tokyopulse-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173 --strictPort",
+    "build": "tsc -b --noEmit && vite build",
+    "typecheck": "tsc -b --noEmit",
+    "preview": "vite preview --port 5173"
+  },
+  "dependencies": {
+    "cesium": "1.122.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
+    "vite-plugin-cesium": "1.2.23"
+  },
+  "overrides": {
+    "@zip.js/zip.js": "2.7.57"
+  }
+}
