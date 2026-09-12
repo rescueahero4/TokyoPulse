@@ -33,7 +33,15 @@
   "jma_warning_tokyo": {
     "url": "https://www.jma.go.jp/bosai/warning/data/warning/130000.json",
     "keyless": true,
-    "verified": "200, 14KB"
+    "verified": "200, 14KB",
+    "area_granularity": "Payload has TWO tiers under areaTypes[]. [0]=class10s, 4 coarse regions (130010 東京地方 covers ALL 23 wards as ONE blob -- never position from this tier). [1]=class20s, 62 municipalities -- THIS is the ward level.",
+    "ward_codes": "class20s codes are the 5-digit JIS municipality code + '00'. The 23 special wards are the contiguous range 1310100-1312300 (JIS 13101-13123): 1310100=千代田区 ... 1312300=江戸川区. Codes outside that range in the same list are Tama cities (1320xxx-1330xxx) or island municipalities (1336100 大島町, 1340100 八丈町, 1340200 青ヶ島村) -- NOT wards, and must not be forced onto one.",
+    "status_filter": "Emit only active statuses: 発表 (newly issued) and 継続 (continuing). Skip 発表警報・注意報はなし (none issued) and 解除 (cancelled).",
+    "area_master": "https://www.jma.go.jp/bosai/common/const/area.json (class20s section, 1805 entries; snapshot at mock/raw/jma-area-master.json)",
+    "gotcha_reportDatetime": "reportDatetime can be MONTHS stale -- observed 2026-05-28 on an otherwise current feed, because JMA keeps the last report time for an area group with nothing new. Do not use it as a liveness signal or let it drive Event.time unchecked.",
+    "gotcha_class15s": "class15s exists in JMA's area master but NOT in 130000.json -- only class10s and class20s appear. Code assuming three tiers will index out of range.",
+    "verified_state": "At time of writing: 23 ward areas present, 0 with an active warning; the 8 active class20s areas are ALL island municipalities. An empty ward layer is CORRECT, not a bug.",
+    "doc": "doc/jma-warnings.md"
   },
   "open_meteo": {
     "url": "https://api.open-meteo.com/v1/forecast?latitude=35.68&longitude=139.76&hourly=temperature_2m,precipitation&past_days=2&forecast_days=2&timezone=Asia%2FTokyo",
