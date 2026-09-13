@@ -72,22 +72,69 @@ The one design idea that drives everything: **every feed normalizes into one `Ev
 
 ## Setup
 
-Prerequisites: Python (via the project's `.venv`), Node v24+, a Neo4j Aura (or local Docker) instance, and `.env` populated from `.env.example` (Neo4j credentials, optional `ANTHROPIC_API_KEY`, optional `DAYTONA_API_KEY`).
+**Prerequisites**
+
+- **Python 3.12** with the project's `.venv` — dependencies are already installed there. For a fresh
+  environment there is no `requirements.txt`; recreate it with:
+  ```
+  python -m venv .venv
+  .venv\Scripts\python.exe -m pip install fastapi==0.141.1 uvicorn==0.52.4 neo4j==6.3.0 ^
+      python-dotenv==1.2.3 httpx==0.28.1 websockets==17.1 daytona==0.211.2
+  ```
+  The `anthropic` SDK is deliberately **not** installed — `api/brief.py` calls the Messages API over
+  raw `httpx`.
+- **Node 24+** (built and verified on v24.11.1 / npm 11.6.2).
+- **A Neo4j Aura instance.** Docker is *not* required and no `Dockerfile`/compose file ships with this
+  repo; "Neo4j in a Daytona sandbox" is a documented fallback only (`doc/arch.md` §6, ladder #2).
+- **`.env` populated from `.env.example`** — Neo4j credentials, optional `ANTHROPIC_API_KEY`, optional
+  `DAYTONA_API_KEY`. Note that newer Aura Free instances use the **instance ID** as both
+  `NEO4J_USERNAME` and `NEO4J_DATABASE`, not `neo4j`/`neo4j`; copy the values from the credentials
+  file Aura makes you download, verbatim.
+
+**One-time**
 
 ```
-# one-time: seed the static graph (lines/wards/stations) — idempotent, safe to re-run
+# seed the static graph (20 lines, 23 wards, 149 stations) - idempotent, safe to re-run
 .venv\Scripts\python.exe scripts\seed.py
 
+# install web dependencies
+cd web && npm install && cd ..
+```
+
+**Run** — one terminal each, from the project root:
+
+```
 # terminal 1: API
 .venv\Scripts\python.exe scripts\run_api.py          # -> http://127.0.0.1:8000
 
-# terminal 2: ingest (auto-selects Daytona --push mode if DAYTONA_API_KEY is set,
-# otherwise falls back to local in-process threads with status "mock")
-.venv\Scripts\python.exe -m ingest.launcher
+# terminal 2: web
+cd web && npm run dev                                 # -> http://127.0.0.1:5173
 
-# terminal 3: web
-cd web && npm install && npm run dev                  # -> http://localhost:5173
+# terminal 3: ingest - OPTIONAL, polls the live feeds into Neo4j.
+# Auto-selects Daytona --push mode if DAYTONA_API_KEY is set, otherwise falls back
+# to local in-process threads with status "mock". Without it the app still renders
+# everything already in the graph; you just get no newly arriving events.
+.venv\Scripts\python.exe -m ingest.launcher
 ```
+
+Then open **`http://127.0.0.1:5173`**.
+
+> **Use `127.0.0.1`, not `localhost`.** Vite binds only to `127.0.0.1:5173`, so if any other project's
+> dev server is running on port 5173 with a default IPv6 bind, `localhost` resolves to *that* server
+> over `::1` and this app is unreachable by that name. `127.0.0.1` is unambiguous. (The API binds
+> `0.0.0.0:8000` per `API_HOST`, so it is reachable from your LAN — there is no auth, so keep that in
+> mind on a shared network.)
+
+Check it came up:
+
+```
+curl http://127.0.0.1:8000/health        # -> {"ok": true, "neo4j": "up", "eventCount": N}
+```
+
+Endpoints are `/events.json`, `/lines.geojson`, `/stations.geojson`, `/wards.geojson`,
+`/impact/{lineId}`, `/forecast.json`, `/weathergrid.json`, `/brief`, `/sandboxes.json`, `/layers.json`,
+plus `POST /demo/replay` and `POST /demo/reset`. Full interactive list at
+`http://127.0.0.1:8000/docs`.
 
 Full step-by-step with expected output at every stage, plus the demo script and failure playbook: **`demo-runbook.md`**.
 
