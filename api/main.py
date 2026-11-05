@@ -68,7 +68,9 @@ app.add_middleware(
 # Public deployment: no stale data presented as current, no unauthenticated
 # writes to the graph, and POST /tick drives ingest. Off for local demos.
 PUBLIC_MODE = env_str("TOKYOPULSE_PUBLIC").lower() == "true"
+cache.CDN_ENABLED = PUBLIC_MODE
 TICK_MIN_GAP_S = 55
+TICK_CDN_TTL_S = 25
 
 
 def _open_meteo_url() -> str:
@@ -1178,10 +1180,24 @@ def _empty_layers() -> dict[str, Any]:
                         "lastUpdate": stamp} for k, v in LAYER_LABELS.items()]}
 
 
+def _last_ingest_iso() -> str | None:
+    try:
+        at = graph.last_ingest_at()
+    except Exception as exc:
+        log.warning("layers: last ingest time unavailable: %s", exc)
+        return None
+    return datetime.fromtimestamp(at, JST).isoformat(timespec="seconds") if at else None
+
+
 def _produce_layers() -> dict[str, Any]:
     """Composed entirely from the other endpoints' cached payloads — zero extra
     Cypher on the hot path."""
     stamp = now_iso()
+    # Hosted, feeds only refresh while someone is watching, so "now" would present
+    # old data as just updated. Say when ingest last finished; static layers have no
+    # update time to report.
+    feed_stamp = _last_ingest_iso() if PUBLIC_MODE else stamp
+    static_stamp = None if PUBLIC_MODE else stamp
     since = _since_iso("now", None)
     ev_key = _events_key(200, None, None, since, "now")
     ev = _cached_payload(ev_key) or _produce_events(200, None, None, since, True)
@@ -1203,20 +1219,20 @@ def _produce_layers() -> dict[str, Any]:
 
     layers = [
         {"id": "trains", "label": LAYER_LABELS["trains"], "state": line_state,
-         "count": train_count, "lastUpdate": stamp},
+         "count": train_count, "lastUpdate": feed_stamp},
         {"id": "quakes", "label": LAYER_LABELS["quakes"], "state": ev_state,
-         "count": counts.get("quake", 0), "lastUpdate": stamp},
+         "count": counts.get("quake", 0), "lastUpdate": feed_stamp},
         {"id": "warnings", "label": LAYER_LABELS["warnings"], "state": ev_state,
-         "count": counts.get("warning", 0), "lastUpdate": stamp},
+         "count": counts.get("warning", 0), "lastUpdate": feed_stamp},
         {"id": "weather", "label": LAYER_LABELS["weather"], "state": ev_state,
-         "count": counts.get("weather", 0), "lastUpdate": stamp},
+         "count": counts.get("weather", 0), "lastUpdate": feed_stamp},
         {"id": "flood", "label": LAYER_LABELS["flood"], "state": st_state,
-         "count": flood_count, "lastUpdate": stamp},
+         "count": flood_count, "lastUpdate": static_stamp},
         {"id": "crowd", "label": LAYER_LABELS["crowd"], "state": st_state,
-         "count": len(st_feats), "lastUpdate": stamp},
+         "count": len(st_feats), "lastUpdate": static_stamp},
         # Honest: no people-flow dataset is wired in this build.
         {"id": "peopleflow", "label": LAYER_LABELS["peopleflow"], "state": "off",
-         "count": 0, "lastUpdate": stamp},
+         "count": 0, "lastUpdate": static_stamp},
     ]
 
     # Buses: computed the same way as every other row — from the endpoint's own
@@ -1273,6 +1289,7 @@ def events_json(
     severity: str | None = Query(None, description="minimum level: info|warning|critical"),
     since: str | None = Query(None, description="ISO8601"),
     window: str | None = Query(None, description="now (last 6h, default) | 7d"),
+    v: float | None = Query(None, description="latest ingest time the caller knows of"),
 ) -> Response:
     n = _clamp_limit(limit)
     types = _csv_list(type, TYPES)
@@ -1283,13 +1300,13 @@ def events_json(
     key = _events_key(n, types, sevs, since_iso, window)
     return cache.serve(key, TTL_EVENTS,
                        lambda: _produce_events(n, types, sevs, since_iso, now_window),
-                       "events.json", _empty_events)
+                       "events.json", _empty_events, fresh_after=v)
 
 
 @app.get("/lines.geojson")
-def lines_geojson() -> Response:
+def lines_geojson(v: float | None = Query(None)) -> Response:
     return cache.serve("lines.geojson", TTL_LINES, _produce_lines,
-                       "lines.geojson", _empty_lines)
+                       "lines.geojson", _empty_lines, fresh_after=v)
 
 
 @app.get("/stations.geojson")
@@ -1354,8 +1371,8 @@ def weathergrid_json(step: str | None = Query(None, description="0.25 | 0.125 (d
 
 
 @app.get("/brief")
-def brief() -> Response:
-    return cache.serve("brief", TTL_BRIEF, _produce_brief, "brief", _empty_brief)
+def brief(v: float | None = Query(None)) -> Response:
+    return cache.serve("brief", TTL_BRIEF, _produce_brief, "brief", _empty_brief, fresh_after=v)
 
 
 @app.get("/sandboxes.json")
@@ -1432,9 +1449,9 @@ def wards_geojson() -> Response:
 
 
 @app.get("/layers.json")
-def layers_json() -> Response:
+def layers_json(v: float | None = Query(None)) -> Response:
     return cache.serve("layers.json", TTL_LAYERS, _produce_layers,
-                       "layers.json", _empty_layers)
+                       "layers.json", _empty_layers, fresh_after=v)
 
 
 # ──────────────────────────── POST /demo/replay ──────────────────────────────
@@ -1771,47 +1788,60 @@ def _warm_on_startup() -> None:
 
 # ─────────────────────────── serverless ingest ───────────────────────────────
 
-def _claim_tick() -> bool:
-    """Atomic across instances: at most one ingest pass per TICK_MIN_GAP_S."""
-    now = time.time()
-    rows = graph.run(
-        "MERGE (s:IngestState {id: 'tick'}) ON CREATE SET s.at = 0.0 "
-        "WITH s WHERE s.at <= $cutoff SET s.at = $now RETURN s.at AS at",
-        cutoff=now - TICK_MIN_GAP_S, now=now)
-    return bool(rows)
-
-
 def _run_tick() -> dict[str, Any]:
     try:
-        if not _claim_tick():
-            return {"ran": False, "reason": "recently ingested"}
+        claimed, last = graph.claim_ingest(TICK_MIN_GAP_S)
     except Exception as exc:
         log.warning("tick: claim failed: %s", exc)
-        return {"ran": False, "reason": "graph unavailable"}
+        return {"ran": False, "reason": "graph unavailable", "lastIngestAt": None}
+    if not claimed:
+        return {"ran": False, "reason": "recently ingested", "lastIngestAt": last}
     from ingest.once import run_once
     feeds = run_once()
+    if any(v["ok"] for v in feeds.values()):
+        last = time.time()
+        try:
+            graph.mark_ingest_complete(last)
+        except Exception as exc:
+            log.warning("tick: could not record completion: %s", exc)
     # No cache.invalidate here. Dropping entries forces uncached reads while the
-    # database is busy with these writes, and the short TTLs pick the data up anyway.
-    return {"ran": True, "feeds": {k: {"ok": v["ok"], "written": v["written"]}
-                                   for k, v in feeds.items()}}
+    # database is busy with these writes. Viewers pass the new lastIngestAt as `v`,
+    # which re-reads once the pass is finished.
+    return {"ran": True, "lastIngestAt": last,
+            "feeds": {k: {"ok": v["ok"], "written": v["written"]} for k, v in feeds.items()}}
 
 
-@app.post("/tick")
-def tick() -> dict[str, Any]:
-    """Open pages call this about once a minute. Safe to expose: the claim limits
-    it to one pass per minute however often it is called."""
+@app.get("/tick")
+def tick() -> Response:
+    """Visible pages drive all ingest through this; with none open, nothing runs.
+
+    Shared on the CDN once data is fresh, so however many viewers are open, few of
+    these reach a function, and the claim allows one pass per minute among those. It
+    stays uncached while data is old, so a viewer arriving mid-pass sees it finish.
+    """
     if not PUBLIC_MODE:
         raise HTTPException(status_code=404, detail="Not Found")
-    return _run_tick()
+    result = _run_tick()
+    last = result["lastIngestAt"]
+    headers = {"Cache-Control": "no-cache"}
+    if last is not None and time.time() - last < TICK_MIN_GAP_S:
+        headers["Vercel-CDN-Cache-Control"] = f"public, max-age={TICK_CDN_TTL_S}"
+    return JSONResponse(result, headers=headers)
 
 
-@app.get("/cron/tick")
-def cron_tick(authorization: str | None = Header(default=None)) -> dict[str, Any]:
-    """Daily Vercel cron: keeps the graph active when nobody has the page open."""
+@app.get("/cron/keepalive")
+def cron_keepalive(authorization: str | None = Header(default=None)) -> dict[str, Any]:
+    """Daily Vercel cron. One small write and no feeds: Aura Free pauses after 3 days
+    without a write and deletes an instance left paused for 30."""
     secret = env_str("CRON_SECRET")
     if not PUBLIC_MODE or not secret or authorization != f"Bearer {secret}":
         raise HTTPException(status_code=404, detail="Not Found")
-    return _run_tick()
+    try:
+        graph.run("MERGE (s:IngestState {id: 'keepalive'}) SET s.at = $now", now=time.time())
+    except Exception as exc:
+        log.warning("keepalive failed: %s", exc)
+        raise HTTPException(status_code=503, detail="graph unavailable") from exc
+    return {"ok": True}
 
 
 # ─────────────────────────────────── root ────────────────────────────────────

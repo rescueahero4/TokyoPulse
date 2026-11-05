@@ -195,6 +195,38 @@ def run(cypher: str, **params: Any) -> list[dict[str, Any]]:
         raise GraphUnavailable(f"{type(exc).__name__}: {str(exc)[:120]}") from exc
 
 
+def claim_ingest(min_gap_s: float) -> tuple[bool, float | None]:
+    """Let one caller, across all instances, start an ingest pass per `min_gap_s`.
+
+    Returns (claimed, last completed pass as epoch seconds). The lock needs its own
+    statement: tested against Aura with 8 simultaneous callers, single-query versions
+    let all 8 win, because they read the old time before taking the write lock. This
+    form let exactly 1 win in every trial.
+    """
+    def work(tx, now: float) -> tuple[bool, float | None]:
+        tx.run("MERGE (s:IngestState {id: 'tick'}) ON CREATE SET s.at = 0.0 "
+               "SET s.lockedAt = $now", now=now).consume()
+        row = tx.run("MATCH (s:IngestState {id: 'tick'}) "
+                     "RETURN s.at AS at, s.completedAt AS completedAt").single()
+        if row["at"] > now - min_gap_s:
+            return False, row["completedAt"]
+        tx.run("MATCH (s:IngestState {id: 'tick'}) SET s.at = $now", now=now).consume()
+        return True, row["completedAt"]
+
+    with _get_driver().session(database=_resolved_db) as session:
+        return session.execute_write(work, time.time())
+
+
+def mark_ingest_complete(at: float) -> None:
+    run("MERGE (s:IngestState {id: 'tick'}) ON CREATE SET s.at = $at "
+        "SET s.completedAt = $at", at=at)
+
+
+def last_ingest_at() -> float | None:
+    rows = run("MATCH (s:IngestState {id: 'tick'}) RETURN s.completedAt AS at")
+    return rows[0]["at"] if rows else None
+
+
 def neo4j_status(force: bool = False) -> tuple[bool, str | None]:
     """Cached liveness probe. Returns (up, note). Never raises.
 

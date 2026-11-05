@@ -107,9 +107,9 @@ export interface EventsPayload {
   meta: Meta;
 }
 
-export function fetchEvents(window: TimeWindow, limit = 60): Promise<Loaded<EventsPayload>> {
+export function fetchEvents(window: TimeWindow, limit = 60, version?: number): Promise<Loaded<EventsPayload>> {
   return load<EventsPayload>(
-    '/events.json?window=' + encodeURIComponent(window) + '&limit=' + limit,
+    '/events.json?window=' + encodeURIComponent(window) + '&limit=' + limit + (version ? '&v=' + version : ''),
     ['/mock/events.json'],
     hasArray('events'),
     () => ({ events: [], counts: {}, meta: mkMeta('mock', true, 'no events source') }),
@@ -117,10 +117,10 @@ export function fetchEvents(window: TimeWindow, limit = 60): Promise<Loaded<Even
 }
 
 /** Lines must carry geometry to be useful to the rail layer; a geometry-less payload drops a rung. */
-export async function fetchLines(): Promise<Loaded<LineCollection>> {
+export async function fetchLines(version?: number): Promise<Loaded<LineCollection>> {
   const withGeom = (j: unknown) => isFc(j) && hasGeometry(j as LineCollection);
   const res = await load<LineCollection>(
-    '/lines.geojson',
+    '/lines.geojson' + (version ? '?v=' + version : ''),
     ['/mock/lines.geojson', '/fallback/lines.geojson'],
     withGeom,
     () => ({ type: 'FeatureCollection', features: [], meta: mkMeta('mock', true, 'no line source') }),
@@ -155,9 +155,9 @@ export function fetchForecast(): Promise<Loaded<Forecast>> {
   );
 }
 
-export function fetchBrief(): Promise<Loaded<Brief>> {
+export function fetchBrief(version?: number): Promise<Loaded<Brief>> {
   return load<Brief>(
-    '/brief',
+    '/brief' + (version ? '?v=' + version : ''),
     ['/mock/brief.json'],
     (j) => isObj(j) && typeof j.en === 'string',
     () => ({
@@ -184,9 +184,9 @@ export function fetchSandboxes(): Promise<Loaded<SandboxPayload>> {
 
 export interface LayersPayload { layers: LayerState[]; meta: Meta }
 
-export async function fetchLayers(): Promise<Loaded<LayersPayload>> {
+export async function fetchLayers(version?: number): Promise<Loaded<LayersPayload>> {
   const res = await load<LayersPayload>(
-    '/layers.json',
+    '/layers.json' + (version ? '?v=' + version : ''),
     ['/mock/layers.json'],
     hasArray('layers'),
     () => ({ layers: [], meta: mkMeta('mock', true, 'no layer health source') }),
@@ -241,17 +241,26 @@ export async function probePeopleFlow(): Promise<boolean> {
   return false;
 }
 
+export interface TickResult {
+  ran: boolean;
+  /** Epoch seconds of the last finished ingest, from any viewer. */
+  lastIngestAt: number | null;
+}
+
 /**
- * Serverless ingest heartbeat. There is no always-on poller in production: open
- * pages drive it, and the API limits it to one pass per minute across all viewers.
+ * Serverless ingest heartbeat. There is no always-on poller in production: active
+ * viewers drive it, and the API limits it to one pass per minute across all of them.
  * No abort timeout, because a pass legitimately takes several seconds.
+ * Returns null when this beat failed and is worth retrying.
  */
-export async function tickIngest(): Promise<void> {
-  if (FORCE_MOCKS) return;
+export async function tickIngest(): Promise<TickResult | 'unsupported' | null> {
   try {
-    await fetch(BASE + '/tick', { method: 'POST' });
+    const res = await fetch(BASE + '/tick');
+    if (res.status === 404) return 'unsupported'; // local API: its own pollers run ingest
+    if (!res.ok) return null;
+    return (await res.json()) as TickResult;
   } catch {
-    /* the next beat retries */
+    return null;
   }
 }
 

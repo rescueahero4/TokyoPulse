@@ -15,7 +15,12 @@ previous payload in place (stale beats blank).
 
 Honesty: `meta.generatedAt` is stamped when the payload was actually FETCHED,
 never when it was served, and every response carries `X-Cache: hit|stale|miss`
-plus `Age: <seconds>` so staleness is visible rather than implied.
+so staleness is visible rather than implied. Locally `Age: <seconds>` says how old
+it is; on the hosted site the CDN sets its own `Age`.
+
+Hosted, this memory belongs to a single function instance, so the CDN does the
+sharing: fresh payloads carry a CDN lifetime, and every viewer gets the same copy
+without reaching a function. Stale or degraded payloads are never put on the CDN.
 """
 
 from __future__ import annotations
@@ -38,6 +43,9 @@ _registry: dict[str, tuple[float, Callable[[], dict], str]] = {}
 _touch: dict[str, float] = {}          # last time a key was actually requested
 IDLE_MAX = 300.0                       # stop prefetching a key nobody asks for
 KEEP_GOOD_MAX = 300.0                  # how long a good payload outlives failed refreshes
+CDN_ENABLED = False                    # api.main turns this on for the hosted site
+CDN_MIN_TTL = 15.0                     # viewers poll every 15s or slower, so no gain below this
+REFRESH_MIN_GAP = 5.0                  # a client-supplied `v` can't force reads faster than this
 
 
 def _dump(payload: dict[str, Any]) -> bytes:
@@ -49,17 +57,29 @@ def _degraded(payload: Any) -> bool:
 
 
 def _store(key: str, payload: dict[str, Any]) -> dict[str, Any]:
-    entry = {"payload": payload, "raw": _dump(payload), "at": time.monotonic()}
+    entry = {"payload": payload, "raw": _dump(payload), "at": time.monotonic(),
+             "wall": time.time()}
     with _lock:
         _entries[key] = entry
     return entry
 
 
-def _respond(entry: dict[str, Any], state: str) -> Response:
-    age = int(time.monotonic() - entry["at"])
-    return Response(content=entry["raw"], media_type="application/json",
-                    headers={"X-Cache": state, "Age": str(age),
-                             "Cache-Control": "no-cache"})
+def _keep_previous(old: dict[str, Any] | None, payload: Any) -> bool:
+    """Producers report data problems as a degraded payload rather than raising, so
+    a transient timeout must not replace good data with it."""
+    return (old is not None and _degraded(payload) and not _degraded(old["payload"])
+            and time.monotonic() - old["at"] < KEEP_GOOD_MAX)
+
+
+def _respond(entry: dict[str, Any], state: str, cdn_ttl: float = 0.0) -> Response:
+    age = time.monotonic() - entry["at"]
+    headers = {"X-Cache": state, "Cache-Control": "no-cache"}
+    if not CDN_ENABLED:
+        headers["Age"] = str(int(age))
+    elif cdn_ttl - age >= 1 and not _degraded(entry["payload"]):
+        # Counted from the fetch, so the CDN can't extend a payload's life.
+        headers["Vercel-CDN-Cache-Control"] = f"public, max-age={int(cdn_ttl - age)}"
+    return Response(content=entry["raw"], media_type="application/json", headers=headers)
 
 
 def _refresh_async(key: str, producer: Callable[[], dict], label: str) -> None:
@@ -71,11 +91,7 @@ def _refresh_async(key: str, producer: Callable[[], dict], label: str) -> None:
     def work():
         try:
             payload = producer()
-            # Producers report data problems as a degraded payload rather than
-            # raising, so a transient timeout must not replace good data with it.
-            old = _entries.get(key)
-            if (old is not None and _degraded(payload) and not _degraded(old["payload"])
-                    and time.monotonic() - old["at"] < KEEP_GOOD_MAX):
+            if _keep_previous(_entries.get(key), payload):
                 log.warning("[%s] refresh degraded, keeping the last good payload", label)
                 return
             _store(key, payload)
@@ -90,26 +106,43 @@ def _refresh_async(key: str, producer: Callable[[], dict], label: str) -> None:
 
 
 def serve(key: str, ttl: float, producer: Callable[[], dict], label: str,
-          empty: Callable[[], dict] | None = None) -> Response:
+          empty: Callable[[], dict] | None = None,
+          fresh_after: float | None = None) -> Response:
     """Serve `key` from memory, refreshing in the background when stale.
 
     `producer` must already be three-tier safe (it returns a payload with a
     `meta` envelope and does not raise for data problems).
+
+    `fresh_after` is the ingest time the caller already knows about: a payload
+    fetched before it predates that ingest, so it is re-read now instead of waiting
+    out its TTL. This is what shows new data seconds after a cold start.
     """
     _registry[key] = (ttl, producer, label)
     _touch[key] = time.monotonic()
     entry = _entries.get(key)
+    cdn_ttl = max(ttl, CDN_MIN_TTL)
 
     if entry is not None:
         age = time.monotonic() - entry["at"]
+        if fresh_after is not None and entry["wall"] < fresh_after:
+            if age < REFRESH_MIN_GAP:
+                return _respond(entry, "stale")
+            try:
+                payload = producer()
+            except Exception:
+                log.exception("[%s] refresh after ingest failed — keeping stale payload", label)
+                return _respond(entry, "stale")
+            if _keep_previous(entry, payload):
+                return _respond(entry, "stale")
+            return _respond(_store(key, payload), "miss", cdn_ttl)
         if age >= ttl:
             _refresh_async(key, producer, label)
             return _respond(entry, "stale")
-        return _respond(entry, "hit")
+        return _respond(entry, "hit", cdn_ttl)
 
     # Cold: pay for it once.
     try:
-        return _respond(_store(key, producer()), "miss")
+        return _respond(_store(key, producer()), "miss", cdn_ttl)
     except Exception:
         log.exception("[%s] producer raised on a cold cache", label)
         from .envelope import meta

@@ -16,6 +16,6 @@
     { "source": "/(.*)", "destination": { "service": "frontend" } }
   ],
   "crons": [
-    { "path": "/api/cron/tick", "schedule": "0 0 * * *" }
+    { "path": "/api/cron/keepalive", "schedule": "0 0 * * *" }
   ]
 }

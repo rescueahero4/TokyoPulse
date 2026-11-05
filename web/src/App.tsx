@@ -4,7 +4,7 @@ import { PEOPLEFLOW_LABEL } from './map/layers/peopleflow';
 import { ErrorBoundary } from './lib/ErrorBoundary';
 import { usePolling } from './lib/usePolling';
 import {
-  FORCE_MOCKS, tickIngest, fetchBrief, fetchEvents, fetchForecast, fetchImpact, fetchLayers, fetchLines,
+  FORCE_MOCKS, fetchBrief, fetchEvents, fetchForecast, fetchImpact, fetchLayers, fetchLines,
   fetchSandboxes, fetchStations, linesFromCollection, probePeopleFlow, type Loaded,
 } from './lib/api';
 import { lineSegments } from './lib/geo';
@@ -19,6 +19,7 @@ import { ForecastStrip } from './panels/ForecastStrip';
 import { InspectorPanel } from './panels/InspectorPanel';
 import { fetchBuses } from './panels/busData';
 import { StatusBar } from './panels/StatusBar';
+import { useLiveFeed } from './lib/useLiveFeed';
 
 import './styles/app.css';
 import './styles/panels.css';
@@ -115,17 +116,21 @@ export default function App() {
   });
 
   // ---- data (polling intervals per the brief)
-  usePolling(tickIngest, 60_000);
-  const eventsRes = usePolling(() => fetchEvents(timeWindow), 15_000, [timeWindow]);
-  const linesRes = usePolling(fetchLines, 30_000);
-  const layersRes = usePolling(fetchLayers, 20_000);
-  const sandboxRes = usePolling(fetchSandboxes, 20_000);
+  const feed = useLiveFeed();
+  // Versioning these by ingest gives all viewers the same cached copy, and shows
+  // fresh data as soon as a pass finishes rather than when a cache entry expires.
+  const version = feed.lastIngestAt === null ? undefined : Math.ceil(feed.lastIngestAt);
+  const eventsRes = usePolling(() => fetchEvents(timeWindow, 60, version), 15_000, [timeWindow]);
+  const linesRes = usePolling(() => fetchLines(version), 30_000);
+  const layersRes = usePolling(() => fetchLayers(version), 20_000);
+  // Hosted, nothing writes sandbox state, so there is nothing to keep polling for.
+  const sandboxRes = usePolling(fetchSandboxes, import.meta.env.PROD && !FORCE_MOCKS ? 0 : 20_000);
   const stationsRes = usePolling(fetchStations, 0);
   const forecastRes = usePolling(fetchForecast, 0);
   // P1-8: interval 0 fetched the brief once, ever — it went stale next to a
   // scrolling timeline. /brief is already cached 60s server-side, so this costs
   // nothing extra.
-  const briefRes = usePolling(fetchBrief, 60_000);
+  const briefRes = usePolling(() => fetchBrief(version), 60_000);
   // Bus vehicles: only polled while the layer is on (~360 features, and each
   // payload is valid for ~30s). Feeds the inspector's bus card.
   const busesRes = usePolling(
@@ -133,6 +138,15 @@ export default function App() {
     visible.buses ? 15_000 : 0,
     [visible.buses],
   );
+
+  useEffect(() => {
+    if (version === undefined) return;
+    eventsRes.refetch();
+    linesRes.refetch();
+    layersRes.refetch();
+    briefRes.refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [version]);
 
   useEffect(() => {
     let alive = true;
@@ -313,6 +327,7 @@ export default function App() {
         <ErrorBoundary label="StatusBar">
           <StatusBar
             sandboxes={sandboxRes.data?.data.sandboxes ?? EMPTY_SANDBOXES}
+            feed={feed}
             window={timeWindow}
             onWindowChange={setTimeWindow}
             lang={lang}
@@ -414,7 +429,7 @@ export default function App() {
         )}
 
         <div className="source-chip" title={eventsMeta?.note || ''}>
-          {FORCE_MOCKS ? 'SNAPSHOT' : degraded ? 'API UNREACHABLE / MOCK' : 'API LIVE'}
+          {FORCE_MOCKS ? 'SNAPSHOT' : degraded ? 'API UNREACHABLE / MOCK' : feed.phase === 'paused' ? 'API PAUSED' : 'API LIVE'}
         </div>
       </div>
     </div>

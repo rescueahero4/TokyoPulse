@@ -2,7 +2,7 @@
 ingest/once.py -- one ingest pass over every event feed, then exit.
 
 The serverless counterpart of ingest/launcher.py: Vercel functions cannot hold
-polling loops or the P2PQuake WebSocket, so POST /tick runs this instead. Quakes
+polling loops or the P2PQuake WebSocket, so GET /tick runs this instead. Quakes
 use the history endpoint, which also catches up on anything missed while no one
 was watching. A feed failing never stops the others.
 """

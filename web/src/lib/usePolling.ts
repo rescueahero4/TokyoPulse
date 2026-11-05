@@ -1,14 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { whileLive } from './liveActivity';
 
 export interface Polled<T> {
   data: T | null;
   loading: boolean;
   error: string | null;
   refresh: () => void;
+  /** Like refresh, without flagging `loading`: for updates the viewer didn't ask for. */
+  refetch: () => void;
 }
 
 /**
- * Poll an async fetcher on an interval. `intervalMs <= 0` fetches once only.
+ * Poll an async fetcher on an interval, only while this viewer is active.
+ * `intervalMs <= 0` fetches once only.
  * Intervals and in-flight results are cleaned up on unmount / dependency change.
  */
 export function usePolling<T>(fetcher: () => Promise<T>, intervalMs: number, deps: unknown[] = []): Polled<T> {
@@ -20,11 +24,17 @@ export function usePolling<T>(fetcher: () => Promise<T>, intervalMs: number, dep
   const fetcherRef = useRef(fetcher);
   fetcherRef.current = fetcher;
 
+  const silent = useRef(false);
+
   const refresh = useCallback(() => setNonce((n) => n + 1), []);
+  const refetch = useCallback(() => {
+    silent.current = true;
+    setNonce((n) => n + 1);
+  }, []);
 
   useEffect(() => {
     alive.current = true;
-    let timer: ReturnType<typeof setInterval> | null = null;
+    let stopPolling: (() => void) | null = null;
 
     const run = async () => {
       try {
@@ -40,16 +50,17 @@ export function usePolling<T>(fetcher: () => Promise<T>, intervalMs: number, dep
       }
     };
 
-    setLoading(true);
-    void run();
-    if (intervalMs > 0) timer = setInterval(run, intervalMs);
+    if (!silent.current) setLoading(true);
+    silent.current = false;
+    if (intervalMs > 0) stopPolling = whileLive(() => void run(), intervalMs);
+    else void run();
 
     return () => {
       alive.current = false;
-      if (timer) clearInterval(timer);
+      stopPolling?.();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intervalMs, nonce, ...deps]);
 
-  return { data, loading, error, refresh };
+  return { data, loading, error, refresh, refetch };
 }

@@ -22,6 +22,7 @@ import {
 // Shared collapsible header owned by the panels agent. Imported, never edited,
 // so the MAP cluster's collapse affordance matches every other HUD widget.
 import { PanelHeader } from '../panels/PanelHeader';
+import { whileLive } from '../lib/liveActivity';
 import {
   BASEMAPS, DEFAULT_BASEMAP_ID, ION_TOKEN, SYNC_FALLBACK_ID, basemapById,
   buildBasemapLayerAsync, buildFirstWorkingBasemap, buildLabelOverlay,
@@ -857,12 +858,11 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     const load = () => {
       void fetchBuses(ctrl.signal).then((fc) => { if (alive && fc) setBuses(fc); });
     };
-    load();
-    const t = window.setInterval(load, 20_000);
+    const stop = whileLive(load, 20_000);
     return () => {
       alive = false;
       ctrl.abort();
-      window.clearInterval(t);
+      stop();
     };
   }, [ready, busesOn]);
 
@@ -921,10 +921,9 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     const load = () => {
       void fetchWeatherGrid(ctrl.signal).then((g) => { if (alive && g) setWxGrid(g); });
     };
-    load();
     // The grid is hourly; 5 minutes is plenty and keeps the demo honest-fresh.
-    const t = window.setInterval(load, 300_000);
-    return () => { alive = false; ctrl.abort(); window.clearInterval(t); };
+    const stop = whileLive(load, 300_000);
+    return () => { alive = false; ctrl.abort(); stop(); };
   }, [ready, weatherOn]);
 
   useEffect(() => {

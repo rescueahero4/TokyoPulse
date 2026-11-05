@@ -1,4 +1,5 @@
 import { FORCE_MOCKS } from '../lib/api';
+import type { LiveFeed } from '../lib/useLiveFeed';
 import type { Lang, SandboxInfo, TimeWindow } from '../lib/types';
 
 // godseye neon palette (same semantics as ui-contract rule 5).
@@ -10,8 +11,25 @@ const SANDBOX_DOT_COLOR: Record<string, string> = {
   failed: '#ff3333',
 };
 
+function ago(epochSeconds: number): string {
+  const s = Math.max(0, Date.now() / 1000 - epochSeconds);
+  if (s < 90) return `${Math.round(s)}s ago`;
+  if (s < 5400) return `${Math.round(s / 60)}m ago`;
+  if (s < 129600) return `${Math.round(s / 3600)}h ago`;
+  return `${Math.round(s / 86400)}d ago`;
+}
+
+function feedLabel({ phase, lastIngestAt }: LiveFeed): string {
+  const when = lastIngestAt === null ? null : ago(lastIngestAt);
+  if (phase === 'live') return `Live: updated ${when}`;
+  if (phase === 'warming') return when ? `Refreshing: data from ${when}` : 'Refreshing feeds';
+  if (phase === 'paused') return when ? `Paused: data from ${when}` : 'Paused';
+  return 'Feeds refresh while viewed';
+}
+
 export function StatusBar(p: {
   sandboxes: SandboxInfo[];
+  feed: LiveFeed;
   window: TimeWindow;
   onWindowChange(w: TimeWindow): void;
   lang: Lang;
@@ -26,7 +44,7 @@ export function StatusBar(p: {
           {FORCE_MOCKS
             ? 'Snapshot: no live ingest'
             : sandboxes.length === 0
-              ? 'Feeds refresh while viewed'
+              ? feedLabel(p.feed)
               : <>{'⚡'} {sandboxes.length} Daytona sandbox{sandboxes.length === 1 ? '' : 'es'} ingesting</>}
         </span>
         {sandboxes.length > 0 && !FORCE_MOCKS ? (
