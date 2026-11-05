@@ -141,6 +141,7 @@ def make_event(
     url: Optional[str] = None,
     magnitude: Optional[float] = None,
     maxScale: Optional[float] = None,
+    areaCodes: Optional[list[str]] = None,
 ) -> dict[str, Any]:
     """Build an Event dict with EXACTLY the fields in event.schema.json
     (additionalProperties:false) — never add extra keys here."""
@@ -161,6 +162,7 @@ def make_event(
         "url": url,
         "magnitude": magnitude,
         "maxScale": maxScale,
+        "areaCodes": areaCodes,
     }
 
 

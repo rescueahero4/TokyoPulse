@@ -24,6 +24,32 @@ export interface PulseEvent {
   url: string | null;
   magnitude?: number | null;
   maxScale?: number | null;
+  /** JMA area codes a warning covers; matches public/geo/tokyo-areas.geojson. */
+  areaCodes?: string[] | null;
+}
+
+export type WeatherVar = 'temperature' | 'precipitation';
+
+export interface WardForecast {
+  ward: string;
+  wardJa: string;
+  code: string;
+  /** How many forecast cells this ward's values are averaged from. */
+  cellCount: number;
+  temperature: (number | null)[];
+  precipitation: (number | null)[];
+}
+
+/** GET /wardweather.json. Series line up with `time`. */
+export interface WardWeather {
+  time: string[];
+  nowIndex: number;
+  units: Record<string, string>;
+  wards: WardForecast[];
+  sourceUrl?: string;
+  attribution?: string;
+  note?: string;
+  meta: Meta;
 }
 
 export interface LineProps {

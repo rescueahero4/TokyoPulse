@@ -87,7 +87,8 @@ SET e.type = ev.type,
     e.source = ev.source,
     e.url = ev.url,
     e.magnitude = ev.magnitude,
-    e.maxScale = ev.maxScale
+    e.maxScale = ev.maxScale,
+    e.areaCodes = ev.areaCodes
 WITH e, ev
 UNWIND (CASE WHEN ev.affects IS NULL OR size(ev.affects) = 0 THEN [null] ELSE ev.affects END) AS ref
 FOREACH (_ IN CASE WHEN ref IS NOT NULL AND ref STARTS WITH 'line:' THEN [1] ELSE [] END |

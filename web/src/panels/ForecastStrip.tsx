@@ -7,7 +7,8 @@
 //
 // Exported name and props are unchanged (ui-contract is frozen).
 
-import type { ReactNode } from 'react';
+import { useRef } from 'react';
+import type { KeyboardEvent, PointerEvent, ReactNode } from 'react';
 import type { Forecast } from '../lib/types';
 import { formatDayClock } from './time';
 import { PanelHeader } from './PanelHeader';
@@ -95,8 +96,13 @@ function Shell(p: { collapsed: boolean; onToggle(): void; sub: string; children:
 export function ForecastStrip(p: {
   forecast: Forecast | null;
   loading: boolean;
+  /** The hour the map's weather layer is showing; null means now. */
+  selectedTime?: string | null;
+  /** Present while the weather layer is on: the chart becomes a time control. */
+  onSelectTime?(time: string | null): void;
 }): JSX.Element {
   const [collapsed, toggleCollapsed] = useCollapse('weather');
+  const plotRef = useRef<HTMLDivElement | null>(null);
 
   const hourly = p.forecast?.hourly ?? [];
   const n = hourly.length;
@@ -138,6 +144,48 @@ export function ForecastStrip(p: {
   const showNowMarker = nowIndex >= 0 && nowIndex < n;
   const nowPct = (nowX / VB_W) * 100;
 
+  // ---- choosing a future hour for the map. History isn't on the ward layer.
+  const pick = p.onSelectTime;
+  const selectAt = (i: number) => {
+    const clamped = Math.max(clampedNowIndex, Math.min(n - 1, i));
+    pick?.(clamped === clampedNowIndex ? null : hourly[clamped].time);
+  };
+  const selectAtPointer = (clientX: number) => {
+    const box = plotRef.current?.getBoundingClientRect();
+    if (!box || !box.width) return;
+    selectAt(Math.floor((((clientX - box.left) / box.width) * VB_W - PAD_L) / step));
+  };
+  const foundIndex = p.selectedTime ? hourly.findIndex((h) => h.time === p.selectedTime) : -1;
+  const selectedIndex = foundIndex > clampedNowIndex ? foundIndex : -1;
+  const activeIndex = selectedIndex >= 0 ? selectedIndex : clampedNowIndex;
+  const selectedX = selectedIndex >= 0 ? xAt(selectedIndex) : null;
+  const scrubProps = pick
+    ? {
+        role: 'slider',
+        tabIndex: 0,
+        'aria-label': 'Hour shown on the map',
+        'aria-valuemin': 0,
+        'aria-valuemax': n - 1 - clampedNowIndex,
+        'aria-valuenow': activeIndex - clampedNowIndex,
+        'aria-valuetext': formatDayClock(hourly[activeIndex]?.time),
+        onPointerDown: (ev: PointerEvent<HTMLDivElement>) => {
+          ev.currentTarget.setPointerCapture(ev.pointerId);
+          selectAtPointer(ev.clientX);
+        },
+        onPointerMove: (ev: PointerEvent<HTMLDivElement>) => {
+          if (ev.buttons & 1) selectAtPointer(ev.clientX);
+        },
+        onKeyDown: (ev: KeyboardEvent<HTMLDivElement>) => {
+          if (ev.key === 'ArrowRight') selectAt(activeIndex + 1);
+          else if (ev.key === 'ArrowLeft') selectAt(activeIndex - 1);
+          else if (ev.key === 'Home') selectAt(clampedNowIndex);
+          else if (ev.key === 'End') selectAt(n - 1);
+          else return;
+          ev.preventDefault();
+        },
+      }
+    : {};
+
   // Honest span, computed from the payload — NOT assumed. Most of this strip is
   // history, which is exactly what "FORECAST" hid.
   const pastHours = hourly.reduce((acc, h) => acc + (h.isPast ? 1 : 0), 0);
@@ -147,8 +195,20 @@ export function ForecastStrip(p: {
 
   return (
     <Shell collapsed={collapsed} onToggle={toggleCollapsed} sub={sub}>
-      <Legend />
-      <div className="tp-wx-plot">
+      <div className="tp-wx-legend-row">
+        <Legend />
+        {pick ? (
+          selectedIndex >= 0 ? (
+            <span className="tp-wx-map-hour">
+              Map: {formatDayClock(hourly[selectedIndex].time)} (+{selectedIndex - clampedNowIndex}h)
+              <button type="button" className="tp-wx-map-now" onClick={() => pick(null)}>Now</button>
+            </span>
+          ) : (
+            <span className="tp-wx-map-hint">Drag the chart to see a future hour on the map</span>
+          )
+        ) : null}
+      </div>
+      <div className={`tp-wx-plot${pick ? ' tp-wx-plot-scrub' : ''}`} ref={plotRef} {...scrubProps}>
         <svg
           className="tp-forecast-svg"
           viewBox={`0 0 ${VB_W} ${VB_H}`}
@@ -189,6 +249,11 @@ export function ForecastStrip(p: {
           {/* now marker */}
           {showNowMarker ? (
             <line x1={nowX} y1={0} x2={nowX} y2={VB_H} className="tp-forecast-now-marker" />
+          ) : null}
+
+          {/* the hour the map is showing */}
+          {selectedX !== null ? (
+            <line x1={selectedX} y1={0} x2={selectedX} y2={VB_H} className="tp-forecast-map-marker" />
           ) : null}
         </svg>
 

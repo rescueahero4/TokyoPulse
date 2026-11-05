@@ -282,9 +282,7 @@ html, body, #root {
 .map-wx-ramp { height: 8px; border-radius: 2px; border: 1px solid rgba(255, 255, 255, 0.12); }
 
 .map-wx-ramp.is-temp {
-  background: linear-gradient(90deg,
-    rgb(49, 84, 168) 0%, rgb(58, 160, 200) 25%, rgb(120, 196, 120) 50%,
-    rgb(240, 214, 90) 70%, rgb(240, 140, 55) 85%, rgb(214, 60, 50) 100%);
+  background: linear-gradient(90deg, #3154a8 0%, #3aa0c8 30%, #78c478 55%, #f0d65a 80%, #f08c37 100%);
 }
 
 .map-wx-ramp.is-precip {

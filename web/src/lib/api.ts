@@ -1,5 +1,5 @@
 import type {
-  Brief, Forecast, Impact, LayerState, LineProps, Meta, PulseEvent, SandboxInfo, TimeWindow,
+  Brief, Forecast, Impact, LayerState, LineProps, Meta, PulseEvent, SandboxInfo, TimeWindow, WardWeather,
 } from './types';
 import type { LineCollection, StationCollection } from './geo';
 import { hasGeometry } from './geo';
@@ -152,6 +152,15 @@ export function fetchForecast(): Promise<Loaded<Forecast>> {
       summary: { maxPrecip24h: 0, minTemp: 0, maxTemp: 0, rainHoursNext48: 0 },
       meta: mkMeta('mock', true, 'no forecast source'),
     }),
+  );
+}
+
+export function fetchWardWeather(): Promise<Loaded<WardWeather>> {
+  return load<WardWeather>(
+    '/wardweather.json',
+    ['/mock/wardweather.json'],
+    hasArray('wards'),
+    () => ({ time: [], nowIndex: 0, units: {}, wards: [], meta: mkMeta('mock', true, 'no ward weather source') }),
   );
 }
 

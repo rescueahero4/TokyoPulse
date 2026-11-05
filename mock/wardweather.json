@@ -1,0 +1,296 @@
+{
+ "time": [
+  "2026-09-12T20:00:00+09:00"
+ ],
+ "nowIndex": 0,
+ "units": {
+  "temperature": "°C",
+  "precipitation": "mm"
+ },
+ "wards": [
+  {
+   "ward": "Chiyoda",
+   "wardJa": "千代田区",
+   "code": "1310100",
+   "cellCount": 2,
+   "temperature": [
+    22.5
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Chuo",
+   "wardJa": "中央区",
+   "code": "1310200",
+   "cellCount": 4,
+   "temperature": [
+    22.7
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Minato",
+   "wardJa": "港区",
+   "code": "1310300",
+   "cellCount": 3,
+   "temperature": [
+    22.5
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Shinjuku",
+   "wardJa": "新宿区",
+   "code": "1310400",
+   "cellCount": 2,
+   "temperature": [
+    22.5
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Bunkyo",
+   "wardJa": "文京区",
+   "code": "1310500",
+   "cellCount": 2,
+   "temperature": [
+    22.5
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Taito",
+   "wardJa": "台東区",
+   "code": "1310600",
+   "cellCount": 3,
+   "temperature": [
+    22.8
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Sumida",
+   "wardJa": "墨田区",
+   "code": "1310700",
+   "cellCount": 2,
+   "temperature": [
+    23.0
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Koto",
+   "wardJa": "江東区",
+   "code": "1310800",
+   "cellCount": 3,
+   "temperature": [
+    23.3
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Shinagawa",
+   "wardJa": "品川区",
+   "code": "1310900",
+   "cellCount": 2,
+   "temperature": [
+    23.3
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Meguro",
+   "wardJa": "目黒区",
+   "code": "1311000",
+   "cellCount": 2,
+   "temperature": [
+    22.8
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Ota",
+   "wardJa": "大田区",
+   "code": "1311100",
+   "cellCount": 5,
+   "temperature": [
+    23.4
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Setagaya",
+   "wardJa": "世田谷区",
+   "code": "1311200",
+   "cellCount": 4,
+   "temperature": [
+    22.6
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Shibuya",
+   "wardJa": "渋谷区",
+   "code": "1311300",
+   "cellCount": 2,
+   "temperature": [
+    22.5
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Nakano",
+   "wardJa": "中野区",
+   "code": "1311400",
+   "cellCount": 4,
+   "temperature": [
+    22.5
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Suginami",
+   "wardJa": "杉並区",
+   "code": "1311500",
+   "cellCount": 3,
+   "temperature": [
+    22.5
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Toshima",
+   "wardJa": "豊島区",
+   "code": "1311600",
+   "cellCount": 3,
+   "temperature": [
+    22.7
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Kita",
+   "wardJa": "北区",
+   "code": "1311700",
+   "cellCount": 4,
+   "temperature": [
+    22.7
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Arakawa",
+   "wardJa": "荒川区",
+   "code": "1311800",
+   "cellCount": 2,
+   "temperature": [
+    22.7
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Itabashi",
+   "wardJa": "板橋区",
+   "code": "1311900",
+   "cellCount": 3,
+   "temperature": [
+    22.7
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Nerima",
+   "wardJa": "練馬区",
+   "code": "1312000",
+   "cellCount": 3,
+   "temperature": [
+    22.6
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Adachi",
+   "wardJa": "足立区",
+   "code": "1312100",
+   "cellCount": 4,
+   "temperature": [
+    22.7
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Katsushika",
+   "wardJa": "葛飾区",
+   "code": "1312200",
+   "cellCount": 4,
+   "temperature": [
+    22.7
+   ],
+   "precipitation": [
+    0.0
+   ]
+  },
+  {
+   "ward": "Edogawa",
+   "wardJa": "江戸川区",
+   "code": "1312300",
+   "cellCount": 3,
+   "temperature": [
+    23.1
+   ],
+   "precipitation": [
+    0.0
+   ]
+  }
+ ],
+ "attribution": "Weather data by Open-Meteo.com (CC BY 4.0). Ward boundaries: JMA.",
+ "note": "Archived from the 12 Sep 2026 grid capture: one hour only, no forecast.",
+ "meta": {
+  "source": "mock",
+  "generatedAt": "2026-09-12T20:15:00+09:00",
+  "degraded": true,
+  "note": "archived snapshot"
+ }
+}

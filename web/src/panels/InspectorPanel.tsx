@@ -14,7 +14,7 @@
 
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Lang, Meta, PulseEvent } from '../lib/types';
+import type { Lang, Meta, PulseEvent, WardWeather } from '../lib/types';
 import type { LineCollection, StationCollection } from '../lib/geo';
 import { attachInspector, type MapPick } from '../map/inspector';
 import { LAYER_INFO, railSource, wardAdvisorySummary } from './dataSources';
@@ -38,6 +38,7 @@ import { wardCentroid } from '../lib/wards';
 import { formatClock, formatClockWithRelative } from './time';
 import { PanelHeader } from './PanelHeader';
 import { useCollapse } from './useCollapse';
+import { formatDayClock } from './time';
 
 /** Tokyo Station — the reference point for "how far away was that quake". */
 const TOKYO = { lat: 35.6812, lon: 139.7671 };
@@ -137,14 +138,24 @@ export function InspectorPanel(p: {
   stationsMeta?: Meta | null;
   /** Live bus positions, for the bus card. Optional so the older call still type-checks. */
   buses?: BusCollection | null;
+  /** Ward forecasts and the hour the map is showing, for the ward card. */
+  wardWeather?: WardWeather | null;
+  wardHourIndex?: number;
   onOpenImpact?(lineId: string): void;
 }): JSX.Element | null {
-  const [pick, setPick] = useState<MapPick>(null);
+  const [clicked, setPick] = useState<MapPick>(null);
   const [collapsed, toggleCollapsed] = useCollapse('inspector');
 
   useEffect(() => attachInspector(setPick), []);
 
-  if (!pick) return null;
+  if (!clicked) return null;
+
+  // With a raster overlay on, a click on a ward is asking about the raster: it has
+  // no entities of its own to click, and the ward paint sits over all of it.
+  const pick: NonNullable<MapPick> =
+    clicked.kind === 'ward' && (p.floodVisible || p.peopleFlowVisible)
+      ? { kind: 'ground', lat: clicked.lat, lon: clicked.lon }
+      : clicked;
 
   // A click on bare map only means something when an overlay without clickable
   // entities is on (the GSI flood raster, or the people-flow grid); otherwise
@@ -415,6 +426,50 @@ export function InspectorPanel(p: {
         />
       );
     }
+  } else if (pick.kind === 'ward') {
+    const w = p.wardWeather?.wards.find((x) => x.ward === pick.ward);
+    const data = p.wardWeather;
+    title = w && p.lang === 'ja' ? w.wardJa : pick.ward;
+    kindLabel = 'Ward · forecast';
+    if (w && data) {
+      const i = p.wardHourIndex ?? 0;
+      const t = data.units.temperature ?? '';
+      const mm = data.units.precipitation ?? '';
+      const temps = w.temperature.filter((v): v is number => typeof v === 'number');
+      const rain = w.precipitation.map((v, h) => ({ v: v ?? 0, h })).reduce((a, b) => (b.v > a.v ? b : a), { v: 0, h: 0 });
+      body = (
+        <>
+          <Row label="Hour shown" value={formatDayClock(data.time[i])} mono />
+          <Row label="Temperature" value={typeof w.temperature[i] === 'number' ? `${w.temperature[i]}${t}` : 'no data'} mono />
+          <Row label="Rain" value={typeof w.precipitation[i] === 'number' ? `${w.precipitation[i]}${mm} in the hour` : 'no data'} mono />
+          {temps.length > 1 ? (
+            <Row
+              label={`Next ${temps.length}h`}
+              value={`${Math.min(...temps)}${t} to ${Math.max(...temps)}${t}`}
+              mono
+            />
+          ) : null}
+          {temps.length > 1 ? (
+            <Row
+              label="Heaviest rain"
+              value={rain.v > 0 ? `${rain.v}${mm} at ${formatDayClock(data.time[rain.h])}` : 'None forecast'}
+              mono
+            />
+          ) : null}
+          <Row label="Forecast cells" value={`Averaged from ${w.cellCount}`} mono />
+          {data.sourceUrl ? (
+            <a className="tp-insp-action" href={data.sourceUrl} target="_blank" rel="noopener noreferrer">
+              Open the raw forecast data ↗
+            </a>
+          ) : null}
+        </>
+      );
+    } else {
+      body = <div className="tp-empty-row">No forecast is loaded for this ward.</div>;
+    }
+    footer = (
+      <SourceFooter text={LAYER_INFO.weather.source} meta={data?.meta} note={LAYER_INFO.weather.caveat} />
+    );
   } else if (pick.kind === 'ground' && !p.floodVisible && p.peopleFlowVisible) {
     title = 'People flow (typical pattern)';
     kindLabel = 'Derived grid · not live';

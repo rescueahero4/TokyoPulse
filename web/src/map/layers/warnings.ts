@@ -1,145 +1,214 @@
 import * as Cesium from 'cesium';
 import type { Lang, PulseEvent } from '../../lib/types';
 import { wardCentroid } from '../../lib/wards';
+import { polygonHierarchy, wardArea, type TokyoArea, type TokyoAreas } from '../areas';
 import { severityColor } from '../colors';
 
-interface Job {
-  eventId: string;
-  lat: number;
-  lon: number;
-  /** Ward name when we know it, '' for a bare lat/lon event. */
-  place: string;
-  title: string;
-  severity: string;
-  selected: boolean;
-}
-
-/** 4 decimals ~11m: anything closer than that is the same pin on screen. */
-function spotKey(lat: number, lon: number): string {
-  return lat.toFixed(4) + ',' + lon.toFixed(4);
-}
-
 /**
- * Government weather warnings, pinned at the affected ward centroid
- * (contracts/wards.csv). Falls back to the event's own lat/lon when the
- * `affects` list names no ward we know.
+ * Government weather warnings, drawn as the area JMA issued them for: a coloured
+ * outline and a faint fill over the ward, Tama municipality or island region.
  *
- * Collision handling: many JMA warnings carry no lat/lon and resolve to the SAME
- * ward centroid, which previously stacked a dozen black-outlined labels on one
- * pixel and read as a solid black smear. Now markers sharing a spot are fanned
- * out in a small ring and only ONE label is drawn per spot, carrying a count.
- * Nothing is dropped from the map, and every event is listed in the timeline
- * regardless — honest labelling, less ink.
+ * Weather forecasts are not drawn here. They are the ward weather layer's job, and
+ * the citywide summaries in the event feed have no place on the map.
+ *
+ * If the boundaries failed to load, or an area has no known shape, a warning falls
+ * back to a point at its ward's centre or its own coordinates, so it never vanishes.
  */
+
+/** Above the weather paint (2m) and the rail casing, so an outline stays readable. */
+const FILL_HEIGHT_M = 3;
+const OUTLINE_HEIGHT_M = 14;
+const POLYGON_GRANULARITY = Cesium.Math.toRadians(0.02);
+const SEVERITY_RANK: Record<string, number> = { info: 0, warning: 1, critical: 2 };
+
+function worst(events: PulseEvent[]): PulseEvent {
+  return events.reduce((a, b) => ((SEVERITY_RANK[b.severity] ?? 0) > (SEVERITY_RANK[a.severity] ?? 0) ? b : a));
+}
+
+function areasOf(e: PulseEvent, areas: TokyoAreas | null): TokyoArea[] {
+  if (!areas) return [];
+  const out: TokyoArea[] = [];
+  for (const code of e.areaCodes ?? []) {
+    const area = areas.get(code);
+    if (area) out.push(area);
+  }
+  if (out.length) return out;
+  // Events stored before areaCodes existed still name their ward.
+  for (const token of e.affects ?? []) {
+    const w = wardCentroid(token);
+    const area = w && wardArea(areas, w.ward);
+    if (area) out.push(area);
+  }
+  return out;
+}
+
+function chipLabel(text: string, color: Cesium.Color): Cesium.LabelGraphics.ConstructorOptions {
+  return {
+    text,
+    font: '600 11px ui-monospace, monospace',
+    fillColor: color,
+    style: Cesium.LabelStyle.FILL,
+    showBackground: true,
+    backgroundColor: Cesium.Color.fromCssColorString('rgba(10,10,15,0.8)'),
+    backgroundPadding: new Cesium.Cartesian2(6, 3),
+    horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+    // Above the ward weather chip, which sits centred on the same point.
+    pixelOffset: new Cesium.Cartesian2(0, -18),
+    disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    translucencyByDistance: new Cesium.NearFarScalar(2.0e5, 1.0, 6.0e5, 0.0),
+  };
+}
+
+function drawArea(
+  ds: Cesium.CustomDataSource,
+  area: TokyoArea,
+  lead: PulseEvent,
+  selected: boolean,
+): void {
+  const color = severityColor(lead.severity);
+  const properties = { kind: 'event', eventId: lead.id };
+  area.polygons.forEach((rings, i) => {
+    ds.entities.add({
+      id: 'warning-fill:' + area.code + ':' + i,
+      name: lead.title,
+      properties,
+      polygon: {
+        hierarchy: polygonHierarchy(rings),
+        height: FILL_HEIGHT_M,
+        granularity: POLYGON_GRANULARITY,
+        material: color.withAlpha(selected ? 0.32 : 0.16),
+      },
+    });
+    rings.forEach((ring, r) => {
+      ds.entities.add({
+        id: 'warning-line:' + area.code + ':' + i + ':' + r,
+        name: lead.title,
+        properties,
+        polyline: {
+          positions: Cesium.Cartesian3.fromDegreesArrayHeights(
+            ring.flatMap(([lon, lat]) => [lon, lat, OUTLINE_HEIGHT_M]),
+          ),
+          width: selected ? 3.5 : 2,
+          material: color,
+          clampToGround: false,
+        },
+      });
+    });
+  });
+}
+
+function drawPoint(
+  ds: Cesium.CustomDataSource,
+  id: string,
+  lon: number,
+  lat: number,
+  lead: PulseEvent,
+  selected: boolean,
+  labelText: string,
+): void {
+  const color = severityColor(lead.severity);
+  ds.entities.add({
+    id,
+    name: lead.title,
+    properties: { kind: 'event', eventId: lead.id },
+    position: Cesium.Cartesian3.fromDegrees(lon, lat, 40),
+    point: {
+      pixelSize: selected ? 16 : 11,
+      color: color.withAlpha(0.65),
+      outlineColor: color,
+      outlineWidth: selected ? 3 : 1.5,
+      disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    },
+    label: labelText ? chipLabel(labelText, color) : undefined,
+  });
+}
+
+/** Rebuilding polygons is visible on screen, and the feed re-delivers the same events every poll. */
+const lastDrawn = new WeakMap<Cesium.CustomDataSource, { key: string; drawn: number }>();
+
 export function renderWarnings(
   ds: Cesium.CustomDataSource,
   events: PulseEvent[],
+  areas: TokyoAreas | null,
   lang: Lang,
   selectedId: string | null,
 ): number {
+  const warnings = events.filter((e) => e.type === 'warning');
+  const key = JSON.stringify([
+    !!areas, lang, selectedId,
+    warnings.map((e) => [e.id, e.severity, e.title, e.areaCodes, e.affects, e.lat, e.lon]),
+  ]);
+  const previous = lastDrawn.get(ds);
+  if (previous?.key === key) return previous.drawn;
+
   ds.entities.removeAll();
 
-  // ---- pass 1: resolve every event to its map position(s)
-  const jobs: Job[] = [];
-  for (const e of events) {
-    if (e.type !== 'warning' && e.type !== 'weather') continue;
-    const title = (lang === 'ja' && e.titleJa ? e.titleJa : e.title) || 'warning';
-    const selected = selectedId === e.id;
-    let placed = false;
-
-    for (const token of e.affects || []) {
-      const w = wardCentroid(token);
-      if (!w) continue;
-      jobs.push({
-        eventId: e.id, lat: w.lat, lon: w.lon,
-        place: lang === 'ja' ? w.wardJa : w.ward,
-        title, severity: e.severity, selected,
-      });
-      placed = true;
-    }
-    if (!placed && typeof e.lat === 'number' && typeof e.lon === 'number') {
-      jobs.push({ eventId: e.id, lat: e.lat, lon: e.lon, place: '', title, severity: e.severity, selected });
+  // ---- which warnings fall on which area
+  const byArea = new Map<string, { area: TokyoArea; events: PulseEvent[] }>();
+  const unplaced: PulseEvent[] = [];
+  for (const e of warnings) {
+    const found = areasOf(e, areas);
+    if (!found.length) unplaced.push(e);
+    for (const area of found) {
+      const entry = byArea.get(area.code);
+      if (entry) entry.events.push(e);
+      else byArea.set(area.code, { area, events: [e] });
     }
   }
 
-  // ---- pass 2: how many share each spot, and does any of them matter most
-  const groups = new Map<string, Job[]>();
-  for (const j of jobs) {
-    const k = spotKey(j.lat, j.lon);
-    const g = groups.get(k);
-    if (g) g.push(j);
-    else groups.set(k, [j]);
+  // ---- one chip per place: 30 Tama cities under one advisory is one thing to read
+  const byPlace = new Map<string, { area: TokyoArea; events: Set<PulseEvent> }>();
+  for (const { area, events: list } of byArea.values()) {
+    const entry = byPlace.get(area.place) ?? { area, events: new Set<PulseEvent>() };
+    list.forEach((e) => entry.events.add(e));
+    byPlace.set(area.place, entry);
   }
 
-  // ---- pass 3: emit
   let drawn = 0;
   ds.entities.suspendEvents();
   try {
-    groups.forEach((group) => {
-      // Label the selected one if it is in this group, otherwise the first.
-      const lead = group.find((j) => j.selected) ?? group[0];
-      const n = group.length;
+    for (const { area, events: list } of byArea.values()) {
+      const selected = list.find((e) => e.id === selectedId);
+      try {
+        drawArea(ds, area, selected ?? worst(list), !!selected);
+        drawn += 1;
+      } catch (err) {
+        console.warn('[map] warning area failed for ' + area.code, err);
+      }
+    }
 
-      group.forEach((j, i) => {
-        const color = severityColor(j.severity);
-        const isLead = j === lead;
-        // Fan duplicates out on a ~220m ring (PointGraphics has no pixelOffset, so
-        // the offset has to be geographic) — one pixel is ~40m at the home camera
-        // height, so this separates the pins without moving them off their ward.
-        const angle = (i / Math.max(1, n)) * Math.PI * 2;
-        const r = n > 1 ? 220 : 0;
-        const dLat = (r * Math.sin(angle)) / 111_320;
-        const dLon = (r * Math.cos(angle)) / (111_320 * Math.cos((j.lat * Math.PI) / 180) || 1);
+    for (const [place, { area, events: set }] of byPlace) {
+      const list = [...set];
+      const selected = list.find((e) => e.id === selectedId);
+      const lead = selected ?? worst(list);
+      const text = (lang === 'ja' ? area.placeJa : place) + (list.length > 1 ? '  ×' + list.length : '');
+      if (area.level === 'ward') {
+        ds.entities.add({
+          id: 'warning-chip:' + area.code,
+          name: lead.title,
+          properties: { kind: 'event', eventId: lead.id },
+          position: Cesium.Cartesian3.fromDegrees(area.label[0], area.label[1], 60),
+          label: chipLabel(text, severityColor(lead.severity)),
+        });
+      } else {
+        // Island groups are specks at city scale, so they keep a marker you can find.
+        drawPoint(ds, 'warning-marker:' + place, area.label[0], area.label[1], lead, !!selected, text);
+      }
+    }
 
-        // P1-9: null-geo events all resolve to the same ward centroid. Only the
-        // lead marker of a spot gets a label, and ONLY when we actually know the
-        // place — a truncated event title is noise, and stacking them was what
-        // produced the black smear over Shinjuku. Every event is in the timeline
-        // regardless, so nothing is lost by not printing it on the map.
-        const labelText = isLead && j.place ? j.place + (n > 1 ? '  ×' + n : '') : '';
-
-        try {
-          ds.entities.add({
-            id: 'warning:' + j.eventId + ':' + spotKey(j.lat, j.lon) + ':' + i,
-            name: j.title,
-            description: j.place,
-            properties: { kind: 'event', eventId: j.eventId },
-            position: Cesium.Cartesian3.fromDegrees(j.lon + dLon, j.lat + dLat, 40),
-            point: {
-              pixelSize: j.selected ? 16 : 11,
-              color: color.withAlpha(0.65),
-              outlineColor: color,
-              outlineWidth: j.selected ? 3 : 1.5,
-              disableDepthTestDistance: Number.POSITIVE_INFINITY,
-            },
-            // A HUD chip, not a heavy black text outline — that stacking is what
-            // produced the black smear over Shinjuku.
-            label: labelText
-              ? {
-                text: labelText,
-                font: '600 11px ui-monospace, monospace',
-                fillColor: color,
-                style: Cesium.LabelStyle.FILL,
-                showBackground: true,
-                backgroundColor: Cesium.Color.fromCssColorString('rgba(10,10,15,0.72)'),
-                backgroundPadding: new Cesium.Cartesian2(6, 3),
-                horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-                verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                pixelOffset: new Cesium.Cartesian2(10, -8),
-                disableDepthTestDistance: Number.POSITIVE_INFINITY,
-                // Hide the text entirely when zoomed out past city scale.
-                translucencyByDistance: new Cesium.NearFarScalar(2.0e5, 1.0, 6.0e5, 0.0),
-              }
-              : undefined,
-          });
-          drawn += 1;
-        } catch (err) {
-          console.warn('[map] warning entity failed for ' + j.eventId, err);
-        }
-      });
-    });
+    for (const e of unplaced) {
+      const w = (e.affects ?? []).map((t) => wardCentroid(t)).find(Boolean);
+      const lat = w?.lat ?? e.lat;
+      const lon = w?.lon ?? e.lon;
+      if (typeof lat !== 'number' || typeof lon !== 'number') continue;
+      const place = w ? (lang === 'ja' ? w.wardJa : w.ward) : '';
+      drawPoint(ds, 'warning-point:' + e.id, lon, lat, e, e.id === selectedId, place);
+      drawn += 1;
+    }
   } finally {
     ds.entities.resumeEvents();
   }
+  lastDrawn.set(ds, { key, drawn });
   return drawn;
 }

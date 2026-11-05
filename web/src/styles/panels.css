@@ -1935,3 +1935,50 @@
   .tp-forecast-strip { width: calc(100vw - 560px); }
   .tp-inspector { left: 252px; width: 280px; }
 }
+
+/* The forecast chart doubles as the time control for the ward weather layer. */
+.tp-wx-legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.tp-wx-legend-row .tp-wx-legend { flex: 1 1 auto; min-width: 0; }
+.tp-wx-map-hint,
+.tp-wx-map-hour {
+  flex: 0 0 auto;
+  padding-right: 12px;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.tp-wx-map-hint { color: var(--gs-text-dim); }
+.tp-wx-map-hour {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gs-neon-cyan);
+  font-weight: 600;
+}
+.tp-wx-map-now {
+  padding: 0 5px;
+  border: 1px solid var(--gs-neon-green);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--gs-neon-green);
+  font: inherit;
+  cursor: pointer;
+}
+.tp-wx-plot-scrub {
+  cursor: ew-resize;
+  touch-action: none;
+}
+.tp-wx-plot-scrub:focus-visible {
+  outline: 1px solid var(--gs-neon-cyan);
+  outline-offset: 1px;
+}
+.tp-forecast-map-marker {
+  stroke: var(--gs-neon-cyan);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}

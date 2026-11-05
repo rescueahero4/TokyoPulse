@@ -37,6 +37,7 @@ from fastapi.responses import JSONResponse
 from . import brief as brief_mod
 from . import cache
 from . import graph
+from . import wardweather
 from .envelope import (JST, MOCK_DIR, NoLiveData, ROOT, env_str, lines_csv,
                        meta, now_iso, now_jst, read_mock, three_tier, wards_csv)
 
@@ -92,7 +93,7 @@ TTL_LAYERS = 10.0
 TTL_HEALTH = 10.0
 TTL_BRIEF = 15.0
 TTL_FORECAST = 60.0
-TTL_WEATHERGRID = 600.0     # "the field barely moves" — A10/orchestrator spec
+TTL_WARDWEATHER = 600.0     # hourly model output, so 10 minutes loses nothing
 TTL_SANDBOXES = 5.0
 # odpt:Bus republishes every 30s (odpt:frequency), so refreshing faster than
 # that just burns the mirror for an identical payload.
@@ -614,165 +615,47 @@ def _produce_forecast() -> dict[str, Any]:
     return _attach_open_meteo_source(data)
 
 
-# ─────────────────── /weathergrid.json (A12) ─────────────────────────────────
-# A continuous-surface weather field for the map, not the old point markers.
-# Verified (contracts/api.md AMENDED post-freeze): Open-Meteo accepts many
-# comma-separated coordinates in ONE request -> 63 points / 951-char URL for
-# the default 7x9 lattice. Tier 1 here is that live fetch (like /forecast.json
-# -- weather is not a graph entity), cached 10 minutes since the field barely
-# moves and we must not re-pay for the same lattice on every poll.
-WEATHERGRID_BBOX = {"latMin": 35.30, "latMax": 36.05, "lonMin": 139.20, "lonMax": 140.20}
-WEATHERGRID_DEFAULT_STEP = 0.125
-WEATHERGRID_ALLOWED_STEPS = (0.25, 0.125, 0.0625)
-WEATHERGRID_VARS = ("temperature_2m", "precipitation")
-WEATHERGRID_UNITS = {"temperature_2m": "°C", "precipitation": "mm"}
-# Guard against a caller asking for a 10,000-point lattice (orchestrator's own
-# wording). The finest allowed step over the fixed bbox is already only 221
-# points, so this is a defensive ceiling, not the normal path.
-WEATHERGRID_MAX_POINTS = 400
-WEATHERGRID_RESOLUTION_NOTE = (
-    "This surface is bilinearly interpolated for smooth rendering -- interpolation "
-    "adds no new information, it only renders the transition between known grid "
-    "points smoothly. Open-Meteo's native model resolution over Japan is ~5km; "
-    "a finer ?step= re-requests the same underlying cells rather than adding real "
-    "detail. Treat the temperature field as defensible continuous data and the "
-    "precipitation field as a coarser, genuinely patchier approximation."
-)
+# ─────────────────── /wardweather.json ───────────────────────────────────────
+# Hourly forecast per ward, for painting the map ward by ward. Like /forecast.json,
+# weather is not a graph entity, so tier 1 is the live feed. One Open-Meteo request
+# covers every forecast cell; see api/wardweather.py.
+_wardweather_live_cache: dict[str, Any] = {"at": 0.0, "value": None}
 
 
-def _weathergrid_step(raw: Any) -> tuple[float, str | None]:
-    """Snap to one of the three contracted steps; anything else degrades to the
-    default with an honest note, never a 500 on a bad query param."""
-    if raw is None:
-        return WEATHERGRID_DEFAULT_STEP, None
-    try:
-        s = float(str(raw))
-    except (TypeError, ValueError):
-        return WEATHERGRID_DEFAULT_STEP, f"unrecognised step {raw!r}, served default {WEATHERGRID_DEFAULT_STEP}"
-    for allowed in WEATHERGRID_ALLOWED_STEPS:
-        if abs(s - allowed) < 1e-6:
-            return allowed, None
-    return WEATHERGRID_DEFAULT_STEP, f"step {s} not one of {WEATHERGRID_ALLOWED_STEPS}, served default {WEATHERGRID_DEFAULT_STEP}"
-
-
-def _weathergrid_vars(raw: str | None) -> tuple[tuple[str, ...], str | None]:
-    if not raw:
-        return WEATHERGRID_VARS, None
-    items = tuple(x for x in _csv_list(raw, WEATHERGRID_VARS) or [] if x)
-    if not items:
-        return WEATHERGRID_VARS, f"unrecognised ?var={raw!r}, served both variables"
-    return items, None
-
-
-def _weathergrid_axes(step: float) -> tuple[list[float], list[float]]:
-    bbox = WEATHERGRID_BBOX
-    lats, lons = [], []
-    lat = bbox["latMin"]
-    while lat <= bbox["latMax"] + 1e-9:
-        lats.append(round(lat, 4)); lat += step
-    lon = bbox["lonMin"]
-    while lon <= bbox["lonMax"] + 1e-9:
-        lons.append(round(lon, 4)); lon += step
-    return lats, lons
-
-
-def _weathergrid_source_url(flat_lat: list[float], flat_lon: list[float],
-                            var_keys: tuple[str, ...]) -> str:
-    return (f"https://api.open-meteo.com/v1/forecast?latitude={','.join(str(x) for x in flat_lat)}"
-            f"&longitude={','.join(str(x) for x in flat_lon)}"
-            f"&current={','.join(var_keys)}&timezone=Asia%2FTokyo")
-
-
-def _empty_weathergrid(step: float, lats: list[float], lons: list[float],
-                       var_keys: tuple[str, ...]) -> dict[str, Any]:
-    n = len(lats) * len(lons)
-    return {
-        "bbox": dict(WEATHERGRID_BBOX), "step": step, "rows": len(lats), "cols": len(lons),
-        "lats": lats, "lons": lons, "time": None,
-        "units": {k: WEATHERGRID_UNITS.get(k) for k in var_keys},
-        "values": {k: [None] * n for k in var_keys},
-    }
-
-
-# One live Open-Meteo fetch per (step, vars) combo fronts every request for
-# that shape, the same pattern as _forecast_cache / _bus_live_cache.
-_weathergrid_live_cache: dict[str, dict[str, Any]] = {}
-
-
-def _produce_weathergrid(step: float, var_keys: tuple[str, ...]) -> dict[str, Any]:
-    lats, lons = _weathergrid_axes(step)
-    if len(lats) * len(lons) > WEATHERGRID_MAX_POINTS:
-        # Defensive only: the three contracted steps over the fixed bbox top
-        # out at 221 points, well under this ceiling. A future caller-supplied
-        # bbox must not be allowed to blow this past WEATHERGRID_MAX_POINTS.
-        step = WEATHERGRID_DEFAULT_STEP
-        lats, lons = _weathergrid_axes(step)
-    flat_lat, flat_lon = [], []
-    for la in lats:
-        for lo in lons:
-            flat_lat.append(la); flat_lon.append(lo)
-    source_url = _weathergrid_source_url(flat_lat, flat_lon, var_keys)
-    cache_key = f"{step}|{','.join(var_keys)}"
+def _produce_wardweather() -> dict[str, Any]:
+    wards = wardweather.load_wards()
+    cells = wardweather.unique_cells(wards)
+    source_url = wardweather.source_url(cells)
 
     def live():
-        cached = _weathergrid_live_cache.get(cache_key)
-        if cached and (time.monotonic() - cached["at"]) < 600:
-            return json.loads(json.dumps(cached["value"]))
-        if len(source_url) > 7000:
-            raise NoLiveData(f"weathergrid source URL too long ({len(source_url)} chars)")
+        cached = _wardweather_live_cache["value"]
+        if cached and (time.monotonic() - _wardweather_live_cache["at"]) < TTL_WARDWEATHER:
+            return json.loads(json.dumps(cached))
         import httpx
         with httpx.Client(timeout=8.0, headers={"User-Agent": "TokyoPulse-hackathon/1.0"}) as client:
             r = client.get(source_url)
             r.raise_for_status()
             data = r.json()
-        if not isinstance(data, list):
-            data = [data]
-        if len(data) != len(flat_lat):
-            raise NoLiveData(f"Open-Meteo returned {len(data)} points, expected {len(flat_lat)}")
-        values: dict[str, list[Any]] = {k: [] for k in var_keys}
-        units: dict[str, Any] = {}
-        obs_time = None
-        for pt in data:
-            cur = (pt or {}).get("current") or {}
-            cur_units = (pt or {}).get("current_units") or {}
-            obs_time = obs_time or cur.get("time")
-            for k in var_keys:
-                values[k].append(cur.get(k))
-                units.setdefault(k, cur_units.get(k, WEATHERGRID_UNITS.get(k)))
-        payload = {
-            "bbox": dict(WEATHERGRID_BBOX), "step": step, "rows": len(lats), "cols": len(lons),
-            "lats": lats, "lons": lons, "time": obs_time, "units": units, "values": values,
-        }
-        _weathergrid_live_cache[cache_key] = {"at": time.monotonic(), "value": payload}
+        points = data if isinstance(data, list) else [data]
+        payload = wardweather.aggregate(points, cells, wards, graph.normalise_time)
+        if not payload:
+            raise NoLiveData("Open-Meteo returned no hourly series")
+        _wardweather_live_cache.update(at=time.monotonic(), value=payload)
         return json.loads(json.dumps(payload))
 
     def cache_tier():
         if PUBLIC_MODE:
             return None
-        raw = read_mock("weathergrid.json")
-        if not raw or not raw.get("values"):
+        raw = read_mock("wardweather.json")
+        if not raw or not raw.get("wards"):
             return None
-        # The mock snapshot is only valid for the shape it was captured at —
-        # never present a cached 7x9 payload as if it were a different
-        # resolution's data.
-        if raw.get("step") != step or raw.get("rows") != len(lats) or raw.get("cols") != len(lons):
-            return None
-        if not all(k in raw.get("values", {}) for k in var_keys):
-            return None
-        out = {
-            "bbox": raw.get("bbox") or dict(WEATHERGRID_BBOX), "step": step,
-            "rows": raw["rows"], "cols": raw["cols"], "lats": raw["lats"], "lons": raw["lons"],
-            "time": raw.get("time"),
-            "units": {k: raw["units"].get(k) for k in var_keys},
-            "values": {k: raw["values"][k] for k in var_keys},
-        }
-        return out
+        raw.pop("meta", None)
+        return raw
 
-    payload = three_tier(live, cache_tier, lambda: _empty_weathergrid(step, lats, lons, var_keys),
-                         "weathergrid.json")
+    payload = three_tier(live, cache_tier, wardweather.empty, "wardweather.json")
     payload["sourceUrl"] = source_url
-    payload["attribution"] = OPEN_METEO_ATTRIBUTION
-    payload["note"] = WEATHERGRID_RESOLUTION_NOTE
+    payload["attribution"] = wardweather.ATTRIBUTION
+    payload["note"] = wardweather.NOTE
     return payload
 
 
@@ -1168,9 +1051,8 @@ def _produce_buses_scoped(routeId: str | None, bbox: str | None,
 
 LAYER_LABELS = {
     "trains": "Train lines", "quakes": "Earthquakes", "warnings": "JMA warnings",
-    "weather": "Weather", "flood": "Flood hazard", "crowd": "Station crowding",
+    "weather": "Weather by ward", "flood": "Flood hazard", "crowd": "Station crowding",
     "peopleflow": "People flow (typical)", "buses": "Toei buses (derived)",
-    "weathergrid": "Weather surface (gridded)",
 }
 
 
@@ -1254,19 +1136,16 @@ def _produce_layers() -> dict[str, Any]:
                    "state": bus_state, "count": bus_count,
                    "lastUpdate": bus_update})
 
-    # Weather surface: honest count = actual grid points served, from the
-    # cache the endpoint itself already warms (no extra Open-Meteo call here).
-    wg_key = f"weathergrid:{WEATHERGRID_DEFAULT_STEP}|{','.join(WEATHERGRID_VARS)}"
-    wg = _cached_payload(wg_key)
-    if wg is None:
-        wg_state, wg_count, wg_update = ("live" if PUBLIC_MODE else "off"), 0, stamp
-    else:
-        wg_meta = wg.get("meta") or {}
-        wg_state = wg_meta.get("source", "mock")
-        wg_count = (wg.get("rows") or 0) * (wg.get("cols") or 0)
-        wg_update = wg_meta.get("generatedAt") or stamp
-    layers.append({"id": "weathergrid", "label": LAYER_LABELS["weathergrid"],
-                   "state": wg_state, "count": wg_count, "lastUpdate": wg_update})
+    # Weather: honest count = wards actually served, from the cache the endpoint
+    # itself already warms (no extra Open-Meteo call here).
+    ww = _cached_payload("wardweather.json")
+    if ww is not None:
+        ww_meta = ww.get("meta") or {}
+        for layer in layers:
+            if layer["id"] == "weather":
+                layer["state"] = ww_meta.get("source", "mock")
+                layer["count"] = len(ww.get("wards") or [])
+                layer["lastUpdate"] = ww_meta.get("generatedAt") or stamp
     up, note = graph.neo4j_status()
     return {"layers": layers,
             "meta": meta("live" if up else "cache", not up,
@@ -1334,40 +1213,11 @@ def forecast_json() -> Response:
                        "forecast.json", _empty_forecast)
 
 
-@app.get("/weathergrid.json")
-def weathergrid_json(step: str | None = Query(None, description="0.25 | 0.125 (default) | 0.0625"),
-                     var: str | None = Query(None, description="csv of temperature_2m,precipitation")) -> Response:
-    """Gridded weather field for a bilinear-interpolated map surface (see
-    contracts/api.md). Default bbox lat 35.30-36.05 / lon 139.20-140.20,
-    default step 0.125 (7x9 = 63 points, one Open-Meteo request). `?step=`
-    snaps to the nearest contracted value; an unrecognised one degrades to
-    the default rather than 500ing. The bbox itself is fixed (not caller
-    supplied) precisely so the point-count guard cannot be bypassed."""
-    step_val, step_note = _weathergrid_step(step)
-    var_keys, var_note = _weathergrid_vars(var)
-    key = f"weathergrid:{step_val}|{','.join(var_keys)}"
-    lats, lons = _weathergrid_axes(step_val)
-    payload = cache.serve(key, TTL_WEATHERGRID,
-                          lambda: _produce_weathergrid(step_val, var_keys),
-                          "weathergrid.json",
-                          lambda: _empty_weathergrid(step_val, lats, lons, var_keys))
-    extra = "; ".join(n for n in (step_note, var_note) if n)
-    if extra:
-        # Response is already a serialized Response object from cache.serve;
-        # a bad query param is rare enough to pay the re-encode cost for an
-        # honest note rather than threading this through the cache layer.
-        body = json.loads(payload.body)
-        m = body.get("meta") or {}
-        m["note"] = f"{m['note']}; {extra}" if m.get("note") else extra
-        body["meta"] = m
-        # Strip content-length (and any other size-derived header) so
-        # Starlette recomputes it for the new, different-length body --
-        # reusing the old one truncates the response (curl exit 18).
-        headers = {k: v for k, v in payload.headers.items()
-                  if k.lower() not in ("content-length", "content-type")}
-        return Response(content=json.dumps(body, ensure_ascii=False).encode("utf-8"),
-                        media_type="application/json", headers=headers)
-    return payload
+@app.get("/wardweather.json")
+def wardweather_json() -> Response:
+    """Hourly forecast for each of the 23 wards, see contracts/api.md."""
+    return cache.serve("wardweather.json", TTL_WARDWEATHER, _produce_wardweather,
+                       "wardweather.json", wardweather.empty)
 
 
 @app.get("/brief")
@@ -1739,10 +1589,7 @@ def _warm_on_startup() -> None:
         cache.prime("lines.geojson", TTL_LINES, _produce_lines, "lines.geojson")
         cache.prime("stations.geojson", TTL_STATIONS, _produce_stations, "stations.geojson")
         cache.prime("forecast.json", TTL_FORECAST, _produce_forecast, "forecast.json")
-        cache.prime(f"weathergrid:{WEATHERGRID_DEFAULT_STEP}|{','.join(WEATHERGRID_VARS)}",
-                    TTL_WEATHERGRID,
-                    lambda: _produce_weathergrid(WEATHERGRID_DEFAULT_STEP, WEATHERGRID_VARS),
-                    "weathergrid.json")
+        cache.prime("wardweather.json", TTL_WARDWEATHER, _produce_wardweather, "wardweather.json")
         cache.prime("sandboxes.json", TTL_SANDBOXES, _produce_sandboxes, "sandboxes.json")
         cache.prime("wards.geojson", TTL_WARDS_GEOJSON, _produce_wards_geojson, "wards.geojson")
         cache.prime("busroutes.geojson:None|None|None|None", TTL_BUSROUTES,
@@ -1852,7 +1699,7 @@ def root() -> dict[str, Any]:
     return {
         "service": "TokyoPulse API", "neo4j": "up" if up else "down",
         "endpoints": ["/health", "/events.json", "/lines.geojson", "/stations.geojson",
-                      "/impact/{lineId}", "/forecast.json", "/weathergrid.json", "/brief",
+                      "/impact/{lineId}", "/forecast.json", "/wardweather.json", "/brief",
                       "/sandboxes.json", "/layers.json", "/buses.geojson",
                       "/busroutes.geojson", "/busstops.geojson", "/wards.geojson",
                       "POST /demo/replay"],

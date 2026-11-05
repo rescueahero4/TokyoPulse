@@ -7,12 +7,14 @@ hourly temperature_2m + precipitation, Asia/Tokyo local time. Polls slowly
 order of hours, so it's cheap to over-poll).
 
 Emits AT MOST 2 summary events per cycle (never the full 96-hour array):
-  1. heaviest forecast precipitation hour in the next 48h
+  1. heaviest forecast rain hour in the next 48h, only if rain is forecast
   2. hottest forecast hour in the next 48h
 Both ids key off the target hour, not the poll time, so re-polling with an
-unchanged forecast never creates duplicate timeline rows; a revised forecast
-naturally produces a new id for the new peak hour (old node goes stale --
-acceptable for forecast-type data, noted as DEGRADED).
+unchanged forecast never creates duplicate timeline rows. A revised forecast gets
+a new id for its new peak hour, and run_cycle removes the events it replaced.
+
+These are citywide summaries of one forecast point, so they carry no lat/lon: a
+position would read as "rain here". Weather by area is GET /wardweather.json.
 """
 
 from __future__ import annotations
@@ -38,8 +40,11 @@ log = get_logger("ingest.weather")
 # for the Daytona --push sandbox (no network call here, just an env read).
 FEED_URL_DEFAULT = (
     "https://api.open-meteo.com/v1/forecast?latitude=35.68&longitude=139.76"
-    "&hourly=temperature_2m,precipitation&past_days=2&forecast_days=2&timezone=Asia%2FTokyo"
+    "&hourly=temperature_2m,precipitation&past_hours=48&forecast_hours=48&timezone=Asia%2FTokyo"
 )
+
+# Below this, "rain expected" would be drizzle or model noise (often a literal 0.0).
+RAIN_EVENT_MIN_MM = 0.5
 
 
 def _source_url() -> str:
@@ -74,8 +79,6 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
     times = hourly.get("time") or []
     temps = hourly.get("temperature_2m") or []
     precs = hourly.get("precipitation") or []
-    lat = payload.get("latitude")
-    lon = payload.get("longitude")
 
     if not times:
         return []
@@ -96,7 +99,7 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
     source_url = _source_url()
     events: list[dict[str, Any]] = []
 
-    precip_rows = [r for r in future if isinstance(r[2], (int, float))]
+    precip_rows = [r for r in future if isinstance(r[2], (int, float)) and r[2] >= RAIN_EVENT_MIN_MM]
     if precip_rows:
         peak = max(precip_rows, key=lambda r: r[2])
         dt, _, mm = peak
@@ -110,8 +113,6 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 time=dt.isoformat(),
                 title=f"Heaviest rain expected: {mm:.1f}mm at {dt.strftime('%H:%M')} on {dt.strftime('%b %d')}",
                 titleJa=f"{dt.strftime('%m/%d %H:%M')}頃に最大{mm:.1f}mmの降水を予測",
-                lat=lat,
-                lon=lon,
                 affects=[],
                 source="open-meteo",
                 url=source_url,
@@ -132,8 +133,6 @@ def normalize(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 time=dt.isoformat(),
                 title=f"Forecast high: {c:.1f}C at {dt.strftime('%H:%M')} on {dt.strftime('%b %d')}",
                 titleJa=f"{dt.strftime('%m/%d %H:%M')}頃に最高{c:.1f}度を予測",
-                lat=lat,
-                lon=lon,
                 affects=[],
                 source="open-meteo",
                 url=source_url,
@@ -155,15 +154,31 @@ def fetch_once() -> dict[str, Any]:
     return data
 
 
+def prune_superseded(active_ids: list[str]) -> Optional[int]:
+    """Remove forecast events the latest forecast no longer contains. A forecast that
+    has been revised is not history, and left in place it contradicts the current one."""
+    try:
+        from api.graph import run
+        rows = run("MATCH (e:Event {type: 'weather', source: 'open-meteo'}) WHERE NOT e.id IN $ids "
+                   "DETACH DELETE e RETURN count(e) AS n", ids=active_ids)
+        return int(rows[0]["n"]) if rows else 0
+    except Exception as e:
+        log.warning("could not prune superseded forecasts: %s", e)
+        return None
+
+
 def run_cycle() -> dict[str, Any]:
     payload = fetch_once()
     events = normalize(payload)
     result = upsert(FEED_NAME, events)
+    # Only after a successful fetch: a failed one raises above and clears nothing.
+    pruned = prune_superseded([e["id"] for e in events]) if result.get("neo4j_ok") else None
     log.info(
-        "cycle ok: %d weather summary events, neo4j_ok=%s written=%s",
+        "cycle ok: %d weather summary events, neo4j_ok=%s written=%s pruned=%s",
         len(events),
         result.get("neo4j_ok"),
         result.get("written"),
+        pruned,
     )
     return result
 

@@ -50,8 +50,18 @@ export const LAYER_INFO: Record<string, DataSourceInfo> = {
     url: 'https://api.p2pquake.net/v2/history?codes=551&limit=100',
     urlLabel: 'P2PQuake v2 history',
   },
+  weather: {
+    what: 'Forecast temperature or rain for each of the 23 wards, hour by hour for the next 48 hours.',
+    how:
+      'Open-Meteo forecasts on a grid of cells about 5.5km across, not by ward. Each ward is the average of the cells it overlaps, weighted by how much of the ward falls in each. Boundaries are JMA\'s.',
+    source: 'Open-Meteo hourly forecast (CC BY 4.0), JMA ward boundaries.',
+    caveat:
+      'A model forecast, not a measurement. Neighbouring wards are often within a degree of each other, because a storm or a cold front is usually much larger than a ward. Differences of a few tenths of a degree are not meaningful.',
+    url: 'https://open-meteo.com/en/docs',
+    urlLabel: 'Open-Meteo forecast API',
+  },
   warnings: {
-    what: 'Official JMA (気象庁) weather advisories and warnings for Tokyo, positioned PER WARD.',
+    what: 'Official JMA (気象庁) weather advisories and warnings for Tokyo, outlined over the area each one covers.',
     // The mechanism IS the explanation here: the layer looks broken when it is
     // empty, and the only way to tell the difference is to say how positioning
     // works. See doc/jma-warnings.md.
@@ -59,7 +69,7 @@ export const LAYER_INFO: Record<string, DataSourceInfo> = {
       'JMA publishes at two granularities. The coarse tier (class10s) treats all 23 wards as one region — positioning from it would put every Tokyo warning on a single pin. We use the municipality tier (class20s), where each ward has its own code (1310100 Chiyoda … 1312300 Edogawa), so an advisory attaches to the specific ward it covers. Only issued (発表) and continuing (継続) advisories are shown; cancelled (解除) ones are dropped.',
     source: 'JMA 気象庁 warning feed, Tokyo area code 130000.',
     caveat:
-      'A ward-level advisory is drawn at its ward, not at a measured point. Areas outside the 23 wards (Tama cities, Izu / Ogasawara island municipalities) are never forced onto a ward — they are listed in the feed and labelled "outside 23-ward scope" instead.',
+      'An advisory covers its whole area, not any one spot inside it. Areas outside the 23 wards are outlined too and labelled as such: Tama cities are near Tokyo, while the Izu and Ogasawara islands are far to the south, so they keep a marker you can find when zoomed out.',
     url: 'https://www.jma.go.jp/bosai/warning/#area_type=class20s&area_code=130000',
     urlLabel: 'JMA warnings (class20s)',
   },
@@ -149,12 +159,12 @@ export function wardAdvisorySummary(
 
   let line: string;
   if (ward > 0) {
-    line = `${ward} ward-level advisor${ward === 1 ? 'y is' : 'ies are'} active and drawn on the ward it covers.`;
+    line = `${ward} ward-level advisor${ward === 1 ? 'y is' : 'ies are'} active and outlined on the ward it covers.`;
     if (outside > 0) {
       line += ` A further ${outside} ${outside === 1 ? 'is' : 'are'} for Tokyo areas outside the 23 wards.`;
     }
   } else if (outside > 0) {
-    line = `No ward-level advisories are active. ${outside} ${outside === 1 ? 'advisory is' : 'advisories are'} active for Tokyo areas outside the 23 wards (Tama cities, Izu / Ogasawara islands), so an empty ward layer is correct, not a bug.`;
+    line = `No ward-level advisories are active. ${outside} ${outside === 1 ? 'advisory is' : 'advisories are'} active for Tokyo areas outside the 23 wards (Tama cities, Izu / Ogasawara islands), so no ward being outlined is correct, not a bug.`;
   } else {
     line = 'No JMA advisories are active for Tokyo right now.';
   }

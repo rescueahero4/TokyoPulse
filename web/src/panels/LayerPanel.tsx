@@ -9,6 +9,7 @@
 // FROZEN RULE: a layer with state === 'off' renders DISABLED AND GREYED,
 // never hidden. Every row is always present.
 
+import type { WeatherVar } from '../lib/types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { LayerState, PulseEvent } from '../lib/types';
 import { formatClock } from './time';
@@ -17,7 +18,7 @@ import { useCollapse } from './useCollapse';
 import { LAYER_INFO, wardAdvisorySummary } from './dataSources';
 import { layersBottomPx, layersMaxHeightPx, setLayersHeight, subscribeStack } from './stack';
 
-export type WeatherVar = 'temperature' | 'precipitation';
+export type { WeatherVar };
 
 const WEATHER_VAR_LABEL: Record<WeatherVar, string> = {
   temperature: 'Temperature',
@@ -242,7 +243,7 @@ export function LayerPanel(p: {
                   </div>
                 ) : null}
 
-                {/* Weather surface parameters, nested under their own layer. Shown as
+                {/* Weather layer parameters, nested under their own layer. Shown as
                     live controls while the layer is on; collapsed to one greyed
                     summary row when it is off, so the panel stays quiet. */}
                 {showWeatherRows ? (
@@ -275,7 +276,7 @@ export function LayerPanel(p: {
                           max={0.9}
                           step={0.05}
                           value={wxOpacity}
-                          aria-label="Weather surface opacity"
+                          aria-label="Weather layer opacity"
                           onChange={(ev) => p.onWeatherOpacityChange?.(Number(ev.target.value))}
                         />
                         <span className="tp-layer-subvalue">{Math.round(wxOpacity * 100)}%</span>
@@ -288,8 +289,8 @@ export function LayerPanel(p: {
                           className={`tp-toggle-switch tp-toggle-switch-sm${wxValues ? ' tp-toggle-on' : ''}`}
                           role="switch"
                           aria-checked={wxValues}
-                          aria-label="Show weather values at lattice points"
-                          title="Numbers are printed at the real lattice points, not at interpolated positions"
+                          aria-label="Show ward names and values"
+                          title="Print each ward's name and forecast value on the map"
                           onClick={() => p.onToggleWeatherValues?.()}
                         />
                       </div>

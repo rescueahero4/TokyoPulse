@@ -132,7 +132,7 @@ curl http://127.0.0.1:8000/health        # -> {"ok": true, "neo4j": "up", "event
 ```
 
 Endpoints are `/events.json`, `/lines.geojson`, `/stations.geojson`, `/wards.geojson`,
-`/impact/{lineId}`, `/forecast.json`, `/weathergrid.json`, `/brief`, `/sandboxes.json`, `/layers.json`,
+`/impact/{lineId}`, `/forecast.json`, `/wardweather.json`, `/brief`, `/sandboxes.json`, `/layers.json`,
 plus `POST /demo/replay` and `POST /demo/reset`. Full interactive list at
 `http://127.0.0.1:8000/docs`.
 

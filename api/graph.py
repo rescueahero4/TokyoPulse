@@ -15,7 +15,7 @@ Graph model (frozen — A2 writes into exactly this):
     (:Line   {lineId,name,nameJa,operator,color,status,statusText,statusSource,updatedAt})
     (:Station{stationId,name,nameJa,lat,lon,ridership,ridershipBand,inFloodZone})
     (:Ward   {name,nameJa,lat,lon})
-    (:Event  {id,type,severity,time,lat,lon,title,titleJa,source,url,magnitude,maxScale})
+    (:Event  {id,type,severity,time,lat,lon,title,titleJa,source,url,magnitude,maxScale,areaCodes})
     (Line)-[:SERVES {index}]->(Station)
     (Station)-[:IN]->(Ward)
     (Event)-[:AFFECTS]->(Line|Ward)
@@ -294,7 +294,7 @@ def normalise_time(value: Any) -> str | None:
 
 EVENT_FIELDS = (
     "id", "type", "severity", "time", "lat", "lon", "title", "titleJa",
-    "source", "url", "magnitude", "maxScale",
+    "source", "url", "magnitude", "maxScale", "areaCodes",
 )
 
 
@@ -540,6 +540,7 @@ def upsert_events(events: list[dict]) -> int:
             "url": ev.get("url"),
             "magnitude": _f(ev.get("magnitude")),
             "maxScale": _i(ev.get("maxScale")),
+            "areaCodes": ev.get("areaCodes"),
         })
         for ref in ev.get("affects") or []:
             if not isinstance(ref, str) or ":" not in ref:
@@ -560,7 +561,7 @@ def upsert_events(events: list[dict]) -> int:
         SET e.type = r.type, e.severity = r.severity, e.time = datetime(r.time),
             e.lat = r.lat, e.lon = r.lon, e.title = r.title, e.titleJa = r.titleJa,
             e.source = r.source, e.url = r.url, e.magnitude = r.magnitude,
-            e.maxScale = r.maxScale, e.ingestedAt = datetime()
+            e.maxScale = r.maxScale, e.areaCodes = r.areaCodes, e.ingestedAt = datetime()
         """,
         rows=rows,
     )

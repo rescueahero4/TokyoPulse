@@ -19,6 +19,8 @@ export type MapPick =
   | { kind: 'bus'; busId: string; routeId: string | null; positionSource: string | null }
   | { kind: 'event'; eventId: string }
   | { kind: 'line'; lineId: string }
+  /** A ward on the weather layer. Keeps the point, since a raster may lie under it. */
+  | { kind: 'ward'; ward: string; lat: number | null; lon: number | null }
   /** Nothing pickable under the cursor — i.e. basemap or a raster overlay. */
   | { kind: 'ground'; lat: number | null; lon: number | null }
   | null;
@@ -102,6 +104,14 @@ function resolvePick(viewer: Cesium.Viewer, position: Cesium.Cartesian2): MapPic
         if (lineId) return { kind: 'line', lineId: String(lineId) };
       }
     }
+  }
+
+  // Ward paint covers most of the map, so it only answers when nothing else did.
+  for (const raw of picks) {
+    const props = (raw as { id?: Cesium.Entity } | undefined)?.id?.properties;
+    if (props?.kind?.getValue?.(now) !== 'ward') continue;
+    const ward = props.ward?.getValue?.(now);
+    if (ward) return { kind: 'ward', ward: String(ward), ...groundAt(viewer, position) };
   }
 
   return { kind: 'ground', ...groundAt(viewer, position) };

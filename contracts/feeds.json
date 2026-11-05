@@ -44,7 +44,7 @@
     "doc": "doc/jma-warnings.md"
   },
   "open_meteo": {
-    "url": "https://api.open-meteo.com/v1/forecast?latitude=35.68&longitude=139.76&hourly=temperature_2m,precipitation&past_days=2&forecast_days=2&timezone=Asia%2FTokyo",
+    "url": "https://api.open-meteo.com/v1/forecast?latitude=35.68&longitude=139.76&hourly=temperature_2m,precipitation&past_hours=48&forecast_hours=48&timezone=Asia%2FTokyo",
     "keyless": true,
     "verified": "200, 3KB"
   },
@@ -120,5 +120,11 @@
     "use": "odpt:busstopPoleOrder gives the ordered stop sequence per pattern -> join to BusstopPole coords to build route polylines. Same technique as odpt:Railway stationOrder for rail.",
     "note": "Use ug:region for real road-following geometry; odpt:busstopPoleOrder remains the stop sequence. Straight-line fallback applies to 9 patterns only.",
     "CORRECTION": "Orchestrator note was WRONG. BusroutePattern DOES carry geometry: 748 of 757 patterns have a ug:region LineString following the ACTUAL ROAD (45,524 vertices total). Only the 9 without one fall back to stop-to-stop straight lines, tagged geometrySource='stop-to-stop'. Verified by A11."
+  },
+  "jma_area_boundaries": {
+    "url": "https://www.jma.go.jp/bosai/common/const/geojson/class20s_3.json",
+    "also": "class10s.json for the island regions, area.json for names",
+    "keyless": true,
+    "used_by": "scripts/build_tokyo_areas.py, offline. Not fetched at runtime."
   }
 }

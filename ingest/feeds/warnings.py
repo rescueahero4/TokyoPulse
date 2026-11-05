@@ -185,6 +185,9 @@ def normalize_r8(reports: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     centroid = ward_centroid(ward)
                     if centroid:
                         lat, lon = centroid
+                # Several Tama municipalities can share one "Tama area" event.
+                codes = set((out.get(event_id) or {}).get("areaCodes") or [])
+                codes.add(area_code)
                 out[event_id] = make_event(
                     id=event_id,
                     type="warning",
@@ -197,6 +200,7 @@ def normalize_r8(reports: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     url=SOURCE_URL,
                     lat=lat,
                     lon=lon,
+                    areaCodes=sorted(codes),
                 )
     return list(out.values())
 
@@ -271,6 +275,7 @@ def normalize(payload: Any) -> list[dict[str, Any]]:
                         url=SOURCE_URL,
                         lat=lat,
                         lon=lon,
+                        areaCodes=[area_code] if area_code else None,
                     )
                 )
     if unmapped_codes:

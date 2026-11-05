@@ -108,6 +108,17 @@
         "null"
       ],
       "description": "quake only: JMA shindo *10 (e.g. 45 = shindo 4.5). P2PQuake native."
+    },
+    "areaCodes": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "ADDED post-freeze. JMA area codes a warning covers, matching web/public/geo/tokyo-areas.geojson, so the map can draw the real area. Null for every other event type.",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{6,7}$"
+      }
     }
   }
 }

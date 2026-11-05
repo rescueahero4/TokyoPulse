@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CesiumViewer, LAYER_IDS, type MapHandle } from './map/CesiumViewer';
 import { PEOPLEFLOW_LABEL } from './map/layers/peopleflow';
+import { areasFocus } from './map/areas';
 import { ErrorBoundary } from './lib/ErrorBoundary';
 import { usePolling } from './lib/usePolling';
 import {
   FORCE_MOCKS, fetchBrief, fetchEvents, fetchForecast, fetchImpact, fetchLayers, fetchLines,
-  fetchSandboxes, fetchStations, linesFromCollection, probePeopleFlow, type Loaded,
+  fetchSandboxes, fetchStations, fetchWardWeather, linesFromCollection, probePeopleFlow, type Loaded,
 } from './lib/api';
 import { lineSegments } from './lib/geo';
 import { wardCentroid } from './lib/wards';
@@ -29,6 +30,7 @@ const DEFAULT_VISIBLE: Record<string, boolean> = {
   quakes: true,
   warnings: true,
   crowd: true,
+  weather: true,
   flood: false,
   peopleflow: false,
   buses: false,   // ~360 vehicles: opt-in, never on by default
@@ -45,7 +47,7 @@ const PANEL_LAYER_IDS: string[] = Array.from(new Set<string>([...LAYER_IDS, 'bus
 
 /** Shared with the map (A6) and the LayerPanel control (A8). */
 const STATION_LABELS_KEY = 'tp.showStationLabels';
-/** Weather surface parameters — controls live in LayerPanel, the map consumes them. */
+/** Weather layer parameters — controls live in LayerPanel, the map consumes them. */
 const WEATHER_VAR_KEY = 'tp.weatherVar';
 const WEATHER_OPACITY_KEY = 'tp.weatherOpacity';
 const WEATHER_VALUES_KEY = 'tp.wxValues';
@@ -58,6 +60,7 @@ const LAYER_LABELS: Record<string, string> = {
   trains: 'Train lines',
   quakes: 'Earthquakes',
   warnings: 'Weather warnings',
+  weather: 'Weather by ward',
   crowd: 'Station crowding',
   flood: 'Flood hazard (GSI)',
   peopleflow: PEOPLEFLOW_LABEL,
@@ -109,11 +112,13 @@ export default function App() {
   });
   const [showWeatherValues, setShowWeatherValues] = useState<boolean>(() => {
     try {
-      return window.localStorage.getItem(WEATHER_VALUES_KEY) === '1';
+      return window.localStorage.getItem(WEATHER_VALUES_KEY) !== '0';
     } catch {
-      return false;
+      return true;
     }
   });
+  /** The hour shown by the weather layer; null follows the current hour. */
+  const [weatherTime, setWeatherTime] = useState<string | null>(null);
 
   // ---- data (polling intervals per the brief)
   const feed = useLiveFeed();
@@ -126,7 +131,14 @@ export default function App() {
   // Hosted, nothing writes sandbox state, so there is nothing to keep polling for.
   const sandboxRes = usePolling(fetchSandboxes, import.meta.env.PROD && !FORCE_MOCKS ? 0 : 20_000);
   const stationsRes = usePolling(fetchStations, 0);
-  const forecastRes = usePolling(fetchForecast, 0);
+  // The chart is also the map's time control, so its "now" has to keep up.
+  const forecastRes = usePolling(fetchForecast, 600_000);
+  // Only while the layer is on. The forecast is hourly and cached server-side.
+  const wardWeatherRes = usePolling(
+    () => (visible.weather ? fetchWardWeather() : Promise.resolve(null)),
+    visible.weather ? 300_000 : 0,
+    [visible.weather],
+  );
   // P1-8: interval 0 fetched the brief once, ever — it went stale next to a
   // scrolling timeline. /brief is already cached 60s server-side, so this costs
   // nothing extra.
@@ -161,6 +173,12 @@ export default function App() {
   const lines = linesRes.data?.data ?? null;
   const lineList = useMemo(() => linesFromCollection(lines), [lines]);
   const stations = stationsRes.data?.data ?? null;
+  const wardWeather = wardWeatherRes.data?.data ?? null;
+  // An hour that has since passed drops out of the data, and the map returns to now.
+  const wardHourIndex = useMemo(() => {
+    const found = weatherTime && wardWeather ? wardWeather.time.indexOf(weatherTime) : -1;
+    return found >= 0 ? found : wardWeather?.nowIndex ?? 0;
+  }, [weatherTime, wardWeather]);
 
   /** lang toggle: swap title/titleJa everywhere, without destroying titleJa. */
   const localizedEvents = useMemo(
@@ -266,6 +284,11 @@ export default function App() {
       mapRef.current?.flyTo(e.lat, e.lon, e.type === 'quake' ? 300_000 : 12_000);
       return;
     }
+    const focus = areasFocus(e.areaCodes);
+    if (focus) {
+      mapRef.current?.flyTo(focus.lat, focus.lon, focus.height);
+      return;
+    }
     for (const token of e.affects || []) {
       const w = wardCentroid(token);
       if (w) { mapRef.current?.flyTo(w.lat, w.lon, 15_000); return; }
@@ -316,6 +339,8 @@ export default function App() {
         lang={lang}
         peopleFlowAvailable={peopleFlow}
         showStationLabels={showStationLabels}
+        wardWeather={wardWeather}
+        wardHourIndex={wardHourIndex}
         weatherVar={weatherVar}
         weatherOpacity={weatherOpacity}
         showWeatherValues={showWeatherValues}
@@ -412,12 +437,19 @@ export default function App() {
             linesMeta={lines?.meta ?? null}
             stationsMeta={stations?.meta ?? null}
             buses={busesRes.data ?? null}
+            wardWeather={wardWeather}
+            wardHourIndex={wardHourIndex}
             onOpenImpact={onPickLine}
           />
         </ErrorBoundary>
 
         <ErrorBoundary label="ForecastStrip">
-          <ForecastStrip forecast={forecastRes.data?.data ?? null} loading={forecastRes.loading} />
+          <ForecastStrip
+            forecast={forecastRes.data?.data ?? null}
+            loading={forecastRes.loading}
+            selectedTime={weatherTime}
+            onSelectTime={visible.weather ? setWeatherTime : undefined}
+          />
         </ErrorBoundary>
 
         {FORCE_MOCKS || (eventsRes.data && eventsRes.data.origin !== 'api') ? (

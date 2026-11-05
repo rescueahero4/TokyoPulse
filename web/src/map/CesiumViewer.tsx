@@ -3,7 +3,7 @@ import {
   forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import type { Lang, PulseEvent } from '../lib/types';
+import type { Lang, PulseEvent, WardWeather } from '../lib/types';
 import type { LineCollection, StationCollection } from '../lib/geo';
 import { lineSegments } from '../lib/geo';
 import { renderRail } from './layers/rail';
@@ -15,10 +15,9 @@ import { renderPeopleFlow } from './layers/peopleflow';
 import {
   fetchBusRoute, fetchBuses, renderBusRoute, renderBuses, type BusCollection,
 } from './layers/buses';
-import {
-  addWeatherLayer, fetchWeatherGrid, range, renderWeatherValues, sample,
-  type WeatherGrid, type WeatherVar,
-} from './layers/weathergrid';
+import { formatWardValue, syncWardWeather, wardWeatherRange } from './layers/wardweather';
+import { loadTokyoAreas, wardAt, type TokyoAreas } from './areas';
+import { formatDayClock } from '../panels/time';
 // Shared collapsible header owned by the panels agent. Imported, never edited,
 // so the MAP cluster's collapse affordance matches every other HUD widget.
 import { PanelHeader } from '../panels/PanelHeader';
@@ -84,9 +83,9 @@ export interface CesiumViewerProps {
   /** Presenter toggle for station name labels. Owned by App/LayerPanel (A8);
    *  the map only consumes it. Defaults to on when the prop is absent. */
   showStationLabels?: boolean;
-  /** Weather surface controls. Owned by App/LayerPanel (A8); the map consumes
-   *  them. A8's vocabulary is 'temperature'; the payload field is
-   *  'temperature_2m', so the two are mapped at this boundary and nowhere else. */
+  /** Weather layer data and controls. Owned by App/LayerPanel; the map consumes them. */
+  wardWeather?: WardWeather | null;
+  wardHourIndex?: number;
   weatherVar?: 'temperature' | 'precipitation';
   weatherOpacity?: number;
   showWeatherValues?: boolean;
@@ -135,11 +134,11 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
   });
   const clusterRef = useRef<HTMLDivElement | null>(null);
   const busRouteDsRef = useRef<Cesium.CustomDataSource | null>(null);
-  const weatherLayerRef = useRef<Cesium.ImageryLayer | null>(null);
-  const [wxGrid, setWxGrid] = useState<WeatherGrid | null>(null);
-  const [wxProbe, setWxProbe] = useState<number | null>(null);
-  const wxValuesDsRef = useRef<Cesium.CustomDataSource | null>(null);
-  const wxVar: WeatherVar = props.weatherVar === 'precipitation' ? 'precipitation' : 'temperature_2m';
+  const [areas, setAreas] = useState<TokyoAreas | null>(null);
+  const [wxProbe, setWxProbe] = useState<string | null>(null);
+  const wardWeather = props.wardWeather ?? null;
+  const wardHourIndex = props.wardHourIndex ?? 0;
+  const wxVar = props.weatherVar === 'precipitation' ? 'precipitation' : 'temperature';
   const wxAlpha = typeof props.weatherOpacity === 'number'
     ? Math.max(0, Math.min(1, props.weatherOpacity))
     : 0.55;
@@ -566,7 +565,7 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
 
     // One CustomDataSource per layer, each added independently.
     for (const id of LAYER_IDS) {
-      if (id === 'flood' || id === 'weather') continue;
+      if (id === 'flood') continue;
       try {
         const ds = new Cesium.CustomDataSource(id);
         void viewer.dataSources.add(ds);
@@ -574,16 +573,6 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       } catch (e) {
         console.warn('[map] layer ' + id + ' could not be created', e);
       }
-    }
-
-    // Numeric weather values ride in their own source: they are labels, not part
-    // of the imagery layer, and must toggle independently of the surface.
-    try {
-      const wxDs = new Cesium.CustomDataSource('wxvalues');
-      void viewer.dataSources.add(wxDs);
-      wxValuesDsRef.current = wxDs;
-    } catch (e) {
-      console.warn('[map] weather value source could not be created', e);
     }
 
     // The selected bus route lives in its own source so refreshing the vehicle
@@ -661,8 +650,6 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
       pinchCleanupRef.current?.();
       pinchCleanupRef.current = null;
       floodRef.current = null;
-      weatherLayerRef.current = null;
-      wxValuesDsRef.current = null;
       busRouteDsRef.current = null;
       baseLayerRef.current = null;
       labelLayerRef.current = null;
@@ -804,11 +791,11 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     const ds = sourcesRef.current.warnings;
     if (!ds) return;
     try {
-      bump('warnings', renderWarnings(ds, props.events, props.lang, props.selectedEventId));
+      bump('warnings', renderWarnings(ds, props.events, areas, props.lang, props.selectedEventId));
     } catch (e) {
       console.warn('[map] warning layer failed', e);
     }
-  }, [ready, props.events, props.lang, props.selectedEventId]);
+  }, [ready, props.events, areas, props.lang, props.selectedEventId]);
 
   // ---- crowd
   useEffect(() => {
@@ -911,96 +898,46 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     return () => { alive = false; ctrl.abort(); };
   }, [ready, busesOn, selectedBusRouteId]);
 
-  // ---- weather surface (imagery layer, zero entity cost)
+  // ---- weather, painted ward by ward
   const weatherOn = props.visible.weather === true;
 
   useEffect(() => {
-    if (!ready || !weatherOn) { setWxGrid(null); return; }
     let alive = true;
-    const ctrl = new AbortController();
-    const load = () => {
-      void fetchWeatherGrid(ctrl.signal).then((g) => { if (alive && g) setWxGrid(g); });
-    };
-    // The grid is hourly; 5 minutes is plenty and keeps the demo honest-fresh.
-    const stop = whileLive(load, 300_000);
-    return () => { alive = false; ctrl.abort(); stop(); };
-  }, [ready, weatherOn]);
+    void loadTokyoAreas().then((a) => { if (alive) setAreas(a); });
+    return () => { alive = false; };
+  }, []);
 
   useEffect(() => {
-    const viewer = viewerRef.current;
-    if (!ready || !viewer) return;
-    let cancelled = false;
-    const drop = () => {
-      if (!weatherLayerRef.current) return;
-      try { viewer.imageryLayers.remove(weatherLayerRef.current, true); } catch { /* ignore */ }
-      weatherLayerRef.current = null;
-    };
-    if (!weatherOn || !wxGrid) { drop(); viewer.scene.requestRender(); return; }
-    void addWeatherLayer(viewer, wxGrid, wxVar, wxAlpha).then((layer) => {
-      if (cancelled) {
-        if (layer) { try { viewer.imageryLayers.remove(layer, true); } catch { /* ignore */ } }
-        return;
-      }
-      drop();
-      weatherLayerRef.current = layer;
-      if (layer) {
-        const r = range(wxGrid, wxVar);
-        console.info(
-          '[map] weather surface: ' + wxVar + ' ' + r.min.toFixed(1) + '-' + r.max.toFixed(1)
-          + ' ' + (wxGrid.units?.[wxVar] || '') + ' over ' + wxGrid.rows + 'x' + wxGrid.cols
-          + ' lattice (bilinear; native model res ~5km)',
-        );
-      }
-      viewer.scene.requestRender();
-    });
-    return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, weatherOn, wxGrid, wxVar]);
-
-  // Opacity is a live property — no need to rebuild the raster for it.
-  useEffect(() => {
-    if (weatherLayerRef.current) {
-      weatherLayerRef.current.alpha = wxAlpha;
-      viewerRef.current?.scene.requestRender();
-    }
-  }, [wxAlpha]);
-
-  // Numeric values at the lattice points. Keyed on the variable too, so a TEMP
-  // reading can never survive a switch to RAIN wearing a "mm" unit.
-  useEffect(() => {
-    const ds = wxValuesDsRef.current;
-    if (!ds) return;
+    const ds = sourcesRef.current.weather;
+    if (!ready || !ds || !areas) return;
     try {
-      const n = renderWeatherValues(
-        ds, weatherOn ? wxGrid : null, wxVar, weatherOn && wxValues,
-      );
-      if (weatherOn && wxValues) {
-        console.info('[map] weather values: ' + n + ' labels at lattice points (' + wxVar + ')');
-      }
+      syncWardWeather(ds, areas, wardWeather, {
+        variable: wxVar,
+        hourIndex: wardHourIndex,
+        opacity: wxAlpha,
+        showValues: wxValues,
+        lang: props.lang,
+      });
       viewerRef.current?.scene.requestRender();
     } catch (e) {
-      console.warn('[map] weather value labels failed', e);
+      console.warn('[map] ward weather failed', e);
     }
-  }, [ready, weatherOn, wxGrid, wxVar, wxValues]);
+  }, [ready, areas, wardWeather, wxVar, wardHourIndex, wxAlpha, wxValues, props.lang]);
 
-  // A probe reading is variable-specific: a temperature left on screen and
-  // relabelled "mm" would be a small but real lie. Clear it on every switch.
-  useEffect(() => { setWxProbe(null); }, [wxVar]);
-
-  // Turning the weather layer on from the LayerPanel brings controls with it
-  // (variable, opacity, values). The MAP cluster is collapsed by default, so
-  // open it once on that transition rather than leaving them undiscoverable.
-  const weatherWasOn = useRef(false);
+  // Switching the layer on from the LayerPanel brings a legend with it. The MAP
+  // cluster is collapsed by default, so open it once on that transition, but not
+  // on page load, where the ward chips already carry the numbers.
+  const weatherWasOn = useRef(weatherOn);
   useEffect(() => {
     if (weatherOn && !weatherWasOn.current) setControlsOpen(true);
     weatherWasOn.current = weatherOn;
   }, [weatherOn]);
 
-  // Hover probe: read the interpolated value under the cursor. Throttled to
-  // ~8/s so a mousemove storm cannot drive React re-renders.
+  // Hover readout for the ward under the cursor. Throttled to ~8/s so a mousemove
+  // storm cannot drive React re-renders.
   useEffect(() => {
     const viewer = viewerRef.current;
-    if (!ready || !viewer || !weatherOn || !wxGrid) { setWxProbe(null); return; }
+    if (!ready || !viewer || !weatherOn || !wardWeather || !areas) { setWxProbe(null); return; }
     let last = 0;
     const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
     handler.setInputAction((m: { endPosition: Cesium.Cartesian2 }) => {
@@ -1011,14 +948,15 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
         const cart = viewer.camera.pickEllipsoid(m.endPosition, viewer.scene.globe.ellipsoid);
         if (!cart) { setWxProbe(null); return; }
         const c = Cesium.Cartographic.fromCartesian(cart);
-        const v = sample(
-          wxGrid, wxVar, Cesium.Math.toDegrees(c.latitude), Cesium.Math.toDegrees(c.longitude),
-        );
-        setWxProbe(Number.isFinite(v) ? v : null);
+        const area = wardAt(areas, Cesium.Math.toDegrees(c.latitude), Cesium.Math.toDegrees(c.longitude));
+        const ward = area && wardWeather.wards.find((w) => w.code === area.code);
+        setWxProbe(ward
+          ? ward.ward + ' ' + formatWardValue(wxVar, ward[wxVar][wardHourIndex], wardWeather.units)
+          : null);
       } catch { setWxProbe(null); }
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
     return () => { try { handler.destroy(); } catch { /* ignore */ } };
-  }, [ready, weatherOn, wxGrid, wxVar]);
+  }, [ready, weatherOn, wardWeather, areas, wxVar, wardHourIndex]);
 
   // ---- visibility, each toggle isolated
   useEffect(() => {
@@ -1026,7 +964,6 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
     for (const id of LAYER_IDS) {
       const on = props.visible[id] !== false;
       try {
-        if (id === 'weather') continue;   // imagery layer, see its own effect
         if (id === 'flood') {
           const wantFlood = props.visible.flood === true;
           const viewer = viewerRef.current;
@@ -1129,37 +1066,31 @@ export const CesiumViewer = forwardRef<MapHandle, CesiumViewerProps>(function Ce
         </button>
             </div>
 
-            {/* Weather surface controls + legend. Only while the layer is on, so
-                the cluster stays small in the default demo state. */}
-            {weatherOn && wxGrid && (() => {
-              const r = range(wxGrid, wxVar);
-              const unit = wxGrid.units?.[wxVar] || '';
-              const isTemp = wxVar === 'temperature_2m';
+            {/* Weather legend. Only while the layer is on, so the cluster stays small. */}
+            {weatherOn && wardWeather && wardWeather.wards.length > 0 && (() => {
+              const r = wardWeatherRange(wardWeather, wxVar, wardHourIndex);
+              const unit = wardWeather.units?.[wxVar] || '';
+              const isTemp = wxVar === 'temperature';
               // READOUT ONLY. The controls (variable, opacity, values) live in
               // the Layers panel and arrive here as props — two sets of controls
               // for one layer would drift out of sync.
               return (
-                <div className="map-wx" aria-label="Weather surface legend">
+                <div className="map-wx" aria-label="Weather legend">
                   <div className="map-wx-row">
                     <span className="map-wx-title">WEATHER</span>
-                    <span className="map-wx-var">{isTemp ? 'TEMPERATURE' : 'PRECIPITATION'}</span>
+                    <span className="map-wx-var">{formatDayClock(wardWeather.time[wardHourIndex])}</span>
                   </div>
                   <div className={'map-wx-ramp' + (isTemp ? ' is-temp' : ' is-precip')} />
                   <div className="map-wx-row map-wx-scale">
-                    <span>{r.min.toFixed(1)}{unit}</span>
-                    {wxProbe !== null && (
-                      <span className="map-wx-probe">{wxProbe.toFixed(1)}{unit}</span>
-                    )}
-                    <span>{r.max.toFixed(1)}{unit}</span>
+                    <span>{isTemp ? r.min.toFixed(1) + unit : 'dry'}</span>
+                    {wxProbe !== null && <span className="map-wx-probe">{wxProbe}</span>}
+                    <span>{isTemp ? r.max.toFixed(1) + unit : '10+' + unit + '/h'}</span>
                   </div>
                   <div className="map-wx-note">
                     {isTemp
-                      ? 'Bilinearly interpolated between a 7×9 lattice — smoothing only, no added detail. Model resolution ~5km.'
-                      : 'Quantised bands, not smoothed: rainfall is genuinely patchy and a smooth surface would imply detail we do not have.'}
-                    {wxValues && (
-                      <> {' '}Values shown at the model grid points — the actual samples, not
-                      interpolated readings{!isTemp && ', and only where rain is forecast'}.</>
-                    )}
+                      ? 'Colours compare the wards within this hour, so read the numbers for actual temperatures.'
+                      : 'Rain in bands, because small differences in a model forecast mean little.'}
+                    {' '}Each ward averages the ~5.5km forecast cells it overlaps.
                   </div>
                 </div>
               );
