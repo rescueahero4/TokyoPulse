@@ -1224,7 +1224,9 @@ def _produce_layers() -> dict[str, Any]:
     # one, and does NOT force a live ODPT fetch just to render a layer badge.
     bus = _cached_payload("buses.geojson")
     if bus is None:
-        bus_state, bus_count, bus_update = "off", 0, stamp
+        # Serverless has no startup warm-up, and "off" disables the toggle, which is
+        # the only thing that would ever fill this cache.
+        bus_state, bus_count, bus_update = ("live" if PUBLIC_MODE else "off"), 0, stamp
     else:
         bus_meta = bus.get("meta") or {}
         bus_state = bus_meta.get("source", "mock")
@@ -1241,7 +1243,7 @@ def _produce_layers() -> dict[str, Any]:
     wg_key = f"weathergrid:{WEATHERGRID_DEFAULT_STEP}|{','.join(WEATHERGRID_VARS)}"
     wg = _cached_payload(wg_key)
     if wg is None:
-        wg_state, wg_count, wg_update = "off", 0, stamp
+        wg_state, wg_count, wg_update = ("live" if PUBLIC_MODE else "off"), 0, stamp
     else:
         wg_meta = wg.get("meta") or {}
         wg_state = wg_meta.get("source", "mock")
@@ -1788,8 +1790,8 @@ def _run_tick() -> dict[str, Any]:
         return {"ran": False, "reason": "graph unavailable"}
     from ingest.once import run_once
     feeds = run_once()
-    for prefix in ("events:", "layers.json", "brief", "impact:", "health", "lines.geojson"):
-        cache.invalidate(prefix)
+    # No cache.invalidate here. Dropping entries forces uncached reads while the
+    # database is busy with these writes, and the short TTLs pick the data up anyway.
     return {"ran": True, "feeds": {k: {"ok": v["ok"], "written": v["written"]}
                                    for k, v in feeds.items()}}
 

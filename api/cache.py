@@ -37,10 +37,15 @@ _refreshing: set[str] = set()
 _registry: dict[str, tuple[float, Callable[[], dict], str]] = {}
 _touch: dict[str, float] = {}          # last time a key was actually requested
 IDLE_MAX = 300.0                       # stop prefetching a key nobody asks for
+KEEP_GOOD_MAX = 300.0                  # how long a good payload outlives failed refreshes
 
 
 def _dump(payload: dict[str, Any]) -> bytes:
     return json.dumps(payload, ensure_ascii=False, default=str).encode("utf-8")
+
+
+def _degraded(payload: Any) -> bool:
+    return bool(isinstance(payload, dict) and (payload.get("meta") or {}).get("degraded"))
 
 
 def _store(key: str, payload: dict[str, Any]) -> dict[str, Any]:
@@ -65,7 +70,15 @@ def _refresh_async(key: str, producer: Callable[[], dict], label: str) -> None:
 
     def work():
         try:
-            _store(key, producer())
+            payload = producer()
+            # Producers report data problems as a degraded payload rather than
+            # raising, so a transient timeout must not replace good data with it.
+            old = _entries.get(key)
+            if (old is not None and _degraded(payload) and not _degraded(old["payload"])
+                    and time.monotonic() - old["at"] < KEEP_GOOD_MAX):
+                log.warning("[%s] refresh degraded, keeping the last good payload", label)
+                return
+            _store(key, payload)
         except Exception:
             # Keep the stale entry: a failed refresh must never blank a layer.
             log.exception("[%s] cache refresh failed — keeping stale payload", label)
