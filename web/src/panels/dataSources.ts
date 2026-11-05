@@ -27,13 +27,18 @@ export interface DataSourceInfo {
 export const TOEI_THRESHOLD = '15 min or more (ODPT)';
 export const JREAST_THRESHOLD = '30 min or more (JR East)';
 
+/** The hosted build ingests from Vercel, where JR East's status page returns 403. */
+const HOSTED = import.meta.env.PROD && String(import.meta.env.VITE_USE_MOCKS) !== 'true';
+
 export const LAYER_INFO: Record<string, DataSourceInfo> = {
   trains: {
     what: 'Live operational status per rail line, painted in each line’s official livery.',
-    source:
-      'ODPT odpt:TrainInformation (Toei, 15min+ delay threshold) + JR East traininfo.jreast.co.jp (30min+ threshold). Geometry from odpt:Railway stationOrder, and OpenStreetMap via Overpass for the rest.',
-    caveat:
-      '11 of 20 lines have a live feed. The 9 Tokyo Metro lines have NO keyless feed and render grey/unknown — never a faked "normal". The two feeds also disagree on what counts as a delay: JR East publishes 30min+, ODPT 15min+.',
+    source: HOSTED
+      ? 'ODPT odpt:TrainInformation (Toei, 15min+ delay threshold). Geometry from odpt:Railway stationOrder, and OpenStreetMap via Overpass for the rest.'
+      : 'ODPT odpt:TrainInformation (Toei, 15min+ delay threshold) + JR East traininfo.jreast.co.jp (30min+ threshold). Geometry from odpt:Railway stationOrder, and OpenStreetMap via Overpass for the rest.',
+    caveat: HOSTED
+      ? '6 of 20 lines have a live feed. Tokyo Metro has NO keyless feed, and JR East blocks requests from cloud servers, so those 14 lines render grey/unknown — never a faked "normal".'
+      : '11 of 20 lines have a live feed. The 9 Tokyo Metro lines have NO keyless feed and render grey/unknown — never a faked "normal". The two feeds also disagree on what counts as a delay: JR East publishes 30min+, ODPT 15min+.',
     url: 'https://api-public.odpt.org/api/v4/odpt:TrainInformation',
     urlLabel: 'odpt:TrainInformation',
   },
@@ -96,7 +101,9 @@ export function railSource(operator: string, hasFeed: boolean): DataSourceInfo {
     return {
       what: 'Rail line geometry with no live status.',
       source: 'Geometry: OpenStreetMap via Overpass. Status: NO LIVE FEED.',
-      caveat: `There is no keyless live-status feed for ${operator || 'this operator'}, so this line renders grey/unknown rather than a faked "normal".`,
+      caveat: operator === 'JR-East'
+        ? 'JR East blocks requests from cloud servers, so this hosted site has no live status for this line. It renders grey/unknown rather than a faked "normal".'
+        : `There is no keyless live-status feed for ${operator || 'this operator'}, so this line renders grey/unknown rather than a faked "normal".`,
     };
   }
   if (operator === 'JR-East') {
@@ -112,7 +119,9 @@ export function railSource(operator: string, hasFeed: boolean): DataSourceInfo {
     what: 'Live Toei line status.',
     source:
       'ODPT odpt:TrainInformation (live, 15min+ delay threshold) · geometry from odpt:Railway stationOrder × odpt:Station coords',
-    caveat: 'Live status covers Toei and JR East lines; Tokyo Metro remains unknown.',
+    caveat: HOSTED
+      ? 'Live status covers Toei lines only; JR East and Tokyo Metro remain unknown.'
+      : 'Live status covers Toei and JR East lines; Tokyo Metro remains unknown.',
   };
 }
 

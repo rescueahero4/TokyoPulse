@@ -13,17 +13,18 @@ from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from typing import Any, Callable
 
 from .common import get_logger
-from .feeds import jreast, quakes, trains, weather
+from .feeds import quakes, trains, weather
 from .feeds import warnings as warnings_feed
 
 log = get_logger("ingest.once")
 
+# No JR East: traininfo.jreast.co.jp returns 403 to Vercel's servers (it works from
+# a home connection), so the hosted site shows those lines as having no live feed.
 FEEDS: dict[str, Callable[[], dict[str, Any]]] = {
     "trains": trains.run_cycle,
     "quakes": quakes.run_history_backfill,
     "warnings": warnings_feed.run_cycle,
     "weather": weather.run_cycle,
-    "jreast": jreast.run_cycle,
 }
 
 

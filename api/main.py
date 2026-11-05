@@ -361,6 +361,8 @@ def _line_features(status_map: dict[str, dict[str, Any]] | None,
             "type": "LineString", "coordinates": []}
         mock_props = (geometry_src.get(lid) or {}).get("props") or {}
         has_feed = (row.get("statusFeed") or "none").strip().lower() == "live"
+        if PUBLIC_MODE and row.get("operator") == "JR-East":
+            has_feed = False    # see ingest/once.py: JR East blocks cloud servers
         st = (status_map or {}).get(lid) or {}
         if not has_feed:
             # Honest labelling: no live feed => unknown/grey, never a faked 'normal'.
