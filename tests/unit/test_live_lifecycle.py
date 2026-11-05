@@ -41,15 +41,32 @@ class CacheSharing(unittest.TestCase):
 
     def test_short_ttls_still_share_for_a_polling_interval(self):
         self.assertEqual(cache.serve("k", 5, good, "k").headers[CDN], "public, max-age=15")
-
-    def test_stale_and_degraded_stay_off_the_cdn(self):
-        self.assertNotIn(CDN, cache.serve("bad", 60, degraded, "bad").headers)
-        cache.serve("k", 5, good, "k")
         cache._entries["k"]["at"] -= 6
-        with mock.patch.object(cache, "_refresh_async"):
-            res = cache.serve("k", 5, good, "k")
-        self.assertEqual(res.headers["x-cache"], "stale")
-        self.assertNotIn(CDN, res.headers)
+        producer = mock.Mock(return_value=good(2))
+        res = cache.serve("k", 5, producer, "k")
+        producer.assert_not_called()
+        self.assertEqual(res.headers["x-cache"], "hit")
+        self.assertEqual(res.headers[CDN], "public, max-age=9")
+
+    def test_an_expired_entry_is_reread_so_the_next_viewers_share_it(self):
+        cache.serve("k", 5, lambda: good(1), "k")
+        cache._entries["k"]["at"] -= cache.CDN_MIN_TTL
+        res = cache.serve("k", 5, lambda: good(2), "k")
+        self.assertEqual(res.headers["x-cache"], "miss")
+        self.assertIn(b'"n": 2', res.body)
+        self.assertEqual(res.headers[CDN], "public, max-age=15")
+
+    def test_a_failed_reread_serves_the_old_payload_off_the_cdn(self):
+        cache.serve("k", 5, lambda: good(1), "k")
+        cache._entries["k"]["at"] -= cache.CDN_MIN_TTL
+        for producer in (degraded, mock.Mock(side_effect=RuntimeError("down"))):
+            res = cache.serve("k", 5, producer, "k")
+            self.assertEqual(res.headers["x-cache"], "stale")
+            self.assertIn(b'"n": 1', res.body)
+            self.assertNotIn(CDN, res.headers)
+
+    def test_degraded_stays_off_the_cdn(self):
+        self.assertNotIn(CDN, cache.serve("bad", 60, degraded, "bad").headers)
 
     def test_a_newer_ingest_forces_a_reread(self):
         cache.serve("k", 60, lambda: good(1), "k")

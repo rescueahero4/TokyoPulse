@@ -66,6 +66,7 @@ _probe: dict[str, Any] = {"ok": False, "ts": 0.0, "note": "not probed yet"}
 # A failed connect is remembered for this long, so a dead database costs ONE
 # timeout per window across every endpoint instead of one per request.
 _FAIL_TTL = 15.0
+HOSTED_CONNECTION_LIFETIME = 30
 _fail: dict[str, Any] = {"until": 0.0, "note": ""}
 
 
@@ -75,6 +76,10 @@ def _cfg() -> tuple[str, str, str, str | None]:
     pwd = (os.getenv("NEO4J_PASSWORD") or "").strip()
     db = (os.getenv("NEO4J_DATABASE") or "").strip() or None
     return uri, user, pwd, db
+
+
+def _hosted() -> bool:
+    return (os.getenv("TOKYOPULSE_PUBLIC") or "").strip().lower() == "true"
 
 
 def _get_driver():
@@ -117,8 +122,10 @@ def _get_driver():
                     # threadpool + the prefetch loop + A2's ingestors sharing Aura.
                     max_connection_pool_size=POOL_SIZE,
                     # Routing discovery happens once per driver; keep connections
-                    # alive so we never re-pay it on a warm path.
-                    max_connection_lifetime=3600,
+                    # alive so we never re-pay it on a warm path. Hosted, connections
+                    # die while a function sits idle, and reusing one costs a 4s timeout
+                    # and a failed read, so retire them before that can happen.
+                    max_connection_lifetime=HOSTED_CONNECTION_LIFETIME if _hosted() else 3600,
                     liveness_check_timeout=30,
                 )
                 drv.verify_connectivity()

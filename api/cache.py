@@ -105,6 +105,20 @@ def _refresh_async(key: str, producer: Callable[[], dict], label: str) -> None:
     threading.Thread(target=work, name=f"refresh:{key}", daemon=True).start()
 
 
+def _reread(key: str, entry: dict[str, Any], producer: Callable[[], dict], label: str,
+            cdn_ttl: float) -> Response:
+    """Refresh inline, so the result can go on the CDN. The old payload survives a failure."""
+    try:
+        payload = producer()
+    except Exception:
+        log.exception("[%s] re-read failed — keeping stale payload", label)
+        return _respond(entry, "stale")
+    if _keep_previous(entry, payload):
+        log.warning("[%s] re-read degraded, keeping the last good payload", label)
+        return _respond(entry, "stale")
+    return _respond(_store(key, payload), "miss", cdn_ttl)
+
+
 def serve(key: str, ttl: float, producer: Callable[[], dict], label: str,
           empty: Callable[[], dict] | None = None,
           fresh_after: float | None = None) -> Response:
@@ -127,14 +141,13 @@ def serve(key: str, ttl: float, producer: Callable[[], dict], label: str,
         if fresh_after is not None and entry["wall"] < fresh_after:
             if age < REFRESH_MIN_GAP:
                 return _respond(entry, "stale")
-            try:
-                payload = producer()
-            except Exception:
-                log.exception("[%s] refresh after ingest failed — keeping stale payload", label)
-                return _respond(entry, "stale")
-            if _keep_previous(entry, payload):
-                return _respond(entry, "stale")
-            return _respond(_store(key, payload), "miss", cdn_ttl)
+            return _reread(key, entry, producer, label, cdn_ttl)
+        if CDN_ENABLED:
+            # A stale reply can't be shared, and viewers poll slower than the shorter
+            # TTLs, so serving stale would keep almost every poll off the CDN.
+            if age >= cdn_ttl:
+                return _reread(key, entry, producer, label, cdn_ttl)
+            return _respond(entry, "hit", cdn_ttl)
         if age >= ttl:
             _refresh_async(key, producer, label)
             return _respond(entry, "stale")
