@@ -70,6 +70,12 @@ app.add_middleware(
 PUBLIC_MODE = env_str("TOKYOPULSE_PUBLIC").lower() == "true"
 TICK_MIN_GAP_S = 55
 
+
+def _open_meteo_url() -> str:
+    from ingest.feeds.weather import FEED_URL_DEFAULT
+    return env_str("FEED_OPEN_METEO") or FEED_URL_DEFAULT
+
+
 SEV_RANK = {"info": 0, "warning": 1, "critical": 2}
 TYPES = ("quake", "train", "warning", "weather")
 EMPTY_COUNTS = {"quake": 0, "train": 0, "warning": 0, "weather": 0,
@@ -567,7 +573,7 @@ OPEN_METEO_ATTRIBUTION = "Weather data by Open-Meteo.com (CC BY 4.0)"
 
 
 def _attach_open_meteo_source(data: dict[str, Any]) -> dict[str, Any]:
-    data["sourceUrl"] = env_str("FEED_OPEN_METEO") or None
+    data["sourceUrl"] = _open_meteo_url()
     data["sourceName"] = OPEN_METEO_SOURCE_NAME
     data["attribution"] = OPEN_METEO_ATTRIBUTION
     return data
@@ -579,9 +585,7 @@ def _produce_forecast() -> dict[str, Any]:
         # cached for 10 minutes so the demo never waits on it twice.
         if _forecast_cache["value"] and (time.monotonic() - _forecast_cache["at"]) < 600:
             return dict(_forecast_cache["value"])
-        url = env_str("FEED_OPEN_METEO")
-        if not url:
-            raise NoLiveData("FEED_OPEN_METEO not set")
+        url = _open_meteo_url()
         import httpx
         with httpx.Client(timeout=4.0) as client:
             r = client.get(url)
@@ -593,6 +597,8 @@ def _produce_forecast() -> dict[str, Any]:
         return dict(data)
 
     def cache_tier():
+        if PUBLIC_MODE:
+            return None
         raw = read_mock("forecast.json")
         if not raw or not raw.get("hourly"):
             raw2 = read_mock("raw/open-meteo-forecast.json")
@@ -737,6 +743,8 @@ def _produce_weathergrid(step: float, var_keys: tuple[str, ...]) -> dict[str, An
         return json.loads(json.dumps(payload))
 
     def cache_tier():
+        if PUBLIC_MODE:
+            return None
         raw = read_mock("weathergrid.json")
         if not raw or not raw.get("values"):
             return None

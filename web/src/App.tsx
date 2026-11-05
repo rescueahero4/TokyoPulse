@@ -410,7 +410,7 @@ export default function App() {
             {FORCE_MOCKS ? 'ARCHIVED DEMO' : 'API UNREACHABLE'}: showing data frozen at 12 Sep 2026, not live. Do not use for travel or safety decisions.
           </div>
         ) : (
-          <div className="demo-notice">Hackathon demo. Not an official source: check operators and JMA for travel or safety decisions.</div>
+          <div className="demo-notice">Hackathon demo, not an official source. Check operators and JMA for travel or safety decisions.</div>
         )}
 
         <div className="source-chip" title={eventsMeta?.note || ''}>
