@@ -42,8 +42,9 @@ FEED_NAME = "trains"
 log = get_logger("ingest.trains")
 
 NORMAL_MARKERS = ("平常運転", "遅延はありません")
-DELAY_MARKER = "遅延"
 SUSPENDED_MARKERS = ("運転見合わせ", "運転中止")
+# Trains stop running through onto another operator's line, but the line itself still runs.
+THROUGH_SERVICE_STOPPED = "直通運転中止"
 
 
 def _feed_url() -> str:
@@ -56,14 +57,16 @@ def _feed_url() -> str:
     return url
 
 
-def classify_severity(text: str) -> str:
-    if any(m in text for m in SUSPENDED_MARKERS):
+def classify_severity(text: str, status: str = "") -> str:
+    """`status` is odpt:trainInformationStatus, which ODPT leaves empty on Toei lines
+    running normally. Disruptions have many wordings (ダイヤが乱れています never says
+    遅延), so a line only reads as normal when the feed says so itself."""
+    combined = f"{status} {text}".replace(THROUGH_SERVICE_STOPPED, "")
+    if any(m in combined for m in SUSPENDED_MARKERS):
         return "critical"
-    if any(m in text for m in NORMAL_MARKERS):
+    if any(m in (status or text) for m in NORMAL_MARKERS):
         return "info"
-    if DELAY_MARKER in text:
-        return "warning"
-    return "info"
+    return "warning"
 
 
 _ENGLISH_BY_SEVERITY = {
@@ -88,7 +91,8 @@ def normalize(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
         text_ja = (text_obj.get("ja") or "").strip()
         if not text_ja:
             continue
-        severity = classify_severity(text_ja)
+        status_ja = ((item.get("odpt:trainInformationStatus") or {}).get("ja") or "").strip()
+        severity = classify_severity(text_ja, status_ja)
         line_name = line_names.get(line_id, {}).get("name", line_id)
         title = f"{line_name}: {_ENGLISH_BY_SEVERITY[severity]}"
         # odpt:timeOfOrigin = when THIS status began (stable while unchanged).
