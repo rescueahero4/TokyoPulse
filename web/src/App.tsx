@@ -4,7 +4,7 @@ import { PEOPLEFLOW_LABEL } from './map/layers/peopleflow';
 import { ErrorBoundary } from './lib/ErrorBoundary';
 import { usePolling } from './lib/usePolling';
 import {
-  FORCE_MOCKS, fetchBrief, fetchEvents, fetchForecast, fetchImpact, fetchLayers, fetchLines,
+  FORCE_MOCKS, tickIngest, fetchBrief, fetchEvents, fetchForecast, fetchImpact, fetchLayers, fetchLines,
   fetchSandboxes, fetchStations, linesFromCollection, probePeopleFlow, type Loaded,
 } from './lib/api';
 import { lineSegments } from './lib/geo';
@@ -115,6 +115,7 @@ export default function App() {
   });
 
   // ---- data (polling intervals per the brief)
+  usePolling(tickIngest, 60_000);
   const eventsRes = usePolling(() => fetchEvents(timeWindow), 15_000, [timeWindow]);
   const linesRes = usePolling(fetchLines, 30_000);
   const layersRes = usePolling(fetchLayers, 20_000);
@@ -404,8 +405,16 @@ export default function App() {
           <ForecastStrip forecast={forecastRes.data?.data ?? null} loading={forecastRes.loading} />
         </ErrorBoundary>
 
+        {FORCE_MOCKS || (eventsRes.data && eventsRes.data.origin !== 'api') ? (
+          <div className="snapshot-banner" role="status">
+            {FORCE_MOCKS ? 'ARCHIVED DEMO' : 'API UNREACHABLE'}: showing data frozen at 12 Sep 2026, not live. Do not use for travel or safety decisions.
+          </div>
+        ) : (
+          <div className="demo-notice">Hackathon demo. Not an official source: check operators and JMA for travel or safety decisions.</div>
+        )}
+
         <div className="source-chip" title={eventsMeta?.note || ''}>
-          {FORCE_MOCKS ? 'MOCKS FORCED' : degraded ? 'API UNREACHABLE / MOCK' : 'API LIVE'}
+          {FORCE_MOCKS ? 'SNAPSHOT' : degraded ? 'API UNREACHABLE / MOCK' : 'API LIVE'}
         </div>
       </div>
     </div>

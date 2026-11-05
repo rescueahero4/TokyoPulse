@@ -105,3 +105,18 @@ misleading empty state.
    timeline ordering without a sanity check.
 2. **`class15s` exists in JMA's area master but not in this payload.** Only `class10s` and `class20s`
    appear in `130000.json`. Code that assumes three tiers will index out of range.
+
+## May 2026 format change
+
+JMA started its new warning system on 29 May 2026 and froze `data/warning/130000.json` the day
+before. The file still returns HTTP 200, so it looks healthy while reporting 28 May forever. The
+live file is now `data/r8/130000.json`, and everything earlier in this document describes the old
+format.
+
+- **Shape:** a list of reports, one per hazard group, each with its own `reportDatetime`. Areas are
+  in `warning.class10Items` and `warning.class20Items` as `{areaCode, kinds: [{code, status}]}`.
+- **Codes:** renumbered (`19` was dense fog and is now storm surge), with new landslide codes and a
+  Level 4 tier. `R8_CODES` in `ingest/feeds/warnings.py` comes from the table in JMA's own page
+  script. An unknown code gets a generic label rather than a guessed hazard.
+- **Lifted warnings:** the feed lists only what is active, so `run_cycle()` deletes JMA events it no
+  longer lists. Otherwise the "now" view would keep showing a ward's last warning indefinitely.

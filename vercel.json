@@ -1,0 +1,21 @@
+{
+  "regions": ["sin1"],
+  "services": {
+    "frontend": {
+      "root": "web",
+      "framework": "vite"
+    },
+    "backend": {
+      "root": ".",
+      "entrypoint": "vercel_app:app",
+      "framework": "fastapi"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "backend" } },
+    { "source": "/(.*)", "destination": { "service": "frontend" } }
+  ],
+  "crons": [
+    { "path": "/api/cron/tick", "schedule": "0 0 * * *" }
+  ]
+}

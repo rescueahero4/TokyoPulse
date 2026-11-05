@@ -31,7 +31,7 @@
     "note": "May be silent for hours. POST /demo/replay is the demo guarantee, not this."
   },
   "jma_warning_tokyo": {
-    "url": "https://www.jma.go.jp/bosai/warning/data/warning/130000.json",
+    "url": "https://www.jma.go.jp/bosai/warning/data/r8/130000.json",
     "keyless": true,
     "verified": "200, 14KB",
     "area_granularity": "Payload has TWO tiers under areaTypes[]. [0]=class10s, 4 coarse regions (130010 東京地方 covers ALL 23 wards as ONE blob -- never position from this tier). [1]=class20s, 62 municipalities -- THIS is the ward level.",

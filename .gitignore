@@ -16,3 +16,7 @@ ingest/state/
 *.pyc
 tests/e2e/report/
 tests/e2e/screenshots/
+
+.vercel/
+
+.vercel/

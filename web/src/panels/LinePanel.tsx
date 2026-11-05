@@ -12,6 +12,7 @@
 // A6 depends on the pick behaviour: onPick(lineId) still fires on selection so
 // the map highlights the line and labels its stations, and onPick(null) clears.
 
+import { FORCE_MOCKS } from '../lib/api';
 import { useCallback, useEffect, useRef } from 'react';
 import type { Impact, Lang, LineProps } from '../lib/types';
 import { PanelHeader } from './PanelHeader';
@@ -173,7 +174,7 @@ export function LinePanel(p: {
                     <span className="tp-line-group-stat">
                       {g.live === 0
                         ? `${g.lines.length} · no live feed`
-                        : `${g.live}/${g.lines.length} live`}
+                        : `${g.live}/${g.lines.length} ${FORCE_MOCKS ? 'snapshot' : 'live'}`}
                     </span>
                   </div>
                   {g.lines.map((line) => (

@@ -10,6 +10,7 @@
 // then says the detail is unavailable rather than inventing one.
 
 const BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+const SNAPSHOT = String(import.meta.env.VITE_USE_MOCKS) === 'true';
 
 /** Exactly what /buses.geojson puts in feature.properties. */
 export interface BusProps {
@@ -54,7 +55,7 @@ export interface BusCollection {
 
 export async function fetchBuses(): Promise<BusCollection | null> {
   try {
-    const res = await fetch(`${BASE}/buses.geojson`, { headers: { accept: 'application/json' } });
+    const res = await fetch(SNAPSHOT ? '/mock/busvehicles.geojson' : `${BASE}/buses.geojson`, { headers: { accept: 'application/json' } });
     if (!res.ok) return null;
     const json = (await res.json()) as BusCollection;
     if (!json || !Array.isArray(json.features)) return null;

@@ -184,13 +184,17 @@ export function fetchSandboxes(): Promise<Loaded<SandboxPayload>> {
 
 export interface LayersPayload { layers: LayerState[]; meta: Meta }
 
-export function fetchLayers(): Promise<Loaded<LayersPayload>> {
-  return load<LayersPayload>(
+export async function fetchLayers(): Promise<Loaded<LayersPayload>> {
+  const res = await load<LayersPayload>(
     '/layers.json',
     ['/mock/layers.json'],
     hasArray('layers'),
     () => ({ layers: [], meta: mkMeta('mock', true, 'no layer health source') }),
   );
+  if (res.origin === 'api') return res;
+  // A captured payload is never live, whatever state it recorded at capture time.
+  const layers = res.data.layers.map((l) => (l.state === 'live' ? { ...l, state: 'cache' as const } : l));
+  return { ...res, data: { ...res.data, layers } };
 }
 
 export function fetchImpact(lineId: string): Promise<Loaded<Impact>> {
@@ -235,6 +239,20 @@ export async function probePeopleFlow(): Promise<boolean> {
     }
   }
   return false;
+}
+
+/**
+ * Serverless ingest heartbeat. There is no always-on poller in production: open
+ * pages drive it, and the API limits it to one pass per minute across all viewers.
+ * No abort timeout, because a pass legitimately takes several seconds.
+ */
+export async function tickIngest(): Promise<void> {
+  if (FORCE_MOCKS) return;
+  try {
+    await fetch(BASE + '/tick', { method: 'POST' });
+  } catch {
+    /* the next beat retries */
+  }
 }
 
 export async function postReplay(scenario: 'quake' | 'train' | 'warning'): Promise<boolean> {

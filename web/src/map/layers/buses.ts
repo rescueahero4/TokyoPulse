@@ -19,6 +19,7 @@ import type { Lang } from '../../lib/types';
  */
 
 const BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+const SNAPSHOT = String(import.meta.env.VITE_USE_MOCKS) === 'true';
 
 export interface BusProps {
   busId: string;
@@ -69,7 +70,7 @@ export interface BusRouteCollection { type: 'FeatureCollection'; features: BusRo
 /** Vehicles only. The server already caps this at ~360; never request `?all=1`. */
 export async function fetchBuses(signal?: AbortSignal): Promise<BusCollection | null> {
   try {
-    const res = await fetch(BASE + '/buses.geojson', { signal });
+    const res = await fetch(SNAPSHOT ? '/mock/busvehicles.geojson' : BASE + '/buses.geojson', { signal });
     if (!res.ok) return null;
     return (await res.json()) as BusCollection;
   } catch (e) {
@@ -81,9 +82,14 @@ export async function fetchBuses(signal?: AbortSignal): Promise<BusCollection | 
 /** One route's shape. Scoped by routeId on purpose — `?all=1` is 651 features. */
 export async function fetchBusRoute(routeId: string, signal?: AbortSignal): Promise<BusRouteCollection | null> {
   try {
-    const res = await fetch(BASE + '/busroutes.geojson?routeId=' + encodeURIComponent(routeId), { signal });
+    const res = await fetch(
+      SNAPSHOT ? '/mock/busroutes.geojson' : BASE + '/busroutes.geojson?routeId=' + encodeURIComponent(routeId),
+      { signal },
+    );
     if (!res.ok) return null;
-    return (await res.json()) as BusRouteCollection;
+    const fc = (await res.json()) as BusRouteCollection;
+    // A static file cannot apply ?routeId=, so scope it here.
+    return SNAPSHOT ? { ...fc, features: fc.features.filter((f) => f.properties?.routeId === routeId) } : fc;
   } catch (e) {
     if ((e as Error)?.name !== 'AbortError') console.warn('[map] /busroutes.geojson unavailable', e);
     return null;

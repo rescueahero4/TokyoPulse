@@ -553,3 +553,38 @@ html, body, #root {
 }
 
 .map-basemap-swatch[data-bm='ion'] { background: linear-gradient(135deg, #35562f, #1b4a63); }
+
+/* Public snapshot build: this must never read as current city status. */
+.snapshot-banner {
+  position: fixed;
+  top: 8px;
+  left: 16px;
+  right: 16px;
+  width: fit-content;
+  margin-inline: auto;
+  z-index: 10000;
+  padding: 4px 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+  color: #1a1200;
+  background: #ffaa00;
+  border-radius: 4px;
+  pointer-events: none;
+}
+body:has(.snapshot-banner) .tp-alert-banner-wrap { top: 40px; }
+@media (max-width: 900px) {
+  .snapshot-banner { top: 44px; }
+  body:has(.snapshot-banner) .tp-alert-banner-wrap { top: 96px; }
+}
+
+.demo-notice {
+  position: fixed;
+  bottom: 4px;
+  right: 16px;
+  z-index: 10000;
+  max-width: calc(100vw - 32px);
+  font-size: 10px;
+  color: #9aa4b2;
+  pointer-events: none;
+}

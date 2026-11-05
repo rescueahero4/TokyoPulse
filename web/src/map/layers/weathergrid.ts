@@ -19,6 +19,7 @@ import * as Cesium from 'cesium';
  */
 
 const BASE = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '');
+const SNAPSHOT = String(import.meta.env.VITE_USE_MOCKS) === 'true';
 
 export type WeatherVar = 'temperature_2m' | 'precipitation';
 
@@ -40,7 +41,7 @@ export interface WeatherGrid {
 
 export async function fetchWeatherGrid(signal?: AbortSignal): Promise<WeatherGrid | null> {
   try {
-    const res = await fetch(BASE + '/weathergrid.json', { signal });
+    const res = await fetch(SNAPSHOT ? '/mock/weathergrid.json' : BASE + '/weathergrid.json', { signal });
     if (!res.ok) return null;
     const g = (await res.json()) as WeatherGrid;
     // Defend the invariant the contract states: values are ROW-MAJOR, rows*cols.

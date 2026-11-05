@@ -30,7 +30,7 @@ import time
 from datetime import datetime, timedelta
 from typing import Any
 
-from fastapi import Body, FastAPI, Query, Response
+from fastapi import Body, FastAPI, Header, HTTPException, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -64,6 +64,11 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["X-Cache", "Age"],
 )
+
+# Public deployment: no stale data presented as current, no unauthenticated
+# writes to the graph, and POST /tick drives ingest. Off for local demos.
+PUBLIC_MODE = env_str("TOKYOPULSE_PUBLIC").lower() == "true"
+TICK_MIN_GAP_S = 55
 
 SEV_RANK = {"info": 0, "warning": 1, "critical": 2}
 TYPES = ("quake", "train", "warning", "weather")
@@ -269,6 +274,8 @@ def _produce_events(limit: int, types: list[str] | None,
         return {"events": evs, "counts": _counts(evs)}
 
     def cache_tier():
+        if PUBLIC_MODE:
+            return None
         raw = read_mock("events.json")
         if not raw:
             return None
@@ -359,6 +366,9 @@ def _line_features(status_map: dict[str, dict[str, Any]] | None,
             text_ja = st.get("statusTextJa")
             source = st.get("statusSource") or fallback_source
             updated = st.get("updatedAt")
+        elif PUBLIC_MODE:
+            status, text, text_ja, source, updated = (
+                "unknown", "Waiting for the first status update", None, "none", None)
         else:
             status = mock_props.get("status") or "unknown"
             text = mock_props.get("statusText") or "No live status feed"
@@ -483,6 +493,8 @@ def _produce_impact(lineId: str, row: dict[str, str]) -> dict[str, Any]:
         return data
 
     def cache_tier():
+        if PUBLIC_MODE:
+            return None
         raw = read_mock(f"impact/{lineId}.json")
         if not raw:
             return None
@@ -793,6 +805,8 @@ def _produce_sandboxes() -> dict[str, Any]:
         return {"count": len(boxes), "sandboxes": boxes}
 
     def cache_tier():
+        if PUBLIC_MODE:
+            return None
         raw = read_mock("sandboxes.json")
         if not raw or not raw.get("sandboxes"):
             return None
@@ -839,6 +853,8 @@ def _produce_buses() -> dict[str, Any]:
         return json.loads(json.dumps(payload))
 
     def cache_tier():
+        if PUBLIC_MODE:
+            return None
         raw = read_mock("busvehicles.geojson")
         if not raw or not raw.get("features"):
             return None
@@ -1584,6 +1600,8 @@ SCENARIOS = {"quake": _replay_quake, "train": _replay_train, "warning": _replay_
 
 @app.post("/demo/replay")
 def demo_replay(body: dict[str, Any] = Body(default=None)) -> dict[str, Any]:
+    if PUBLIC_MODE:
+        raise HTTPException(status_code=404, detail="Not Found")
     raw_scenario = str(((body or {}).get("scenario") or "quake")).strip().lower()
     scenario = raw_scenario if raw_scenario in SCENARIOS else "quake"
     note = None if scenario == raw_scenario else f"unknown scenario {raw_scenario!r}, replayed quake"
@@ -1638,6 +1656,8 @@ def demo_reset() -> dict[str, Any]:
     memory>, "meta": {...}}. Never 500s: if Neo4j is unreachable the in-memory
     replay list is still cleared and `meta` says so.
     """
+    if PUBLIC_MODE:
+        raise HTTPException(status_code=404, detail="Not Found")
     held = len(REPLAY)
     REPLAY.clear()
     deleted, src, degraded, note = 0, "live", False, None
@@ -1735,6 +1755,51 @@ def _warm_on_startup() -> None:
         cache.start_prefetch_loop(3.0)
 
     threading.Thread(target=warm, name="startup-warm", daemon=True).start()
+
+
+# ─────────────────────────── serverless ingest ───────────────────────────────
+
+def _claim_tick() -> bool:
+    """Atomic across instances: at most one ingest pass per TICK_MIN_GAP_S."""
+    now = time.time()
+    rows = graph.run(
+        "MERGE (s:IngestState {id: 'tick'}) ON CREATE SET s.at = 0.0 "
+        "WITH s WHERE s.at <= $cutoff SET s.at = $now RETURN s.at AS at",
+        cutoff=now - TICK_MIN_GAP_S, now=now)
+    return bool(rows)
+
+
+def _run_tick() -> dict[str, Any]:
+    try:
+        if not _claim_tick():
+            return {"ran": False, "reason": "recently ingested"}
+    except Exception as exc:
+        log.warning("tick: claim failed: %s", exc)
+        return {"ran": False, "reason": "graph unavailable"}
+    from ingest.once import run_once
+    feeds = run_once()
+    for prefix in ("events:", "layers.json", "brief", "impact:", "health", "lines.geojson"):
+        cache.invalidate(prefix)
+    return {"ran": True, "feeds": {k: {"ok": v["ok"], "written": v["written"]}
+                                   for k, v in feeds.items()}}
+
+
+@app.post("/tick")
+def tick() -> dict[str, Any]:
+    """Open pages call this about once a minute. Safe to expose: the claim limits
+    it to one pass per minute however often it is called."""
+    if not PUBLIC_MODE:
+        raise HTTPException(status_code=404, detail="Not Found")
+    return _run_tick()
+
+
+@app.get("/cron/tick")
+def cron_tick(authorization: str | None = Header(default=None)) -> dict[str, Any]:
+    """Daily Vercel cron: keeps the graph active when nobody has the page open."""
+    secret = env_str("CRON_SECRET")
+    if not PUBLIC_MODE or not secret or authorization != f"Bearer {secret}":
+        raise HTTPException(status_code=404, detail="Not Found")
+    return _run_tick()
 
 
 # ─────────────────────────────────── root ────────────────────────────────────

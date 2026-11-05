@@ -35,7 +35,7 @@ except ImportError:  # pragma: no cover - true inside a --push sandbox, which
 # ── paths ────────────────────────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parents[1]  # TokyoPulse/
 INGEST_DIR = ROOT / "ingest"
-STATE_DIR = INGEST_DIR / "state"
+STATE_DIR = Path(os.environ.get("INGEST_STATE_DIR") or INGEST_DIR / "state")
 CONTRACTS_DIR = ROOT / "contracts"
 
 try:

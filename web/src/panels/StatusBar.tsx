@@ -1,3 +1,4 @@
+import { FORCE_MOCKS } from '../lib/api';
 import type { Lang, SandboxInfo, TimeWindow } from '../lib/types';
 
 // godseye neon palette (same semantics as ui-contract rule 5).
@@ -22,9 +23,13 @@ export function StatusBar(p: {
     <div className="tp-panel tp-status-bar">
       <div className="tp-status-sandbox-wrap">
         <span className="tp-status-sandbox-badge">
-          {'⚡'} {sandboxes.length} Daytona sandbox{sandboxes.length === 1 ? '' : 'es'} ingesting
+          {FORCE_MOCKS
+            ? 'Snapshot: no live ingest'
+            : sandboxes.length === 0
+              ? 'Feeds refresh while viewed'
+              : <>{'⚡'} {sandboxes.length} Daytona sandbox{sandboxes.length === 1 ? '' : 'es'} ingesting</>}
         </span>
-        {sandboxes.length > 0 ? (
+        {sandboxes.length > 0 && !FORCE_MOCKS ? (
           <div className="tp-status-sandbox-hover">
             {sandboxes.map((sb) => (
               <div key={sb.name} className="tp-status-sandbox-item">

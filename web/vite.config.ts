@@ -42,8 +42,29 @@ function mockServer() {
   };
 }
 
+/**
+ * The dev middleware above does not exist in a production build, so copy the runtime
+ * snapshot next to the bundle. mock/raw (source feed dumps) and mock/_tools are never
+ * fetched by the frontend and are not published.
+ */
+function mockBundle() {
+  return {
+    name: 'tokyopulse-mock-bundle',
+    apply: 'build' as const,
+    closeBundle() {
+      fs.cpSync(MOCK_DIR, path.resolve(HERE, 'dist', 'mock'), {
+        recursive: true,
+        filter: (src: string) => {
+          const rel = path.relative(MOCK_DIR, src).split(path.sep)[0];
+          return rel !== 'raw' && rel !== '_tools';
+        },
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), cesium(), mockServer()],
+  plugins: [react(), cesium(), mockServer(), mockBundle()],
   server: {
     port: 5173,
     strictPort: true,
